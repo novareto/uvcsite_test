@@ -1,0 +1,4 @@
+setuptools
+grok
+pysqlite
+z3c.testsetup
