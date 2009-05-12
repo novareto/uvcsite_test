@@ -1,0 +1,31 @@
+import grok
+from uvcsite.extranetmembership.interfaces import IUserManagement
+
+users = [
+          {'mnr':'010101001', 'passwort':'passwort', 'email':'test@test.de'},
+          {'mnr':'010101002', 'passwort':'passwort', 'email':'test@test.de'},
+        ]
+
+class UserManagement(grok.GlobalUtility):
+    """ Utility for Usermanagement """
+    grok.implements(IUserManagement)
+
+    def updateUser(self, **kwargs):
+	"""Updates a User"""
+
+    def deleteUser(self, mnr):
+	"""Delete the User"""
+
+    def addUser(self, **kwargs):
+	"""Adds a User"""
+
+    def getUser(self, mnr):
+	"""Return a User"""
+	for user in users:
+	    if user.get('mnr') == mnr:
+		return mnr
+	return None
+
+    def getUserGroup(self, mnr):
+	"""Return a group of Users"""
+	return users

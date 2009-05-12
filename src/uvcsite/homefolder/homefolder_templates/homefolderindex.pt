@@ -1,0 +1,24 @@
+<html>
+<head>
+</head>
+<body>
+ <div>
+  <h1 tal:content="view/title"></h1>
+  <p tal:content="view/description"/>
+
+  <ul>
+      <li tal:repeat="type view/getContentTypes"> 
+          <a href="" tal:attributes="href string:${view/url}?meta_type=${type}"> 
+             <span tal:content="type"/>
+	  </a>   
+      </li>
+  </ul>
+
+  <form action="deleteitem">
+  <div tal:content="structure view/renderBatch" />
+  <div tal:replace="structure view/renderTable" />
+  <input type="submit" value="Delte"/>
+  </form>
+ </div>
+</body>
+</html>

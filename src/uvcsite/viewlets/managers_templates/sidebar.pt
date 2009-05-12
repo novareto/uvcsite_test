@@ -1,0 +1,7 @@
+<div id="navigationTree" class="box" 
+     tal:define="items viewletmanager/viewlets" tal:condition="items">
+  <h1> Navigation </h1>
+    <div class="navitem" tal:repeat="item items">
+          <span tal:content="structure item/render" />
+    </div>
+</div>    

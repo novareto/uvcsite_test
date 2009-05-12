@@ -1,0 +1,49 @@
+Do a functional doctest test on the app.
+========================================
+
+:Test-Layer: functional
+
+Let's first create an instance of Restest at the top level:
+
+   >>> from uvcsite.app import Uvcsite 
+   >>> uvcsite = Uvcsite()
+   >>> root = getRootFolder()
+   >>> root['app'] = uvcsite 
+
+Let´s set the Site this is a hack because traversal set´s the site
+
+   >>> from zope.component import getUtility
+   >>> from zope.app.component.hooks import getSite, setSite
+   >>> setSite(uvcsite)
+
+Do we get a utility with our IHomeFolderManager
+
+   >>> from zope.app.homefolder.interfaces import IHomeFolderManager
+   >>> utility = getUtility(IHomeFolderManager)
+   >>> utility
+   <uvcsite.homefolder.homefolder.PortalMembership object at ...>
+
+Is the MembersContainer the one we specified?
+
+   >>> utility.homeFolderBase
+   <uvcsite.homefolder.homefolder.Members object at...>
+
+Try to add the user lars. this should work because autoassigment is true
+
+   >>> utility.assignHomeFolder('lars')
+   >>> 'lars' in utility.homeFolderBase
+   True
+
+Do we get the HomeFolder thourgh the api
+
+   >>> homefolder = utility.getHomeFolder('lars')
+   >>> homefolder
+   <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+
+OK now we have our homefolder. this homefolder should now have it´s own
+PrincipalRoleMap with settings for lars
+
+   >>> from zope.securitypolicy.interfaces import IPrincipalRoleMap
+   >>> rolemap = IPrincipalRoleMap(homefolder) 
+   >>> rolemap.getPrincipalsAndRoles()
+   [(u'uvc.ManageHomeFolder', 'lars', PermissionSetting: Allow)]
