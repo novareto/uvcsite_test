@@ -1,0 +1,15 @@
+<html
+   xmlns:i18n="http://namespaces.zope.org/i18n"
+   i18n:domain="uvcsite">
+<head>
+</head>
+<body>
+ <div>
+  <h1>Congratulations!</h1>
+
+  <p>Your Grok application is up and running.
+  Edit <code>restest/app_templates/index.pt</code> to change
+  this page.</p>
+ </div>
+</body>
+</html>

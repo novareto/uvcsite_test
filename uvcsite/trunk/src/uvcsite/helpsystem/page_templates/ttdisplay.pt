@@ -1,0 +1,7 @@
+<html>
+<body>
+<h1 tal:content="context/name"/>
+<h2 tal:content="context/title"/>
+<h3 tal:content="context/text"/>
+</body>
+</html>

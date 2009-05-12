@@ -1,0 +1,16 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:grok="http://namespaces.zope.org/grok">
+
+    <adapter factory=".rolemap.CustomPrincipalRoleMap"
+             provides="zope.securitypolicy.interfaces.IPrincipalRoleMap"
+             for="uvcsite.interfaces.IUVCSite"
+             trusted="true"
+             /> 
+
+    <adapter factory=".rolemap.ContentPrincipalRoleMap"
+             provides="zope.securitypolicy.interfaces.IPrincipalRoleMap"
+    	     for="uvcsite.interfaces.IContentType"
+	     trusted="true"
+	     />
+
+</configure>

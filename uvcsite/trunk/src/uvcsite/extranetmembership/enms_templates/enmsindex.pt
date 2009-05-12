@@ -1,0 +1,40 @@
+<html>
+<head>
+</head>
+<body>
+<div>
+ <h1> Mitbenutzerverwaltung </h1>                                                                                        
+ <fieldset>
+ <legend > Benutzerübersicht </legend>
+  <div>
+  <dl class="portlet portletHalfWidth">
+  <dt class="portletHeader">
+    <span> Mitbenutzer </span>
+  </dt>
+  <tal:list repeat="user view/getUserGroup">
+     <dd class="portletItem"
+         tal:define="oddrow repeat/user/odd"
+         tal:attributes="class string: even ">
+            <a href="" 
+               i18n:translate=""
+               tal:attributes="href string:enmsupdateuser?cn=${user/mnr}">
+                  <span i18n:name="updateUser" tal:content="string: ${user/mnr}"> user updaten </span>
+            </a>
+     </dd>
+  </tal:list>
+
+  <dd class="portletFooter">
+     <a href="" 
+        i18n:translate=""
+        tal:attributes="href string:enmscreateuser">
+        <span i18n:name="neuenUseranlegen" tal:content="string: neuen User anlegen"> neuen User anlegen </span>
+     </a>
+  </dd>
+
+ </dl>
+</div>
+</fieldset>
+</div>
+</body>
+</html>
+

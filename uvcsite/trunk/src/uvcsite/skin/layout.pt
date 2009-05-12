@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="uvcsite">
+<head>
+  <title>Extranet</title>
+  <tal:block replace="resource_library:uvcresources"/>
+
+  <!--
+  <link rel="stylesheet" type="text/css" href="resources/worldcookery.css"
+        tal:attributes="href context/++resource++worldcookeryskin/worldcookery.css" />
+  <link rel="icon" type="image/png" href="resources/icon.png"
+        tal:attributes="href context/++resource++worldcookeryskin/icon.png" /> 
+-->
+<!--  <metal:slot define-slot="headers" /> -->
+  <tal:providers replace="structure provider:uvcsite.headers" />
+</head>
+
+<body>
+  <div id="visualBodyWrapper">
+    <div id="toolbar"> 
+       <html:block tal:content="structure provider:uvcsite.logo" />
+       <html:block tal:content="structure provider:uvcsite.globalmenu" />
+    </div>
+
+    <div id="visualContentWrapper">
+      <div id="sidebar" tal:define="sidebar provider:uvcsite.sidebar"
+           tal:condition="sidebar" tal:content="structure sidebar">
+        The sidebar goes here
+      </div>
+
+      <div id="content" tal:content="structure view/render">
+      </div>
+    </div>
+
+    <div id="footer" tal:content="structure provider:uvcsite.footer">
+      Footer goes here
+    </div>
+  </div>
+</body>
+</html>
