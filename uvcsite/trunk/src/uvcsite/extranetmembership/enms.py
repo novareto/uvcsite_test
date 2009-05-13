@@ -28,7 +28,7 @@ class ENMSCreateUser(FormPageletMixin, grok.Form):
     grok.context(IUVCSite)
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden 
-    form_fields['roles'].custom_widget = MultiCheckBoxVocabularyWidget
+    form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
 
     def setUpWidgets(self, ignore_request=False):
         #BBB Die Werte mussen hier erst noch errechnet werden.
@@ -53,8 +53,8 @@ class ENMSCreateUser(FormPageletMixin, grok.Form):
         # Setting Home Folder Rights
         hauptuser = kw.get('mnr').split('-')[0]
         utility = getUtility(IHomeFolderManager)
-        #principal_roles = IPrincipalRoleManager(utility.homeFolderBase[hauptuser])
-        #principal_roles.assignRoleToPrincipal( utility.homeFolderRole, kw.get('mnr') )
+        principal_roles = IPrincipalRoleManager(utility.homeFolderBase[hauptuser])
+        principal_roles.assignRoleToPrincipal( utility.homeFolderRole, kw.get('mnr') )
 	self.flash('Der Mitbenutzer wurde gespeichert')
         self.redirect(self.url(self.context))
 
@@ -64,7 +64,7 @@ class ENMSUpdateUser(FormPageletMixin, grok.Form):
     grok.context(IUVCSite)
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden 
-    form_fields['roles'].custom_widget = MultiCheckBoxVocabularyWidget
+    form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
 
     def setUpWidgets(self, ignore_request=False):
         #BBB Die Werte mussen hier erst noch errechnet werden.
@@ -75,6 +75,7 @@ class ENMSUpdateUser(FormPageletMixin, grok.Form):
         user = {}
         if id:
             user = um.getUser(id)
+	    user['mnr'] = id
         data=user
         self.adapters = {}
         self.widgets = setUpWidgets(

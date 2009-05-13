@@ -12,6 +12,8 @@ from zope.app.homefolder.interfaces import IHomeFolder
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
 
+from uvcsite.interfaces import ICompanyInfo
+
 class MyName(grok.Viewlet):
     grok.name('myname')
     grok.context(Interface)
@@ -41,7 +43,8 @@ class MyFolder(MenuItem):
 	    return "members/notexist"
 	try:
 	    utility = getUtility(IHomeFolderManager)
-	    homeFolder = utility.getHomeFolder(str(principal.id)).__name__
+	    principal_id = ICompanyInfo(principal).getHauptUser()
+	    homeFolder = utility.getHomeFolder(principal_id).__name__
 	except:
 	    homeFolder = ""
 	return "members/" + homeFolder 

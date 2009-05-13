@@ -42,6 +42,7 @@ class Person(grok.Model):
 class PersonIndex(FormPageletMixin, grok.DisplayForm):
     grok.context(Person)
     grok.name('index')
+    grok.require('uvc.CanViewKontakt')
     form_fields = grok.Fields(IPerson)
     template = grok.PageTemplateFile('display_form.pt')
 
@@ -53,6 +54,7 @@ class PersonIndex(FormPageletMixin, grok.DisplayForm):
 ### Die Person Add Form
 class PersonAdd(FormPageletMixin, grok.AddForm):
     grok.context(Uvcsite)
+    grok.require('uvc.CanAddKontakt')
     template = grok.PageTemplateFile('form.pt')
     form_fields = grok.Fields(IPerson)
 
@@ -72,6 +74,7 @@ class PersonAdd(FormPageletMixin, grok.AddForm):
 class PersonEdit(FormPageletMixin, grok.EditForm):
     grok.context(Person)
     grok.name('edit')
+    grok.require('uvc.CanEditKontakt')
     template = grok.PageTemplateFile('form.pt')
     form_fields = grok.Fields(IPerson)
 

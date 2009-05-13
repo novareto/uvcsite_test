@@ -2,8 +2,9 @@ from persistent import Persistent
 from zope.component import getUtility
 from zope.interface import implements
 from zope.location.interfaces import ILocation
-from interfaces import IUVCAuth, IUserManagement
+from interfaces import IUVCAuth
 from zope.app.authentication.principalfolder import PrincipalInfo
+from uvcsite.extranetmembership.interfaces import IUserManagement
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.authentication.httpplugins import HTTPBasicAuthCredentialsPlugin
 
@@ -27,7 +28,7 @@ class UVCAuthenticator(Persistent):
         utility = getUtility(IUserManagement)
 	user = utility.getUser(id)
 	if user:
-	    roles = user.get('roles', [])
+	    roles = user.get('rollen', [])
 	return roles 
 
     def authenticateCredentials(self, credentials):
@@ -39,7 +40,7 @@ class UVCAuthenticator(Persistent):
 	if user:
 	    if password == user.get('passwort'):
 	        id = user.get('mnr').split('-')[0]
-		title = "%s" %(user.get('mnr'))
+		title = "%s-%s" %(user.get('mnr'),user.get('az'))
 		#PrincipalInfo('users.foo', 'foo', 'Foo', 'An over-used term.')
 	        pi = PrincipalInfo(login, id, id, title)
 	        return pi

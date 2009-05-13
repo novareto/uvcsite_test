@@ -12,7 +12,7 @@ class IExtranetMember(Interface):
              description = _(u"Mitgliedsnummer"),
              required = True)
 
-    roles = List(
+    rollen = List(
              title=_(u"Berechtigung"),
              description=_(u"Berechtiung"),
              value_type=Choice(vocabulary="VocabularyBerechtigungen")) 
