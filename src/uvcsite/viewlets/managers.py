@@ -44,3 +44,9 @@ class PersonalMenu(grok.ViewletManager):
     grok.name('uvcsite.personalpanel')
     grok.context(Interface)
     grok.implements(IPersonalMenu)
+
+class StatusMessage(grok.ViewletManager):
+    """ ViewletManager for StatusMessages"""
+    grok.name('uvcsite.statusmessage')
+    grok.context(Interface)
+    grok.implements(IStatusMessage)     

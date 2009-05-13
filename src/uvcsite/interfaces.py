@@ -51,4 +51,6 @@ class ILogo(Interface):
 class IPersonalMenu(Interface):
     """ Marker for PersonalMenu """
 
+class IStatusMessage(Interface):                                                
+    """ Marker for StatusMessage """
 
