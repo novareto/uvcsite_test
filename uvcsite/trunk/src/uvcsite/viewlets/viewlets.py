@@ -3,7 +3,7 @@
 import grok
 
 from zope.interface import Interface
-from uvcsite.interfaces import ILogo
+from uvcsite.interfaces import ILogo, IStatusMessage
 from zope.traversing.browser import absoluteURL
 
 class Image(grok.Viewlet):
@@ -18,3 +18,13 @@ class Image(grok.Viewlet):
 	except:
 	    return absoluteURL(self.view, self.view.request)
 	return self.view.application_url()
+
+
+class StatusMessages(grok.Viewlet):
+    grok.name('uvcsite.messages')
+    grok.context(Interface)
+    grok.viewletmanager(IStatusMessage)
+
+    def update(self):
+        source = getUtility(IMessageReceiver)
+        self.messages = list(source.receive()) 	
