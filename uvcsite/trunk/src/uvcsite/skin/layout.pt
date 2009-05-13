@@ -30,7 +30,7 @@
            tal:condition="sidebar" tal:content="structure sidebar">
         The sidebar goes here
       </div>
-
+      <div tal:content="structure provider:uvcsite.statusmessage"> </div>
       <div id="content" tal:content="structure view/render">
       </div>
     </div>

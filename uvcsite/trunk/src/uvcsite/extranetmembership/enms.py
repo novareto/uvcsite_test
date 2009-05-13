@@ -21,7 +21,7 @@ class ENMSIndex(megrok.pagelet.Pagelet):
     def getUserGroup(self):
         principal = "0101010001" #self.request.principal.hauptuser
         um = getUtility(IUserManagement)
-        return um.getUserGroup(principal)
+        return um.getUserGroups(principal)
 
 
 class ENMSCreateUser(FormPageletMixin, grok.Form):
@@ -34,8 +34,8 @@ class ENMSCreateUser(FormPageletMixin, grok.Form):
         #BBB Die Werte mussen hier erst noch errechnet werden.
         principal = "0101010001" #self.request.principal.hauptuser
         um = getUtility(IUserManagement)
-        ll = len(um.getUserGroup(principal))
-        value = principal + '-' + str(ll)
+        ll = len(um.getUserGroups(principal))
+        value = principal + '-' + str(ll+1)
         data={'mnr': value}
         self.adapters = {}
         self.widgets = setUpWidgets(
@@ -88,7 +88,7 @@ class ENMSUpdateUser(FormPageletMixin, grok.Form):
     @grok.action(_(u"Bearbeiten"))
     def anlegen(self, **kw):
         um = getUtility(IUserManagement)
-        um.updateUser(**kw)
+        um.updUser(**kw)
         self.redirect(self.url(self.context))
 
     @grok.action(_(u"Entfernen"))
