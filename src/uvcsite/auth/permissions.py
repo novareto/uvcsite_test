@@ -11,9 +11,9 @@ class ManageHomeFolder(grok.Role):
     grok.name('uvc.ManageHomeFolder')
     grok.permissions('uvc.AccessHomeFolder')
 
-class ManageKontakt(grok.Role):
-    grok.name('uvc.ManageKontakt')
-    grok.permissions('uvc.AccesHomeFolder', 'uvc.kontakt')
+#class ManageKontakt(grok.Role):
+#    grok.name('uvc.ManageKontakt')
+#    grok.permissions('uvc.AccesHomeFolder', 'uvc.kontakt')
 
 ## Permissions
 

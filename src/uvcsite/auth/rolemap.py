@@ -44,16 +44,17 @@ class CustomPrincipalRoleMap(object):
         this principal, then the empty list is returned."""
 	if principal_id.startswith('zope'):
 	    return []
-	#print "getRolesForPrincipal", principal_id
-	#print "---> " , self.userfolder.getRolesForPrincipal(principal_id)
+	print "getRolesForPrincipal", principal_id
+	print "---> " , self.userfolder.getRolesForPrincipal(principal_id)
 	roleslist = []
 	if len(principal_id) == 10:
-	    roleslist.append(('uvc.RolleMember', Allow))
 	    roleslist.append(('uvc.ManageHomeFolder', Allow))
 	for roles in self.userfolder.getRolesForPrincipal(principal_id):
 	    if roles.startswith('uvc.'):
                 roleslist.append((roles, Allow))
-	#print roleslist    
+	## Default Rolle 	
+	roleslist.append(('uvc.RolleMember', Allow))
+	print roleslist    
 	return roleslist 
 
 

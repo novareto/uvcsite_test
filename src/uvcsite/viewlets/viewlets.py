@@ -3,8 +3,10 @@
 import grok
 
 from zope.interface import Interface
-from uvcsite.interfaces import ILogo, IStatusMessage
+from zope.component import getUtility
 from zope.traversing.browser import absoluteURL
+from uvcsite.interfaces import ILogo, IStatusMessage
+from z3c.flashmessage.interfaces import IMessageReceiver
 
 class Image(grok.Viewlet):
     """ Image Things"""
