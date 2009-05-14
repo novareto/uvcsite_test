@@ -6,11 +6,11 @@
              for="uvcsite.interfaces.IUVCSite"
              trusted="true"
              /> 
-
+<!--
     <adapter factory=".rolemap.ContentPrincipalRoleMap"
              provides="zope.securitypolicy.interfaces.IPrincipalRoleMap"
     	     for="uvcsite.interfaces.IContentType"
 	     trusted="true"
 	     />
-
+-->
 </configure>
