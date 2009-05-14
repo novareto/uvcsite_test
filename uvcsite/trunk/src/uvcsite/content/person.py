@@ -13,6 +13,7 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.schema.fieldproperty import FieldProperty
 
 
+from zope.securitypolicy.interfaces import IPrincipalPermissionManager
 
 ### Factory
 
@@ -66,7 +67,11 @@ class PersonAdd(FormPageletMixin, grok.AddForm):
 	utility = getUtility(IHomeFolderManager)
 	homeFolder = utility.getHomeFolder(str(principal.id))
 	id = "%s-%s" %(kw.get('name'), len(homeFolder))
-	homeFolder[id] = person 
+	homeFolder[id] = person
+	print "Setting Edit Permission for the User", self.request.principal.id
+	permission_man = IPrincipalPermissionManager(person)
+	permission_man.grantPermissionToPrincipal( 'uvc.CanEditKontakt', self.request.principal.id)
+	permission_man.grantPermissionToPrincipal( 'uvc.CanViewKontakt', self.request.principal.id)
 	self.redirect(self.url(person))
 
 
@@ -78,7 +83,13 @@ class PersonEdit(FormPageletMixin, grok.EditForm):
     template = grok.PageTemplateFile('form.pt')
     form_fields = grok.Fields(IPerson)
 
-
+    @grok.action(u'ROLLENCHEKC')
+    def do_the_role_dance(self, **data):
+	person = self.context
+	permission_man = IPrincipalPermissionManager(person)
+	permission_man.denyPermissionToPrincipal( 'uvc.CanEditKontakt', self.request.principal.id)
+	self.redirect(self.url(person))
+	
 
 ### Menus
 from uvcsite.viewlets.managers import Sidebar

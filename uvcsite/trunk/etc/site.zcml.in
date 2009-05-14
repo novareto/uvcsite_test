@@ -2,7 +2,8 @@
            i18n_domain="uvcsite">
 
   <include package="uvcsite" />
-
+  <includeOverrides package="uvcsite" file="overrides.zcml"/>
+  <includeOverrides package="nva.sliteauth" file="overrides.zcml"/>
     <configure i18n_domain="uvcsite">
     
       <unauthenticatedPrincipal id="zope.anybody"

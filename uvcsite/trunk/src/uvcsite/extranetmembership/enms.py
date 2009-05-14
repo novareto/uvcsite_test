@@ -17,6 +17,7 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
 class ENMSIndex(megrok.pagelet.Pagelet):
     grok.context(IUVCSite)
+    grok.require('uvc.CanManageMitbenutzer')
 
     def getUserGroup(self):
         principal = "0101010001" #self.request.principal.hauptuser
@@ -26,6 +27,7 @@ class ENMSIndex(megrok.pagelet.Pagelet):
 
 class ENMSCreateUser(FormPageletMixin, grok.Form):
     grok.context(IUVCSite)
+    grok.require('uvc.CanManageMitbenutzer')
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden 
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
@@ -65,6 +67,7 @@ class ENMSUpdateUser(FormPageletMixin, grok.Form):
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden 
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
+    grok.require('uvc.CanManageMitbenutzer')
 
     def setUpWidgets(self, ignore_request=False):
         #BBB Die Werte mussen hier erst noch errechnet werden.

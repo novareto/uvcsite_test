@@ -32,7 +32,7 @@ setup(name='uvcsite',
                         'lxml',
                         'megrok.pagelet',
                         'zc.resourcelibrary',
-	
+			'nva.sliteauth',	
                         # Add extra requirements here
                         ],
       entry_points = """

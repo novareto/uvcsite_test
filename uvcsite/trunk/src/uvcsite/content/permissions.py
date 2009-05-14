@@ -2,7 +2,7 @@ import grok
 
 class ManageKontakt(grok.Role):
     grok.name('uvc.ManageKontakt')
-    grok.permissions('uvc.AccesHomeFolder', 'uvc.CanViewKontakt')
+    grok.permissions('uvc.AccesHomeFolder', 'uvc.CanAddKontakt')
 
 
 # Permissions

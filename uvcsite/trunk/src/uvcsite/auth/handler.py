@@ -47,6 +47,8 @@ class UVCAuthenticator(Persistent):
 
     def principalInfo(self, id):
         """Principal Info"""
+	print "PRINCIPAL INFO"
+	print id
         if id.startswith(self.prefix):
             login = id[len(self.prefix):]
             if login == "hans":
