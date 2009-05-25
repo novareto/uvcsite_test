@@ -1,0 +1,58 @@
+Do a functional doctest test on the app.
+========================================
+
+:Test-Layer: functional
+
+Zuerst erstellen wir unsere UVCSite:
+
+   >>> from uvcsite.app import Uvcsite
+   >>> from zope.app.component.hooks import setSite
+   >>> root = getRootFolder()
+   >>> root['app'] = Uvcsite()
+   >>> setSite(root['app'])
+
+Prüfen wir ob unsere Seite auch das richtige Interface inne hat
+
+   >>> from uvcsite.interfaces import IUVCSite
+   >>> IUVCSite.providedBy(root['app'])
+   True
+ 
+Instanzieren wir unseren Contenttyp:
+
+   >>> from uvcsite.content.person import Person
+   >>> person = Person()
+   >>> from uvcsite.content.interfaces import IPerson
+   >>> IPerson.providedBy(person)
+   True
+
+   >>> root['app']['klaus'] = person
+
+
+Nachdem wir das Basissetup fertiggestellt haben können wir nun
+die Security dieses Objecttypes testen
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+   >>> url = "http://localhost/++skin++uvcsiteskin/app/"
+   >>> #browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+   >>> browser.handleErrors = False 
+
+   >>> browser.open(url+'personadd')
+   Traceback (most recent call last):
+   ...
+   Unauthorized: (<uvcsite.content.person.PersonAdd object at ...>, 'browserDefault', 'uvc.CanAddKontakt') 
+
+Wenn wir uns nun mit einem User anmelden der die Richtigen Rechte hat...
+
+   >>> browser = Browser()
+   >>> browser.handleErrors = False 
+   >>> browser.addHeader('Authorization', 'Basic personadd:personadd')
+   >>> browser.open(url+'personadd')
+   >>> browser.headers.get('Status').upper()
+   '200 OK'
+
+   >>> browser.getControl(name='form.vorname').value = "Christian"
+   >>> browser.getControl(name='form.name').value = "klinger"
+   >>> browser.getControl(name='form.actions.anlegen').click()
+
+   >>> #import interlude; interlude.interact(locals())

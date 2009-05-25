@@ -68,11 +68,11 @@ class PersonAdd(FormPageletMixin, grok.AddForm):
 	homeFolder = utility.getHomeFolder(str(principal.id))
 	id = "%s-%s" %(kw.get('name'), len(homeFolder))
 	homeFolder[id] = person
-	print "Setting Edit Permission for the User", self.request.principal.id
+	#print "Setting Edit Permission for the User", self.request.principal.id
 	permission_man = IPrincipalPermissionManager(person)
 	permission_man.grantPermissionToPrincipal( 'uvc.CanEditKontakt', self.request.principal.id)
 	permission_man.grantPermissionToPrincipal( 'uvc.CanViewKontakt', self.request.principal.id)
-	self.redirect(self.url(person))
+	#self.redirect(self.url(person))
 
 
 ### Die Person Edit Form
