@@ -8,8 +8,9 @@ Zuerst erstellen wir unsere UVCSite:
    >>> from uvcsite.app import Uvcsite
    >>> from zope.app.component.hooks import setSite
    >>> root = getRootFolder()
-   >>> root['app'] = Uvcsite()
-   >>> setSite(root['app'])
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+   >>> setSite(uvcsite)
 
 Prüfen wir ob unsere Seite auch das richtige Interface inne hat
 
@@ -55,4 +56,32 @@ Wenn wir uns nun mit einem User anmelden der die Richtigen Rechte hat...
    >>> browser.getControl(name='form.name').value = "klinger"
    >>> browser.getControl(name='form.actions.anlegen').click()
 
-   >>> #import interlude; interlude.interact(locals())
+Nachdem wir die Form ausgefüllt und abgeschickt haben sollten wir die Person-Instanz
+in unserem HomeFolder finden.
+
+   >>> setSite(uvcsite)
+   >>> from zope.component import getUtility
+   >>> from zope.app.homefolder.interfaces import IHomeFolderManager
+   >>> utility = getUtility(IHomeFolderManager)
+   >>> utility
+   <uvcsite.homefolder.homefolder.PortalMembership object at ...>
+
+   >>> utility.getHomeFolder('uvc.personadd')
+   <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+   >>> hf = utility.getHomeFolder('uvc.personadd')
+   >>> len(hf)
+   1
+   >>> [x for x in hf]
+   [u'klinger-0']
+
+   >>> person = hf[u'klinger-0']
+   >>> person
+   <uvcsite.content.person.Person object at ...>
+
+Nun könnnen wir prüfen welche Principlas auf das Object zugreifen dürfen...
+
+   >>> from zope.securitypolicy.interfaces import IPrincipalPermissionManager
+   >>> permission_man = IPrincipalPermissionManager(person)
+   >>> permission_man.getPermissionsForPrincipal('uvc.personadd')
+   [('uvc.CanEditKontakt', PermissionSetting: Allow), ('uvc.CanViewKontakt', PermissionSetting: Allow)]
+

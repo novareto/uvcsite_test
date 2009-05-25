@@ -67,6 +67,7 @@ class PersonAdd(FormPageletMixin, grok.AddForm):
 	utility = getUtility(IHomeFolderManager)
 	homeFolder = utility.getHomeFolder(str(principal.id))
 	id = "%s-%s" %(kw.get('name'), len(homeFolder))
+
 	homeFolder[id] = person
 	#print "Setting Edit Permission for the User", self.request.principal.id
 	permission_man = IPrincipalPermissionManager(person)
