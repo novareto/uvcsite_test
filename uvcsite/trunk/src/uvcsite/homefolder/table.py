@@ -7,8 +7,10 @@ from uvcsite import uvcsiteMF as _
 from zope.interface import Interface
 from z3c.table.interfaces import IValues, IColumn, ITable, IColumnHeader
 from hurry.workflow.interfaces import IWorkflowState
-from uvcsite.workflow.transitions import reverseStates
+from uvcsite.workflow.basic_workflow import titleForState
 from uvcsite.interfaces import IHomeFolder
+
+from zope.dublincore.interfaces import IZopeDublinCore
 
 class IHFTable(Interface):
     """ Markter Interface for IHFTable"""
@@ -97,15 +99,19 @@ class StateColumn(grok.MultiAdapter, column.GetAttrColumn):
     def getValue(self, obj):
 	state = IWorkflowState(obj).getState()
 	if state != None:
-	    return reverseStates(state)
+	    return titleForState(state)
         return self.defaultValue
 
-class CreatorColumn(grok.MultiAdapter, column.CreatedColumn):    
+class CreatorColumn(grok.MultiAdapter, column.Column):    
     grok.name('creator')
+    header = u"Autor"
+    weight = 4 
     grok.implements(IColumn)
     grok.provides(IColumn)
     grok.adapts(IHomeFolder, Interface, HFTable)
 
+    def renderCell(self, item):
+	return ', '.join(IZopeDublinCore(item).creators)
 
 class ModifiedColumn(grok.MultiAdapter, column.ModifiedColumn):    
     grok.name('modified')

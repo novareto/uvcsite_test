@@ -12,7 +12,7 @@ from zope.app.homefolder.interfaces import IHomeFolder
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
 from zope.app import zapi
-from uvcsite.interfaces import ICompanyInfo
+from uvcsite.api.interfaces import ICompanyInfo
 
 class MyName(grok.Viewlet):
     grok.name('myname')

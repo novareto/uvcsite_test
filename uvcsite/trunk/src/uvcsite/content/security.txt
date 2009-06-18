@@ -35,7 +35,7 @@ die Security dieses Objecttypes testen
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
    >>> url = "http://localhost/++skin++uvcsiteskin/app/"
-   >>> #browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+   >>> #browser.addHeader('Authorization', 'Basic personadd:personadd')
    >>> browser.handleErrors = False 
 
    >>> browser.open(url+'personadd')
@@ -47,7 +47,7 @@ Wenn wir uns nun mit einem User anmelden der die Richtigen Rechte hat...
 
    >>> browser = Browser()
    >>> browser.handleErrors = False 
-   >>> browser.addHeader('Authorization', 'Basic personadd:personadd')
+   >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
    >>> browser.open(url+'personadd')
    >>> browser.headers.get('Status').upper()
    '200 OK'
