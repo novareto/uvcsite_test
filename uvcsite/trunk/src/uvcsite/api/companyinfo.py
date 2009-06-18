@@ -1,6 +1,6 @@
 import grok
 from zope.interface import Interface
-from uvcsite.interfaces import ICompanyInfo
+from uvcsite.api.interfaces import ICompanyInfo
 from zope.app.authentication.interfaces import IPrincipal
 
 class CompanyInfo(grok.Adapter):
