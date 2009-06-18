@@ -1,19 +1,19 @@
 import grok
+from megrok.pagelet.component import FormPageletMixin
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 
 
 class HelpPage(grok.Model):
     grok.implements(IHelpPage)
 
-    def __init__(self, name, title="", text=""):
+    def __init__(self, name="", title="", text=""):
 	self.name = name
 	self.title = title
 	self.text = text
 
-class HelpAdd(grok.AddForm):
+class HelpAdd(FormPageletMixin, grok.AddForm):
     grok.context(IHelpFolder)
     form_fields = grok.Fields(IHelpPage)
-    template = grok.PageTemplateFile('templates/form.pt')
 
     @grok.action(u"Anlegen")
     def handle_add(self, **data):
@@ -23,11 +23,10 @@ class HelpAdd(grok.AddForm):
 	container[data.get('title')] = helppage
 	self.redirect(self.url(helppage, 'overview'))
 
-class HelpPageIndex(grok.DisplayForm):
+class HelpPageIndex(FormPageletMixin,grok.DisplayForm):
     grok.name('overview')
     grok.context(IHelpPage)
     form_fields = grok.Fields(IHelpPage)
-    template = grok.PageTemplateFile('templates/display_form.pt')
 
 
 class TTDisplay(grok.View):

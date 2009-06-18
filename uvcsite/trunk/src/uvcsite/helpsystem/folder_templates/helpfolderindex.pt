@@ -1,10 +1,9 @@
-<html metal:use-macro="context/@@standard_macros/page">
+<html>
 <head>
-   <title metal:fill-slot="title"
-            tal:content="view/title|nothing"> title goes here </title>
+   <title tal:content="view/title|nothing"> title goes here </title>
 </head>
 <body>
- <div metal:fill-slot="body">
+ <div>
   <h1>Hilfe System</h1>
 
   <div tal:content="view/context"/>
