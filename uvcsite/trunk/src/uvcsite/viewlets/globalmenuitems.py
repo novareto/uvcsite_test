@@ -42,7 +42,6 @@ class MyFolder(MenuItem):
 	if IUnauthenticatedPrincipal.providedBy(principal):
 	    return 
 	homeFolder = IHomeFolder(principal).homeFolder
-	import pdb; pdb.set_trace() 
         return zapi.absoluteURL(homeFolder, self.request)
 
 
