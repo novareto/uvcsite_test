@@ -11,7 +11,7 @@ from uvcsite.viewlets.utils import MenuItem
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
-
+from zope.app import zapi
 from uvcsite.interfaces import ICompanyInfo
 
 class MyName(grok.Viewlet):
@@ -37,17 +37,13 @@ class MyFolder(MenuItem):
         return str(principal.id)
 
     @property
-    def viewURL(self):
+    def url(self):
 	principal = self.request.principal
 	if IUnauthenticatedPrincipal.providedBy(principal):
-	    return "members/notexist"
-	try:
-	    utility = getUtility(IHomeFolderManager)
-	    principal_id = ICompanyInfo(principal).getHauptUser()
-	    homeFolder = utility.getHomeFolder(principal_id).__name__
-	except:
-	    homeFolder = ""
-	return "members/" + homeFolder 
+	    return 
+	homeFolder = IHomeFolder(principal).homeFolder
+	import pdb; pdb.set_trace() 
+        return zapi.absoluteURL(homeFolder, self.request)
 
 
 class Logout(MenuItem):

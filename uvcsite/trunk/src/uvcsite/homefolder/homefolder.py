@@ -13,6 +13,7 @@ from zope.app.content.interfaces import IContentType
 from zope.app.homefolder.homefolder import HomeFolderManager
 from zope.app.homefolder.interfaces import IHomeFolderManager
 
+
 class HomeFolder(grok.Container):
     grok.implements(IHomeFolder)
     pass
@@ -26,11 +27,17 @@ class PortalMembership(HomeFolderManager):
 
     def __init__(self):
         super(PortalMembership, self).__init__()
-        self.homeFolderBase = Members()
 	self.autoCreateAssignment = True
 	self.homeFolderRole = u'uvc.ManageHomeFolder'
         self.containerObject = 'uvcsite.homefolder.homefolder.HomeFolder'
 
+    @property
+    def homeFolderBase(self):
+	return grok.getSite()['members'] 
+
+@grok.subscribe(IHomeFolderManager, grok.IObjectAddedEvent)
+def add_members_folder(object, event):
+    object.__parent__.__parent__['members'] = Members()
 
 class HomeFolderIndex(megrok.pagelet.Pagelet):
     grok.name('index')
