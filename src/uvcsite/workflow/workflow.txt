@@ -1,0 +1,26 @@
+Workflow
+========
+
+:Test-Layer: functional
+
+Let's first create an instance of Uvcsite at the top level:
+
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> root['app'] = Uvcsite()
+
+   >>> from uvcsite.content.person import Person
+   >>> klaus = Person()
+   >>> root['app']['klaus'] = klaus
+
+   >>> from hurry.workflow.interfaces import IWorkflowState
+   >>> wf = IWorkflowState(klaus)
+   >>> wf.getState()
+   0
+
+   >>> from hurry.workflow.interfaces import IWorkflowInfo
+   >>> IWorkflowInfo(klaus).fireTransition('publish')
+   >>> wf.getState()
+   1
+   >>> klaus.published
+   datetime.datetime(...)

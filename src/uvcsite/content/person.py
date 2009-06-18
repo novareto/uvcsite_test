@@ -1,6 +1,7 @@
 import grok
 from megrok.pagelet.component import FormPageletMixin
 
+from hurry.workflow.interfaces import IWorkflowInfo
 from uvcsite.app import Uvcsite
 from interfaces import IPerson
 from zope.interface import implementedBy
@@ -25,7 +26,9 @@ class PersonFactory(grok.GlobalUtility):
     descritpin = u"This factory instaciates new persons"
 
     def __call__(self):
-	return Person()
+	person = Person()
+	grok.notify(grok.ObjectCreatedEvent(person))
+	return person 
 
     def getInterfaces(self):
 	return implementedBy(Person)
@@ -83,6 +86,11 @@ class PersonEdit(FormPageletMixin, grok.EditForm):
     grok.require('uvc.CanEditKontakt')
     template = grok.PageTemplateFile('form.pt')
     form_fields = grok.Fields(IPerson)
+
+
+    @grok.action(u'Speichern')
+    def finishWorkflow(self, **data):
+	IWorkflowInfo(self.context).fireTransition('publish')
 
     @grok.action(u'ROLLENCHEKC')
     def do_the_role_dance(self, **data):

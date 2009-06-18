@@ -4,42 +4,83 @@ from hurry.workflow import workflow
 from hurry.workflow.interfaces import IWorkflow
 from hurry.workflow.interfaces import IWorkflowState
 from hurry.workflow.interfaces import IWorkflowInfo
+from hurry.workflow.interfaces import IWorkflowTransitionEvent
 
 from hurry.query.query import Query
 from hurry.query import Eq
 
 from uvcsite.interfaces import IContentType
-from uvcsite.workflow.transitions import create_workflow
 
-class Workflow(grok.GlobalUtility, workflow.Workflow):
-    grok.provides(IWorkflow)
+from persistent.list import PersistentList
+from datetime import datetime
 
+
+CREATED = 0
+PUBLISHED = 1
+
+def titleForState(state):
+    mapping = {0:'Entwurf', 1:'gesendet'}
+    return mapping.get(state, 'unbekannt')
+
+@grok.subscribe(IWorkflowTransitionEvent)
+def set_publish_action(event):
+    event.object.published = datetime.now()
+
+
+
+def create_workflow():
+    create_transition = workflow.Transition(
+        transition_id='create',
+        title='create',
+        source=None,
+        destination=CREATED)
+
+    publish_transition = workflow.Transition(
+        transition_id='publish',
+        title='publish',
+        source=CREATED,
+        destination=PUBLISHED)
+
+    return workflow.Workflow([create_transition, 
+                              publish_transition])
+
+grok.global_utility(create_workflow, provides=IWorkflow)
+class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
+    
     def __init__(self):
-        super(Workflow, self).__init__(create_workflow())
+        self.clear() 
 
-
-class Versions(grok.GlobalUtility, workflow.WorkflowVersions):
+    def addVersion(self, obj):
+        self.versions.append(obj)
 
     def getVersions(self, state, id):
-        q = Query()
-        return q.searchResults(
-            Eq(('entry_catalog', 'workflow_state'),
-               state) &
-            Eq(('entry_catalog', 'workflow_id'),
-               id))
+        result = []
+        for version in self.versions:
+            state_adapter = interfaces.IWorkflowState(version)
+            if state_adapter.getId() == id and state_adapter.getState() == state:
+                result.append(version)
+        return result
 
     def getVersionsWithAutomaticTransitions(self):
-        return []
+        result = []
+        for version in self.versions:
+            if interfaces.IWorkflowInfo(version).hasAutomaticTransitions():
+                result.append(version)
+        return result
 
-    def hasVersion(self, id, state):
-        return bool(len(self.getVersions(state, id)))
+    def hasVersion(self, state, id):
+        return bool(self.getVersions(state, id))
 
     def hasVersionId(self, id):
-        q = Query()
-        result = q.searchResults(
-            Eq(('entry_catalog', 'workflow_id'), id))
-        return bool(len(result))
+        result = []
+        for version in self.versions:
+            state_adapter = interfaces.IWorkflowState(version)
+            if state_adapter.getId() == id:
+                return True
+        return False
 
+    def clear(self):
+        self.versions = PersistentList() 
 
 
 class WorkflowState(grok.Adapter, workflow.WorkflowState):
@@ -51,3 +92,6 @@ class WorkflowInfo(grok.Adapter, workflow.WorkflowInfo):
     grok.context(IContentType)
     grok.provides(IWorkflowInfo)
 
+@grok.subscribe(IContentType, grok.IObjectAddedEvent)
+def initializeWorkflow(content, event):
+    IWorkflowInfo(content).fireTransition('create')

@@ -27,6 +27,13 @@
       password="mgrpw"
       />
 
+  <principal
+      id="uvc.personadd"
+      title="personadd"
+      login="personadd"
+      password="personadd"
+      />
+
   <role id="zope.Manager" title="Site Manager" />
   <grantAll role="zope.Manager" />
   <grant role="zope.Manager" principal="zope.mgr" />
