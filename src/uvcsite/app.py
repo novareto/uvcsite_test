@@ -7,7 +7,6 @@ from uvcsite import uvcsiteMF as _
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
 from uvcsite.auth.handler import setup_pau 
-from uvcsite.helpsystem.folder import HelpFolder
 from zope.app.security.interfaces import IAuthentication
 from uvcsite.homefolder.homefolder import PortalMembership
 from zope.app.authentication import PluggableAuthentication
@@ -24,11 +23,6 @@ class Uvcsite(grok.Application, grok.Container):
     grok.local_utility(PluggableAuthentication, 
                        IAuthentication,
                        setup=setup_pau)
-
-    def __init__(self):
-        super(Uvcsite, self).__init__()
-        self['hilfe'] = HelpFolder()
-
 
 class Index(megrok.pagelet.Pagelet):
     """ Index Site for UVC """
