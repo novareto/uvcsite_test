@@ -6,7 +6,7 @@ Do a functional doctest test on the app.
 Zuerst erstellen wir eine Principal Instanz
 
    >>> from zope.app.authentication.principalfolder import Principal
-   >>> from uvcsite.interfaces import ICompanyInfo
+   >>> from uvcsite.api.interfaces import ICompanyInfo
    >>> user = Principal('0101010001')
 
 Der User soll das Interface IPrinciapl beinhalten
@@ -18,7 +18,7 @@ Der User soll das Interface IPrinciapl beinhalten
 Nun sollte wir den CompanyAdapter auf den User anwenden können
 
    >>> ICompanyInfo(user)
-   <uvcsite.memberinfo.companyinfo.CompanyInfo object at ...>
+   <uvcsite.api.companyinfo.CompanyInfo object at ...>
    >>> user = ICompanyInfo(user)
 
 Laut Interface koennen wir uns die Adresse ausgeben lassen
