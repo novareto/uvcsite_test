@@ -27,6 +27,11 @@ Is the MembersContainer the one we specified?
 
    >>> utility.homeFolderBase
    <uvcsite.homefolder.homefolder.Members object at...>
+   >>> root['app']['members']
+   <uvcsite.homefolder.homefolder.Members object at...>
+
+   >>> utility.homeFolderBase is root['app']['members']
+   True
 
 Try to add the user lars. this should work because autoassigment is true
 

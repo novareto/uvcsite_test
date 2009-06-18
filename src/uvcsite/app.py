@@ -19,19 +19,11 @@ class Uvcsite(grok.Application, grok.Container):
     grok.implements(IUVCSite)
 
     grok.local_utility(PortalMembership,
-                       provides=IHomeFolderManager,
-                       public=True,
-                       name_in_container="members")
+                       provides=IHomeFolderManager)
 
     grok.local_utility(PluggableAuthentication, 
                        IAuthentication,
                        setup=setup_pau)
-
-    def traverse(self, name):
-        """ Custom Travers Method For the HomeFolders """
-        if name == "members":
-            utility = getUtility(IHomeFolderManager)
-            return utility.homeFolderBase
 
     def __init__(self):
         super(Uvcsite, self).__init__()
