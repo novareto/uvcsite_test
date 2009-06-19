@@ -14,10 +14,11 @@ from uvcsite.extranetmembership.custom_fields import *
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
+from uvcsite.interfaces import IHomeFolder
 
 class ENMSIndex(megrok.pagelet.Pagelet):
-    grok.context(IUVCSite)
-    grok.require('uvc.CanManageMitbenutzer')
+    grok.context(IHomeFolder)
+    grok.require('uvc.ManageCoUsers')
 
     def getUserGroup(self):
         principal = "0101010001" #self.request.principal.hauptuser
@@ -26,8 +27,8 @@ class ENMSIndex(megrok.pagelet.Pagelet):
 
 
 class ENMSCreateUser(FormPageletMixin, grok.Form):
-    grok.context(IUVCSite)
-    grok.require('uvc.CanManageMitbenutzer')
+    grok.context(IHomeFolder)
+    grok.require('uvc.ManageCoUsers')
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden 
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
@@ -53,21 +54,20 @@ class ENMSCreateUser(FormPageletMixin, grok.Form):
         um = getUtility(IUserManagement)
         um.addUser(**kw)
         # Setting Home Folder Rights
-        hauptuser = kw.get('mnr').split('-')[0]
-        utility = getUtility(IHomeFolderManager)
-        principal_roles = IPrincipalRoleManager(utility.homeFolderBase[hauptuser])
-        principal_roles.assignRoleToPrincipal( utility.homeFolderRole, kw.get('mnr') )
+	for role in kw.get('rollen'):
+            principal_roles = IPrincipalRoleManager(self.context[role])
+            principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
 	self.flash('Der Mitbenutzer wurde gespeichert')
         self.redirect(self.url(self.context))
 
 
 class ENMSUpdateUser(FormPageletMixin, grok.Form):
     """ A Form for updating a User in ENMS"""
-    grok.context(IUVCSite)
+    grok.context(IHomeFolder)
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden 
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
-    grok.require('uvc.CanManageMitbenutzer')
+    grok.require('uvc.ManageCoUsers')
 
     def setUpWidgets(self, ignore_request=False):
         #BBB Die Werte mussen hier erst noch errechnet werden.
@@ -93,6 +93,12 @@ class ENMSUpdateUser(FormPageletMixin, grok.Form):
     def anlegen(self, **kw):
         um = getUtility(IUserManagement)
         um.updUser(**kw)
+	for role in self.context.values():
+            principal_roles = IPrincipalRoleManager(role)
+            principal_roles.removeRoleFromPrincipal('uvc.Editor', kw.get('mnr'))
+	for role in kw.get('rollen'):
+            principal_roles = IPrincipalRoleManager(self.context[role])
+            principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
         self.redirect(self.url(self.context))
 
     @grok.action(_(u"Entfernen"))
@@ -100,5 +106,8 @@ class ENMSUpdateUser(FormPageletMixin, grok.Form):
         um = getUtility(IUserManagement)
         key = kw.get('mnr')
         um.delUser(key)
+	for role in self.context.values():
+            principal_roles = IPrincipalRoleManager(role)
+            principal_roles.removeRoleFromPrincipal('uvc.Editor', kw.get('mnr'))
         self.redirect(self.url(self.context))
 

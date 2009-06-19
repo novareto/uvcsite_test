@@ -15,7 +15,8 @@ class IExtranetMember(Interface):
     rollen = List(
              title=_(u"Berechtigung"),
              description=_(u"Berechtiung"),
-             value_type=Choice(vocabulary="VocabularyBerechtigungen")) 
+             value_type=Choice(vocabulary="VocabularyBerechtigungen"),
+	     required = False) 
 
     email = TextLine(
              title=_(u"Email"),

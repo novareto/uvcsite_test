@@ -9,6 +9,5 @@ class IUVCAuth(Interface):
                        default=u'',
                      )
 
-
-class IUserManagement(Interface):
-    """ """
+class IMasterUser(Interface):
+    """ Marker Interface for MasterUser"""

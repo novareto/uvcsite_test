@@ -26,17 +26,14 @@ class Uvcsite(grok.Application, grok.Container):
 
 class Index(megrok.pagelet.Pagelet):
     """ Index Site for UVC """
-    grok.require('uvc.View')
-
+    grok.require('zope.View')
 
 class Infos(megrok.pagelet.Pagelet):
     """ Info Page for UVC """
-    grok.require('uvc.View')
 
 
 class PersonalPanelView(megrok.pagelet.Pagelet):
     """ Page for Personal Properties """
-    grok.require('uvc.View')
     title = _(u"Persönliche Einstellungen")
     description = _(u"Hier können Sie Einstellungen zu" 
                      " Ihrem Benutzerprofil vornehmen.")
