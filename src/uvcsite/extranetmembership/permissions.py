@@ -1,10 +1,11 @@
 import grok
 
-class ManageMitbenutzer(grok.Role):
-    grok.name('uvc.ManageMitbenutzer')
-    grok.permissions('uvc.CanManageMitbenutzer')
+# Roles
+class MasterUser(grok.Role):
+    grok.name('uvc.MasterUser')
+    grok.permissions('uvc.ManageCoUsers')
 
 
 # Permissions
-class CanManageMitbenutzer(grok.Permission):
-    grok.name('uvc.CanManageMitbenutzer')  
+class ManageCoUsers(grok.Permission):
+    grok.name('uvc.ManageCoUsers')  

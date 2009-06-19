@@ -18,3 +18,9 @@ simulates a web browser similar to Mozilla Firefox or IE.  We use that
 to test how our application behaves in a browser.  For more
 information, see http://pypi.python.org/pypi/zope.testbrowser.
 
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/')
+   Traceback (most recent call last):
+   httperror_seek_wrapper: HTTP Error 401: Unauthorized
+

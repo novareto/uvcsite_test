@@ -9,10 +9,6 @@ class VocabularyBerechtigungen(grok.GlobalUtility):
     grok.name('VocabularyBerechtigungen')
 
     def __call__(self, context):
-        items=[('uvc.ManageKontakt', 'uvc.ManageKontakt'),
-               ('uvc.RolleMember', 'uvc.RolleMember'), 
-               ('Manager', 'Manager'), 
-               ('Entgeltnachweis', 'Entgeltnachweis')]
-        items.sort()
+        items = sorted((c, c) for c in context)
         return SimpleVocabulary.fromItems(items)
 

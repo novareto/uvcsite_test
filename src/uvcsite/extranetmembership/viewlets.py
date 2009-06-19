@@ -7,6 +7,7 @@ from uvcsite import uvcsiteMF as _
 
 from uvcsite.viewlets.utils import MenuItem
 from uvcsite.interfaces import IPersonalMenu
+from zope.app.homefolder.interfaces import IHomeFolder
 
 
 class ExtranetMembership(MenuItem):
@@ -16,5 +17,8 @@ class ExtranetMembership(MenuItem):
     grok.order(1)
 
     urlEndings = "enmsindex"
-    viewURL = "enmsindex"
+    @property
+    def url(self):
+        hF = IHomeFolder(self.request.principal).homeFolder
+        return self.view.url(hF, 'enmsindex')
 

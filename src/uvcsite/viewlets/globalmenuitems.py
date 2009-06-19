@@ -29,7 +29,6 @@ class MyFolder(MenuItem):
     grok.context(Interface)
     grok.viewletmanager(IGlobalMenu)
     grok.order(2)
-    grok.require('uvc.View')
 
     @property
     def urlEndings(self):

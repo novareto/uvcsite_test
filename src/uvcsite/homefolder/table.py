@@ -45,7 +45,9 @@ class CustomValues(grok.MultiAdapter, value.ValuesForContainer):
 
     @property
     def values(self):
-	results = self.context.values()
+        results = []
+	for object in self.context.values():
+	    results.extend(object.values())
 	meta_type = self.request.get('meta_type', None)
 	if meta_type:
             results = [x for x in results if x.meta_type == meta_type]
