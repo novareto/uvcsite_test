@@ -2,6 +2,10 @@
            i18n_domain="uvcsite">
 
   <include package="uvcsite" />
+  <include package="uvcsample" />
+  <include package="megrok.z3cform" />
+  <include package="megrok.z3cform" file="meta.zcml" />
+
   <includeOverrides package="uvcsite" file="overrides.zcml"/>
   <includeOverrides package="nva.sliteauth" file="overrides.zcml"/>
     <configure i18n_domain="uvcsite">

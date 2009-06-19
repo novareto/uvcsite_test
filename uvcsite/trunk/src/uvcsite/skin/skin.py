@@ -3,7 +3,9 @@ import megrok.pagelet
 import megrok.resourcelibrary
 from zope.interface import Interface
 
-class IUVCSiteLayer(grok.IBrowserRequest):
+from megrok.z3cform.skin import FormLayer
+
+class IUVCSiteLayer(FormLayer):
     pass
 
 
