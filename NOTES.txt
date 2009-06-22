@@ -1,0 +1,18 @@
+Notes zum Review
+================
+
+Der IMasterUser Adapter wurde regsitriert für zope.app.authentication.interfaces.IPrincipal
+wenn wir aber in der ftesting.zcml einen "TestUSer" anlgen so ist dieser von
+zope.security.interfaces.IGroupAwarePrincipal deshalb habe ich den Adapter wiefolgt 
+angepasst:
+
++from zope.security.interfaces import IGroupAwarePrincipal
+ 
+-
++@grok.adapter(IGroupAwarePrincipal)
+ @grok.adapter(IPrincipal)
+ @grok.implementer(IMasterUser)
+ def masteruser(self):
+
+
+
