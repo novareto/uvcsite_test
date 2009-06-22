@@ -7,8 +7,8 @@ Let's first create an instance of Uvcsite at the top level:
 
    >>> from uvcsite.app import Uvcsite
    >>> root = getRootFolder()
-   >>> root['app'] = Uvcsite()
-
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
 
 Run tests in the testbrowser
 ----------------------------
@@ -18,9 +18,26 @@ simulates a web browser similar to Mozilla Firefox or IE.  We use that
 to test how our application behaves in a browser.  For more
 information, see http://pypi.python.org/pypi/zope.testbrowser.
 
+Only Authorzied people should get access
+----------------------------------------
+
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
    >>> browser.open('http://localhost/++skin++uvcsiteskin/app/')
    Traceback (most recent call last):
    httperror_seek_wrapper: HTTP Error 401: Unauthorized
+
+Now log on as a user and look if we get the index page
+
+   >>> browser.handleErrors = False 
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/')
+   >>> "Congratulations" in browser.contents
+   True
+
+And we have a infos Page too.
+
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/infos')
+   >>> "Allgemeine Informationen" in browser.contents
+   True
 

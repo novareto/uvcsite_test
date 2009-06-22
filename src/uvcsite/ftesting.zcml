@@ -20,6 +20,13 @@
       password="personadd"
       />
 
+  <principal
+      id="uvc.user"
+      title="user"
+      login="user"
+      password="user"
+      />
+
   <grant role="zope.Manager" principal="zope.mgr" />
 
 </configure>

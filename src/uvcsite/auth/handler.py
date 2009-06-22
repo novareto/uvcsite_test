@@ -12,8 +12,9 @@ from zope.app.authentication.httpplugins import HTTPBasicAuthCredentialsPlugin
 import zope.interface
 from zope.publisher.interfaces import IRequest
 from zope.event import notify
+from zope.security.interfaces import IGroupAwarePrincipal
 
-
+@grok.adapter(IGroupAwarePrincipal)
 @grok.adapter(IPrincipal)
 @grok.implementer(IMasterUser)
 def masteruser(self):
