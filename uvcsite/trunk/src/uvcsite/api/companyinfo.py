@@ -13,24 +13,31 @@ class CompanyInfo(grok.Adapter):
     grok.context(IPrincipal)
 
     def __init__(self, principal):
-	self.principal = principal
+        self.principal = principal
 
     def getHauptUser(self):
-	return str(self.principal.id).split('-')[0]
+        """ Return the master-prefix of the principal"""
+        return str(self.principal.id).split('-')[0]
 
     def getSuffix(self):
-	zuser = str(self.principal.id).split('-')
-	if len(zuser) == 2:
-	    return zuser[1]
-	return '00'    
+        """ Return the Suffix of a user"""
+        zuser = str(self.principal.id).split('-')
+        if len(zuser) == 2:
+            return zuser[1]
+        return '00'    
 
 class CompanyAddress(grok.Adapter):
     """ Adapter for Company Adress"""
     grok.implements(ICompanyAddress)
     grok.context(IPrincipal)
 
+    def __init__(self, principal):
+        self.principal = principal
+
     def getAddress(self):
-	return { 'name1': 'Novareto GmbH',
+        """ Return the Address of the principal(master)
+	    as a dict"""
+        return { 'name1': 'Novareto GmbH',
 	         'name2': 'Geschaeftsprozesse im Netz',
 		 'name3': '',
 		 'strasse': 'Karolinenstr.',
