@@ -1,10 +1,10 @@
+""" app.py"""
 # -*- coding: utf-8 -*-
 
 import grok
 import megrok.pagelet
 
 from uvcsite import uvcsiteMF as _
-from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
 from uvcsite.auth.handler import setup_pau 
 from zope.app.security.interfaces import IAuthentication
