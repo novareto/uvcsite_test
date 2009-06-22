@@ -3,51 +3,61 @@ Do a functional doctest test on the app.
 
 :Test-Layer: functional 
 
-Zuerst erstellen wir eine Principal Instanz
+CompanyInfo
+-----------
+
+First start with a fresh instance of a principal
 
    >>> from zope.app.authentication.principalfolder import Principal
    >>> from uvcsite.api.interfaces import ICompanyInfo
    >>> user = Principal('0101010001')
 
-Der User soll das Interface IPrinciapl beinhalten
+Does this user provide the IPrincipal interface?
 
    >>> from zope.app.authentication.interfaces import IPrincipal
    >>> IPrincipal.providedBy(user)
    True
 
-Nun sollte wir den CompanyAdapter auf den User anwenden können
+Can we adapt the user to ICompanyInfo
 
    >>> ICompanyInfo(user)
    <uvcsite.api.companyinfo.CompanyInfo object at ...>
    >>> user = ICompanyInfo(user)
 
-Laut Interface koennen wir uns die Adresse ausgeben lassen
-
-   >>> user.getAdresse()
-   {'ort': 'Illesheim', 'plz': '91471', 'mnr': '0101010001', 'name2': 'Geschaeftsprozesse im Netz', 'name3': '', 'name1': 'Novareto GmbH', 'strasse': 'Karolinenstr.', 'nr': '17'}
-
-Da keine Unteruserkennung sollten wir auch den normalen Hauptuser bekommen
+Do we get the MasterUser for our User
 
     >>> user.getHauptUser()
     '0101010001'
 
-Per Konvention ist beim Hauptuser der Suffix '00'
+There is a convention that our MasterUser get the suffix '00'
 
     >>> user.getSuffix()
     '00'
 
-Was passiert wenn wir einen Unteruser haben?
+What happens if we get a CoUser?
 
     >>> uu = Principal('0101010001-01')
     >>> user = ICompanyInfo(uu)
     >>> user.getHauptUser()
     '0101010001'
 
-Suffix hier '01'=
+Suffix '01'=
 
     >>> user.getSuffix()
     '01'
 
-   >>> #import interlude
-   >>> #interlude.interact(locals()) 
 
+CompanyAddress
+--------------
+
+   >>> from uvcsite.api.interfaces import ICompanyAddress
+   >>> user = Principal('0101010001')
+   >>> address = ICompanyAddress(user)
+   >>> ICompanyAddress.providedBy(address)
+   True
+
+   >>> novareto = address.getAddress()
+   >>> 'name1' in novareto.keys()
+   True
+   >>> 'name2' in novareto.keys()
+   True
