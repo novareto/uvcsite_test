@@ -40,8 +40,7 @@ die Security dieses Objecttypes testen
 
    >>> browser.open(url+'personadd')
    Traceback (most recent call last):
-   ...
-   Unauthorized: (<uvcsite.content.person.PersonAdd object at ...>, 'browserDefault', 'uvc.CanAddKontakt') 
+   Unauthorized: (<uvcsite.content.person.PersonAdd object at ...>, 'browserDefault', 'uvc.AddContent') 
 
 Wenn wir uns nun mit einem User anmelden der die Richtigen Rechte hat...
 
@@ -66,9 +65,9 @@ in unserem HomeFolder finden.
    >>> utility
    <uvcsite.homefolder.homefolder.PortalMembership object at ...>
 
-   >>> utility.getHomeFolder('uvc.personadd')
+   >>> utility.getHomeFolder('zope.mgr')
    <uvcsite.homefolder.homefolder.HomeFolder object at ...>
-   >>> hf = utility.getHomeFolder('uvc.personadd')
+   >>> hf = utility.getHomeFolder('zope.mgr')
    >>> len(hf)
    1
    >>> [x for x in hf]
@@ -82,6 +81,6 @@ Nun könnnen wir prüfen welche Principlas auf das Object zugreifen dürfen...
 
    >>> from zope.securitypolicy.interfaces import IPrincipalPermissionManager
    >>> permission_man = IPrincipalPermissionManager(person)
-   >>> permission_man.getPermissionsForPrincipal('uvc.personadd')
+   >>> permission_man.getPermissionsForPrincipal('zope.mgr')
    [('uvc.CanEditKontakt', PermissionSetting: Allow), ('uvc.CanViewKontakt', PermissionSetting: Allow)]
 
