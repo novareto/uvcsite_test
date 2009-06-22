@@ -1,11 +1,15 @@
+# -*- coding: utf-8 -*- 
+# Copyright (c) 2007-2008 NovaReto GmbH 
+# cklinger@novareto.de 
+
 import grok
 from zope.interface import Interface
-from uvcsite.api.interfaces import ICompanyInfo
+from uvcsite.api.interfaces import ICompanyInfo, ICompanyAddress
 from zope.app.authentication.interfaces import IPrincipal
 
 class CompanyInfo(grok.Adapter):
+    """ Adapter for General Company Things"""
     grok.implements(ICompanyInfo)
-    #grok.adapts(IPrincipal)
     grok.context(IPrincipal)
 
     def __init__(self, principal):
@@ -20,8 +24,12 @@ class CompanyInfo(grok.Adapter):
 	    return zuser[1]
 	return '00'    
 
-    def getAdresse(self):
-	mnr = self.getHauptUser()
+class CompanyAddress(grok.Adapter):
+    """ Adapter for Company Adress"""
+    grok.implements(ICompanyAddress)
+    grok.context(IPrincipal)
+
+    def getAddress(self):
 	return { 'name1': 'Novareto GmbH',
 	         'name2': 'Geschaeftsprozesse im Netz',
 		 'name3': '',
@@ -29,6 +37,6 @@ class CompanyInfo(grok.Adapter):
 		 'nr': '17',
 		 'plz': '91471',
 		 'ort': 'Illesheim',
-		 'mnr': mnr,
+		 'mnr': '0101010001',
 	       }
 
