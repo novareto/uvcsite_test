@@ -1,0 +1,41 @@
+Doctest for the AuthenticationUtility
+=====================================
+
+:Test-Layer: functional
+
+IMasterUser Adapter
+-------------------
+
+Let´s create a *Master User* and see if we can adapt it to the
+IMasterUser interface.
+
+   >>> from zope.app.authentication.principalfolder import Principal
+   >>> from zope.app.authentication.interfaces import IPrincipal
+   >>> from uvcsite.auth.interfaces import IMasterUser
+   >>> principal = Principal('0101010001')
+   >>> IPrincipal.providedBy(principal)
+   True
+
+   >>> masteruser = IMasterUser(principal)
+   >>> masteruser is principal
+   True
+
+   >>> IPrincipal.providedBy(masteruser)
+   True
+
+   >>> print masteruser.id
+   0101010001
+
+Co-User
+-------
+
+   >>> principal = Principal('0101010001-01')
+   >>> IPrincipal.providedBy(principal)
+   True
+
+   >>> co_user = IMasterUser(principal)
+   >>> co_user is not principal
+   True
+
+   >>> print co_user.id
+   0101010001
