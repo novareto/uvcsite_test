@@ -1,0 +1,68 @@
+Do a functional doctest test for viewlet managers.
+==================================================
+
+:Test-Layer: functional
+
+Let's first create an instance of Uvcsite at the top level:
+
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+
+Create some context for the ViewletManager
+
+   >>> from zope.publisher.browser import TestRequest
+   >>> request = TestRequest()
+   >>> from zope import component
+   >>> view = component.getMultiAdapter((uvcsite, request), name='index')
+   >>> from zope.contentprovider.interfaces import IContentProvider
+
+Sidebar
+-------
+
+Let´s call the Viewlet uvcsite.sidebar
+
+   >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
+   ...   'uvcsite.sidebar')
+   >>> mgr
+   <uvcsite.viewlets.managers.Sidebar object at ...>
+
+Does the viewlet manager provide the right interfce ISidebar?
+
+   >>> from uvcsite.interfaces import ISidebar
+   >>> ISidebar.providedBy(mgr)
+   True
+
+Footer
+------
+
+Let´s call the Viewlet uvcsite.footer
+
+   >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
+   ...   'uvcsite.footer')
+   >>> mgr
+   <uvcsite.viewlets.managers.Footer object at ...>
+
+Does the viewlet manager provide the right interfce IFooter?
+
+   >>> from uvcsite.interfaces import IFooter
+   >>> IFooter.providedBy(mgr)
+   True
+
+GlobalMenu
+---------_
+
+Let´s call the Viewlet uvcsite.globalmenu
+
+   >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
+   ...   'uvcsite.globalmenu')
+   >>> mgr
+   <uvcsite.viewlets.managers.GlobalMenu object at ...>
+
+Does the viewlet manager provide the right interfce IGlobalMenu?
+
+   >>> from uvcsite.interfaces import IGlobalMenu
+   >>> IGlobalMenu.providedBy(mgr)
+   True
+
