@@ -51,7 +51,7 @@ Does the viewlet manager provide the right interfce IFooter?
    True
 
 GlobalMenu
----------_
+----------
 
 Let´s call the Viewlet uvcsite.globalmenu
 
