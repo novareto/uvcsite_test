@@ -20,7 +20,6 @@ from zope.security.interfaces import IPrincipal
 
 class HomeFolder(grok.Container):
     grok.implements(IHomeFolder)
-    pass
 
 class Members(grok.Container):
     pass
