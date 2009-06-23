@@ -6,9 +6,6 @@ from hurry.workflow.interfaces import IWorkflowState
 from hurry.workflow.interfaces import IWorkflowInfo
 from hurry.workflow.interfaces import IWorkflowTransitionEvent
 
-from hurry.query.query import Query
-from hurry.query import Eq
-
 from uvcsite.interfaces import IContentType
 
 from persistent.list import PersistentList
@@ -19,16 +16,13 @@ CREATED = 0
 PUBLISHED = 1
 
 def titleForState(state):
+    """ Reverse Mapping of workflow States """
     mapping = {0:'Entwurf', 1:'gesendet'}
     return mapping.get(state, 'unbekannt')
 
-@grok.subscribe(IWorkflowTransitionEvent)
-def set_publish_action(event):
-    event.object.published = datetime.now()
-
-
 
 def create_workflow():
+    """ Basic Setup For Workflow Utility"""
     create_transition = workflow.Transition(
         transition_id='create',
         title='create',
@@ -45,15 +39,24 @@ def create_workflow():
                               publish_transition])
 
 grok.global_utility(create_workflow, provides=IWorkflow)
+
+
+# Workflow Versions (Not sure if really needed!!!)
+
 class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
+    """ Worklfow Versions is needed by hurry Workflow
+        This is a really basic impplementation and 
+        should be replaced with a better one"""
     
     def __init__(self):
         self.clear() 
 
     def addVersion(self, obj):
+        """ """
         self.versions.append(obj)
 
     def getVersions(self, state, id):
+        """ """
         result = []
         for version in self.versions:
             state_adapter = interfaces.IWorkflowState(version)
@@ -62,6 +65,7 @@ class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
         return result
 
     def getVersionsWithAutomaticTransitions(self):
+        """ """
         result = []
         for version in self.versions:
             if interfaces.IWorkflowInfo(version).hasAutomaticTransitions():
@@ -69,9 +73,11 @@ class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
         return result
 
     def hasVersion(self, state, id):
+        """ """
         return bool(self.getVersions(state, id))
 
     def hasVersionId(self, id):
+        """ """
         result = []
         for version in self.versions:
             state_adapter = interfaces.IWorkflowState(version)
@@ -80,8 +86,10 @@ class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
         return False
 
     def clear(self):
+        """ """
         self.versions = PersistentList() 
 
+# Workflow States
 
 class WorkflowState(grok.Adapter, workflow.WorkflowState):
     grok.context(IContentType)
@@ -92,6 +100,12 @@ class WorkflowInfo(grok.Adapter, workflow.WorkflowInfo):
     grok.context(IContentType)
     grok.provides(IWorkflowInfo)
 
+# Events
+
 @grok.subscribe(IContentType, grok.IObjectAddedEvent)
 def initializeWorkflow(content, event):
     IWorkflowInfo(content).fireTransition('create')
+
+@grok.subscribe(IWorkflowTransitionEvent)
+def set_publish_action(event):
+    event.object.published = datetime.now()

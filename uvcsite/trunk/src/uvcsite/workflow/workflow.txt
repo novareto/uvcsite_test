@@ -3,24 +3,65 @@ Workflow
 
 :Test-Layer: functional
 
+Check the initialization of the workflow
+----------------------------------------
+
 Let's first create an instance of Uvcsite at the top level:
 
    >>> from uvcsite.app import Uvcsite
    >>> root = getRootFolder()
    >>> root['app'] = Uvcsite()
 
+
+Is the Workflow Utility registerd?
+
+   >>> from zope.component import getUtility
+   >>> from hurry.workflow.interfaces import IWorkflow
+   >>> wu = getUtility(IWorkflow)
+   >>> wu
+   <hurry.workflow.workflow.Workflow object at ...>
+
+We have registerd two transitions (publish and create) on
+workflow setup. Let´s check if we get the both... 
+
+   >>> wu.getTransitionById('publish')
+   <hurry.workflow.workflow.Transition object at ...>
+
+   >>> wu.getTransitionById('create')
+   <hurry.workflow.workflow.Transition object at ...>
+
+What happens if we ask for an non existing transition
+
+   >>> wu.getTransitionById('noexist')
+   Traceback (most recent call last):
+   KeyError: 'noexist'
+
+
+Check the basic functionality of the workflow
+---------------------------------------------
+
+Second create a person object
+
    >>> from uvcsite.content.person import Person
    >>> klaus = Person()
    >>> root['app']['klaus'] = klaus
+
+Is the initial Workflow state correct?
 
    >>> from hurry.workflow.interfaces import IWorkflowState
    >>> wf = IWorkflowState(klaus)
    >>> wf.getState()
    0
 
+Publish the workflow to determine if all is correct
+we check the a) the workflow state
+
    >>> from hurry.workflow.interfaces import IWorkflowInfo
    >>> IWorkflowInfo(klaus).fireTransition('publish')
    >>> wf.getState()
    1
+
+and b) the published property should be a datetime object
+
    >>> klaus.published
    datetime.datetime(...)
