@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import grok
-import megrok.pagelet
+import megrok.layout
 
 from uvcsite import uvcsiteMF as _
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
 from zope.formlib.form import setUpWidgets
-from megrok.pagelet.component import FormPageletMixin
+from megrok.layout.components import Form
 from uvcsite.extranetmembership.interfaces import (IUserManagement,
                  IExtranetMember)
 from uvcsite.extranetmembership.custom_fields import *
@@ -16,7 +16,7 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
 from uvcsite.interfaces import IHomeFolder
 
-class ENMSIndex(megrok.pagelet.Pagelet):
+class ENMSIndex(megrok.layout.Page):
     grok.context(IHomeFolder)
     grok.require('uvc.ManageCoUsers')
 
@@ -26,7 +26,7 @@ class ENMSIndex(megrok.pagelet.Pagelet):
         return um.getUserGroups(principal)
 
 
-class ENMSCreateUser(FormPageletMixin, grok.Form):
+class ENMSCreateUser(Form, grok.Form):
     grok.context(IHomeFolder)
     grok.require('uvc.ManageCoUsers')
     form_fields = grok.Fields(IExtranetMember)
@@ -61,7 +61,7 @@ class ENMSCreateUser(FormPageletMixin, grok.Form):
         self.redirect(self.url(self.context))
 
 
-class ENMSUpdateUser(FormPageletMixin, grok.Form):
+class ENMSUpdateUser(Form, grok.Form):
     """ A Form for updating a User in ENMS"""
     grok.context(IHomeFolder)
     form_fields = grok.Fields(IExtranetMember)

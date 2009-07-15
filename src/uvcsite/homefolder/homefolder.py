@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import grok
-import megrok.pagelet
+import megrok.layout
 
 from uvcsite import uvcsiteMF as _
 from uvcsite.interfaces import IHomeFolder
@@ -66,7 +66,7 @@ class HomeFolderForPrincipal(grok.Adapter, zope.app.homefolder.homefolder.HomeFo
 def add_members_folder(object, event):
     object.__parent__.__parent__['members'] = Members()
 
-class HomeFolderIndex(megrok.pagelet.Pagelet):
+class HomeFolderIndex(megrok.layout.Page):
     grok.name('index')
     grok.context(IHomeFolder)
     

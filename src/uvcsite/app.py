@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import grok
-import megrok.pagelet
+import megrok.layout
 
 from uvcsite import uvcsiteMF as _
 from uvcsite.interfaces import IUVCSite
@@ -24,15 +24,15 @@ class Uvcsite(grok.Application, grok.Container):
                        IAuthentication,
                        setup=setup_pau)
 
-class Index(megrok.pagelet.Pagelet):
+class Index(megrok.layout.Page):
     """ Index Site for UVC """
     grok.require('zope.View')
 
-class Infos(megrok.pagelet.Pagelet):
+class Infos(megrok.layout.Page):
     """ Info Page for UVC """
 
 
-class PersonalPanelView(megrok.pagelet.Pagelet):
+class PersonalPanelView(megrok.layout.Page):
     """ Page for Personal Properties """
     title = _(u"Persönliche Einstellungen")
     description = _(u"Hier können Sie Einstellungen zu" 
