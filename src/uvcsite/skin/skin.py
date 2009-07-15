@@ -1,5 +1,5 @@
 import grok
-import megrok.pagelet
+import megrok.layout
 import megrok.resourcelibrary
 from zope.interface import Interface
 
@@ -26,6 +26,5 @@ class Resources(megrok.resourcelibrary.ResourceLibrary):
     megrok.resourcelibrary.include('tooltip.css')
 
 
-class StandardLayout(megrok.pagelet.Layout):
+class StandardLayout(megrok.layout.Layout):
     grok.context(Interface)
-    megrok.pagelet.template('layout.pt')
