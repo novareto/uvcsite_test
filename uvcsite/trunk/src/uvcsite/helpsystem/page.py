@@ -1,5 +1,5 @@
 import grok
-from megrok.pagelet.component import FormPageletMixin
+from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 
 
@@ -11,7 +11,7 @@ class HelpPage(grok.Model):
 	self.title = title
 	self.text = text
 
-class HelpAdd(FormPageletMixin, grok.AddForm):
+class HelpAdd(Form, grok.AddForm):
     grok.context(IHelpFolder)
     form_fields = grok.Fields(IHelpPage)
 
@@ -23,7 +23,7 @@ class HelpAdd(FormPageletMixin, grok.AddForm):
 	container[data.get('title')] = helppage
 	self.redirect(self.url(helppage, 'overview'))
 
-class HelpPageIndex(FormPageletMixin,grok.DisplayForm):
+class HelpPageIndex(Form, grok.DisplayForm):
     grok.name('overview')
     grok.context(IHelpPage)
     form_fields = grok.Fields(IHelpPage)

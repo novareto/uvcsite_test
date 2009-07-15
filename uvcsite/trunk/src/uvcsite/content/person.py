@@ -1,5 +1,5 @@
 import grok
-from megrok.pagelet.component import FormPageletMixin
+from megrok.layout.components import Form
 
 from hurry.workflow.interfaces import IWorkflowInfo
 from uvcsite.app import Uvcsite
@@ -43,7 +43,7 @@ class Person(grok.Model):
 
 
 ### Die Person View Form
-class PersonIndex(FormPageletMixin, grok.DisplayForm):
+class PersonIndex(Form, grok.DisplayForm):
     grok.context(Person)
     grok.name('index')
     grok.require('uvc.ViewContent')
@@ -56,7 +56,7 @@ class PersonIndex(FormPageletMixin, grok.DisplayForm):
 
 
 ### Die Person Add Form
-class PersonAdd(FormPageletMixin, grok.AddForm):
+class PersonAdd(Form, grok.AddForm):
     grok.context(Uvcsite)
     grok.require('uvc.AddContent')
     template = grok.PageTemplateFile('form.pt')
@@ -80,7 +80,7 @@ class PersonAdd(FormPageletMixin, grok.AddForm):
 
 
 ### Die Person Edit Form
-class PersonEdit(FormPageletMixin, grok.EditForm):
+class PersonEdit(Form, grok.EditForm):
     grok.context(Person)
     grok.name('edit')
     grok.require('uvc.EditContent')

@@ -46,12 +46,12 @@ class CustomValues(grok.MultiAdapter, value.ValuesForContainer):
     @property
     def values(self):
         results = []
-	for object in self.context.values():
-	    results.extend(object.values())
-	meta_type = self.request.get('meta_type', None)
-	if meta_type:
+        for object in self.context.values():
+            results.extend(object.values())
+        meta_type = self.request.get('meta_type', None)
+        if meta_type:
             results = [x for x in results if x.meta_type == meta_type]
-	return results 
+        return results 
 
 class HakenColumn(grok.MultiAdapter, column.CheckBoxColumn):
     grok.name('checkbox')
@@ -72,11 +72,11 @@ class FirstNameColumn(grok.MultiAdapter, column.Column):
     weight = 1
 
     def renderCell(self, item):
-	url = grok.url( self.request, item, name="index") 
-	return '<a href="%s"> %s </a>' %(url, item.name)
+        url = grok.url( self.request, item, name="index") 
+        return '<a href="%s"> %s </a>' %(url, item.name)
 
     def getSortKey(self, item):
-	return item.name
+        return item.name
 
 class MetaTypeColumn(grok.MultiAdapter, column.GetAttrColumn):
     grok.name('meta_type')
@@ -99,9 +99,9 @@ class StateColumn(grok.MultiAdapter, column.GetAttrColumn):
 
 
     def getValue(self, obj):
-	state = IWorkflowState(obj).getState()
-	if state != None:
-	    return titleForState(state)
+        state = IWorkflowState(obj).getState()
+        if state != None:
+            return titleForState(state)
         return self.defaultValue
 
 class CreatorColumn(grok.MultiAdapter, column.Column):    
@@ -113,7 +113,7 @@ class CreatorColumn(grok.MultiAdapter, column.Column):
     grok.adapts(IHomeFolder, Interface, HFTable)
 
     def renderCell(self, item):
-	return ', '.join(IZopeDublinCore(item).creators)
+        return ', '.join(IZopeDublinCore(item).creators)
 
 class ModifiedColumn(grok.MultiAdapter, column.ModifiedColumn):    
     grok.name('modified')
