@@ -66,56 +66,56 @@ class HomeFolderForPrincipal(grok.Adapter, zope.app.homefolder.homefolder.HomeFo
 def add_members_folder(object, event):
     object.__parent__.__parent__['members'] = Members()
 
-class HomeFolderIndex(megrok.layout.Page):
-    grok.name('index')
-    grok.context(IHomeFolder)
+#class HomeFolderIndex(megrok.layout.Page):
+#    grok.name('index')
+#    grok.context(IHomeFolder)
     
     # This shows which metatype is called
-    meta_type = None
-    description = _(u"Hier werden Ihre Dokumente abgelegt")
+#    meta_type = None
+#    description = _(u"Hier werden Ihre Dokumente abgelegt")
 
-    @property
-    def title(self):
+#    @property
+#    def title(self):
 	#print self.request.principal
-	name = self.request.principal.title
-        return _(u"Ordner von %s" %name)
+#	name = self.request.principal.title
+#        return _(u"Ordner von %s" %name)
 
-    def getContentTypes(self):
-	""" Return the different Content Types in this Folder"""
-	rc = []
-	for object in self.context.values():
-	    meta_type = getattr(object, 'meta_type', '')
-	    if not meta_type in rc and meta_type != '':
-		rc.append(meta_type)
-	return rc    
+#    def getContentTypes(self):
+#	""" Return the different Content Types in this Folder"""
+#	rc = []
+#	for object in self.context.values():
+#	    meta_type = getattr(object, 'meta_type', '')
+#	    if not meta_type in rc and meta_type != '':
+#		rc.append(meta_type)
+#	return rc    
 
 
-    def update(self, meta_type=None):
-	self.meta_type = meta_type
+#    def update(self, meta_type=None):
+#	self.meta_type = meta_type
 
-    def renderBatch(self):
-	context = self.context
-	table = getMultiAdapter((self.context, self.request), name="table")
-	table.__name__ = context.__name__
-	table.__parent__ = context.__parent__
-	table.update()
-	table.updateBatch()
-	return table.renderBatch()
+#    def renderBatch(self):
+#	context = self.context
+#	table = getMultiAdapter((self.context, self.request), name="table")
+#	table.__name__ = context.__name__
+#	table.__parent__ = context.__parent__
+#	table.update()
+#	table.updateBatch()
+#	return table.renderBatch()
 
-    def renderTable(self):
-	table = getMultiAdapter((self.context, self.request), name="table")
-	table.update()
-	return table.renderTable()
-
-class DeleteItem(grok.View):
-    grok.context(IHomeFolder)
-    """ Delete the DATA"""
-
-    def update(self):
-	context = self.context
-	for x in self.request.get('table-checkbox-0-selectedItems',[]):
-	    del context[x]
-
-    def render(self, **kw):
-        return ''
+#    def renderTable(self):
+#	table = getMultiAdapter((self.context, self.request), name="table")
+#	table.update()
+#	return table.renderTable()
+#
+#class DeleteItem(grok.View):
+#    grok.context(IHomeFolder)
+#    """ Delete the DATA"""
+#
+#    def update(self):
+#	context = self.context
+#	for x in self.request.get('table-checkbox-0-selectedItems',[]):
+#	    del context[x]
+#
+#    def render(self, **kw):
+#        return ''
 
