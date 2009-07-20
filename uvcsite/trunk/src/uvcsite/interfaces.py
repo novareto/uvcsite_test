@@ -9,8 +9,10 @@ class IUVCSite(Interface):
 class IContentType(Interface):
     """ Marker Interface for UVC-Site Content Types """
 
+class IContainer(Interface):
+    """ Marker Interface for UVC-Container """
 
-class IHomeFolder(Interface):
+class IHomeFolder(IContainer):
     """ Markter Interface for HomeFolder """
 
 
