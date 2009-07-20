@@ -7,14 +7,6 @@
 <head>
   <title>Extranet</title>
   <tal:block replace="resource_library:uvcresources"/>
-
-  <!--
-  <link rel="stylesheet" type="text/css" href="resources/worldcookery.css"
-        tal:attributes="href context/++resource++worldcookeryskin/worldcookery.css" />
-  <link rel="icon" type="image/png" href="resources/icon.png"
-        tal:attributes="href context/++resource++worldcookeryskin/icon.png" /> 
--->
-<!--  <metal:slot define-slot="headers" /> -->
   <tal:providers replace="structure provider:uvcsite.headers" />
 </head>
 
