@@ -42,3 +42,5 @@ class IPersonalMenu(Interface):
 class IStatusMessage(Interface):                                                
     """ Marker for StatusMessage """
 
+class IHelp(Interface):
+    """ Marker for Help """

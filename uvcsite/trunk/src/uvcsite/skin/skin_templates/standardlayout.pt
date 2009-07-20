@@ -18,10 +18,17 @@
     </div>
 
     <div id="visualContentWrapper">
-      <div id="sidebar" tal:define="sidebar provider:uvcsite.sidebar"
-           tal:condition="sidebar" tal:content="structure sidebar">
-        The sidebar goes here
+
+      <div id="sidebar"> 
+        <span tal:define="sidebar provider:uvcsite.sidebar"
+              tal:condition="sidebar" 
+	      tal:content="structure sidebar"/>
+
+	<span tal:define="help provider:uvcsite.help"
+	      tal:condition="help"
+	      tal:content="structure help"/>
       </div>
+
       <div tal:content="structure provider:uvcsite.statusmessage"> </div>
       <div id="content" tal:content="structure view/render">
       </div>

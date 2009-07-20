@@ -27,6 +27,11 @@ class Sidebar(grok.ViewletManager):
     grok.context(Interface)
     grok.implements(ISidebar)
 
+class Help(grok.ViewletManager):
+    grok.name('uvcsite.help')
+    grok.context(Interface)
+    grok.implements(IHelp)
+
 class Footer(grok.ViewletManager):
     """ ViewletManager for the Footer """
     grok.name('uvcsite.footer')
