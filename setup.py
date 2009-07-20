@@ -34,6 +34,7 @@ setup(name='uvcsite',
                         'zc.resourcelibrary',
 			'nva.sliteauth',	
 			'megrok.z3cform',
+			'megrok.z3ctable',
                         # Add extra requirements here
                         ],
       entry_points = """

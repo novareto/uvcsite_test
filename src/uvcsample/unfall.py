@@ -29,12 +29,12 @@ def addContainer(object, event):
     object['unfall'] = UnfallContainer()
 
 
-class Index(megrok.z3cform.DisplayForm):
+class Index(megrok.z3cform.PageDisplayForm):
     grok.context(IUnfall)
     fields = field.Fields(IUnfall)
     grok.require('uvc.ViewContent')
 
-class Edit(megrok.z3cform.EditForm):
+class Edit(megrok.z3cform.PageEditForm):
     grok.context(IUnfall)
     form.extends(form.EditForm)
     fields = field.Fields(IUnfall)
@@ -47,7 +47,7 @@ class Edit(megrok.z3cform.EditForm):
         self.redirect(self.url(self.context))
 
 
-class Add(megrok.z3cform.AddForm):
+class Add(megrok.z3cform.PageAddForm):
     grok.context(UnfallContainer)
     fields = field.Fields(IUnfall)
     grok.require('uvc.AddContent')
