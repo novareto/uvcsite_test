@@ -1,6 +1,6 @@
-<div id="help" class="box" 
+<div id="navigationTree" class="box" 
      tal:define="items viewletmanager/viewlets" tal:condition="items">
-  <h1> Hilfe </h1>
+  <h1> Navigation </h1>
     <div class="navitem" tal:repeat="item items">
           <span tal:content="structure item/render" />
     </div>
