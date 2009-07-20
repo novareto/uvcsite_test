@@ -44,7 +44,7 @@ div.row span.error { background: red; padding: 0.2em; display: inline; }
 #toolbar { width: 100%;}
 #sidebar { width: 140px; float: left;}
 #content { font-size: 90%; min-height: 42em;
-           margin-top: 0.4em; margin-right: 0.5em; margin-left: 150px;
+           margin-top: 2.4em; margin-right: 0.5em; margin-left: 150px;
            padding-left: 1em; padding-right: 1em;}
 #footer { text-align: center; border-top: 1px dotted black; font-size: 75%;
           margin-top: 3em; padding: 1em; }
@@ -94,3 +94,59 @@ div.row span.error { background: red; padding: 0.2em; display: inline; }
 #tabs ul li a.selected { padding-top: 0.5em; background-color: white; 
                          border-top: 5px solid #fe8700;}
 #tabs ul li a:hover { background-color: white; }
+
+
+input, textarea, select{
+  border: 1px solid #eee;
+  padding: 2px;
+  margin: 1px;
+}
+input:focus, textarea:focus, select:focus{
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+}
+input[type="button"],
+input[type="submit"]{
+  border: 1px solid #ccc;
+  background: #eee;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+input[type="button"]:hover,
+input[type="submit"]:hover{
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+span.hint{
+  color: #999;
+  padding-left: 10px;
+  font-size: 90%;
+}
+
+div.viewspace h1{
+  font-weight: bold;
+  font-size: 120%;
+  margin-bottom: 1em;
+}
+
+div.required-info span.required,
+label span.required{
+  color: #f00;
+}
+div.viewspace div.row{
+  padding-top: 10px;
+}
+div.buttons{
+  margin-top: 10px;
+}
+
+
+
+
+
+

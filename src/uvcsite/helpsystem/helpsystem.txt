@@ -10,16 +10,17 @@ Let's first create an instance of Uvcsite at the top level:
    >>> uvcsite = Uvcsite()
    >>> root['app'] = uvcsite
    >>> root['app']
-   <Uvcsite >
+   <uvcsite.app.Uvcsite object at ...>
 
 We should get an hilfe container after instanciating the Uvcsite
 application
 
-   >>> hilfe = root['app'].has_key('hilfe')
+   >>> root['app'].has_key('hilfe')
    True
 
 The hilfe application should provide the right Interfaces.
 
-   >>> from uvcsite.helpssystem.interfaces import IHelpFolder
+   >>> from uvcsite.helpsystem.interfaces import IHelpFolder
+   >>> hilfe = root['app']['hilfe']
    >>> IHelpFolder.providedBy(hilfe)
    True
