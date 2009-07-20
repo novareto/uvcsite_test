@@ -1,7 +1,7 @@
 Do some unit tests for workflow.
 ================================
 
-:Test-Layer: unit 
+:Test-Layer: functional 
 
 Start with the reverse mapping of CREATING AND PUBLISHED
 -------------------------------------------------------

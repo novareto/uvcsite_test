@@ -1,0 +1,26 @@
+Do a unit doctest test on the base.py 
+=====================================
+
+:Test-Layer: functional 
+
+Let's first create an Object which inherits from Content:
+
+   >>> from uvcsite.content.base import Content
+   >>> from uvcsite.interfaces import IContentType
+   >>> class Person(Content):
+   ...    """ Base Class For Person """
+
+Does Person implement the IContentType Interface?
+
+   >>> IContentType.implementedBy(Person)
+   True
+
+Now create an instance of Person and look for the
+behaviour.
+
+   >>> klaus = Person()
+   >>> IContentType.providedBy(klaus)
+   True
+
+   >>> print klaus.meta_type
+   Person
