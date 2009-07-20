@@ -29,11 +29,6 @@ input[type=text]:hover,
 input[type=text]:active { background-color: #fdfdfd;}
 select           { background-color: #f4f4f4;}
 
-div.row { margin-top: 1em; }
-div.row div.label { background: #fe8700; padding: 0.2em; display: inline; }
-div.row div.field { display:block; padding-top: 1px; }
-div.row span.error { background: red; padding: 0.2em; display: inline; }
-
 #sortable, #sortable th, #sortable td { border: 1px solid black; }
 #sortable thead th { background-color: #ffed7b; color: black; }
 

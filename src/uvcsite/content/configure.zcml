@@ -5,11 +5,15 @@
 
   <include package="z3c.template" file="meta.zcml"/>
 
-  <z3c:template
-      template="form_templates/table-form.pt"
+   <z3c:template
+      template="form_templates/div-form.pt"
       for="z3c.form.interfaces.IInputForm"
       layer="uvcsite.skin.skin.IUVCSiteLayer"
       />
+
+  <adapter
+      factory="z3c.form.hint.FieldDescriptionAsHint"
+      name="title"/>
 
 
 </configure>

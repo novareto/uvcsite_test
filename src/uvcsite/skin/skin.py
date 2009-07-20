@@ -3,10 +3,10 @@ import megrok.layout
 import megrok.resourcelibrary
 
 from zope.interface import Interface
-from megrok.z3cform.skin import TableLayer
+from megrok.z3cform.skin import FormLayer, TableLayer
 
 
-class IUVCSiteLayer(TableLayer):
+class IUVCSiteLayer(FormLayer):
     pass
 
 
