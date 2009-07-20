@@ -3,6 +3,9 @@ Do a functional doctest test on the helpsystem.
 
 :Test-Layer: functional
 
+Folder
+------
+
 Let's first create an instance of Uvcsite at the top level:
 
    >>> from uvcsite.app import Uvcsite
@@ -23,4 +26,13 @@ The hilfe application should provide the right Interfaces.
    >>> from uvcsite.helpsystem.interfaces import IHelpFolder
    >>> hilfe = root['app']['hilfe']
    >>> IHelpFolder.providedBy(hilfe)
+   True
+
+
+Page
+----
+
+   >>> from uvcsite.helpsystem.page import HelpPage
+   >>> from uvcsite.helpsystem.interfaces import IHelpPage
+   >>> IHelpPage.implementedBy(HelpPage)
    True

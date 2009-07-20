@@ -1,15 +1,7 @@
-<html>
-<head>
-   <title tal:content="view/title|nothing"> title goes here </title>
-</head>
-<body>
- <div>
+<div>
   <h1>Hilfe System</h1>
-
-  <div tal:content="view/context"/>
-
   <a href="helpadd"> Hilfe anlegen </a>
-
- </div>
-</body>
-</html>
+  <div>
+      <span tal:replace="structure view/renderTable"/>
+  </div>
+</div>

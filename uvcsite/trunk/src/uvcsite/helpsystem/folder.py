@@ -1,5 +1,5 @@
 import grok
-import megrok.layout
+import megrok.z3ctable
 
 from uvcsite import uvcsiteMF as _
 from zope.interface import Interface
@@ -13,15 +13,15 @@ class HelpFolder(grok.Container):
     grok.implements(IHelpFolder)
 
 
-class Index(megrok.layout.Page):
-    pass
+class Index(megrok.z3ctable.TablePage):
+    grok.require('zope.ManageSite')
 
 
 class Hilfe(MenuItem):
     grok.name(_(u'Hilfe'))
     grok.context(Interface)
     grok.viewletmanager(IGlobalMenu)
-    grok.order(8)
+    grok.require('zope.ManageSite')
 
     title= _(u'Hilfe')
     urlEndings = "hilfe"
