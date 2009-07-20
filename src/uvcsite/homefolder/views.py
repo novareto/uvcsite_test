@@ -71,29 +71,6 @@ class HomeFolderValues(Values):
         return results
 
 
-class CheckBox(CheckBoxColumn):
-    grok.name('checkBox')
-    grok.adapts(None, None, Index)
-    weight = 0
-
-
-class Link(LinkColumn):
-    grok.name('link')
-    grok.adapts(None, None, Index)
-    weight = 1
-    header = u"edit"
-    linkName = u"edit"
-    linkContent = u"edit this item"
-
-
-class MetaTypeColumn(GetAttrColumn):
-    grok.name('meta_type')
-    grok.adapts(IHomeFolder, None, Index)
-    header = _(u'Object')
-    attrName = 'meta_type'
-    weight = 2
-
-    
 class StateColumn(GetAttrColumn):
     grok.name('state')
     grok.adapts(IHomeFolder, None, Index)
@@ -107,20 +84,3 @@ class StateColumn(GetAttrColumn):
             return titleForState(state)
         return self.defaultValue
    
-
-class CreatorColumn(Column):
-    grok.name('creator')
-    header = u"Autor"
-    weight = 4  
-    grok.adapts(IHomeFolder, None, Index)
-    
-    def renderCell(self, item):
-        return ', '.join(IZopeDublinCore(item).creators)
-
-
-class ModifiedColumn(ModifiedColumn):
-    grok.name('modified')
-    header = u"Datum"
-    weight = 4  
-    grok.adapts(IHomeFolder, None, Index)
-    
