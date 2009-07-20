@@ -1,0 +1,25 @@
+Do a functional doctest test on the helpsystem.
+===============================================
+
+:Test-Layer: functional
+
+Let's first create an instance of Uvcsite at the top level:
+
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+   >>> root['app']
+   <Uvcsite >
+
+We should get an hilfe container after instanciating the Uvcsite
+application
+
+   >>> hilfe = root['app'].has_key('hilfe')
+   True
+
+The hilfe application should provide the right Interfaces.
+
+   >>> from uvcsite.helpssystem.interfaces import IHelpFolder
+   >>> IHelpFolder.providedBy(hilfe)
+   True
