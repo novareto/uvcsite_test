@@ -1,9 +1,10 @@
 import grok
 import megrok.layout
 import megrok.resourcelibrary
-from zope.interface import Interface
 
+from zope.interface import Interface
 from megrok.z3cform.skin import FormLayer
+
 
 class IUVCSiteLayer(FormLayer):
     pass
