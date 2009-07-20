@@ -4,6 +4,7 @@
 
   <include package="grok" />
   <include package=".generations" />
+  <include package=".content" />
   <includeDependencies package="." />
 
   <include package="megrok.z3cform" />

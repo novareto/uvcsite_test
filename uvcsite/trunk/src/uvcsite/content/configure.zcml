@@ -1,0 +1,15 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+	   xmlns:z3c="http://namespaces.zope.org/z3c"
+           xmlns:grok="http://namespaces.zope.org/grok">
+
+  <include package="z3c.template" file="meta.zcml"/>
+
+  <z3c:template
+      template="form_templates/table-form.pt"
+      for="z3c.form.interfaces.IInputForm"
+      layer="uvcsite.skin.skin.IUVCSiteLayer"
+      />
+
+
+</configure>
