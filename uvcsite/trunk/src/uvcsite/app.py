@@ -1,4 +1,3 @@
-""" app.py"""
 # -*- coding: utf-8 -*-
 
 import grok
@@ -24,9 +23,11 @@ class Uvcsite(grok.Application, grok.Container):
                        IAuthentication,
                        setup=setup_pau)
 
+
 class Index(megrok.layout.Page):
     """ Index Site for UVC """
     grok.require('zope.View')
+
 
 class Infos(megrok.layout.Page):
     """ Info Page for UVC """

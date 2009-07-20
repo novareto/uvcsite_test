@@ -33,6 +33,7 @@ def setup_pau(pau):
     pau['basic'] = HTTPBasicAuthCredentialsPlugin()
     pau.credentialsPlugins = ('No Challenge if Authenticated', 'basic',)
 
+
 class UVCAuthenticator(Persistent):
     """ Custom Authenticator for UVC-Site"""
     implements(IUVCAuth, IAuthenticatorPlugin, ILocation)
