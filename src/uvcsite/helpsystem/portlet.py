@@ -4,10 +4,11 @@ from uvcsite.interfaces import IHelp
 
 class HelpPortlet(grok.Viewlet):
     grok.context(Interface)
-    grok.PageTemplateFile('templates/help_portlet')
     grok.viewletmanager(IHelp)
     grok.baseclass()
+    template = grok.PageTemplateFile('templates/helpportlet.pt')
 
-    urls=[
-            {'href': 'hilfe', 'name': 'zur Eingabemaske'},
-	 ]
+    urls = []
+
+    def render(self):
+	return self.template.render(self)
