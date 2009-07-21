@@ -1,20 +1,26 @@
-from uvcsite import Content
-from uvcsite.interfaces import ISidebar
-from uvcsite.viewlets.utils import MenuItem 
-import uvcsite.interfaces
-from zope.interface import Interface
-from zope.app.homefolder.interfaces import IHomeFolder
+# -*- coding: utf-8 -*- 
+# Copyright (c) 2007-2008 NovaReto GmbH 
+# cklinger@novareto.de 
+
 import grok
 import zope.schema
 import megrok.z3cform
+import uvcsite.interfaces
 
-from hurry.workflow.interfaces import IWorkflowInfo
+
+from uvcsite import Content
+from uvcsite.interfaces import ISidebar
+from uvcsite.viewlets.utils import MenuItem 
+from zope.interface import Interface
+from zope.app.homefolder.interfaces import IHomeFolder
+
 from z3c.form import field, form, button
+from hurry.workflow.interfaces import IWorkflowInfo
 from zope.app.container.interfaces import INameChooser
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
-
-class IUnfall(Interface):
-    name = zope.schema.TextLine(title=u"name")
+from uvcsample.interfaces import IUnfall
+from z3c.form.browser import radio
 
 
 class Unfall(Content):
@@ -53,7 +59,10 @@ class Edit(megrok.z3cform.PageEditForm):
 class Add(megrok.z3cform.PageAddForm):
     grok.context(UnfallContainer)
     fields = field.Fields(IUnfall)
+    fields['unfustdor'].widgetFactory = radio.RadioFieldWidget
     grok.require('uvc.AddContent')
+
+    label=u"Elektronische Unfallanzeige"
 
     def create(self, data):
 	unfall = Unfall()
