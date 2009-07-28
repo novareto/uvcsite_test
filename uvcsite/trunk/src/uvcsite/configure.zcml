@@ -6,6 +6,7 @@
   <include package=".generations" />
   <include package=".content" />
   <includeDependencies package="." />
+  <includePlugins package="." />
 
   <include package="megrok.z3cform" />
   <include package="megrok.z3cform" file="meta.zcml" />
