@@ -1,0 +1,94 @@
+Skin Doctest
+============
+
+:Test-Layer: functional
+
+Layout
+------
+
+First test if we have the right Layout for our Site:
+
+  >>> from zope.interface import Interface
+  >>> from zope.component import getMultiAdapter
+  >>> from megrok.layout import ILayout
+  >>> from zope.publisher.browser import TestRequest
+
+  >>> layout = getMultiAdapter((Interface, TestRequest()), ILayout)
+  >>> ILayout.providedBy(layout)
+  True
+
+Do we get the right Class
+
+  >>> layout
+  <uvcsite.skin.skin.StandardLayout object at ...>
+
+Resourcen & Layer
+-----------------
+
+Setup an instance of UVCSite so we can use the TestBrowser to check 
+if we get all resources and if we get the our layer which is important
+for the megrok.z3cform widget story.
+
+Let's first create an instance of Uvcsite at the top level:
+
+  >>> from uvcsite.app import Uvcsite
+  >>> root = getRootFolder()
+  >>> uvcsite = Uvcsite()
+  >>> root['app'] = uvcsite
+  >>> root['app']
+  <uvcsite.app.Uvcsite object at ...>    
+
+Ok now we have a existing site. We can now call the 
+index site of our uvcsite and check if all default
+resources are loaded:
+
+  >>> from zope.testbrowser.testing import Browser
+  >>> browser = Browser()
+  >>> browser.addHeader('Authorization', 'Basic user:user')
+  >>> browser.open('http://localhost/app')
+  >>> print browser.headers['Status'].upper()
+  200 OK
+
+We have in the overrides.zcml our layer defined as a 
+default layer. But we should get the layer directly:
+
+  >>> browser.open('http://localhost/++skin++uvcsiteskin/app')
+  >>> print browser.headers['Status'].upper()
+  200 OK
+
+So this means we can reach the basic site with the
+testbrowser with the default layer and with an explicit
+layer setting in the url.
+
+Now we can check all resources:
+
+Worldcookery.css
+
+  >>> 'worldcookery.css' in browser.contents
+  True
+
+Tableform.css
+
+  >>> 'tableform.css' in browser.contents
+  True
+
+Jquery.js
+
+  >>> 'jquery-1.3.2.js' in browser.contents
+  True
+
+JTip.js
+
+  >>> 'jtip.js' in browser.contents
+  True
+
+Myjs.js
+
+  >>> 'myjs.js' in browser.contents
+  True
+
+Tooltip.js
+
+  >>> 'tooltip.css' in browser.contents
+  True
+
