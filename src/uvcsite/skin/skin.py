@@ -26,6 +26,5 @@ class Resources(megrok.resourcelibrary.ResourceLibrary):
     megrok.resourcelibrary.include('tableform.css')
     megrok.resourcelibrary.include('worldcookery.css')
 
-
 class StandardLayout(megrok.layout.Layout):
     grok.context(Interface)
