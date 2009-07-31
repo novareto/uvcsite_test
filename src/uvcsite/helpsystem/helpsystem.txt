@@ -32,7 +32,21 @@ The hilfe application should provide the right Interfaces.
 Page
 ----
 
+Do we have the right interface for our HelpPage
+
    >>> from uvcsite.helpsystem.page import HelpPage
    >>> from uvcsite.helpsystem.interfaces import IHelpPage
    >>> IHelpPage.implementedBy(HelpPage)
    True
+
+Initalizing of the HelpPage
+
+   >>> hp = HelpPage(name='unfallanzeige', title='Titel', text='Hilfe UAZ')
+   >>> print hp.name 
+   unfallanzeige
+
+   >>> print hp.title
+   Titel
+
+   >>> print hp.text
+   Hilfe UAZ
