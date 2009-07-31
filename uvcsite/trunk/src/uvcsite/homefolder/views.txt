@@ -169,5 +169,19 @@ Now call the view with some contents...
     </body>
     </html>
 
+Delete Item Form
+----------------
+
+   >>> request = TestRequest(form={'table-checkBox-0-selectedItems': u'hans'})
+   >>> personcontainer = homefolder['personcontainer']
+   >>> 'hans' in personcontainer
+   True
+
+   >>> delview = getMultiAdapter((personcontainer, request), name='deleteitem')
+   >>> delview.update()
+   >>> 'hans' in personcontainer
+   False
+
+
   >>> zope.security.management.endInteraction()
 

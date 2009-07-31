@@ -24,11 +24,27 @@ Check the principalInfo
 Check the authenticateCredentials
 ---------------------------------
 
+Without any credentials
+
    >>> authenticator.authenticateCredentials({})
 
+Only login
 
    >>> authenticator.authenticateCredentials({'login':'0101010001'})
 
+Only password
 
-   >>> authenticator.authenticateCredentials({'login':'0101010001', 'passwort':'klaus'})
+   >>> authenticator.authenticateCredentials({'password':'secret'})
 
+Both but wrong password 
+
+   >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'klaus'})
+
+This user is not in the Database!
+
+   >>> authenticator.authenticateCredentials({'login':'0101010009', 'password':'klaus'})
+
+Right combination of credentials
+
+   >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'passwort'})
+   PrincipalInfo('0101010001')
