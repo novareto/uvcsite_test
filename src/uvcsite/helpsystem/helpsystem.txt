@@ -50,3 +50,70 @@ Initalizing of the HelpPage
 
    >>> print hp.text
    Hilfe UAZ
+
+
+Browser Tests
+=============
+
+Add
+---
+
+Let´s use the TestBrowser to look on the forms itself.
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+   >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/helpadd')
+   >>> print browser.headers['Status'].upper()
+   200 OK
+
+Get the form and look for the right action
+
+   >>> form = browser.getForm()
+   >>> print form.action
+   http://localhost/++skin++uvcsiteskin/app/hilfe/helpadd
+
+Fill out the form with the testbrowser
+
+   >>> form.getControl(name='form.title').value = "myhelp"
+   >>> form.getControl(name='form.description').value = "beschreibung"
+   >>> form.getControl(name='form.text').value = "HilfeText"
+
+Submit the Form
+
+   >>> form.submit('Anlegen')
+
+
+Display from JTip
+-----------------
+
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp')
+   >>> print browser.contents
+   <html>
+   <body>
+   <!--<h1 tal:content="context/name"/>-->
+   <!--<h2 tal:content="context/title"/>-->
+   <h3>HilfeText</h3>
+   </body>
+   </html>
+
+Index
+-----
+
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp/overview')
+   >>> print browser.headers['Status'].upper()
+   200 OK
+
+Edit
+----
+
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp/edit')
+   
+   >>> form = browser.getForm()
+   >>> print form.action
+   http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp/edit
+
+Do we get the default values from the add operation?
+
+   >>> print form.getControl(name='form.title').value
+   myhelp 
