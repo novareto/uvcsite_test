@@ -2,8 +2,8 @@ import grok
 from uvcsite.extranetmembership.interfaces import IUserManagement
 
 users = [
-          {'mnr':'010101001', 'passwort':'passwort', 'email':'test@test.de'},
-          {'mnr':'010101002', 'passwort':'passwort', 'email':'test@test.de'},
+          {'mnr':'0101010001', 'passwort':'passwort', 'email':'test@test.de'},
+          {'mnr':'0101010002', 'passwort':'passwort', 'email':'test@test.de'},
         ]
 
 class UserManagement(grok.GlobalUtility):
@@ -23,7 +23,7 @@ class UserManagement(grok.GlobalUtility):
 	"""Return a User"""
 	for user in users:
 	    if user.get('mnr') == mnr:
-		return mnr
+		return user 
 	return None
 
     def getUserGroup(self, mnr):

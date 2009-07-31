@@ -35,9 +35,10 @@ class Index(TablePage):
     def getContentTypes(self):
 	return self.context.keys()
 
+from zope.component import Interface
 class DeleteItem(grok.View):
-    grok.context(IHomeFolder)
     """ Delete the DATA"""
+    grok.context(Interface)
 
     def update(self):
         liste=[]	
