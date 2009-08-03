@@ -1,4 +1,10 @@
+# -*- coding: utf-8 -*- 
+# Copyright (c) 2007-2008 NovaReto GmbH 
+# cklinger@novareto.de 
+
 import grok
+
+from megrok.z3cform import PageAddForm, field, PageEditForm, PageDisplayForm
 
 from uvcsite.content.base import Content
 from megrok.layout.components import Form
@@ -14,31 +20,36 @@ class HelpPage(Content):
 	self.text = text
 
 
-class HelpAdd(Form, grok.AddForm):
+class HelpAdd(PageAddForm):
     grok.context(IHelpFolder)
-    form_fields = grok.Fields(IHelpPage)
+    fields = field.Fields(IHelpPage)
     grok.require('zope.ManageSite')
 
-    @grok.action(u"Anlegen")
-    def handle_add(self, **data):
+    label = u"Hilfe Seiten anlegen"
+
+    def create(self, data):
+	return HelpPage(**data)
+
+    def add(self, object):
 	container = self.context
-	helppage = HelpPage()
-	self.applyData(helppage, **data)
-	container[data.get('title')] = helppage
+	container[object.name] = object
+	return object
+
+    def nextURL(self):
 	self.flash(u'Die Hilfeseite wurde erfolgreich angelegt')
-	self.redirect(self.url(helppage, 'overview'))
+	return self.url(self.context)
+ 
 
-
-class Edit(Form, grok.EditForm):
+class Edit(PageEditForm):
     grok.context(IHelpPage)
-    form_fields = grok.Fields(IHelpPage)
+    fields = field.Fields(IHelpPage).omit('name')
     grok.require('zope.ManageSite')
 
 
-class HelpPageIndex(Form, grok.DisplayForm):
+class HelpPageIndex(PageDisplayForm):
     grok.name('overview')
     grok.context(IHelpPage)
-    form_fields = grok.Fields(IHelpPage)
+    fields = field.Fields(IHelpPage)
 
 
 class TTDisplay(grok.View):

@@ -12,7 +12,7 @@ class IHelpFolder(IContainer):
     pass
 
 class IHelpPage(IContentType):
+    name = TextLine(title=u"Name")
     title = TextLine(title=u"title")
-    description = TextLine(title=u"description")
     text = Text(title=u"text")
 
