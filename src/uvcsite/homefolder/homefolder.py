@@ -18,6 +18,8 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.dottedname.resolve import resolve
 from zope.security.interfaces import IPrincipal
 
+
+
 class HomeFolder(grok.Container):
     grok.implements(IHomeFolder)
 
@@ -55,8 +57,11 @@ class PortalMembership(HomeFolderManager):
     def homeFolderBase(self):
 	return grok.getSite()['members'] 
 
+
+
 class HomeFolderForPrincipal(grok.Adapter, zope.app.homefolder.homefolder.HomeFolder):
     grok.context(IPrincipal)
+
     def __init__(self, principal):
         self.principal = IMasterUser(principal) 
 
