@@ -2,11 +2,21 @@
 
 import grok
 
+from uvcsite.interfaces import IUVCSite
 from zope.interface import Interface
 from zope.component import getUtility
 from zope.traversing.browser import absoluteURL
-from uvcsite.interfaces import ILogo, IStatusMessage
+from uvcsite.interfaces import ILogo, IStatusMessage, IHeaders
 from z3c.flashmessage.interfaces import IMessageReceiver
+
+class Favicon(grok.Viewlet):
+    """ The Favicon.ico Image"""
+    grok.name('favicon')
+    grok.context(IUVCSite)
+    grok.viewletmanager(IHeaders)
+
+    def update(self):
+	import pdb; pdb.set_trace() 
 
 class Image(grok.Viewlet):
     """ Image Things"""
