@@ -104,6 +104,7 @@ Adapter
    >>> user
    Principal('klaus')
 
-   >>> from uvcsite.interfaces import IHomeFolder
+   >>> from zope.app.homefolder.interfaces import IHomeFolder
    >>> hf = IHomeFolder(user)
    >>> hf
+   <uvcsite.homefolder.homefolder.HomeFolderForPrincipal object at ...>
