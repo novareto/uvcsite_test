@@ -1,5 +1,5 @@
 <tal:messages condition="python: viewlet.messages">                             
-  <dl class="info-message flash" tal:repeat="message python: viewlet.messages">
+  <dl class="status" tal:repeat="message python: viewlet.messages">
     <dt tal:content="message/type" />
     <dd tal:content="message/message" />
   </dl>

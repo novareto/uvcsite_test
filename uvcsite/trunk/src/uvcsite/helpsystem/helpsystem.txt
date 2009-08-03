@@ -75,13 +75,14 @@ Get the form and look for the right action
 
 Fill out the form with the testbrowser
 
-   >>> form.getControl(name='form.title').value = "myhelp"
-   >>> form.getControl(name='form.description').value = "beschreibung"
-   >>> form.getControl(name='form.text').value = "HilfeText"
+
+   >>> form.getControl(name='form.widgets.name').value = "myhelp"
+   >>> form.getControl(name='form.widgets.title').value = "beschreibung"
+   >>> form.getControl(name='form.widgets.text').value = "HilfeText"
 
 Submit the Form
 
-   >>> form.submit('Anlegen')
+   >>> browser.getControl(name='form.buttons.add').click()
 
 
 Display from JTip
@@ -115,5 +116,5 @@ Edit
 
 Do we get the default values from the add operation?
 
-   >>> print form.getControl(name='form.title').value
-   myhelp 
+   >>> print form.getControl(name='form.widgets.title').value
+   beschreibung 
