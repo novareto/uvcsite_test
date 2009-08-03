@@ -94,3 +94,16 @@ PrincipalRoleMap with settings for lars
    >>> rolemap = IPrincipalRoleMap(homefolder) 
    >>> rolemap.getPrincipalsAndRoles()
    [(u'uvc.MasterUser', 'lars', PermissionSetting: Allow), (u'uvc.Editor', 'lars', PermissionSetting: Allow), (u'uvc.User', 'lars', PermissionSetting: Allow)] 
+   
+
+Adapter
+-------
+
+   >>> from zope.app.authentication.principalfolder import PrincipalInfo, Principal
+   >>> user = Principal('klaus', 'klaus', 'klaus')
+   >>> user
+   Principal('klaus')
+
+   >>> from uvcsite.interfaces import IHomeFolder
+   >>> hf = IHomeFolder(user)
+   >>> hf
