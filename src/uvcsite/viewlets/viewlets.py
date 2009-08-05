@@ -12,7 +12,7 @@ from z3c.flashmessage.interfaces import IMessageReceiver
 class Favicon(grok.Viewlet):
     """ The Favicon.ico Image"""
     grok.name('favicon')
-    grok.context(IUVCSite)
+    grok.context(Interface)
     grok.viewletmanager(IHeaders)
 
 

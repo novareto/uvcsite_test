@@ -8,6 +8,24 @@ h2 { font-size: 133% }
 h3 { font-size: 115% }
 table  { border-collapse: collapse; font-size: 90%;
          margin-bottom: 1em;}
+
+table.border {
+ margin: 3px 0 5px 0;
+ border: 1px solid #ccc;
+ border-collapse: collapse;
+}
+
+table.border th {
+ font-weight: bold;
+ text-align: center;
+ border: 1px solid #ccc;
+}
+	
+table.border td {
+ padding: 2px 3px;
+ border: 1px solid #ccc;
+}
+
 iframe { width: 45em; }
 p { text-align: justify }
 blockquote > p { font-style: italic; text-align: right; }
