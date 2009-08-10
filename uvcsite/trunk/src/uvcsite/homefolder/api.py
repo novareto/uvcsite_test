@@ -2,7 +2,7 @@ import grok
 from lxml import etree
 from StringIO import StringIO
 from uvcsite.app import RestLayer
-from uvcsite.interfaces import IHomeFolder
+from uvcsite.interfaces import IMyHomeFolder
 from zope.component import createObject, getUtility
 from zope.component.interfaces import IFactory
 from zope.interface import Invalid
@@ -12,7 +12,7 @@ from zope.schema import getFields, ValidationError
 
 class ARest(grok.REST):
     grok.layer(RestLayer)
-    grok.context(IHomeFolder)
+    grok.context(IMyHomeFolder)
 
     def GET(self):
         eoot = etree.Element('container')

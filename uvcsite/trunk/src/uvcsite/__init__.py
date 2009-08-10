@@ -1,3 +1,6 @@
 from zope.i18nmessageid import MessageFactory
-uvcsiteMF = MessageFactory('uvcsite')
 from uvcsite.content.base import Content
+uvcsiteMF = MessageFactory('uvcsite')
+
+
+from uvc.content import ProductFolder, IProductFolder, contenttype

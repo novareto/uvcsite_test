@@ -83,7 +83,7 @@ content to the container to see a table.
 Setting up a Container for Person Objects
 
   >>> import grok
-  >>> from uvcsite.interfaces import IContainer
+  >>> from grok.interfaces import IContainer
   >>> class PersonContainer(grok.Container):
   ...     grok.implements(IContainer)   
 

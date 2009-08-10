@@ -14,10 +14,10 @@ from uvcsite.extranetmembership.custom_fields import *
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
-from uvcsite.interfaces import IHomeFolder
+from uvcsite.interfaces import IMyHomeFolder
 
 class ENMSIndex(megrok.layout.Page):
-    grok.context(IHomeFolder)
+    grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
 
     def getUserGroup(self):
@@ -27,7 +27,7 @@ class ENMSIndex(megrok.layout.Page):
 
 
 class ENMSCreateUser(Form, grok.Form):
-    grok.context(IHomeFolder)
+    grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden 
@@ -63,7 +63,7 @@ class ENMSCreateUser(Form, grok.Form):
 
 class ENMSUpdateUser(Form, grok.Form):
     """ A Form for updating a User in ENMS"""
-    grok.context(IHomeFolder)
+    grok.context(IMyHomeFolder)
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden 
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget

@@ -4,8 +4,9 @@
 
 import grok
 
+from zope.component import Interface
 from uvcsite import uvcsiteMF as _
-from uvcsite.interfaces import IHomeFolder
+from uvcsite.interfaces import IMyHomeFolder
 from megrok.z3ctable import (TablePage, Column, GetAttrColumn,
 	    CheckBoxColumn, LinkColumn, ModifiedColumn, Values)
 
@@ -15,7 +16,7 @@ from uvcsite.workflow.basic_workflow import titleForState
 
 
 class Index(TablePage):
-    grok.context(IHomeFolder)
+    grok.context(IMyHomeFolder)
 
     cssClasses = {'table': 'listing'}
     cssClassEven = u'even'
@@ -35,7 +36,6 @@ class Index(TablePage):
     def getContentTypes(self):
 	return self.context.keys()
 
-from zope.component import Interface
 class DeleteItem(grok.View):
     """ Delete the DATA"""
     grok.context(Interface)
@@ -62,7 +62,7 @@ class HomeFolderValues(Values):
     """This Adapter returns IContent Objects
        form child folders
     """   
-    grok.adapts(IHomeFolder, None, Index)
+    grok.adapts(IMyHomeFolder, None, Index)
 
     @property
     def values(self):
@@ -74,7 +74,7 @@ class HomeFolderValues(Values):
 
 class StateColumn(GetAttrColumn):
     grok.name('state')
-    grok.adapts(IHomeFolder, None, Index)
+    grok.adapts(IMyHomeFolder, None, Index)
     header = _(u'Status')
     attrName = 'status'
     weight = 3 

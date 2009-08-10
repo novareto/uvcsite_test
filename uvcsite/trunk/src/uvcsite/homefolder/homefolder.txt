@@ -78,13 +78,13 @@ Do we get the HomeFolder thourgh the api
 
 Is this the right HomeFolder?
 
-   >>> from uvcsite.interfaces import IHomeFolder
+   >>> from uvcsite.interfaces import IMyHomeFolder
    >>> from uvcsite.homefolder.homefolder import HomeFolder
    >>> hf = HomeFolder()
-   >>> IHomeFolder.providedBy(hf)
+   >>> IMyHomeFolder.providedBy(hf)
    True
 
-   >>> IHomeFolder.providedBy(homefolder)
+   >>> IMyHomeFolder.providedBy(homefolder)
    True
 
 OK now we have our homefolder. this homefolder should now have it´s own
