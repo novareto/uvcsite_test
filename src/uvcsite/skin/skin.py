@@ -22,6 +22,8 @@ class Resources(megrok.resourcelibrary.ResourceLibrary):
     megrok.resourcelibrary.include('jquery-1.3.2.js')
     megrok.resourcelibrary.include('jtip.js')
     megrok.resourcelibrary.include('myjs.js')
+    megrok.resourcelibrary.include('jquery.tablesorter.js')
+    megrok.resourcelibrary.include('mytable.js')
     megrok.resourcelibrary.include('tooltip.css')
     megrok.resourcelibrary.include('tableform.css')
     megrok.resourcelibrary.include('worldcookery.css')
