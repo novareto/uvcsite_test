@@ -18,7 +18,7 @@ from uvcsite.workflow.basic_workflow import titleForState
 class Index(TablePage):
     grok.context(IMyHomeFolder)
 
-    cssClasses = {'table': 'listing'}
+    cssClasses = {'table': 'tablesorter myTable'}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
 
