@@ -92,6 +92,16 @@ Tooltip.js
   >>> 'tooltip.css' in browser.contents
   True
 
+Tablesorter.js
+
+  >>> 'jquery.tablesorter.js' in browser.contents
+  True
+
+mytable.js
+
+  >>> 'mytable.js' in browser.contents
+  True
+
 favicon.ico
    
    >>> print browser.contents
