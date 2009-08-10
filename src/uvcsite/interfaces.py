@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from zope.interface import Interface
+from grok.interfaces import IContainer
 
 
 class IUVCSite(Interface):
@@ -9,10 +10,7 @@ class IUVCSite(Interface):
 class IContentType(Interface):
     """ Marker Interface for UVC-Site Content Types """
 
-class IContainer(Interface):
-    """ Marker Interface for UVC-Container """
-
-class IHomeFolder(IContainer):
+class IMyHomeFolder(IContainer):
     """ Markter Interface for HomeFolder """
 
 

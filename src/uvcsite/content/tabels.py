@@ -1,7 +1,7 @@
 import grok
 
 from uvcsite import uvcsiteMF as _
-from uvcsite.interfaces import IContainer
+from grok.interfaces import IContainer
 from megrok.z3ctable import (TablePage, Column, GetAttrColumn,
             CheckBoxColumn, LinkColumn, ModifiedColumn, Values)
 

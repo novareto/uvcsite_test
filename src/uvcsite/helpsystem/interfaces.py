@@ -4,7 +4,8 @@
 
 import grok
 
-from uvcsite.interfaces import IContainer, IContentType
+from grok.interfaces import IContainer
+from uvcsite.interfaces import IContentType
 from zope.interface import Interface
 from zope.schema import TextLine, Text
 

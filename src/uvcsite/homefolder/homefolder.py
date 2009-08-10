@@ -4,7 +4,7 @@ import grok
 import megrok.layout
 
 from uvcsite import uvcsiteMF as _
-from uvcsite.interfaces import IHomeFolder
+from uvcsite.interfaces import IMyHomeFolder
 from uvcsite.auth.interfaces import IMasterUser
 from zope.interface import Interface
 from zope.component import getMultiAdapter
@@ -21,7 +21,7 @@ from zope.security.interfaces import IPrincipal
 
 
 class HomeFolder(grok.Container):
-    grok.implements(IHomeFolder)
+    grok.implements(IMyHomeFolder)
 
 class Members(grok.Container):
     pass
