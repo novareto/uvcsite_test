@@ -56,7 +56,7 @@ Now we can render the Index Page of the Homefolder:
     </ul>
     <form action="deleteitem">
     <div></div>
-    <table class="listing">
+    <table class="tablesorter myTable">
     <thead>
       <tr>
         <th>X</th>
@@ -141,7 +141,7 @@ Now call the view with some contents...
     </ul>
     <form action="deleteitem">
     <div></div>
-    <table class="listing">
+    <table class="tablesorter myTable">
     <thead>
       <tr>
         <th>X</th>
