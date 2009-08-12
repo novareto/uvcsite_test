@@ -1,0 +1,80 @@
+Functional Doctest
+==================
+
+:Test-Layer: functional
+
+Setup:
+------
+
+Application
+
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+
+A very "Basic" Content Type
+
+   >>> import grok
+   >>> from uvcsite import ProductFolder, contenttype
+   >>> from zope.schema import TextLine
+   >>> from zope.interface import Interface
+
+   >>> class IMyContent(Interface):
+   ...    name = TextLine(title=u"Name")
+   ...    age = TextLine(title=u"Age") 
+
+   >>> class MyContent(grok.Model):
+   ...     """ Base Class MyContent """
+   ...     grok.implements(IMyContent)
+   
+A ProductFolder for MyContent
+
+   >>> class MyContentFolder(ProductFolder):
+   ...     pass
+
+A Instance of the Folder
+
+   >>> mcf = MyContentFolder()
+   >>> mcf
+   <MyContentFolder object at ...>
+
+   >>> from grok.testing import grok_component
+   >>> grok_component('mcf', mcf)
+   True
+
+   >>> from grok.interfaces import IContainer
+   >>> IContainer.providedBy(mcf)
+   True
+
+Make sure that we get the right content type
+
+   >>> mcf.getContentType()
+   <class 'MyContent'>
+
+Save the ProductFolder into the approot
+
+   >>> from uvc.content.components import FF
+   
+   >>> class MF(grok.Container):
+   ...     """ """
+
+   >>> mcf = MF()
+
+   >>> from uvc.content.components import ProductFolder 
+   >>> #mcf = ProductFolder()
+   >>> root['app']['mcf'] = mcf 
+   >>> 'mcf' in root['app']
+   True
+
+Add View
+--------
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+   >>> browser.handleErrors = True 
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/')
+   >>> "Congratulations" in browser.contents
+   True
+
