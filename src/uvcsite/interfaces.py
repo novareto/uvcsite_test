@@ -7,9 +7,6 @@ from grok.interfaces import IContainer
 class IUVCSite(Interface):
     """ Markter Interface for UVC-Site Site """
 
-class IContentType(Interface):
-    """ Marker Interface for UVC-Site Content Types """
-
 class IMyHomeFolder(IContainer):
     """ Markter Interface for HomeFolder """
 

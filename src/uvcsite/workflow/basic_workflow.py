@@ -6,7 +6,7 @@ from hurry.workflow.interfaces import IWorkflowState
 from hurry.workflow.interfaces import IWorkflowInfo
 from hurry.workflow.interfaces import IWorkflowTransitionEvent
 
-from uvcsite.interfaces import IContentType
+from uvcsite import IContent
 
 from persistent.list import PersistentList
 from datetime import datetime
@@ -92,17 +92,17 @@ class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
 # Workflow States
 
 class WorkflowState(grok.Adapter, workflow.WorkflowState):
-    grok.context(IContentType)
+    grok.context(IContent)
     grok.provides(IWorkflowState)
 
 
 class WorkflowInfo(grok.Adapter, workflow.WorkflowInfo):
-    grok.context(IContentType)
+    grok.context(IContent)
     grok.provides(IWorkflowInfo)
 
 # Events
 
-@grok.subscribe(IContentType, grok.IObjectAddedEvent)
+@grok.subscribe(IContent, grok.IObjectAddedEvent)
 def initializeWorkflow(content, event):
     IWorkflowInfo(content).fireTransition('create')
 

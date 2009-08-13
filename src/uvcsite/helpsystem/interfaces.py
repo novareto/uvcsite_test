@@ -5,14 +5,14 @@
 import grok
 
 from grok.interfaces import IContainer
-from uvcsite.interfaces import IContentType
+from uvcsite import IContent
 from zope.interface import Interface
 from zope.schema import TextLine, Text
 
 class IHelpFolder(IContainer):
     pass
 
-class IHelpPage(IContentType):
+class IHelpPage(IContent):
     name = TextLine(title=u"Name")
     title = TextLine(title=u"title")
     text = Text(title=u"text")

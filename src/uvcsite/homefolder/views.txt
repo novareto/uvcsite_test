@@ -92,7 +92,7 @@ Setting up a Container for Person Objects
 
 Creating a Person Object
 
-  >>> from uvcsite.content.base import Content
+  >>> from uvcsite import Content
   >>> class Person(Content):
   ...     """ """
   ...     name = ""
@@ -103,8 +103,8 @@ Creating a Person Object
   >>> hans.age = "44"
   >>> hans.__name__ = "hans"
 
-  >>> from uvcsite.interfaces import IContentType
-  >>> IContentType.providedBy(hans)
+  >>> from uvcsite import IContent
+  >>> IContent.providedBy(hans)
   True
 
 Let's proof if the Homefolder Settings are correct!

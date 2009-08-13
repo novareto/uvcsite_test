@@ -42,7 +42,7 @@ Check the basic functionality of the workflow
 
 Second create a person object
 
-   >>> from uvcsite.content.base import Content
+   >>> from uvcsite import Content
    >>> class Person(Content):
    ...    """ """ 
    >>> klaus = Person()
