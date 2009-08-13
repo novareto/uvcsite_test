@@ -6,7 +6,7 @@ import grok
 
 from megrok.z3cform import PageAddForm, field, PageEditForm, PageDisplayForm
 
-from uvcsite.content.base import Content
+from uvcsite import Content
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 

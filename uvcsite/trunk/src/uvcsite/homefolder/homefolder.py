@@ -10,7 +10,6 @@ from zope.interface import Interface
 from zope.component import getMultiAdapter
 
 from zope.app.interface import queryType
-from zope.app.content.interfaces import IContentType
 from zope.app.homefolder.homefolder import HomeFolderManager
 from zope.app.homefolder.interfaces import IHomeFolderManager
 import zope.app.homefolder.homefolder

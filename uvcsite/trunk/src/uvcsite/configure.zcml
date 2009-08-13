@@ -8,6 +8,7 @@
   <includeDependencies package="." />
   <includePlugins package="." />
 
+  <include package="uvc.content" />
   <include package="megrok.z3cform" />
   <include package="megrok.z3cform" file="meta.zcml" />
 
@@ -33,10 +34,6 @@
 
 
   <i18n:registerTranslations directory="locales" />
-  <interface 
-     interface=".interfaces.IContentType"
-     type="zope.app.content.interfaces.IContentType"/>
-
   <grok:grok package="." />
 
   <includeOverrides package="uvcsite" file="overrides.zcml"/>
