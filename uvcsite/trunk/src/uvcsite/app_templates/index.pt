@@ -10,6 +10,20 @@
   <p>Your Grok application is up and running.
   Edit <code>restest/app_templates/index.pt</code> to change
   this page.</p>
+
+
+<h3>Aktuelle Nachrichten in Überschrift (H3)</h3>
+<ul class="content">
+    <li><img src="public/images/icons/ul-servers.gif" alt="Servers">Neue Dokumente online: <strong>Nachweis für den Beitragsbescheid</strong>
+    <span class="content">vom 2008-12-15  08:15:40</span>
+    </li>
+
+    <li><img src="public/images/icons/ul-antenna.gif" alt="Antenna">Neues, gemeinsames Extranet der Berufsgenossenschaft BGHW
+	    <span class="content">vom 2008-12-15  08:15:40</span>
+    </li>
+</ul>
+
+
  </div>
 </body>
 </html>

@@ -20,6 +20,8 @@ class MyName(grok.Viewlet):
     grok.viewletmanager(IGlobalMenu)
     grok.order(1)
 
+    css = "blue"
+
     def render(self):
 	html = "<span> %s </span> " %self.request.principal.description
 	return html
