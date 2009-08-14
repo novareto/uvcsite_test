@@ -1,7 +1,16 @@
-<div id="navigationTree" class="box" 
-     tal:define="items viewletmanager/viewlets" tal:condition="items">
-  <h1> Navigation </h1>
-    <div class="navitem" tal:repeat="item items">
-          <span tal:content="structure item/render" />
-    </div>
+<div class="box-top" 
+     tal:define="items viewletmanager/viewlets" 
+     tal:condition="items">
+     <h1> 
+        <img src="" 
+	     tal:attributes="src python: viewletmanager.view.application_url()+'/@@/uvcresources/blue-sep.gif'">
+	Navigation 
+     </h1>
+
+     <div class="separator"></div>
+
+     <ul class="first-box" 
+         tal:repeat="item items">
+          <li tal:content="structure item/render" />
+     </ul>
 </div>    

@@ -40,6 +40,3 @@ class PersonalPanelView(megrok.layout.Page):
                      " Ihrem Benutzerprofil vornehmen.")
 
 
-class RestLayer(grok.IRESTLayer):
-    """ Layer for Rest Access"""
-    grok.restskin('api')

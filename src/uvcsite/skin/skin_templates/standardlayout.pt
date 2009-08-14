@@ -11,30 +11,33 @@
 </head>
 
 <body>
-  <div id="visualBodyWrapper">
-    <div id="toolbar"> 
-       <html:block tal:content="structure provider:uvcsite.logo" />
-       <html:block tal:content="structure provider:uvcsite.globalmenu" />
+  <div id="page">
+    <div id="header"> 
+       <html:block tal:replace="structure provider:uvcsite.logo" />
+       <html:block tal:replace="structure provider:uvcsite.globalmenu" />
     </div>
 
-    <div id="visualContentWrapper">
+    <div class="content">
+      <div class="left-col">
+        <div class="box"> 
+            <span tal:define="sidebar provider:uvcsite.sidebar"
+                  tal:condition="sidebar" 
+	          tal:replace="structure sidebar"/>
 
-      <div id="sidebar"> 
-        <span tal:define="sidebar provider:uvcsite.sidebar"
-              tal:condition="sidebar" 
-	      tal:content="structure sidebar"/>
-
-	<span tal:define="help provider:uvcsite.help"
-	      tal:condition="help"
-	      tal:content="structure help"/>
+	    <span tal:define="help provider:uvcsite.help"
+	          tal:condition="help"
+	          tal:replace="structure help"/>
+	</div>      
       </div>
 
       <div tal:content="structure provider:uvcsite.statusmessage"> </div>
-      <div id="content" tal:content="structure view/render">
-      </div>
+
+      <div class="right-col" tal:content="structure view/render"> </div>
+
+      <div class="relax"/>
     </div>
 
-    <div id="footer" tal:content="structure provider:uvcsite.footer">
+    <div class="footer" tal:content="structure provider:uvcsite.footer">
       Footer goes here
     </div>
   </div>

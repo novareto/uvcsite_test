@@ -1,8 +1,14 @@
-<div id="tabs"
+<div class="main-menu"
     tal:define="tabs viewletmanager/viewlets"
     tal:condition="tabs">
+    <img src="" alt="Extranet"
+         tal:attributes="src python: viewletmanager.view.application_url()+'/@@/uvcresources/main-menu-bg.gif'"/>
     <ul>
-       <li tal:repeat="tab tabs"
-           tal:content="structure tab/render" />
+       <rep tal:repeat="tab tabs">
+         <li tal:define="index repeat/tab/index" 
+             tal:attributes="class python: viewletmanager.getClass(index)">
+             <span tal:replace="structure tab/render"> </span>
+         </li>
+       </rep>
     </ul>
 </div>    

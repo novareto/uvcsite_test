@@ -1,0 +1,6 @@
+<ul tal:define="tabs viewletmanager/viewlets"
+    tal:condition="tabs">
+   <li tal:repeat="tab tabs"
+       tal:content="structure tab/render" />
+</ul>
+<div class="relax"/>

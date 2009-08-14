@@ -21,6 +21,11 @@ class GlobalMenu(grok.ViewletManager):
     grok.context(Interface)
     grok.implements(IGlobalMenu)
 
+    css = ['blue', 'orange', 'violet', 'green', 'brown', 'purple']
+
+    def getClass(self, index):
+	return self.css[index]
+
 class Sidebar(grok.ViewletManager):
     """ ViewletManager for the Sidebar """
     grok.name('uvcsite.sidebar')
