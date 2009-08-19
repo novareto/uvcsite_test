@@ -39,3 +39,6 @@ class IStatusMessage(Interface):
 
 class IHelp(Interface):
     """ Marker for Help """
+
+class IPersonalPreferences(Interface):
+    """ Marker for Personal Preferences """

@@ -6,7 +6,7 @@ from uvcsite import uvcsiteMF as _
 from zope.interface import Interface
 from zope.component import getUtility
 from z3c.menu.simple.menu import GlobalMenuItem
-from uvcsite.interfaces import IGlobalMenu, IPersonalMenu
+from uvcsite.interfaces import IGlobalMenu, IPersonalMenu, IPersonalPreferences
 from uvcsite.viewlets.utils import MenuItem
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.app.homefolder.interfaces import IHomeFolderManager
@@ -17,7 +17,7 @@ from uvcsite.api.interfaces import ICompanyInfo
 class MyName(grok.Viewlet):
     grok.name('myname')
     grok.context(Interface)
-    grok.viewletmanager(IGlobalMenu)
+    grok.viewletmanager(IPersonalPreferences)
     grok.order(1)
 
     css = "blue"
@@ -29,7 +29,7 @@ class MyName(grok.Viewlet):
 class MyFolder(MenuItem):
     grok.name(_(u'Mein Ordner'))
     grok.context(Interface)
-    grok.viewletmanager(IGlobalMenu)
+    grok.viewletmanager(IPersonalPreferences)
     grok.order(2)
 
     @property
@@ -49,17 +49,21 @@ class MyFolder(MenuItem):
 class Logout(MenuItem):
     grok.name(_(u'ausloggen'))
     grok.context(Interface)
-    grok.viewletmanager(IGlobalMenu)
+    grok.viewletmanager(IPersonalPreferences)
     grok.order(9)
 
     urlEndings = "ausloggen"
     viewURL = "https://XXX/login/logout"
+    
+    #@property
+    #def view(self):
+    #    return "http://www.google.de"
 
 
 class PersonalProperties(MenuItem):
     grok.name(_(u'Meine Einstellungen'))
     grok.context(Interface)
-    grok.viewletmanager(IGlobalMenu)
+    grok.viewletmanager(IPersonalPreferences)
     grok.order(2)
 
     title= _(u'Meine Einstellungen')

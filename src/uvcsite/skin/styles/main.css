@@ -263,7 +263,7 @@ LABEL {cursor: pointer;}
 .right-col P.miniman{
     padding-left: 20px;
     float: right;
-    background: url("../images/icons/mini-man.gif") left top no-repeat ;
+    background: url("mini-man.gif") left top no-repeat ;
 }
 .right-col P.big{
     font-size: 12px;
