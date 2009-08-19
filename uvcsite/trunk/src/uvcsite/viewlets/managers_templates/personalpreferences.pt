@@ -1,0 +1,7 @@
+<p class="miniman"
+    tal:define="tabs viewletmanager/viewlets"
+    tal:condition="tabs">
+    <rep tal:repeat="tab tabs">
+       <span tal:replace="structure tab/render"> </span>
+    </rep>
+</p>    

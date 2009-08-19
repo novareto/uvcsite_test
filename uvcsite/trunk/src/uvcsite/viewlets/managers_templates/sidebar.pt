@@ -6,11 +6,10 @@
 	     tal:attributes="src python: viewletmanager.view.application_url()+'/@@/uvcresources/blue-sep.gif'">
 	Navigation 
      </h1>
-
      <div class="separator"></div>
-
      <ul class="first-box" 
          tal:repeat="item items">
           <li tal:content="structure item/render" />
      </ul>
+     <div class="relax"></div>
 </div>    
