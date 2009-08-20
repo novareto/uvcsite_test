@@ -1,0 +1,177 @@
+Functional Doctest For Viewlets
+===============================
+
+:Test-Layer: functional
+
+Setup
+-----
+
+We have to setup view and context to get our ViewletManager!
+
+   >>> from zope.component import getMultiAdapter
+   >>> from zope.publisher.browser import TestRequest
+   >>> from zope.contentprovider.interfaces import IContentProvider
+   >>> from uvcsite.app import Uvcsite
+
+   >>> import zope.interface
+   >>> import zope.security.interfaces
+   >>> class DummyPrincipal(object):
+   ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
+   ...
+   ...     id = "someuser"
+   ...     title = "Some User's Name"
+   ...     description = "A User"
+
+
+   >>> import zope.security.management
+   >>> request = TestRequest()
+   >>> request.setPrincipal(DummyPrincipal())
+   >>> zope.security.management.newInteraction(request)
+
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+
+Context
+
+   >>> context = root['app']
+   >>> context
+   <uvcsite.app.Uvcsite object at ...>
+
+View
+
+   >>> view = getMultiAdapter((context, request), name=u"index")
+   >>> view   
+   <uvcsite.app.Index object at ...>
+
+ViewletManagers and their Viewlets
+----------------------------------
+
+GlobalMenu
+----------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.headers")
+   >>> manager 
+   <uvcsite.viewlets.managers.Headers object ...>
+
+Show the viewlets:
+
+   >>> manager.update()
+   >>> [x for x in manager.viewlets]
+   [<uvcsite.viewlets.viewlets.Favicon object at ...>]
+ 
+
+Toolbar
+-------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.toolbar")
+   >>> manager 
+   <uvcsite.viewlets.managers.Toolbar object ...>
+
+Show the viewlets
+
+   >>> manager.update()
+   >>> [x for x in manager.viewlets]
+   []
+
+
+PersonalPreferences
+-------------------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.personalpreferences")
+   >>> manager 
+   <uvcsite.viewlets.managers.PersonalPreferences object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <uvcsite.viewlets.globalmenuitems.MyName object at ...>
+   <uvcsite.viewlets.globalmenuitems.MyFolder object at ...>
+   <uvcsite.viewlets.globalmenuitems.PersonalProperties object at ...>
+   <uvcsite.viewlets.globalmenuitems.Logout object at ...>
+
+
+Sidebar
+-------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.sidebar")
+   >>> manager 
+   <uvcsite.viewlets.managers.Sidebar object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <uvcsite.viewlets.sidebar.Beispiel object at ...>
+   <uvcsite.viewlets.sidebar.Informationen object at ...>
+
+Footer
+------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.footer")
+   >>> manager 
+   <uvcsite.viewlets.managers.Footer object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <uvcsite.viewlets.footer.Impressum object at ...>
+
+
+Logo
+----
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.logo")
+   >>> manager 
+   <uvcsite.viewlets.managers.Logo object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <uvcsite.viewlets.viewlets.Image object at ...>
+
+
+PersonalMenu
+------------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.personalpanel")
+   >>> manager 
+   <uvcsite.viewlets.managers.PersonalMenu object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <uvcsite.extranetmembership.viewlets.ExtranetMembership object at ...>
+   <uvcsite.viewlets.globalmenuitems.ChangePassword object at ...>
+
+StatusMessage
+-------------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.statusmessage")
+   >>> manager 
+   <uvcsite.viewlets.managers.StatusMessage object ...>
+
+GlobalMenu
+----------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.globalmenu")
+   >>> manager 
+   <uvcsite.viewlets.managers.GlobalMenu object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+
+   >>> zope.security.management.endInteraction()
+
