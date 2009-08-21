@@ -6,9 +6,7 @@
   <h1 tal:content="view/title | nothing"></h1>
    <p> <span tal:replace="view/description"/>  </p>
 
-   <div>
      <span tal:replace="structure provider:uvcsite.personalpanel"/>
-   </div>
  </div>
 </body>
 </html>

@@ -38,5 +38,3 @@ class PersonalPanelView(megrok.layout.Page):
     title = _(u"Persönliche Einstellungen")
     description = _(u"Hier können Sie Einstellungen zu" 
                      " Ihrem Benutzerprofil vornehmen.")
-
-
