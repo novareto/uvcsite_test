@@ -5,7 +5,7 @@
 <div>
  <h1> Mitbenutzerverwaltung </h1>                                                                                        
  <fieldset>
- <legend > Benutzerübersicht </legend>
+ <legend > Benutzer </legend>
   <div>
   <dl class="portlet portletHalfWidth">
   <dt class="portletHeader">
