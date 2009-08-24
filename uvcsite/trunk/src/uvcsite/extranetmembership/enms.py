@@ -16,7 +16,7 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
 from uvcsite.interfaces import IMyHomeFolder
 
-class ENMSIndex(megrok.layout.Page):
+class ENMS(megrok.layout.Page):
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
 

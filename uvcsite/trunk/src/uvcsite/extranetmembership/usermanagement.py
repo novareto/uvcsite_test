@@ -2,8 +2,8 @@ import grok
 from uvcsite.extranetmembership.interfaces import IUserManagement
 
 users = [
-          {'cn':'0101010001', 'passwort':'passwort', 'email':'test@test.de'},
-          {'cn':'0101010002', 'passwort':'passwort', 'email':'test@test.de'},
+          {'mnr':'0101010001', 'passwort':'passwort', 'email':'test@test.de'},
+          {'mnr':'0101010002', 'passwort':'passwort', 'email':'test@test.de'},
         ]
 
 class UserManagement(grok.GlobalUtility):
