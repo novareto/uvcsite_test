@@ -118,9 +118,14 @@ Footer
 Show the Viewlets:
 
    >>> manager.update()
+   >>> len(manager.viewlets)
+   3
+
    >>> for x in manager.viewlets:
    ...     print x
    <uvcsite.viewlets.footer.Impressum object at ...>
+   <uvcsite.viewlets.footer.Barrierefreiheit object at ...>
+   <uvcsite.viewlets.footer.Kontakt object at ...>
 
 
 Logo

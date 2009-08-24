@@ -12,3 +12,22 @@ class Impressum(MenuItem):
     urlEndings = "impressum"
     viewURL = "impressum"
 
+class Barrierefreiheit(MenuItem):
+    grok.name(u'Barrierefreiheit')
+    grok.context(Interface)
+    grok.viewletmanager(IFooter)
+    grok.order(2)
+
+    urlEndings = "barrierefreiheit"
+    viewURL = "barrierefreiheit"
+
+class Kontakt(MenuItem):
+    grok.name(u'Kontakt')
+    grok.context(Interface)
+    grok.viewletmanager(IFooter)
+    grok.order(3)
+
+    css = "last"
+
+    urlEndings = "kontakt"
+    viewURL = "kontakt"
