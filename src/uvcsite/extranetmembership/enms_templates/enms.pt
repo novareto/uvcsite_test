@@ -17,8 +17,8 @@
          tal:attributes="class string: even ">
             <a href="" 
                i18n:translate=""
-               tal:attributes="href string:enmsupdateuser?cn=${user/cn}">
-                  <span i18n:name="updateUser" tal:content="string: ${user/cn}"> user updaten </span>
+               tal:attributes="href string:enmsupdateuser?cn=${user/mnr}">
+                  <span i18n:name="updateUser" tal:content="string: ${user/mnr}"> user updaten </span>
             </a>
      </dd>
   </tal:list>

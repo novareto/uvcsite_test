@@ -46,3 +46,11 @@ Now log on as a user and look if we get the index page
    <html xmlns="http://www.w3.org/1999/xhtml">
    ...
    </html>
+
+   >>> form = browser.getForm()
+   >>> form.getControl(name='form.email').value = 'cklinger@novareto.de'
+   >>> form.getControl(name='form.email').value = 'cklinger@novareto.de'
+   >>> form.getControl(name='form.passwort').value = 'geheim'
+   >>> form.getControl(name='form.passwort').value = 'geheim'
+   >>> form.submit('Anlegen')
+
