@@ -7,12 +7,32 @@ Setup
 -----
 
    >>> from uvcsite.app import Uvcsite
+   >>> from zope.app.component.hooks import getSite, setSite
+
    >>> root = getRootFolder()
    >>> uvcsite = Uvcsite()
    >>> root['app'] = uvcsite
    >>> root['app']
    <uvcsite.app.Uvcsite object at ...>
-  
+ 
+   >>> setSite(uvcsite)
+
+   >>> from zope.component import getUtility
+   >>> import grok
+
+   >>> unfallanzeigen = grok.Container()
+
+   >>> from zope.app.homefolder.interfaces import IHomeFolderManager
+   >>> utility = getUtility(IHomeFolderManager)
+   >>> utility
+   <uvcsite.homefolder.homefolder.PortalMembership object at ...>
+
+   >>> hf = utility.getHomeFolder('uvc.user')
+   >>> print hf
+   <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+
+   >>> hf['unfallanzeige'] = unfallanzeigen
+
 Now log on as a user and look if we get the index page
 
 
@@ -47,10 +67,46 @@ Now log on as a user and look if we get the index page
    ...
    </html>
 
+
    >>> form = browser.getForm()
-   >>> form.getControl(name='form.email').value = 'cklinger@novareto.de'
+   >>> form.getControl(name='form.rollen').value = '1'
    >>> form.getControl(name='form.email').value = 'cklinger@novareto.de'
    >>> form.getControl(name='form.passwort').value = 'geheim'
-   >>> form.getControl(name='form.passwort').value = 'geheim'
+   >>> form.getControl(name='form.confirm').value = 'geheim'
    >>> form.submit('Anlegen')
 
+   >>> '<dd>Der Mitbenutzer wurde gespeichert</dd>' in browser.contents
+   True
+
+Bearbeiten
+----------
+
+   >>> link = browser.getLink('Meine Einstellungen')
+   >>> link
+   <Link text='Meine Einstellungen' url='http://localhost/++skin++uvcsiteskin/app/personalpanelview'>
+   >>> link.click()
+
+   >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
+   >>> benutzerverwaltung
+   <Link text='Benutzerverwaltung' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enms'>
+
+   >>> benutzerverwaltung.click()
+   >>> "<span> 0101010001</span>" in browser.contents
+   True
+
+   >>> update = browser.getLink('0101010001')
+   >>> update
+   <Link text='0101010001' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
+   >>> update.click()
+
+   >>> form = browser.getForm()
+   >>> print form.getControl(name='form.email').value
+   test@test.de
+
+
+   >>> form.getControl(name='form.email').value = "lars@novareto.de"
+   >>> form.getControl(name='form.confirm').value = "passwort" 
+   >>> form.submit('Bearbeiten')
+
+   >>> "Der Mitbenutzer wurde gespeichert" in browser.contents
+   True
