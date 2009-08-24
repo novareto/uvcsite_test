@@ -10,7 +10,7 @@ class UserManagement(grok.GlobalUtility):
     """ Utility for Usermanagement """
     grok.implements(IUserManagement)
 
-    def updateUser(self, **kwargs):
+    def updUser(self, **kwargs):
 	"""Updates a User"""
 
     def deleteUser(self, mnr):

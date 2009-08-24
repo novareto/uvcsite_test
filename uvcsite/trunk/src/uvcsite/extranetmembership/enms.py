@@ -99,6 +99,7 @@ class ENMSUpdateUser(Form, grok.Form):
 	for role in kw.get('rollen'):
             principal_roles = IPrincipalRoleManager(self.context[role])
             principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
+	self.flash('Der Mitbenutzer wurde gespeichert')
         self.redirect(self.url(self.context))
 
     @grok.action(_(u"Entfernen"))
