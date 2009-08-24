@@ -3,4 +3,4 @@
    <li tal:repeat="tab tabs"
        tal:content="structure tab/render" />
 </ul>
-<div class="relax"/>
+<div class="relax"> </div>

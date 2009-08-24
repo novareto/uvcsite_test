@@ -42,3 +42,6 @@ class IHelp(Interface):
 
 class IPersonalPreferences(Interface):
     """ Marker for Personal Preferences """
+
+class IBreadCrumb(Interface):
+    """ Marker for Breadcrumbs"""

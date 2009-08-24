@@ -5,6 +5,12 @@ from zope.interface import Interface
 from uvcsite.interfaces import *
 
 
+class Breadcrumb(grok.ViewletManager):
+    grok.name('uvcsite.breadcrumb')
+    grok.context(Interface)
+    grok.implements(IBreadCrumb)
+
+
 class Headers(grok.ViewletManager):
     """ Viewlet Manager for the Header """
     grok.name('uvcsite.headers')
