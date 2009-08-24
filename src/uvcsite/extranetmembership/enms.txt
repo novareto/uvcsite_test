@@ -1,0 +1,48 @@
+Functional Extranetmembership 
+=============================
+
+:Test-Layer: functional
+
+Setup
+-----
+
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+   >>> root['app']
+   <uvcsite.app.Uvcsite object at ...>
+  
+Now log on as a user and look if we get the index page
+
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+
+   >>> browser.handleErrors = False
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/')
+   >>> 'Meine Einstellungen' in browser.contents
+   True
+
+   >>> link = browser.getLink('Meine Einstellungen')
+   >>> link
+   <Link text='Meine Einstellungen' url='http://localhost/++skin++uvcsiteskin/app/personalpanelview'>
+   >>> link.click()
+
+   >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
+   >>> benutzerverwaltung
+   <Link text='Benutzerverwaltung' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enms'>
+
+   >>> benutzerverwaltung.click()
+   >>> neuerUser = browser.getLink('neuen User anlegen')
+   >>> neuerUser
+   <Link text='neuen User anlegen' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enmscreateuser'>
+
+   >>> neuerUser.click()
+   >>> print browser.contents
+   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+   ...
+   </html>

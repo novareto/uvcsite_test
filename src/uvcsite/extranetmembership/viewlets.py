@@ -16,9 +16,10 @@ class ExtranetMembership(MenuItem):
     grok.viewletmanager(IPersonalMenu)
     grok.order(1)
 
-    urlEndings = "enmsindex"
+    urlEndings = "enms"
+
     @property
     def url(self):
         hF = IHomeFolder(self.request.principal).homeFolder
-        return self.view.url(hF, 'enmsindex')
+        return self.view.url(hF, 'enms')
 
