@@ -34,19 +34,12 @@
 
       <div class="right-col">
          <span tal:replace="structure provider:uvcsite.personalpreferences"/>
-	 <!--
-         <p class="miniman">
-	      <a href=""> Meine Einstellungen </a> &nbsp;
-	      <a href=""> Mein Ordner </a> &nbsp;
-	      <a href=""> Abmelden </a> 
-	 </p>
-	 -->
-         <div tal:content="structure view/render"/> 
+         <span tal:replace="structure provider:uvcsite.breadcrumb"/>
+         <div tal:content="structure view/render"> </div> 
       </div>
 
-      <div class="relax"/>
+      <div class="relax"> </div>
     </div>
-
     <div class="footer" tal:content="structure provider:uvcsite.footer">
       Footer goes here
     </div>

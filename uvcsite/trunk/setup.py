@@ -34,6 +34,7 @@ setup(name='uvcsite',
 			'megrok.z3cform',
 			'megrok.z3ctable',
 			'uvc.content',
+			'z3c.breadcrumb',
                         # Add extra requirements here
                         ],
       entry_points = """
