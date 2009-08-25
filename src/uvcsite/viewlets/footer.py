@@ -1,7 +1,13 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2008 NovaReto GmbH
+# cklinger@novareto.de
+
+
 import grok
 from zope.interface import Interface
 from uvcsite.interfaces import IFooter
 from uvcsite.viewlets.utils import MenuItem
+
 
 class Impressum(MenuItem):
     grok.name(u'Impressum')
@@ -12,6 +18,7 @@ class Impressum(MenuItem):
     urlEndings = "impressum"
     viewURL = "impressum"
 
+
 class Barrierefreiheit(MenuItem):
     grok.name(u'Barrierefreiheit')
     grok.context(Interface)
@@ -20,6 +27,7 @@ class Barrierefreiheit(MenuItem):
 
     urlEndings = "barrierefreiheit"
     viewURL = "barrierefreiheit"
+
 
 class Kontakt(MenuItem):
     grok.name(u'Kontakt')

@@ -5,7 +5,7 @@ import megrok.layout
 
 from uvcsite import uvcsiteMF as _
 from uvcsite.interfaces import IUVCSite
-from uvcsite.auth.handler import setup_pau 
+from uvcsite.auth.handler import setup_pau
 from zope.app.security.interfaces import IAuthentication
 from uvcsite.homefolder.homefolder import PortalMembership
 from zope.app.authentication import PluggableAuthentication
@@ -19,7 +19,7 @@ class Uvcsite(grok.Application, grok.Container):
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
 
-    grok.local_utility(PluggableAuthentication, 
+    grok.local_utility(PluggableAuthentication,
                        IAuthentication,
                        setup=setup_pau)
 
@@ -29,12 +29,8 @@ class TestIndex(megrok.layout.Page):
     grok.require('zope.View')
 
 
-#class Infos(megrok.layout.Page):
-#    """ Info Page for UVC """
-
-
 class PersonalPanelView(megrok.layout.Page):
     """ Page for Personal Properties """
     title = _(u"Persönliche Einstellungen")
-    description = _(u"Hier können Sie Einstellungen zu" 
+    description = _(u"Hier können Sie Einstellungen zu"
                      " Ihrem Benutzerprofil vornehmen.")

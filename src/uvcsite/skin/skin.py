@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2008 NovaReto GmbH
+# cklinger@novareto.de
+
 import grok
 import megrok.layout
 import megrok.resourcelibrary
@@ -46,6 +50,7 @@ class Scripts(megrok.resourcelibrary.ResourceLibrary):
     megrok.resourcelibrary.include('jquery.tablesorter.js')
     megrok.resourcelibrary.include('mytable.js')
     megrok.resourcelibrary.include('jquery-ui-1.7.2.custom.min.js')
+
 
 class StandardLayout(megrok.layout.Layout):
     grok.context(Interface)

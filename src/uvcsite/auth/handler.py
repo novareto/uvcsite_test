@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*- 
-# Copyright (c) 2007-2008 NovaReto GmbH 
-# cklinger@novareto.de 
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2008 NovaReto GmbH
+# cklinger@novareto.de
 
 import grok
 from persistent import Persistent
@@ -15,6 +15,7 @@ from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.authentication.httpplugins import HTTPBasicAuthCredentialsPlugin
 from zope.security.interfaces import IGroupAwarePrincipal
 
+
 @grok.adapter(IGroupAwarePrincipal)
 @grok.adapter(IPrincipal)
 @grok.implementer(IMasterUser)
@@ -22,8 +23,8 @@ def masteruser(self):
     """Return always the Master User"""
     if not "-" in self.id:
         return self
-    master_id = self.id.split('-')[0]    
-    return Principal(master_id) 
+    master_id = self.id.split('-')[0]
+    return Principal(master_id)
 
 
 def setup_pau(pau):
@@ -31,21 +32,22 @@ def setup_pau(pau):
     pau['principals'] = UVCAuthenticator('contact.principals.')
     pau.authenticatorPlugins = ('principals', 'groups')
     pau['basic'] = HTTPBasicAuthCredentialsPlugin()
-    pau.credentialsPlugins = ('No Challenge if Authenticated', 'basic',)
+    pau.credentialsPlugins = ('No Challenge if Authenticated', 'basic')
 
 
 class UVCAuthenticator(Persistent):
     """ Custom Authenticator for UVC-Site"""
     implements(IUVCAuth, IAuthenticatorPlugin, ILocation)
     __parent__ = __name__ = None
-    
+
     def __init__(self, prefix=u''):
         self.prefix = prefix
 
     def authenticateCredentials(self, credentials):
         """check if username and password match
            get the credentials from the IUserManagement Utility"""
-        if not (credentials and 'login' in credentials and 'password' in credentials):
+        if not (credentials and 'login' in credentials
+                and 'password' in credentials):
             return
         login, password = credentials['login'], credentials['password']
         utility = getUtility(IUserManagement)

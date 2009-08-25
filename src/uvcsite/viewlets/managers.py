@@ -33,7 +33,7 @@ class GlobalMenu(grok.ViewletManager):
     css = ['blue', 'orange', 'violet', 'green', 'brown', 'purple']
 
     def getClass(self, index):
-	return self.css[index]
+        return self.css[index]
 
 
 class PersonalPreferences(grok.ViewletManager):
@@ -80,4 +80,4 @@ class StatusMessage(grok.ViewletManager):
     """ ViewletManager for StatusMessages"""
     grok.name('uvcsite.statusmessage')
     grok.context(Interface)
-    grok.implements(IStatusMessage)     
+    grok.implements(IStatusMessage)

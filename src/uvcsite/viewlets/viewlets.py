@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 import grok
 
 from uvcsite.interfaces import IUVCSite
@@ -8,7 +9,7 @@ from zope.component import getUtility, getMultiAdapter
 from zope.traversing.browser import absoluteURL
 from uvcsite.interfaces import ILogo, IStatusMessage, IHeaders, IBreadCrumb
 from z3c.flashmessage.interfaces import IMessageReceiver
-from z3c.breadcrumb.interfaces import IBreadcrumb, IBreadcrumbs 
+from z3c.breadcrumb.interfaces import IBreadcrumb, IBreadcrumbs
 
 
 class Breadcrumb(grok.Viewlet):
@@ -17,10 +18,12 @@ class Breadcrumb(grok.Viewlet):
     grok.viewletmanager(IBreadCrumb)
 
     def render(self):
-	bcs = []
-	for bc in getMultiAdapter((self.context, self.request), IBreadcrumbs).crumbs:
-	    bcs.append("<a href=%s> %s </a>/" %(bc.get('url'), bc.get('name')))
-	return "".join(bcs[1:])
+        bcs = []
+        for bc in getMultiAdapter((self.context, self.request), 
+                                   IBreadcrumbs).crumbs:
+            bcs.append("<a href=%s> %s </a>/" %(bc.get('url'), bc.get('name')))
+        return "".join(bcs[1:])
+
 
 class Favicon(grok.Viewlet):
     """ The Favicon.ico Image"""
@@ -36,7 +39,7 @@ class Image(grok.Viewlet):
     grok.viewletmanager(ILogo)
 
     def app_url(self):
-	return self.view.application_url()
+        return self.view.application_url()
 
 
 class StatusMessages(grok.Viewlet):
@@ -46,4 +49,4 @@ class StatusMessages(grok.Viewlet):
 
     def update(self):
         source = getUtility(IMessageReceiver)
-        self.messages = list(source.receive()) 	
+        self.messages = list(source.receive())

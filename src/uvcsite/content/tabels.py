@@ -36,7 +36,7 @@ class MetaTypeColumn(GetAttrColumn):
 class CreatorColumn(Column):
     grok.name('creator')
     header = u"Autor"
-    weight = 99 
+    weight = 99
     grok.adapts(IContainer, None, None)
 
     def renderCell(self, item):
@@ -46,5 +46,5 @@ class CreatorColumn(Column):
 class ModifiedColumn(ModifiedColumn):
     grok.name('modified')
     header = u"Datum"
-    weight = 100 
+    weight = 100
     grok.adapts(IContainer, None, None)
