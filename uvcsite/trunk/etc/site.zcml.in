@@ -2,8 +2,10 @@
            i18n_domain="uvcsite">
 
   <include package="uvcsite" />
+  <include package="uvcsite.tests" />
+  <!--
   <includeOverrides package="nva.sliteauth" file="overrides.zcml"/>
-
+  -->
 
       <principal id="zope.manager"
                  title="Manager"
