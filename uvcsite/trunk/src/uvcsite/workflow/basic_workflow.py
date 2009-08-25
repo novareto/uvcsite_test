@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2008 NovaReto GmbH
+# cklinger@novareto.de
+
 import grok
 
 from hurry.workflow import workflow
@@ -15,9 +19,10 @@ from datetime import datetime
 CREATED = 0
 PUBLISHED = 1
 
+
 def titleForState(state):
     """ Reverse Mapping of workflow States """
-    mapping = {0:'Entwurf', 1:'gesendet'}
+    mapping = {0: 'Entwurf', 1: 'gesendet'}
     return mapping.get(state, 'unbekannt')
 
 
@@ -35,7 +40,7 @@ def create_workflow():
         source=CREATED,
         destination=PUBLISHED)
 
-    return workflow.Workflow([create_transition, 
+    return workflow.Workflow([create_transition,
                               publish_transition])
 
 grok.global_utility(create_workflow, provides=IWorkflow)
@@ -43,13 +48,14 @@ grok.global_utility(create_workflow, provides=IWorkflow)
 
 # Workflow Versions (Not sure if really needed!!!)
 
+
 class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
     """ Worklfow Versions is needed by hurry Workflow
-        This is a really basic impplementation and 
+        This is a really basic impplementation and
         should be replaced with a better one"""
-    
+
     def __init__(self):
-        self.clear() 
+        self.clear()
 
     def addVersion(self, obj):
         """ """
@@ -87,9 +93,10 @@ class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
 
     def clear(self):
         """ """
-        self.versions = PersistentList() 
+        self.versions = PersistentList()
 
 # Workflow States
+
 
 class WorkflowState(grok.Adapter, workflow.WorkflowState):
     grok.context(IContent)
@@ -102,9 +109,11 @@ class WorkflowInfo(grok.Adapter, workflow.WorkflowInfo):
 
 # Events
 
+
 @grok.subscribe(IContent, grok.IObjectAddedEvent)
 def initializeWorkflow(content, event):
     IWorkflowInfo(content).fireTransition('create')
+
 
 @grok.subscribe(IWorkflowTransitionEvent)
 def set_publish_action(event):

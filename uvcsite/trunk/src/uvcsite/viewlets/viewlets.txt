@@ -105,8 +105,7 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <uvcsite.viewlets.sidebar.Beispiel object at ...>
-   <uvcsite.viewlets.sidebar.Informationen object at ...>
+   <uvcsite.viewlets.sidebar.Startseite object at ...>
 
 Footer
 ------

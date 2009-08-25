@@ -18,12 +18,13 @@ from zope.dottedname.resolve import resolve
 from zope.security.interfaces import IPrincipal
 
 
-
 class HomeFolder(grok.Container):
     grok.implements(IMyHomeFolder)
 
+
 class Members(grok.Container):
     pass
+
 
 class PortalMembership(HomeFolderManager):
     """ """
@@ -51,22 +52,19 @@ class PortalMembership(HomeFolderManager):
                 principal_roles.assignRoleToPrincipal(
                     role, principalId)
 
-
     @property
     def homeFolderBase(self):
-	return grok.getSite()['members'] 
+        return grok.getSite()['members']
 
 
-
-class HomeFolderForPrincipal(grok.Adapter, zope.app.homefolder.homefolder.HomeFolder):
+class HomeFolderForPrincipal(grok.Adapter,
+                             zope.app.homefolder.homefolder.HomeFolder):
     grok.context(IPrincipal)
 
     def __init__(self, principal):
-        self.principal = IMasterUser(principal) 
-
+        self.principal = IMasterUser(principal)
 
 
 @grok.subscribe(IHomeFolderManager, grok.IObjectAddedEvent)
 def add_members_folder(object, event):
     object.__parent__.__parent__['members'] = Members()
-

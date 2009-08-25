@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2008 NovaReto GmbH
+# cklinger@novareto.de
+
 from zope.schema import TextLine
 from zope.interface import implements
 from zope.schema.interfaces import ITextLine
@@ -27,12 +31,12 @@ class LoginNameFieldHidden(TextLine):
 
 
 class LoginNameWidgetHidden(SimpleInputWidget):
+
     def __call__(self):
         context=self.context
         widget = ViewPageTemplateFile('templates/loginnamehidden.pt')
         return widget(self)
 
     def _getFormInput(self):
-        value = super(LoginNameWidgetHidden,self)._getFormInput()
+        value = super(LoginNameWidgetHidden, self)._getFormInput()
         return value
-

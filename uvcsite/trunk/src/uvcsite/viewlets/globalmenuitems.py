@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 import grok
 
 from uvcsite import uvcsiteMF as _
@@ -14,6 +15,7 @@ from zope.app.security.interfaces import IUnauthenticatedPrincipal
 from zope.app import zapi
 from uvcsite.api.interfaces import ICompanyInfo
 
+
 class MyName(grok.Viewlet):
     grok.name('myname')
     grok.context(Interface)
@@ -23,8 +25,9 @@ class MyName(grok.Viewlet):
     css = "blue"
 
     def render(self):
-	html = "<span> %s </span> " %self.request.principal.description
-	return html
+        html = "<span> %s </span> " %self.request.principal.description
+        return html
+
 
 class MyFolder(MenuItem):
     grok.name(_(u'Mein Ordner'))
@@ -34,15 +37,15 @@ class MyFolder(MenuItem):
 
     @property
     def urlEndings(self):
-	principal = self.request.principal
+        principal = self.request.principal
         return str(principal.id)
 
     @property
     def url(self):
-	principal = self.request.principal
-	if IUnauthenticatedPrincipal.providedBy(principal):
-	    return 
-	homeFolder = IHomeFolder(principal).homeFolder
+        principal = self.request.principal
+        if IUnauthenticatedPrincipal.providedBy(principal):
+            return
+        homeFolder = IHomeFolder(principal).homeFolder
         return zapi.absoluteURL(homeFolder, self.request)
 
 
@@ -54,10 +57,6 @@ class Logout(MenuItem):
 
     urlEndings = "ausloggen"
     viewURL = "https://XXX/login/logout"
-    
-    #@property
-    #def view(self):
-    #    return "http://www.google.de"
 
 
 class PersonalProperties(MenuItem):
@@ -71,7 +70,6 @@ class PersonalProperties(MenuItem):
     viewURL = "personalpanelview"
 
 
-
 class ChangePassword(MenuItem):
     grok.name(_(u'Passwort'))
     grok.context(Interface)
@@ -80,4 +78,3 @@ class ChangePassword(MenuItem):
 
     urlEndings = "changepassword"
     viewURL = "changepassword"
-

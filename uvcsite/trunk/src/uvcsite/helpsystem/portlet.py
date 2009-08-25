@@ -2,6 +2,7 @@ import grok
 from zope.interface import Interface
 from uvcsite.interfaces import IHelp
 
+
 class HelpPortlet(grok.Viewlet):
     grok.context(Interface)
     grok.viewletmanager(IHelp)
@@ -11,4 +12,4 @@ class HelpPortlet(grok.Viewlet):
     urls = []
 
     def render(self):
-	return self.template.render(self)
+        return self.template.render(self)

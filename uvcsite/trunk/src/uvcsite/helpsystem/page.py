@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*- 
-# Copyright (c) 2007-2008 NovaReto GmbH 
-# cklinger@novareto.de 
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2008 NovaReto GmbH
+# cklinger@novareto.de
 
 import grok
 
@@ -15,9 +15,9 @@ class HelpPage(Content):
     grok.implements(IHelpPage)
 
     def __init__(self, name="", title="", text=""):
-	self.name = name
-	self.title = title
-	self.text = text
+        self.name = name
+        self.title = title
+        self.text = text
 
 
 class HelpAdd(PageAddForm):
@@ -28,17 +28,17 @@ class HelpAdd(PageAddForm):
     label = u"Hilfe Seiten anlegen"
 
     def create(self, data):
-	return HelpPage(**data)
+        return HelpPage(**data)
 
     def add(self, object):
-	container = self.context
-	container[object.name] = object
-	return object
+        container = self.context
+        container[object.name] = object
+        return object
 
     def nextURL(self):
-	self.flash(u'Die Hilfeseite wurde erfolgreich angelegt')
-	return self.url(self.context)
- 
+        self.flash(u'Die Hilfeseite wurde erfolgreich angelegt')
+        return self.url(self.context)
+
 
 class Edit(PageEditForm):
     grok.context(IHelpPage)
