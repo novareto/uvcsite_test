@@ -33,6 +33,9 @@ Setup
 
    >>> hf['unfallanzeige'] = unfallanzeigen
 
+Add
+---
+
 Now log on as a user and look if we get the index page
 
 
@@ -45,10 +48,14 @@ Now log on as a user and look if we get the index page
    >>> 'Meine Einstellungen' in browser.contents
    True
 
+Now we go to 'Meine Einstellungen'
+
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
    <Link text='Meine Einstellungen' url='http://localhost/++skin++uvcsiteskin/app/personalpanelview'>
    >>> link.click()
+
+At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
    >>> benutzerverwaltung
@@ -59,6 +66,8 @@ Now log on as a user and look if we get the index page
    >>> neuerUser
    <Link text='neuen User anlegen' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enmscreateuser'>
 
+After clicking on Benutzerverwaltung we can go to the "add a new User"
+
    >>> neuerUser.click()
    >>> print browser.contents
    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -67,6 +76,7 @@ Now log on as a user and look if we get the index page
    ...
    </html>
 
+Fill out the Form
 
    >>> form = browser.getForm()
    >>> form.getControl(name='form.rollen').value = '1'
@@ -75,11 +85,15 @@ Now log on as a user and look if we get the index page
    >>> form.getControl(name='form.confirm').value = 'geheim'
    >>> form.submit('Anlegen')
 
+And get the right status if no error occur!
+
    >>> '<dd>Der Mitbenutzer wurde gespeichert</dd>' in browser.contents
    True
 
-Bearbeiten
-----------
+Modify
+------
+
+Again we have to navigate to 'Benutzerverwaltung'
 
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
@@ -90,6 +104,8 @@ Bearbeiten
    >>> benutzerverwaltung
    <Link text='Benutzerverwaltung' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enms'>
 
+Here we click on the user we want to modify!
+
    >>> benutzerverwaltung.click()
    >>> "<span> 0101010001</span>" in browser.contents
    True
@@ -98,6 +114,8 @@ Bearbeiten
    >>> update
    <Link text='0101010001' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
    >>> update.click()
+
+Here we have the input form we check if we have the right value for email!
 
    >>> form = browser.getForm()
    >>> print form.getControl(name='form.email').value
@@ -108,5 +126,46 @@ Bearbeiten
    >>> form.getControl(name='form.confirm').value = "passwort" 
    >>> form.submit('Bearbeiten')
 
+Fill out the form and submit, and check if we get the right message!
+
    >>> "Der Mitbenutzer wurde gespeichert" in browser.contents
+   True
+
+
+
+Delete
+------
+
+Again we have to navigate to 'Benutzerverwaltung'
+
+   >>> link = browser.getLink('Meine Einstellungen')
+   >>> link
+   <Link text='Meine Einstellungen' url='http://localhost/++skin++uvcsiteskin/app/personalpanelview'>
+   >>> link.click()
+
+   >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
+   >>> benutzerverwaltung
+   <Link text='Benutzerverwaltung' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enms'>
+
+Here we click on the user we want to modify!
+
+   >>> benutzerverwaltung.click()
+   >>> "<span> 0101010001</span>" in browser.contents
+   True
+
+   >>> delete = browser.getLink('0101010001')
+   >>> delete 
+   <Link text='0101010001' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
+   >>> delete.click()
+
+Here we have the input form!
+
+   >>> form = browser.getForm()
+   >>> "Entfernen" in browser.contents
+   True
+
+Click on the button
+
+   >>> form.submit('Entfernen')
+   >>> "<dd>Der Mitbenutzer wurde entfernt.</dd>" in browser.contents
    True

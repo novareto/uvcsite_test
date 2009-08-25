@@ -16,6 +16,19 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder
 
 
+def null_validator(*args, **kwargs):
+    """A validator that doesn't validate anything.
+    
+    This is somewhat lame, but if you have a "Cancel" type button that
+    won't want to validate the form, you need something like this.
+
+    @form.action(_(u"label_cancel", default=u"Cancel"),
+                 validator=null_validator,
+                 name=u'cancel')
+    """
+    return ()
+
+
 class ENMS(megrok.layout.Page):
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
@@ -103,13 +116,14 @@ class ENMSUpdateUser(Form, grok.Form):
         self.flash('Der Mitbenutzer wurde gespeichert')
         self.redirect(self.url(self.context))
 
-    @grok.action(_(u"Entfernen"))
+    @grok.action(_(u"Entfernen"), validator=null_validator)
     def entfernen(self, **kw):
         um = getUtility(IUserManagement)
         key = kw.get('mnr')
-        um.delUser(key)
+        um.deleteUser(key)
         for role in self.context.values():
             principal_roles = IPrincipalRoleManager(role)
             principal_roles.removeRoleFromPrincipal('uvc.Editor',
                             kw.get('mnr'))
+        self.flash('Der Mitbenutzer wurde entfernt.')
         self.redirect(self.url(self.context))
