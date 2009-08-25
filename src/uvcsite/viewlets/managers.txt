@@ -15,7 +15,7 @@ Create some context for the ViewletManager
    >>> from zope.publisher.browser import TestRequest
    >>> request = TestRequest()
    >>> from zope import component
-   >>> view = component.getMultiAdapter((uvcsite, request), name='testindex')
+   >>> view = component.getMultiAdapter((uvcsite, request), name='index')
    >>> from zope.contentprovider.interfaces import IContentProvider
 
 Sidebar

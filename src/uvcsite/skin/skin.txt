@@ -45,14 +45,14 @@ resources are loaded:
   >>> from zope.testbrowser.testing import Browser
   >>> browser = Browser()
   >>> browser.addHeader('Authorization', 'Basic user:user')
-  >>> browser.open('http://localhost/app/testindex')
+  >>> browser.open('http://localhost/app/')
   >>> print browser.headers['Status'].upper()
   200 OK
 
 We have in the overrides.zcml our layer defined as a 
 default layer. But we should get the layer directly:
 
-  >>> browser.open('http://localhost/++skin++uvcsiteskin/app/testindex')
+  >>> browser.open('http://localhost/++skin++uvcsiteskin/app/')
   >>> print browser.headers['Status'].upper()
   200 OK
 

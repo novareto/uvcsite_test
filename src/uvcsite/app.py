@@ -24,11 +24,6 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau)
 
 
-class TestIndex(megrok.layout.Page):
-    """ Index Site for UVC """
-    grok.require('zope.View')
-
-
 class PersonalPanelView(megrok.layout.Page):
     """ Page for Personal Properties """
     title = _(u"Persönliche Einstellungen")
