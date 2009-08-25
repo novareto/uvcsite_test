@@ -5,7 +5,7 @@
    >
 
   <include package="uvcsite" />
-
+  <include package="uvcsite.tests" />
   <principal
       id="zope.mgr"
       title="Manager"
