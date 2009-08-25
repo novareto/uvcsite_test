@@ -24,13 +24,13 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau)
 
 
-class Index(megrok.layout.Page):
+class TestIndex(megrok.layout.Page):
     """ Index Site for UVC """
     grok.require('zope.View')
 
 
-class Infos(megrok.layout.Page):
-    """ Info Page for UVC """
+#class Infos(megrok.layout.Page):
+#    """ Info Page for UVC """
 
 
 class PersonalPanelView(megrok.layout.Page):

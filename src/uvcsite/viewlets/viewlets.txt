@@ -40,9 +40,9 @@ Context
 
 View
 
-   >>> view = getMultiAdapter((context, request), name=u"index")
+   >>> view = getMultiAdapter((context, request), name=u"testindex")
    >>> view   
-   <uvcsite.app.Index object at ...>
+   <uvcsite.app.TestIndex object at ...>
 
 ViewletManagers and their Viewlets
 ----------------------------------
