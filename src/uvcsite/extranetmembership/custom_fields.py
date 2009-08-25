@@ -19,15 +19,15 @@ class MultiCheckBoxVocabularyWidget(MultiCheckBoxWidget):
             field.value_type.vocabulary, request)
 
 
-class ILoginNameFieldHidden(ITextLine):
-    """ Login Field in form of xxx@mnr"""
+#class ILoginNameFieldHidden(ITextLine):
+#    """ Login Field in form of xxx@mnr"""
 
 
-class LoginNameFieldHidden(TextLine):
-    implements(ILoginNameFieldHidden)
-
-    def __init__(self, **kw):
-        super(LoginNameFieldHidden, self).__init__(**kw)
+#class LoginNameFieldHidden(TextLine):
+#    implements(ILoginNameFieldHidden)
+#
+#    def __init__(self, **kw):
+#        super(LoginNameFieldHidden, self).__init__(**kw)
 
 
 class LoginNameWidgetHidden(SimpleInputWidget):
