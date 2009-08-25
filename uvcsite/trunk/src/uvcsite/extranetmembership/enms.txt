@@ -124,6 +124,7 @@ Here we have the input form we check if we have the right value for email!
 
    >>> form.getControl(name='form.email').value = "lars@novareto.de"
    >>> form.getControl(name='form.confirm').value = "passwort" 
+   >>> form.getControl(name='form.rollen').value = '1'
    >>> form.submit('Bearbeiten')
 
 Fill out the form and submit, and check if we get the right message!
