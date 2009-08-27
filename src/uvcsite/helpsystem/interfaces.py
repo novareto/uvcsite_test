@@ -10,7 +10,8 @@ from zope.interface import Interface
 from zope.schema import TextLine, Text
 from uvc.content import IProductFolder
 
-class IHelpFolder(IProductFolder):
+
+class IHelpFolder(IFolderColumnTable):
     pass
 
 
