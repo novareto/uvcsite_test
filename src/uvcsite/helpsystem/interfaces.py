@@ -8,9 +8,9 @@ from grok.interfaces import IContainer
 from uvcsite import IContent
 from zope.interface import Interface
 from zope.schema import TextLine, Text
+from uvc.content import IProductFolder
 
-
-class IHelpFolder(IContainer):
+class IHelpFolder(IProductFolder):
     pass
 
 
