@@ -1,16 +1,12 @@
 <div class="status"
            tal:condition="view/status"
            metal:define-macro="header">
-        <div class="summary"
-             i18n:translate=""
-             tal:content="view/status">
-          Form status summary
-</div>
-</div>
-<fieldset>
-  <legend tal:condition="view/label|nothing"
-          tal:content="view/label"/>
 
+      <dl class="" tal:attributes="class string: portalMessage message">
+          <dt> Nachricht </dt>
+          <dd tal:content="view/status" />
+      </dl>
+</div>
 <form action="." method="post" enctype="multipart/form-data" class="edit-form"
       metal:define-macro="form"
       tal:attributes="method view/method;
@@ -20,6 +16,10 @@
                       action view/action;
                       name view/name;
                       id view/id">
+
+<fieldset>
+  <legend tal:condition="view/label|nothing"
+          tal:content="view/label"/>
   <metal:block define-macro="subform">
   <div class="viewspace" metal:define-slot="viewspace">
     <metal:block define-slot="header">
@@ -51,11 +51,12 @@
                 <label tal:attributes="for widget/id">
                   <span i18n:translate=""
                       tal:content="widget/label">label</span>
-                  <span class="required"
-                        tal:condition="widget/required">*</span>
+                      <span tal:replace="structure python: widget.field.description"/>
+                  <pan class="required"
+                        tal:condition="widget/required">*</pan>
 			
                 </label>
-
+<!--
 	      <div class="formHelp"
 		   tal:define="description python:widget.field.description"
 		   tal:content="structure description"
@@ -63,16 +64,18 @@
 		   i18n:translate="">
 		Help
 	      </div>
-
+-->
 
               </div>
 
-              <div class="widget" tal:content="structure widget/render">
+              <div class="widget" tal:replace="structure widget/render">
                 <input type="text" size="24" value="" />
               </div>
-               <span class="error"
+               <span class="errormsg"
                     tal:condition="widget/error">
+                 <span> ! 
                  <span tal:replace="structure widget/error/render">error</span>
+                 </span>
                </span>
             </metal:block>
           </div>
@@ -114,5 +117,5 @@
   <metal:block define-slot="bottom">
   </metal:block>
   </metal:block>
-</form>
 </fieldset>
+</form>

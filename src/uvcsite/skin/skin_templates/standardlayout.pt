@@ -30,9 +30,9 @@
 	</div>      
       </div>
 
-      <div tal:content="structure provider:uvcsite.statusmessage"> </div>
 
       <div class="right-col">
+         <div tal:content="structure provider:uvcsite.statusmessage"> </div>
          <span tal:replace="structure provider:uvcsite.personalpreferences"/>
          <span tal:replace="structure provider:uvcsite.breadcrumb"/>
          <div tal:content="structure view/render"> </div> 

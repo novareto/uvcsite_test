@@ -1,7 +1,0 @@
-<div>
-  <h1>Hilfe System</h1>
-  <a href="helpadd"> Hilfe anlegen </a>
-  <div>
-      <span tal:replace="structure view/renderTable"/>
-  </div>
-</div>
