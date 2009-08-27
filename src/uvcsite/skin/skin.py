@@ -23,6 +23,7 @@ class Styles(megrok.resourcelibrary.ResourceLibrary):
     grok.layer(IUVCSiteLayer)
     megrok.resourcelibrary.directory('styles')
     megrok.resourcelibrary.include('main.css')
+    megrok.resourcelibrary.include('nva.css')
 
 
 class Scripts(megrok.resourcelibrary.ResourceLibrary):
