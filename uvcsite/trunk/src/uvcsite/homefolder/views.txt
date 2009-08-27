@@ -59,7 +59,7 @@ Now we can render the Index Page of the Homefolder:
     <table class="tablesorter myTable">
     <thead>
       <tr>
-        <th>X</th>
+        <th class="checkBox">X</th>
         <th>edit</th>
         <th>Object</th>
         <th>Status</th>
@@ -144,7 +144,7 @@ Now call the view with some contents...
     <table class="tablesorter myTable">
     <thead>
       <tr>
-        <th>X</th>
+        <th class="checkBox">X</th>
         <th>edit</th>
         <th>Object</th>
         <th>Status</th>

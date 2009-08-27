@@ -16,6 +16,6 @@ class IHelpFolder(IFolderColumnTable):
 
 
 class IHelpPage(IContent):
-    name = TextLine(title=u"Name")
-    title = TextLine(title=u"title")
-    text = Text(title=u"text")
+    name = TextLine(title=u"Name", description=u"Bitte hier die Daten eingeben")
+    title = TextLine(title=u"title", description=u"Bitte hier die Daten eingeben")
+    text = Text(title=u"text",  description=u"Bitte hier die Daten eingeben")

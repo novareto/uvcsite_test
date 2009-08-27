@@ -13,6 +13,7 @@ class CheckBox(CheckBoxColumn):
     grok.name('checkBox')
     grok.adapts(IFolderColumnTable, None, None)
     weight = 0
+    cssClasses = {'th': 'checkBox'}
 
 
 class Link(LinkColumn):

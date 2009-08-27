@@ -9,15 +9,16 @@ from megrok.z3cform import PageAddForm, field, PageEditForm, PageDisplayForm
 from uvcsite import Content
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
-
+from uvc.content import Content, schema
 
 class HelpPage(Content):
     grok.implements(IHelpPage)
+    schema(IHelpPage)
 
     def __init__(self, name="", title="", text=""):
-        self.name = name
-        self.title = title
-        self.text = text
+        self.name = unicode(name)
+        self.title = unicode(title)
+        self.text = unicode(text)
 
 
 class HelpAdd(PageAddForm):
