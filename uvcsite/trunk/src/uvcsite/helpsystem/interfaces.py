@@ -8,7 +8,7 @@ from grok.interfaces import IContainer
 from uvcsite import IContent
 from zope.interface import Interface
 from zope.schema import TextLine, Text
-from uvc.content import IProductFolder
+from uvcsite.interfaces import IFolderColumnTable
 
 
 class IHelpFolder(IFolderColumnTable):
