@@ -49,9 +49,11 @@ class Edit(PageEditForm):
 class HelpPageIndex(PageDisplayForm):
     grok.name('overview')
     grok.context(IHelpPage)
+    grok.require('zope.View')
     fields = field.Fields(IHelpPage)
 
 
 class TTDisplay(grok.View):
     grok.name('index')
     grok.context(HelpPage)
+    grok.require('zope.View')
