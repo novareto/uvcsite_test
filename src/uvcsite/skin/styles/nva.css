@@ -1,0 +1,7 @@
+table thead tr .headerSortUp {
+    background-image: url(asc.gif);
+}
+table thead tr .headerSortDown {
+    background-image: url(desc.gif);
+}
+
