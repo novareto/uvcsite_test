@@ -42,7 +42,7 @@ Now log on as a user and look if we get the index page
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
 
-   >>> browser.handleErrors = False
+   >>> browser.handleErrors = True 
    >>> browser.addHeader('Authorization', 'Basic user:user')
    >>> browser.open('http://localhost/++skin++uvcsiteskin/app/')
    >>> 'Meine Einstellungen' in browser.contents
@@ -120,7 +120,6 @@ Here we have the input form we check if we have the right value for email!
    >>> form = browser.getForm()
    >>> print form.getControl(name='form.email').value
    test@test.de
-
 
    >>> form.getControl(name='form.email').value = "lars@novareto.de"
    >>> form.getControl(name='form.confirm').value = "passwort" 

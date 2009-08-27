@@ -26,10 +26,11 @@ We have to setup view and context to get our ViewletManager!
    >>> import zope.security.management
    >>> request = TestRequest()
    >>> request.setPrincipal(DummyPrincipal())
-   >>> zope.security.management.newInteraction(request)
 
    >>> root = getRootFolder()
    >>> uvcsite = Uvcsite()
+   >>> from zope.securitypolicy.interfaces import IPrincipalRoleManager
+   >>> #import pdb; pdb.set_trace()
    >>> root['app'] = uvcsite
 
 Context
@@ -37,6 +38,9 @@ Context
    >>> context = root['app']
    >>> context
    <uvcsite.app.Uvcsite object at ...>
+   >>> prm = IPrincipalRoleManager(context)
+   >>> prm.assignRoleToPrincipal('zope.View', 'someuser')
+   >>> zope.security.management.newInteraction(request)
 
 View
 

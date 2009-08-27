@@ -60,6 +60,7 @@ class Footer(grok.ViewletManager):
     grok.name('uvcsite.footer')
     grok.context(Interface)
     grok.implements(IFooter)
+    grok.require('zope.View')
 
 
 class Logo(grok.ViewletManager):
