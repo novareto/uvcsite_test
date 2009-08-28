@@ -1,3 +1,39 @@
+/* Form Effects */
+
+input:focus, textarea:focus, select:focus{
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+}
+
+input[type="submit"] {
+    background-color:#B30B16;
+    border:medium none;
+    color:#FFFFFF;
+    font-weight:bold;
+    margin: 5px 0px 0px 0px;
+    padding:2px 8px;
+}
+
+textarea {
+    margin-top: 4px;
+    border: 1px solid #4f4f4f;
+}       
+   
+
+/* Description */
+
+.right-col P.description{
+        font-size: 14px;
+        margin: 10px 5px 0px 0px;
+        padding: 0px;
+        line-height: 19px;
+        float: none;
+}
+
+/* Table */
+
 table.tablesorter thead tr .header {
         background-image: url(bg.gif);
         background-repeat: no-repeat;
@@ -15,6 +51,8 @@ table.tablesorter thead tr .checkBox {
     width: 1px;
 }
 
+
+/* Portal Messages */
 
 dl.portalMessage {
     font-size: &dtml-fontSmallSize;;

@@ -59,8 +59,8 @@ Now we can render the Index Page of the Homefolder:
     <table class="tablesorter myTable">
     <thead>
       <tr>
-        <th class="checkBox">X</th>
-        <th>edit</th>
+        <th class="checkBox"></th>
+        <th>Titel</th>
         <th>Object</th>
         <th>Status</th>
         <th>Autor</th>
@@ -144,8 +144,8 @@ Now call the view with some contents...
     <table class="tablesorter myTable">
     <thead>
       <tr>
-        <th class="checkBox">X</th>
-        <th>edit</th>
+        <th class="checkBox"></th>
+        <th>Titel</th>
         <th>Object</th>
         <th>Status</th>
         <th>Autor</th>
@@ -155,7 +155,7 @@ Now call the view with some contents...
     <tbody>
       <tr class="even">
       <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="hans"  /></td>
-      <td><a href="http://127.0.0.1/hf/personcontainer/hans/edit">edit this item</a></td>
+      <td><a href="http://127.0.0.1/hf/personcontainer/hans/edit"></a></td>
         <td>Person</td>
         <td>Entwurf</td>
         <td>someuser</td>
