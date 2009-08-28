@@ -14,15 +14,18 @@ class CheckBox(CheckBoxColumn):
     grok.adapts(IFolderColumnTable, None, None)
     weight = 0
     cssClasses = {'th': 'checkBox'}
+    header = u""
 
 
 class Link(LinkColumn):
     grok.name('link')
     grok.adapts(IFolderColumnTable, None, None)
     weight = 1
-    header = u"edit"
+    header = _(u"Titel")
     linkName = u"edit"
-    linkContent = u"edit this item"
+
+    def getLinkContent(self, item):
+        return item.title
 
 
 class MetaTypeColumn(GetAttrColumn):
@@ -35,7 +38,7 @@ class MetaTypeColumn(GetAttrColumn):
 
 class CreatorColumn(Column):
     grok.name('creator')
-    header = u"Autor"
+    header = _(u"Autor")
     weight = 99
     grok.adapts(IFolderColumnTable, None, None)
 
@@ -45,6 +48,6 @@ class CreatorColumn(Column):
 
 class ModifiedColumn(ModifiedColumn):
     grok.name('modified')
-    header = u"Datum"
+    header = _(u"Datum")
     weight = 100
     grok.adapts(IFolderColumnTable, None, None)

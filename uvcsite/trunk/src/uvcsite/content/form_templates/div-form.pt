@@ -2,7 +2,7 @@
            tal:condition="view/status"
            metal:define-macro="header">
 
-      <dl class="" tal:attributes="class string: portalMessage message">
+      <dl class="" tal:attributes="class string: portalMessage error">
           <dt> Nachricht </dt>
           <dd tal:content="view/status" />
       </dl>
@@ -73,9 +73,8 @@
               </div>
                <span class="errormsg"
                     tal:condition="widget/error">
-                 <span> ! 
+                 <span> ! </span> 
                  <span tal:replace="structure widget/error/render">error</span>
-                 </span>
                </span>
             </metal:block>
           </div>

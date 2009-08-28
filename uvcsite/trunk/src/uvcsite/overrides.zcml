@@ -5,4 +5,9 @@
 
     <browser:defaultSkin name="uvcsiteskin"/>
 
+     <adapter
+         factory=".content.error.StandardErrorViewTemplate"
+         />
+
+
 </configure>
