@@ -98,5 +98,5 @@ mytable.js
 
 favicon.ico
    
-   >>> "http://localhost/++skin++uvcsiteskin/app/@@/uvcresources/favicon.gif" in browser.contents
+   >>> "http://localhost/++skin++uvcsiteskin/app/@@/styles/favicon.gif" in browser.contents
    True

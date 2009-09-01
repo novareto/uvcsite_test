@@ -74,8 +74,11 @@ class ENMSCreateUser(Form, grok.Form):
         self.redirect(self.url(self.context))
 
 
+
+
 class ENMSUpdateUser(Form, grok.Form):
     """ A Form for updating a User in ENMS"""
+
     grok.context(IMyHomeFolder)
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden
@@ -85,7 +88,6 @@ class ENMSUpdateUser(Form, grok.Form):
     def setUpWidgets(self, ignore_request=False):
         #BBB Die Werte mussen hier erst noch errechnet werden.
         principal = "0101010001" #self.request.principal.hauptuser
-        #import pdb; pdb.set_trace()
         id = self.request.get('cn')
         um = getUtility(IUserManagement)
         user = {}
