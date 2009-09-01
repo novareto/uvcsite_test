@@ -3,7 +3,7 @@
      tal:condition="items">
      <h1> 
         <img src="" 
-	     tal:attributes="src python: viewletmanager.view.application_url()+'/@@/uvcresources/blue-sep.gif'">
+	     tal:attributes="src python: viewletmanager.view.application_url()+'/@@/styles/blue-sep.gif'">
 	Navigation 
      </h1>
      <div class="separator"></div>

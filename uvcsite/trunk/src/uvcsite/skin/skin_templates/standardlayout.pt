@@ -6,7 +6,9 @@
       i18n:domain="uvcsite">
 <head>
   <title>Extranet</title>
+  <!--
   <tal:block replace="resource_library:uvcresources"/>
+  -->
   <tal:providers replace="structure provider:uvcsite.headers" />
 </head>
 

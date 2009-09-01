@@ -1,9 +1,9 @@
 <a href="#" class="logotype">
     <img src="" alt="Extranet BGHW"
-         tal:attributes="src python: viewlet.app_url()+'/@@/uvcresources/logotype.gif'" />
+         tal:attributes="src python: viewlet.app_url()+'/@@/styles/logotype.gif'" />
 </a>
 <div class="header-bg">
     <img src="" alt="Extranet BGHW"
-         tal:attributes="src python: viewlet.app_url()+'/@@/uvcresources/top-bg2.jpg'" />
+         tal:attributes="src python: viewlet.app_url()+'/@@/styles/top-bg2.jpg'" />
 </div>
 <div class="relax"></div>
