@@ -11,7 +11,6 @@ from uvcsite.viewlets.utils import MenuItem
 from uvcsite.interfaces import IUVCSite, IGlobalMenu
 from uvcsite.helpsystem.interfaces import IHelpFolder
 from zope.app.authentication.interfaces import IPrincipal
-from uvcsite.skin.skin import Scripts
 from uvc.content import ProductFolder, IProductFolder, contenttype
 from page import HelpPage
 
@@ -22,20 +21,6 @@ class HelpFolder(ProductFolder):
     grok.description(u'Sie können auf die einzelnen Dokumente klicken um die Hilfe anzueigen!')
 
     contenttype(HelpPage)
-
-
-#class Index(megrok.z3ctable.TablePage):
-#    grok.require('zope.ManageSite')
-    
-#    cssClasses = {'table': 'tablesorter myTable'}
-#    cssClassEven = u'even'
-#    cssClassOdd = u'odd'
-
-
-
-#    def update(self):
-#        super(Index, self).update()
-#        Scripts.need()
 
 
 class Hilfe(MenuItem):

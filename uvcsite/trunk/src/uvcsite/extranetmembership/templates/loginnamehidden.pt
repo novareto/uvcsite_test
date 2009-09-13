@@ -14,4 +14,5 @@
        <span tal:content="python: form_value"/>
     </b>
 </p>
+<br>
 </div>
