@@ -308,14 +308,13 @@ background: url("menu-blue-bg.gif") left top repeat-x ;
 }
 .content .right-col .breadcrum A {text-decoration: none;}
 .content .right-col .breadcrum A:HOVER {text-decoration: underline;}
+
 .right-col UL {
-	float: left;	
 	margin: 20px 0px 0px 0px;
 	padding: 0px 0px 30px 0px;
-	list-style: none;
 }
-.right-col UL LI{
-	float: left;
+
+.content .right-col UL LI{
 	padding: 0px;
 	margin-bottom: 5px;
 	font-size: 13px;
@@ -328,6 +327,7 @@ background: url("menu-blue-bg.gif") left top repeat-x ;
 	color: #6e6e6e;
 	text-decoration: underline; 
 }
+
 .right-col UL A:HOVER{
 	color: #b30b16;
 }

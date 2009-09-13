@@ -7,6 +7,7 @@
           <dd tal:content="view/status" />
       </dl>
 </div>
+<div class="tooltip"></div> 
 <form action="." method="post" enctype="multipart/form-data" class="edit-form"
       metal:define-macro="form"
       tal:attributes="method view/method;

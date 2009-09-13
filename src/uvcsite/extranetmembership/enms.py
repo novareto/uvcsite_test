@@ -42,6 +42,7 @@ class ENMS(megrok.layout.Page):
 class ENMSCreateUser(Form, grok.Form):
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
+    template = grok.PageTemplateFile('templates/form.pt')
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
@@ -81,6 +82,7 @@ class ENMSUpdateUser(Form, grok.Form):
 
     grok.context(IMyHomeFolder)
     form_fields = grok.Fields(IExtranetMember)
+    template = grok.PageTemplateFile('templates/form.pt')
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
     grok.require('uvc.ManageCoUsers')

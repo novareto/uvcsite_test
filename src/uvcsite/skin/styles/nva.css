@@ -1,3 +1,32 @@
+/* tooltip with jquery tools */
+
+div.tooltip { 
+    background-color:#000; 
+    border:1px solid #fff; 
+    padding:10px 15px; 
+    width:200px; 
+    display:none; 
+    color:#fff; 
+    text-align:left; 
+    font-size:12px; 
+ 
+    /* outline radius for mozilla/firefox only */ 
+    -moz-box-shadow:0 0 10px #000; 
+    -webkit-box-shadow:0 0 10px #000; 
+}
+
+/* Ul & Li Elements */
+
+.right-col ul {
+    margin-bottom:0.5em;
+}
+
+.right-col ul li {
+    line-height:1.5em;
+    list-style-image:url(http://www.novareto.de/bullet.gif);
+    list-style-type:square;
+}
+
 /* Form Effects */
 
 input:focus, textarea:focus, select:focus{

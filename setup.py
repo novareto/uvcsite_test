@@ -36,6 +36,7 @@ setup(name='uvcsite',
 			'z3c.breadcrumb',
                         'hurry.zoperesource',
                         'hurry.jquery',
+                        'z3c.template', # Needed for my custom Template
                         # Add extra requirements here
                         ],
       entry_points = """

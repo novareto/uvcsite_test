@@ -4,9 +4,11 @@
 
 import grok
 
+from zope.interface import Interface
 from megrok.z3cform import PageAddForm, field, PageEditForm, PageDisplayForm
 
 from uvcsite import Content
+from uvcsite.skin.skin import Forms 
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 from uvc.content import Content, schema
@@ -28,6 +30,10 @@ class HelpAdd(PageAddForm):
 
     label = u"Hilfe Seiten anlegen"
 
+    def update(self):
+        print "UPDATE"
+        Forms.need()
+
     def create(self, data):
         return HelpPage(**data)
 
@@ -45,6 +51,16 @@ class Edit(PageEditForm):
     grok.context(IHelpPage)
     fields = field.Fields(IHelpPage).omit('name')
     grok.require('zope.ManageSite')
+
+    def update(self):
+        Forms.need()
+
+class Error(grok.JSON):
+    grok.context(Interface)
+
+    def validate(self, value, id):
+        import pdb; pdb.set_trace()     
+
 
 
 class HelpPageIndex(PageDisplayForm):

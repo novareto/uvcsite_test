@@ -36,8 +36,10 @@ class ScriptsDirectory(grok.DirectoryResource):
 
 scripts = Library('javascripts')
 tablesorter = ResourceInclusion(scripts, 'jquery.tablesorter.js', [jquery])
-Scripts = ResourceInclusion(scripts, 'mytable.js', [tablesorter]) 
+Table = ResourceInclusion(scripts, 'mytable.js', [tablesorter]) 
 
+tooltip = ResourceInclusion(scripts, 'tools.tooltip-1.1.0.js', [jquery])
+Forms = ResourceInclusion(scripts, 'mytooltip.js', [tooltip])
 
 class StandardLayout(megrok.layout.Layout):
     grok.context(Interface)
