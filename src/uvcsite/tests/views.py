@@ -5,9 +5,10 @@
 import grok
 import megrok.layout
 
+from uvcsite import ApplicationAwareView
 from uvcsite.interfaces import IUVCSite
 
 
-class Index(megrok.layout.Page):
+class Index(megrok.layout.Page, ApplicationAwareView):
     grok.context(IUVCSite)
     grok.require('zope.View')

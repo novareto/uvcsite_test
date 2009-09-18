@@ -4,6 +4,7 @@ import grok
 import megrok.layout
 
 from uvcsite import uvcsiteMF as _
+from uvcsite import ApplicationAwareView
 from uvcsite.interfaces import IUVCSite
 from uvcsite.auth.handler import setup_pau
 from zope.app.security.interfaces import IAuthentication
@@ -24,7 +25,7 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau)
 
 
-class PersonalPanelView(megrok.layout.Page):
+class PersonalPanelView(megrok.layout.Page, ApplicationAwareView):
     """ Page for Personal Properties """
     title = _(u"Persönliche Einstellungen")
     description = _(u"Hier können Sie Einstellungen zu"

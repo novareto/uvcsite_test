@@ -13,7 +13,7 @@ First test if we have the right Layout for our Site:
   >>> from megrok.layout import ILayout
   >>> from zope.publisher.browser import TestRequest
 
-  >>> layout = getMultiAdapter((Interface, TestRequest()), ILayout)
+  >>> layout = getMultiAdapter((TestRequest(), Interface), ILayout)
   >>> ILayout.providedBy(layout)
   True
 

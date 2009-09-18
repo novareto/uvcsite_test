@@ -5,9 +5,9 @@
 import grok
 
 from zope.interface import Interface
-from megrok.z3cform import PageAddForm, field, PageEditForm, PageDisplayForm
+from megrok.z3cform.base import PageAddForm, field, PageEditForm, PageDisplayForm, Fields
 
-from uvcsite import Content
+from uvcsite import Content, ApplicationAwareView
 from uvcsite.skin.skin import Forms 
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
@@ -23,15 +23,14 @@ class HelpPage(Content):
         self.text = unicode(text)
 
 
-class HelpAdd(PageAddForm):
+class HelpAdd(PageAddForm, ApplicationAwareView):
     grok.context(IHelpFolder)
-    fields = field.Fields(IHelpPage)
+    fields = Fields(IHelpPage)
     grok.require('zope.ManageSite')
 
     label = u"Hilfe Seiten anlegen"
 
     def update(self):
-        print "UPDATE"
         Forms.need()
 
     def create(self, data):
@@ -47,27 +46,20 @@ class HelpAdd(PageAddForm):
         return self.url(self.context)
 
 
-class Edit(PageEditForm):
+class Edit(PageEditForm, ApplicationAwareView):
     grok.context(IHelpPage)
-    fields = field.Fields(IHelpPage).omit('name')
+    fields = Fields(IHelpPage).omit('name')
     grok.require('zope.ManageSite')
 
     def update(self):
         Forms.need()
 
-class Error(grok.JSON):
-    grok.context(Interface)
 
-    def validate(self, value, id):
-        import pdb; pdb.set_trace()     
-
-
-
-class HelpPageIndex(PageDisplayForm):
+class HelpPageIndex(PageDisplayForm, ApplicationAwareView):
     grok.name('overview')
     grok.context(IHelpPage)
     grok.require('zope.View')
-    fields = field.Fields(IHelpPage)
+    fields = Fields(IHelpPage)
 
 
 class TTDisplay(grok.View):

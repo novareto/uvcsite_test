@@ -6,6 +6,7 @@ import grok
 
 from zope.component import Interface
 from uvcsite import uvcsiteMF as _
+from uvcsite import ApplicationAwareView 
 from uvcsite.interfaces import IMyHomeFolder
 from megrok.z3ctable import (TablePage, Column, GetAttrColumn,
             CheckBoxColumn, LinkColumn, ModifiedColumn, Values)
@@ -15,7 +16,7 @@ from zope.dublincore.interfaces import IZopeDublinCore
 from uvcsite.workflow.basic_workflow import titleForState
 
 
-class Index(TablePage):
+class Index(TablePage, ApplicationAwareView):
     grok.context(IMyHomeFolder)
 
     cssClasses = {'table': 'tablesorter myTable'}
