@@ -63,6 +63,7 @@ Let´s use the TestBrowser to look on the forms itself.
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
    >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+   >>> browser.handleErrors = False 
    >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/helpadd')
    >>> print browser.headers['Status'].upper()
    200 OK

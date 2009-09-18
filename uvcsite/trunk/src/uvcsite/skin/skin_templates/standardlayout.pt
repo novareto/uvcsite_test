@@ -37,7 +37,7 @@
          <div tal:content="structure provider:uvcsite.statusmessage"> </div>
          <span tal:replace="structure provider:uvcsite.personalpreferences"/>
          <span tal:replace="structure provider:uvcsite.breadcrumb"/>
-         <div tal:content="structure view/render"> </div> 
+         <div tal:content="structure view/content"> </div> 
       </div>
 
       <div class="relax"> </div>

@@ -8,10 +8,13 @@ import megrok.layout
 
 from hurry.jquery import jquery
 from zope.interface import Interface
-from megrok.z3cform.skin import FormLayer, TableLayer
+from megrok.z3cform.base import IFormLayer
 from hurry.resource import Library, ResourceInclusion, rollup
 
-class IUVCSiteLayer(FormLayer):
+#Not sure if this is needed after using megrok.z3cform.ui
+from z3c.formui.interfaces import IDivFormLayer
+
+class IUVCSiteLayer(IFormLayer, IDivFormLayer):
     pass
 
 

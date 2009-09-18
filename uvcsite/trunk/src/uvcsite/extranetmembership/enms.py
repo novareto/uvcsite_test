@@ -4,6 +4,7 @@ import grok
 import megrok.layout
 
 from uvcsite import uvcsiteMF as _
+from uvcsite import ApplicationAwareView 
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
 from zope.formlib.form import setUpWidgets
@@ -29,7 +30,7 @@ def null_validator(*args, **kwargs):
     return ()
 
 
-class ENMS(megrok.layout.Page):
+class ENMS(megrok.layout.Page, ApplicationAwareView):
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
 
@@ -39,7 +40,7 @@ class ENMS(megrok.layout.Page):
         return um.getUserGroups(principal)
 
 
-class ENMSCreateUser(Form, grok.Form):
+class ENMSCreateUser(Form, grok.Form, ApplicationAwareView):
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
     template = grok.PageTemplateFile('templates/form.pt')
@@ -77,7 +78,7 @@ class ENMSCreateUser(Form, grok.Form):
 
 
 
-class ENMSUpdateUser(Form, grok.Form):
+class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
     """ A Form for updating a User in ENMS"""
 
     grok.context(IMyHomeFolder)

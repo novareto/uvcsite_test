@@ -7,11 +7,11 @@
   <include package=".content" />
   <includeDependencies package="." />
   <includePlugins package="." />
+  <include package="megrok.z3cform.base" />
+  <include package="megrok.z3cform.base" file="meta.zcml" />
 
+  <include package="uvc.content" file="meta.zcml"/>
   <include package="uvc.content" />
-  <include package="megrok.z3cform" />
-  <include package="megrok.z3cform" file="meta.zcml" />
-
 
       <unauthenticatedPrincipal id="zope.anybody"
                                 title="Unauthenticated User" />
