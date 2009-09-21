@@ -11,6 +11,10 @@ from zope.app.security.interfaces import IAuthentication
 from uvcsite.homefolder.homefolder import PortalMembership
 from zope.app.authentication import PluggableAuthentication
 from zope.app.homefolder.interfaces import IHomeFolderManager
+from zope.publisher.interfaces import INotFound
+from zope.publisher.interfaces import INotFound
+from zope.interface.common.interfaces import IException
+from zope.exceptions.interfaces import IUserError
 
 
 class Uvcsite(grok.Application, grok.Container):
@@ -31,3 +35,17 @@ class PersonalPanelView(megrok.layout.Page, ApplicationAwareView):
     description = _(u"Hier können Sie Einstellungen zu"
                      " Ihrem Benutzerprofil vornehmen.")
     grok.require('zope.View')
+
+
+class NotFound(megrok.layout.Page, ApplicationAwareView):
+      grok.context(INotFound)
+      grok.name('index.html')
+      
+class SystemError(megrok.layout.Page, ApplicationAwareView):
+      grok.context(IException)
+      grok.name('index.html')
+            
+class UserError(megrok.layout.Page, ApplicationAwareView):
+      grok.context(IUserError)
+      grok.name('index.html')
+    

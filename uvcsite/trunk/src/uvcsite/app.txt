@@ -35,3 +35,21 @@ Now log on as a user and look if we get the index page
    >>> "Congratulations" in browser.contents
    True
 
+Not Found View
+--------------
+
+   >>> browser.handleErrors = True 
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/not_found')
+   Traceback (most recent call last):
+   ...
+   httperror_seek_wrapper: HTTP Error 404: Not Found
+
+   >>> print browser.contents
+   <html><head>
+   ...
+   <title>NotFound</title></head>
+   <body><h2>NotFound</h2>
+   A server error occurred.
+   </body></html>
+   <BLANKLINE>
+
