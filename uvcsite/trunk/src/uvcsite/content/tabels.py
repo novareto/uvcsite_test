@@ -31,7 +31,7 @@ class Link(LinkColumn):
 class MetaTypeColumn(GetAttrColumn):
     grok.name('meta_type')
     grok.adapts(IFolderColumnTable, None, None)
-    header = _(u'Object')
+    header = _(u'Objekt')
     attrName = 'meta_type'
     weight = 2
 
