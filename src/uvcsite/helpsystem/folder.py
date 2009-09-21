@@ -18,7 +18,7 @@ class HelpFolder(ProductFolder):
     grok.implements(IProductFolder, IHelpFolder)
     grok.title('Hilfe')
     grok.name(u'In diesem Ordner finden Sie Hilfe Dokumente')
-    grok.description(u'Sie können auf die einzelnen Dokumente klicken um die Hilfe anzueigen!')
+    grok.description(u'Sie knnen auf die einzelnen Dokumente klicken um die Hilfe anzueigen!')
 
     contenttype(HelpPage)
 

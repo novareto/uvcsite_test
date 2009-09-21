@@ -64,6 +64,41 @@ Let´s use the TestBrowser to look on the forms itself.
    >>> browser = Browser()
    >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
    >>> browser.handleErrors = False 
+
+But first do we get the index of the container itself?
+
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe')
+   >>> print browser.contents
+   <!DOCTYPE...
+   <div class="relax"> </div>
+            <div><div>
+     <h1>Hilfe</h1>
+     <p class="big">Sie knnen auf die einzelnen Dokumente klicken um die Hilfe anzueigen!</p>
+     <div class="addContent">
+         <a href="add">
+         <span>HelpPage</span> anlegen </a>
+     </div>
+     <table class="tablesorter myTable">
+     <thead>
+       <tr>
+         <th class="checkBox"></th>
+         <th>Titel</th>
+         <th>Objekt</th>
+         <th>Autor</th>
+         <th>Datum</th>
+       </tr>
+     </thead>
+     <tbody>
+     </tbody>
+   </table>
+   </div>
+   </div>
+     </div>
+   ...
+   </html>
+
+Ok now we can add a new help page!
+
    >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/helpadd')
    >>> print browser.headers['Status'].upper()
    200 OK
