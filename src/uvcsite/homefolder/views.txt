@@ -61,7 +61,7 @@ Now we can render the Index Page of the Homefolder:
       <tr>
         <th class="checkBox"></th>
         <th>Titel</th>
-        <th>Object</th>
+        <th>Objekt</th>
         <th>Status</th>
         <th>Autor</th>
         <th>Datum</th>
@@ -70,7 +70,7 @@ Now we can render the Index Page of the Homefolder:
     <tbody>
     </tbody>
     </table>
-    <input type="submit" value="Delte" />
+    <input type="submit" value="Entfernen" />
     </form>
    </div>
    </body>
@@ -146,7 +146,7 @@ Now call the view with some contents...
       <tr>
         <th class="checkBox"></th>
         <th>Titel</th>
-        <th>Object</th>
+        <th>Objekt</th>
         <th>Status</th>
         <th>Autor</th>
         <th>Datum</th>
@@ -163,7 +163,7 @@ Now call the view with some contents...
       </tr>
      </tbody>
     </table>
-    <input type="submit" value="Delte" />
+    <input type="submit" value="Entfernen" />
     </form>
     </div>
     </body>
