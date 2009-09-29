@@ -78,7 +78,14 @@ But first do we get the index of the container itself?
          <a href="add">
          <span>HelpPage</span> anlegen </a>
      </div>
-     <table class="tablesorter myTable">
+     <form action="http://localhost/++skin++uvcsiteskin/app/hilfe/@@index"
+         method="post" enctype="multipart/form-data"
+         class="edit-form" name="deleteFormTable"
+         id="deleteFormTable">
+     <div class="viewspace">
+       <div>
+       <div class="tabluarTable">
+         <table class="tablesorter myTable">
      <thead>
        <tr>
          <th class="checkBox"></th>
@@ -91,8 +98,14 @@ But first do we get the index of the container itself?
      <tbody>
      </tbody>
    </table>
-   </div>
-   </div>
+       </div>
+       <div class="tabluarForm">
+       </div>
+     </div>
+     </div>
+     <div>
+       <div class="buttons">
+       </div>
      </div>
    ...
    </html>

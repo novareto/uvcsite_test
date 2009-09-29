@@ -11,7 +11,7 @@ from uvcsite.interfaces import IFolderColumnTable
 
 class CheckBox(CheckBoxColumn):
     grok.name('checkBox')
-    grok.adapts(IFolderColumnTable, None, None)
+    grok.context(IFolderColumnTable)
     weight = 0
     cssClasses = {'th': 'checkBox'}
     header = u""
@@ -19,7 +19,7 @@ class CheckBox(CheckBoxColumn):
 
 class Link(LinkColumn):
     grok.name('link')
-    grok.adapts(IFolderColumnTable, None, None)
+    grok.context(IFolderColumnTable)
     weight = 1
     header = _(u"Titel")
     linkName = u"edit"
@@ -30,7 +30,7 @@ class Link(LinkColumn):
 
 class MetaTypeColumn(GetAttrColumn):
     grok.name('meta_type')
-    grok.adapts(IFolderColumnTable, None, None)
+    grok.context(IFolderColumnTable)
     header = _(u'Objekt')
     attrName = 'meta_type'
     weight = 2
@@ -38,9 +38,9 @@ class MetaTypeColumn(GetAttrColumn):
 
 class CreatorColumn(Column):
     grok.name('creator')
+    grok.context(IFolderColumnTable)
     header = _(u"Autor")
     weight = 99
-    grok.adapts(IFolderColumnTable, None, None)
 
     def renderCell(self, item):
         return ', '.join(IZopeDublinCore(item).creators)
@@ -48,6 +48,6 @@ class CreatorColumn(Column):
 
 class ModifiedColumn(ModifiedColumn):
     grok.name('modified')
+    grok.context(IFolderColumnTable)
     header = _(u"Datum")
     weight = 100
-    grok.adapts(IFolderColumnTable, None, None)
