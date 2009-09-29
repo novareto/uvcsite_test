@@ -9,7 +9,7 @@ from uvcsite import uvcsiteMF as _
 from uvcsite import ApplicationAwareView 
 from uvcsite.interfaces import IMyHomeFolder
 from megrok.z3ctable import (TablePage, Column, GetAttrColumn,
-            CheckBoxColumn, LinkColumn, ModifiedColumn, Values)
+            CheckBoxColumn, LinkColumn, ModifiedColumn, Values, table)
 
 from hurry.workflow.interfaces import IWorkflowState
 from zope.dublincore.interfaces import IZopeDublinCore
@@ -75,7 +75,8 @@ class HomeFolderValues(Values):
 
 class StateColumn(GetAttrColumn):
     grok.name('state')
-    grok.adapts(IMyHomeFolder, None, Index)
+    grok.context(IMyHomeFolder)
+    table(Index)
     header = _(u'Status')
     attrName = 'status'
     weight = 3
