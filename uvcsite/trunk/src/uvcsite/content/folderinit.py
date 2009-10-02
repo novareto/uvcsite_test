@@ -7,7 +7,7 @@ from zope.app.publication.zopepublication import ZopePublication
 from zope.app.homefolder.interfaces import IHomeFolderManager
 
 from zope.component import getUtilitiesFor
-from uvcsite.content import IProductFolder
+from uvcsite.content import IProductFolder, IUVCApplication
 
 
 

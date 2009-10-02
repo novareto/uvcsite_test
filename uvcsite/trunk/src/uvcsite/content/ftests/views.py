@@ -45,6 +45,26 @@ Note: There are default columns defined for IContainer in
     <div class="viewspace">
       <div>
       <div class="tabluarTable">
+        <table class="tablesorter myTable">
+    <thead>
+      <tr>
+        <th class="checkBox"></th>
+        <th>Titel</th>
+        <th>Objekt</th>
+        <th>Autor</th>
+        <th>Datum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="even">
+        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent"  /></td>
+        <td><a href="http://127.0.0.1/pf/mycontent/edit"></a></td>
+        <td>MyContent</td>
+        <td></td>
+        <td>...</td>
+      </tr>
+    </tbody>
+  </table>
       </div>
       <div class="tabluarForm">
       </div>
@@ -59,17 +79,38 @@ Note: There are default columns defined for IContainer in
       </div>
     </div>
   </form>
+  <BLANKLINE>
+
 
 If we call this class we should see our tableform in our simple Layout:
 
   >>> print view()
-  <html>
-  <form action="http://127.0.0.1" method="post"
+  <html> <form action="http://127.0.0.1" method="post"
         enctype="multipart/form-data" class="edit-form"
         name="deleteFormTable" id="deleteFormTable">
     <div class="viewspace">
       <div>
       <div class="tabluarTable">
+        <table class="tablesorter myTable">
+    <thead>
+      <tr>
+        <th class="checkBox"></th>
+        <th>Titel</th>
+        <th>Objekt</th>
+        <th>Autor</th>
+        <th>Datum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="even">
+        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent"  /></td>
+        <td><a href="http://127.0.0.1/pf/mycontent/edit"></a></td>
+        <td>MyContent</td>
+        <td></td>
+        <td>...</td>
+      </tr>
+    </tbody>
+  </table>
       </div>
       <div class="tabluarForm">
       </div>
@@ -84,7 +125,7 @@ If we call this class we should see our tableform in our simple Layout:
       </div>
     </div>
   </form>
-  </html>
+   </html>
 
 
 Add View

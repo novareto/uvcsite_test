@@ -40,6 +40,7 @@ setup(name='uvcsite',
                         'z3c.schema2xml',
                         'z3c.template', # Needed for my custom Template
                         'z3c.testsetup',
+                        'zc.blist',
                         'zope.app.homefolder',
                             # Add extra requirements here
                             ],

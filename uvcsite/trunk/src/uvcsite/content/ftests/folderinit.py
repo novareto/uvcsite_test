@@ -2,9 +2,10 @@
 
   >>> from zope.component import getUtilitiesFor
   >>> from uvcsite.content import IProductFolder
-  >>> list(getUtilitiesFor(IProductFolder))
-  [(u'In diesem Ordner finden Sie Hilfe Dokumente', <class 'uvcsite.helpsystem.folder.HelpFolder'>)]
-
+  >>> utils = list(getUtilitiesFor(IProductFolder))
+  >>> titles = [x[0] for x in utils]
+  >>> 'ENW1Container' in titles 
+  True
 """
 
 import grok
