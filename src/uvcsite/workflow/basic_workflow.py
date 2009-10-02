@@ -15,6 +15,7 @@ from uvcsite import IContent
 from persistent.list import PersistentList
 from datetime import datetime
 
+from zc.blist import BList
 
 CREATED = 0
 PUBLISHED = 1
@@ -65,7 +66,7 @@ class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
         """ """
         result = []
         for version in self.versions:
-            state_adapter = interfaces.IWorkflowState(version)
+            state_adapter = IWorkflowState(version)
             if state_adapter.getId() == id and state_adapter.getState() == state:
                 result.append(version)
         return result
@@ -74,7 +75,7 @@ class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
         """ """
         result = []
         for version in self.versions:
-            if interfaces.IWorkflowInfo(version).hasAutomaticTransitions():
+            if IWorkflowInfo(version).hasAutomaticTransitions():
                 result.append(version)
         return result
 
@@ -86,14 +87,14 @@ class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
         """ """
         result = []
         for version in self.versions:
-            state_adapter = interfaces.IWorkflowState(version)
+            state_adapter = IWorkflowState(version)
             if state_adapter.getId() == id:
                 return True
         return False
 
     def clear(self):
         """ """
-        self.versions = PersistentList()
+        self.versions = BList()
 
 # Workflow States
 
