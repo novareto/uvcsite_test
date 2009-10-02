@@ -11,7 +11,7 @@ from uvcsite import Content, ApplicationAwareView
 from uvcsite.skin.skin import Forms 
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
-from uvc.content import Content, schema
+from uvcsite.content import Content, schema
 
 class HelpPage(Content):
     grok.implements(IHelpPage)

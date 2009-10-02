@@ -11,7 +11,7 @@ from uvcsite.viewlets.utils import MenuItem
 from uvcsite.interfaces import IUVCSite, IGlobalMenu
 from uvcsite.helpsystem.interfaces import IHelpFolder
 from zope.app.authentication.interfaces import IPrincipal
-from uvc.content import ProductFolder, IProductFolder, contenttype
+from uvcsite.content import ProductFolder, IProductFolder, contenttype
 from page import HelpPage
 
 class HelpFolder(ProductFolder):
