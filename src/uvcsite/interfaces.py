@@ -2,7 +2,7 @@
 
 from zope.interface import Interface
 from grok.interfaces import IContainer
-from uvc.content import IUVCApplication, IProductFolder, IFolderColumnTable
+from uvcsite.content import IUVCApplication, IProductFolder, IFolderColumnTable
 
 class IUVCSite(IUVCApplication):
     """ Markter Interface for UVC-Site Site """

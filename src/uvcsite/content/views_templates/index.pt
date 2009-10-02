@@ -1,0 +1,9 @@
+<div>
+  <h1 tal:content="context/title"/>
+  <p class="big" tal:content="context/description"/>
+  <div class="addContent">
+      <a href="add"> 
+      <span tal:content="context/getContentName"/> anlegen </a>
+  </div>
+  <span tal:replace="structure view/renderFormTable"/>
+</div>

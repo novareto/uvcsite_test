@@ -19,29 +19,33 @@ setup(name='uvcsite',
       include_package_data=True,
       zip_safe=False,
       install_requires=['setuptools',
+                        'dolmen.content',
+                        'elementtree',
                         'grok',
-                        'grokui.admin',
-                        'z3c.testsetup',
                         'grokcore.startup',
-                        #'megrok.resourcelibrary',
-                        #'zc.resourcelibrary',
-                        'zope.app.homefolder',
-                        'z3c.menu.simple',
+                        'grokui.admin',
+                        'hurry.jquery',
                         'hurry.workflow',
+                        'hurry.zoperesource',
                         'lxml',
                         'megrok.layout',
-			'megrok.z3cform.base',
-			'megrok.z3ctable',
-			'uvc.content',
-			'z3c.breadcrumb',
-                        'hurry.zoperesource',
-                        'hurry.jquery',
+                        'megrok.z3cform.base',
+                        'megrok.z3cform.tabular',
+                        'megrok.z3cform.ui',
+                        'megrok.z3ctable',
+                        'z3c.breadcrumb',
+                        'z3c.formui',
+                        'z3c.macro',
+                        'z3c.menu.simple',
+                        'z3c.schema2xml',
                         'z3c.template', # Needed for my custom Template
-                        # Add extra requirements here
-                        ],
-      entry_points = """
-      [console_scripts]
-      uvcsite-debug = grokcore.startup:interactive_debug_prompt
+                        'z3c.testsetup',
+                        'zope.app.homefolder',
+                            # Add extra requirements here
+                            ],
+          entry_points = """
+          [console_scripts]
+          uvcsite-debug = grokcore.startup:interactive_debug_prompt
       uvcsite-ctl = grokcore.startup:zdaemon_controller
       [paste.app_factory]
       main = grokcore.startup:application_factory
