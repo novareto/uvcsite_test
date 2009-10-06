@@ -5,13 +5,15 @@
 import grok
 
 from zope.interface import Interface
-from megrok.z3cform.base import PageAddForm, field, PageEditForm, PageDisplayForm, Fields
+from megrok.z3cform.base import (PageAddForm, field,
+                   PageEditForm, PageDisplayForm, Fields)
 
 from uvcsite import Content, ApplicationAwareView
-from uvcsite.skin.skin import Forms 
+from uvcsite.skin.skin import Forms
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 from uvcsite.content import Content, schema
+
 
 class HelpPage(Content):
     grok.implements(IHelpPage)

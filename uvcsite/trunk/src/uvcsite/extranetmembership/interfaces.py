@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-
 from uvcsite import uvcsiteMF as _
-from zope.interface import Interface                                                                                      
+from zope.interface import Interface
 from zope.schema import TextLine, Tuple, Choice, List
+
 
 class IExtranetMember(Interface):
 
@@ -16,7 +16,7 @@ class IExtranetMember(Interface):
              title=_(u"Berechtigung"),
              description=_(u"Berechtiung"),
              value_type=Choice(vocabulary="VocabularyBerechtigungen"),
-	     required = False) 
+             required = False)
 
     email = TextLine(
              title=_(u"Email"),
@@ -36,6 +36,7 @@ class IExtranetMember(Interface):
     def getBaseUser():
         """ Return the User Representation"""
 
+
 class IUserManagement(Interface):
 
     def getUser(mnr):
@@ -51,4 +52,4 @@ class IUserManagement(Interface):
         """ Update a specified user """
 
     def deleteUser(mnr):
-        """ Delete a specified user """   
+        """ Delete a specified user """

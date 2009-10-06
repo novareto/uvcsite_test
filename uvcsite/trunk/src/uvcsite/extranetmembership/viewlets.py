@@ -22,4 +22,3 @@ class ExtranetMembership(MenuItem):
     def url(self):
         hF = IHomeFolder(self.request.principal).homeFolder
         return self.view.url(hF, 'enms')
-
