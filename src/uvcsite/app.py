@@ -37,9 +37,9 @@ class PersonalPanelView(megrok.layout.Page, ApplicationAwareView):
     grok.require('zope.View')
 
 
-#class NotFound(megrok.layout.Page, ApplicationAwareView):
-#      grok.context(INotFound)
-#      grok.name('index.html')
+class NotFound(megrok.layout.Page, ApplicationAwareView):
+      grok.context(INotFound)
+      grok.name('index.html')
       
 #class SystemError(megrok.layout.Page, ApplicationAwareView):
 #      grok.context(IException)
