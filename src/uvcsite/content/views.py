@@ -16,6 +16,7 @@ class Index(DeleteFormTablePage, ApplicationAwareView):
     cssClassOdd = u'odd'
 
     def executeDelete(self, item):
+        self.flash(u'Ihre Dokumente wurden entfernt')
         del item.__parent__[item.__name__]
 
 
