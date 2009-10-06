@@ -2,6 +2,7 @@ from zope.component import getUtility
 from z3c.flashmessage.interfaces import IMessageSource
 from uvcsite.content import IUVCApplication
 
+
 class ApplicationAwareView(object):
     """A mixin allowing to access the application url"""
 
@@ -16,10 +17,8 @@ class ApplicationAwareView(object):
         print self.context
         raise ValueError("No application found.")
 
-
     def flash(self, message, type='message'):
-       """Send a short message to the user.
-       """
-       source = getUtility(IMessageSource, name='session')
-       source.send(message, type)
-
+        """Send a short message to the user.
+        """
+        source = getUtility(IMessageSource, name='session')
+        source.send(message, type)

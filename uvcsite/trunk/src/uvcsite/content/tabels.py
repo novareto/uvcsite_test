@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2008 NovaReto GmbH
+# cklinger@novareto.de
+
 import grok
 
 from uvcsite import uvcsiteMF as _
@@ -8,6 +12,7 @@ from hurry.workflow.interfaces import IWorkflowState
 from zope.dublincore.interfaces import IZopeDublinCore
 from uvcsite.workflow.basic_workflow import titleForState
 from uvcsite.interfaces import IFolderColumnTable
+
 
 class CheckBox(CheckBoxColumn):
     grok.name('checkBox')
@@ -65,4 +70,3 @@ class StateColumn(GetAttrColumn):
         if state != None:
             return titleForState(state)
         return self.defaultValue
-    

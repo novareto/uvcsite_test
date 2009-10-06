@@ -2,7 +2,7 @@ import grok
 import transaction
 import zope.app.appsetup.interfaces
 from zope.app.component.hooks import getSite, setSite
-from zope.component import getUtility 
+from zope.component import getUtility
 from zope.app.publication.zopepublication import ZopePublication
 from zope.app.homefolder.interfaces import IHomeFolderManager
 
@@ -13,7 +13,7 @@ from uvcsite.content import IProductFolder, IUVCApplication
 @grok.subscribe(zope.app.appsetup.interfaces.IDatabaseOpenedWithRootEvent)
 def handle_init(event):
     print "START INIT"
-    connection =  event.database.open()
+    connection = event.database.open()
     for object in connection.root()[ZopePublication.root_name]:
         if IUVCApplication.providedBy(object):
             old_site = getSite()
@@ -25,7 +25,7 @@ def handle_init(event):
                     for name, class_ in productfolders:
                         if name in folder:
                             continue
-                        folder[name] = class_()                    
+                        folder[name] = class_()
             finally:
                 setSite(old_site)
     transaction.commit()

@@ -6,6 +6,7 @@ import uvcsite
 from z3c.form import ptcompat, interfaces
 from zope.pagetemplate.interfaces import IPageTemplate
 
+
 class ErrorViewTemplateFactory(object):
     """Error view template factory."""
 
@@ -20,10 +21,9 @@ class ErrorViewTemplateFactory(object):
 
 # Create the standard error view template
 StandardErrorViewTemplate = ErrorViewTemplateFactory(
-    os.path.join(os.path.dirname(uvcsite.content.__file__), 'error.pt'), 'text/html')
+    os.path.join(os.path.dirname(uvcsite.content.__file__),
+    'error.pt'), 'text/html')
 
 zope.component.adapter(
     interfaces.IErrorViewSnippet, None)(StandardErrorViewTemplate)
 zope.interface.implementer(IPageTemplate)(StandardErrorViewTemplate)
-
-
