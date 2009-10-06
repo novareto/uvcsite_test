@@ -236,7 +236,6 @@
 		if (conf.opacity < 1) {
 			tip.css("opacity", conf.opacity);		
 		}
-	        console.log("HILLI");	
 		var pretimer = 0, title = trigger.attr("title");
 		
 		if (title && conf.cancelDefault) { 
