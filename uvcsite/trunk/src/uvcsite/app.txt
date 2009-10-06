@@ -1,10 +1,12 @@
 Do a functional doctest test on the app.
 ========================================
 
-:Test-Layer: functional
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
 
 Let's first create an instance of Uvcsite at the top level:
 
+   >>> from zope.app.testing.functional import getRootFolder
    >>> from uvcsite.app import Uvcsite
    >>> root = getRootFolder()
    >>> uvcsite = Uvcsite()

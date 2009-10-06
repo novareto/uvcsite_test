@@ -43,3 +43,7 @@ Let's add a Version to the utility:
 
    >>> wv.hasVersionId(1)
    False
+
+   >>> wv.hasVersion('', 1)
+   False
+

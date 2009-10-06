@@ -15,6 +15,7 @@ from uvcsite.content import Content, schema
 
 class HelpPage(Content):
     grok.implements(IHelpPage)
+    grok.name('HelpPage')
     schema(IHelpPage)
 
     def __init__(self, name="", title="", text=""):
