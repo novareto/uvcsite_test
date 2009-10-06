@@ -14,11 +14,8 @@
       </li>
   </ul>
 
-  <form action="deleteitem">
   <div tal:content="structure view/renderBatch" />
-  <div tal:replace="structure view/renderTable" />
-  <input type="submit" value="Entfernen"/>
-  </form>
+  <div tal:replace="structure view/renderFormTable" />
  </div>
 </body>
 </html>
