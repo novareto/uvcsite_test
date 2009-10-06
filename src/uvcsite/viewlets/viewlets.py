@@ -19,7 +19,7 @@ class Breadcrumb(grok.Viewlet):
 
     def render(self):
         bcs = []
-        for bc in getMultiAdapter((self.context, self.request), 
+        for bc in getMultiAdapter((self.context, self.request),
                                    IBreadcrumbs).crumbs:
             bcs.append("<a href=%s> %s </a>/" %(bc.get('url'), bc.get('name')))
         return "".join(bcs[1:])

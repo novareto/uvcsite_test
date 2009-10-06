@@ -23,8 +23,7 @@ class MenuItem(grok.Viewlet, GlobalMenuItem):
         homeFolder = IHomeFolder(principal).homeFolder
         if url:
             homeFolder = zapi.absoluteURL(homeFolder, self.request)
-        return homeFolder    
-
+        return homeFolder
 
     def render(self):
         # This method is for grok not to say template or render needed!

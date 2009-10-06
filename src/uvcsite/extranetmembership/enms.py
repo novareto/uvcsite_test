@@ -4,7 +4,7 @@ import grok
 import megrok.layout
 
 from uvcsite import uvcsiteMF as _
-from uvcsite import ApplicationAwareView 
+from uvcsite import ApplicationAwareView
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
 from zope.formlib.form import setUpWidgets
@@ -19,7 +19,6 @@ from uvcsite.interfaces import IMyHomeFolder
 
 def null_validator(*args, **kwargs):
     """A validator that doesn't validate anything.
-    
     This is somewhat lame, but if you have a "Cancel" type button that
     won't want to validate the form, you need something like this.
 
@@ -74,8 +73,6 @@ class ENMSCreateUser(Form, grok.Form, ApplicationAwareView):
             principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
         self.flash('Der Mitbenutzer wurde gespeichert')
         self.redirect(self.url(self.context))
-
-
 
 
 class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
