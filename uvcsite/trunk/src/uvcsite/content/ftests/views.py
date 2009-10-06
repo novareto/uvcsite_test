@@ -51,6 +51,7 @@ Note: There are default columns defined for IContainer in
         <th class="checkBox"></th>
         <th>Titel</th>
         <th>Objekt</th>
+        <th>Status</th>
         <th>Autor</th>
         <th>Datum</th>
       </tr>
@@ -60,6 +61,7 @@ Note: There are default columns defined for IContainer in
         <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent"  /></td>
         <td><a href="http://127.0.0.1/pf/mycontent/edit"></a></td>
         <td>MyContent</td>
+        <td>Entwurf</td>
         <td></td>
         <td>...</td>
       </tr>
@@ -97,6 +99,7 @@ If we call this class we should see our tableform in our simple Layout:
         <th class="checkBox"></th>
         <th>Titel</th>
         <th>Objekt</th>
+        <th>Status</th>
         <th>Autor</th>
         <th>Datum</th>
       </tr>
@@ -106,6 +109,7 @@ If we call this class we should see our tableform in our simple Layout:
         <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent"  /></td>
         <td><a href="http://127.0.0.1/pf/mycontent/edit"></a></td>
         <td>MyContent</td>
+        <td>Entwurf</td>
         <td></td>
         <td>...</td>
       </tr>
@@ -171,10 +175,109 @@ We should get 'mycontent' as item in the container.
 The Index View of the ProductFolder has a executeDelete method
 which get's called by the deleteAction of the form. So we test
 this here manually.
+  
+  >>> print browser.contents
+  <html> <form action="http://localhost/pf1/@@index" method="post"
+        enctype="multipart/form-data" class="edit-form"
+        name="deleteFormTable" id="deleteFormTable">
+    <div class="viewspace">
+      <div>
+      <div class="tabluarTable">
+        <table class="tablesorter myTable">
+    <thead>
+      <tr>
+        <th class="checkBox"></th>
+        <th>Titel</th>
+        <th>Objekt</th>
+        <th>Status</th>
+        <th>Autor</th>
+        <th>Datum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="even">
+        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="MyContent"  /></td>
+        <td><a href="http://localhost/pf1/MyContent/edit">Titel</a></td>
+        <td>MyContent</td>
+        <td>Entwurf</td>
+        <td>zope.mgr</td>
+        <td>...</td>
+      </tr>
+      <tr class="odd">
+        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent"  /></td>
+        <td><a href="http://localhost/pf1/mycontent/edit"></a></td>
+        <td>MyContent</td>
+        <td>Entwurf</td>
+        <td></td>
+        <td>...</td>
+      </tr>
+    </tbody>
+  </table>
+      </div>
+      <div class="tabluarForm">
+      </div>
+    </div>
+    </div>
+    <div>
+      <div class="buttons">
+  <input id="deleteFormTable-buttons-delete"
+         name="deleteFormTable.buttons.delete"
+         class="submit-widget button-field" value="Delete"
+         type="submit" />
+      </div>
+    </div>
+  </form>
+   </html>
 
-  >>> view.executeDelete(mycontent)
-  >>> 'mycontent' in folder
-  False
+
+  >>> form = browser.getForm()
+  >>> form.getControl(name='deleteFormTable-checkBox-0-selectedItems').value = ['mycontent',]
+  >>> form.submit('Delete')
+  >>> print browser.contents 
+  <html> <form action="http://localhost/pf1/@@index" method="post"
+        enctype="multipart/form-data" class="edit-form"
+        name="deleteFormTable" id="deleteFormTable">
+    <div class="viewspace">
+      <div>
+      <div class="tabluarTable">
+        <table class="tablesorter myTable">
+    <thead>
+      <tr>
+        <th class="checkBox"></th>
+        <th>Titel</th>
+        <th>Objekt</th>
+        <th>Status</th>
+        <th>Autor</th>
+        <th>Datum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="even">
+        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="MyContent"  /></td>
+        <td><a href="http://localhost/pf1/MyContent/edit">Titel</a></td>
+        <td>MyContent</td>
+        <td>Entwurf</td>
+        <td>zope.mgr</td>
+        <td>...</td>
+      </tr>
+    </tbody>
+  </table>
+      </div>
+      <div class="tabluarForm">
+      </div>
+    </div>
+    </div>
+    <div>
+      <div class="buttons">
+  <input id="deleteFormTable-buttons-delete"
+         name="deleteFormTable.buttons.delete"
+         class="submit-widget button-field" value="Delete"
+         type="submit" />
+      </div>
+    </div>
+  </form>
+   </html>
+
 
 """
 import grok

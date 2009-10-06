@@ -51,3 +51,18 @@ class ModifiedColumn(ModifiedColumn):
     grok.context(IFolderColumnTable)
     header = _(u"Datum")
     weight = 100
+
+
+class StateColumn(GetAttrColumn):
+    grok.name('state')
+    grok.context(IFolderColumnTable)
+    header = _(u'Status')
+    attrName = 'status'
+    weight = 3
+
+    def getValue(self, obj):
+        state = IWorkflowState(obj).getState()
+        if state != None:
+            return titleForState(state)
+        return self.defaultValue
+    

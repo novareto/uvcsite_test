@@ -91,6 +91,7 @@ But first do we get the index of the container itself?
          <th class="checkBox"></th>
          <th>Titel</th>
          <th>Objekt</th>
+         <th>Status</th>
          <th>Autor</th>
          <th>Datum</th>
        </tr>
