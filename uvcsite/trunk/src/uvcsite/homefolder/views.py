@@ -14,6 +14,8 @@ from megrok.z3ctable import (TablePage, Column, GetAttrColumn,
 from hurry.workflow.interfaces import IWorkflowState
 from zope.dublincore.interfaces import IZopeDublinCore
 from uvcsite.workflow.basic_workflow import titleForState
+from uvcsite.interfaces import IFolderColumnTable
+
 
 
 class Index(TablePage, ApplicationAwareView):
@@ -75,8 +77,8 @@ class HomeFolderValues(Values):
 
 class StateColumn(GetAttrColumn):
     grok.name('state')
-    grok.context(IMyHomeFolder)
-    table(Index)
+    grok.context(IFolderColumnTable)
+    #table(Index)
     header = _(u'Status')
     attrName = 'status'
     weight = 3
