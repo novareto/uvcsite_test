@@ -1,2 +1,5 @@
 import z3c.testsetup
-test_suite = z3c.testsetup.register_all_tests('uvcsite')
+import uvcsite
+
+test_suite = z3c.testsetup.register_all_tests('uvcsite',
+    layer=uvcsite.tests.FunctionalLayer)
