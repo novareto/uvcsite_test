@@ -13,4 +13,3 @@ class IProductFolder(IContainer):
 
 class IFolderColumnTable(Interface):
     """ Provide standard folder columns"""
-

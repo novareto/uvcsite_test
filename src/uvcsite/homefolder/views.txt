@@ -45,18 +45,13 @@ Now we can render the Index Page of the Homefolder:
 
   >>> index.update()
   >>> print index.render()
-  <html>
-  <head>
-  </head>
-  <body>
-   <div>
-    <h1>Some User's Name</h1>
-    <p>Hier werden Ihre Dokumente abgelegt</p>
-    <ul>
-    </ul>
-    <form action="deleteitem">
-    <div></div>
-    <table class="tablesorter myTable">
+  <form action="http://127.0.0.1" method="post"
+        enctype="multipart/form-data" class="edit-form"
+        name="deleteFormTable" id="deleteFormTable">
+    <div class="viewspace">
+      <div>
+      <div class="tabluarTable">
+        <table class="tablesorter myTable">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -69,12 +64,18 @@ Now we can render the Index Page of the Homefolder:
     </thead>
     <tbody>
     </tbody>
-    </table>
-    <input type="submit" value="Entfernen" />
-    </form>
-   </div>
-   </body>
-   </html>
+  </table>
+      </div>
+      <div class="tabluarForm">
+      </div>
+    </div>
+    </div>
+    <div>
+      <div class="buttons">
+      </div>
+    </div>
+  </form>
+
 
 There is no table in the view? This is because there
 is no content in the Folder. So we have to add some
@@ -125,23 +126,13 @@ Now call the view with some contents...
   >>> index = getMultiAdapter((homefolder, request), name="index")
   >>> index.update()
   >>> print index.render()
-  <html>
-  <head>
-  </head>
-  <body>
-   <div>
-    <h1>Some User's Name</h1>
-    <p>Hier werden Ihre Dokumente abgelegt</p>
-    <ul>
-        <li>
-            <a href="http://127.0.0.1/hf/index?meta_type=personcontainer">
-               <span>personcontainer</span>
-  	  </a>
-        </li>
-    </ul>
-    <form action="deleteitem">
-    <div></div>
-    <table class="tablesorter myTable">
+  <form action="http://127.0.0.1" method="post"
+        enctype="multipart/form-data" class="edit-form"
+        name="deleteFormTable" id="deleteFormTable">
+    <div class="viewspace">
+      <div>
+      <div class="tabluarTable">
+        <table class="tablesorter myTable">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -151,37 +142,40 @@ Now call the view with some contents...
         <th>Autor</th>
         <th>Datum</th>
       </tr>
-     </thead>
+    </thead>
     <tbody>
       <tr class="even">
-      <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="hans"  /></td>
-      <td><a href="http://127.0.0.1/hf/personcontainer/hans/edit"></a></td>
+        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="hans"  /></td>
+        <td><a href="http://127.0.0.1/hf/personcontainer/hans/edit"></a></td>
         <td>Person</td>
         <td>Entwurf</td>
         <td>someuser</td>
         <td>...</td>
       </tr>
-     </tbody>
-    </table>
-    <input type="submit" value="Entfernen" />
-    </form>
+    </tbody>
+  </table>
+      </div>
+      <div class="tabluarForm">
+      </div>
     </div>
-    </body>
-    </html>
+    </div>
+    <div>
+      <div class="buttons">
+  <input id="deleteFormTable-buttons-delete"
+         name="deleteFormTable.buttons.delete"
+         class="submit-widget button-field" value="Delete"
+         type="submit" />
+      </div>
+    </div>
+  </form>
+
+
 
 Delete Item Form
 ----------------
 
-   >>> request = TestRequest(form={'table-checkBox-0-selectedItems': u'hans'})
-   >>> personcontainer = homefolder['personcontainer']
-   >>> 'hans' in personcontainer
-   True
-
-   >>> delview = getMultiAdapter((personcontainer, request), name='deleteitem')
-   >>> delview.update()
-   >>> 'hans' in personcontainer
-   False
-
+  >>> 'hans' in homefolder['personcontainer']
+  True
 
   >>> zope.security.management.endInteraction()
 

@@ -69,8 +69,13 @@ But first do we get the index of the container itself?
 
    >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe')
    >>> print browser.contents
-   <!DOCTYPE...
+   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+   ...
    <div class="relax"> </div>
+            <div>
+   </div>
             <div><div>
      <h1>Hilfe</h1>
      <p class="big">Sie knnen auf die einzelnen Dokumente klicken um die Hilfe anzueigen!</p>
@@ -108,6 +113,9 @@ But first do we get the index of the container itself?
        <div class="buttons">
        </div>
      </div>
+   </form>
+   </div>
+   </div>
    ...
    </html>
 

@@ -26,12 +26,12 @@ class ProductFolder(grok.Container):
 
     def getContentType(self):
         return contenttype.bind().get(self)
-    
+
     def getContentName(self):
         return self.getContentType().__content_type__
 
     def add(self, content):
-        name = INameChooser(self).chooseName(content.__name__ or '', content) 
+        name = INameChooser(self).chooseName(content.__name__ or '', content)
         self[name] = content
 
 
@@ -45,5 +45,4 @@ class Content(dolmen.content.Content):
 
     @property
     def schema(self):
-	return dolmen.content.schema.bind().get(self)
-
+        return dolmen.content.schema.bind().get(self)
