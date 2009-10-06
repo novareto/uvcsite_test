@@ -15,10 +15,10 @@ from hurry.workflow.interfaces import IWorkflowState
 from zope.dublincore.interfaces import IZopeDublinCore
 from uvcsite.workflow.basic_workflow import titleForState
 from uvcsite.interfaces import IFolderColumnTable
+from megrok.z3cform.tabular import DeleteFormTablePage
 
 
-
-class Index(TablePage, ApplicationAwareView):
+class Index(DeleteFormTablePage, ApplicationAwareView):
     grok.context(IMyHomeFolder)
 
     cssClasses = {'table': 'tablesorter myTable'}
@@ -38,27 +38,9 @@ class Index(TablePage, ApplicationAwareView):
     def getContentTypes(self):
         return self.context.keys()
 
-
-class DeleteItem(grok.View):
-    """ Delete the DATA"""
-    grok.context(Interface)
-
-    def update(self):
-        liste=[]
-        context = self.context
-        request = self.request
-        items = request.get('table-checkBox-0-selectedItems', None)
-        if items:
-            if isinstance(items, (str, unicode)):
-                liste.append(items)
-            else:
-                liste = items
-            for x in liste:
-                del context[str(x)]
-
-    def render(self, **kw):
-        self.flash(u'Die Objekte wurden gelöscht')
-        self.redirect(self.url(self.context))
+    def executeDelete(self, item):
+        self.flash(u'Ihre Dokumente wurden entfernt')
+        del item.__parent__[item.__name__]
 
 
 class HomeFolderValues(Values):
@@ -73,18 +55,3 @@ class HomeFolderValues(Values):
         for object in self.context.values():
             results.extend(object.values())
         return results
-
-
-class StateColumn(GetAttrColumn):
-    grok.name('state')
-    grok.context(IFolderColumnTable)
-    #table(Index)
-    header = _(u'Status')
-    attrName = 'status'
-    weight = 3
-
-    def getValue(self, obj):
-        state = IWorkflowState(obj).getState()
-        if state != None:
-            return titleForState(state)
-        return self.defaultValue
