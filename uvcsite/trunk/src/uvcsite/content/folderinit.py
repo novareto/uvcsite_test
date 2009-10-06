@@ -10,9 +10,9 @@ from zope.component import getUtilitiesFor
 from uvcsite.content import IProductFolder, IUVCApplication
 
 
-
 @grok.subscribe(zope.app.appsetup.interfaces.IDatabaseOpenedWithRootEvent)
 def handle_init(event):
+    print "START INIT"
     connection =  event.database.open()
     for object in connection.root()[ZopePublication.root_name]:
         if IUVCApplication.providedBy(object):
