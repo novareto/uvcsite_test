@@ -30,7 +30,7 @@ class Favicon(grok.Viewlet):
     grok.name('favicon')
     grok.context(Interface)
     grok.viewletmanager(IHeaders)
-
+    
 
 class Image(grok.Viewlet):
     """ Image Things"""

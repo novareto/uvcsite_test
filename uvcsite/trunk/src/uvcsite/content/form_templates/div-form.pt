@@ -24,7 +24,6 @@
   <metal:block define-macro="subform">
   <div class="viewspace" metal:define-slot="viewspace">
     <metal:block define-slot="header">
-<!--	
         <ul class="errors"
             tal:condition="view/widgets/errors"
             metal:define-macro="errors">
@@ -35,8 +34,6 @@
             <span tal:replace="structure error/render">Error Type</span>
           </li>
         </ul>
-      </div>
--->
     </metal:block>
     <div metal:define-slot="extra-info" tal:replace="nothing">
     </div>
@@ -52,7 +49,7 @@
                 <label tal:attributes="for widget/id">
                   <span i18n:translate=""
                       tal:content="widget/label">label</span>
-                      <span tal:replace="structure python: widget.field.description"/>
+                  <!--    <span tal:replace="structure python: widget.field.description"/> -->
                   <pan class="required"
                         tal:condition="widget/required">*</pan>
 			

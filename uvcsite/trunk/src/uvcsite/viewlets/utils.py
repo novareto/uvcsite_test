@@ -16,12 +16,14 @@ class MenuItem(grok.Viewlet, GlobalMenuItem):
     grok.baseclass()
     template = ViewPageTemplateFile('menu_item.pt')
 
-    def home_folder_url(self):
+    def home_folder_url(self, url=False):
         principal = self.request.principal
         if IUnauthenticatedPrincipal.providedBy(principal):
             return
         homeFolder = IHomeFolder(principal).homeFolder
-        return zapi.absoluteURL(homeFolder, self.request)
+        if url:
+            homeFolder = zapi.absoluteURL(homeFolder, self.request)
+        return homeFolder    
 
 
     def render(self):
