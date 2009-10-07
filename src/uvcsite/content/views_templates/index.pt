@@ -1,9 +1,11 @@
 <div>
   <h1 tal:content="context/title"/>
-  <p class="big" tal:content="context/description"/>
+  <span class="big" tal:content="context/description"/> 
   <div class="addContent">
+    <h3>
       <a href="add"> 
-      <span tal:content="context/getContentName"/> anlegen </a>
+      <span tal:replace="context/getContentName"/> anlegen  </a>
+    </h3>  
   </div>
   <span tal:replace="structure view/renderFormTable"/>
 </div>
