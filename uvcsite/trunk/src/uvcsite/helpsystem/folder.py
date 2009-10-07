@@ -20,7 +20,7 @@ class HelpFolder(ProductFolder):
     grok.title('Hilfe')
     grok.name(u'In diesem Ordner finden Sie Hilfe Dokumente')
     grok.description(u'Sie knnen auf die einzelnen Dokumente'
-                      'klicken um die Hilfe anzueigen!')
+                      ' klicken um die Hilfe anzueigen!')
 
     contenttype(HelpPage)
 
