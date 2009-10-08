@@ -78,10 +78,12 @@ But first do we get the index of the container itself?
    </div>
             <div><div>
      <h1>Hilfe</h1>
-     <p class="big">Sie knnen auf die einzelnen Dokumente klicken um die Hilfe anzueigen!</p>
+     <span class="big">Sie knnen auf die einzelnen Dokumente klicken um die Hilfe anzueigen!</span>
      <div class="addContent">
+       <h3>
          <a href="add">
-         <span>HelpPage</span> anlegen </a>
+         HelpPage anlegen  </a>
+       </h3>  
      </div>
      <form action="http://localhost/++skin++uvcsiteskin/app/hilfe/@@index"
          method="post" enctype="multipart/form-data"
