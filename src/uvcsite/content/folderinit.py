@@ -12,9 +12,8 @@ from uvcsite.content import IProductFolder, IUVCApplication
 
 @grok.subscribe(zope.app.appsetup.interfaces.IDatabaseOpenedWithRootEvent)
 def handle_init(event):
-    print "START INIT"
     connection = event.database.open()
-    for object in connection.root()[ZopePublication.root_name]:
+    for object in connection.root()[ZopePublication.root_name].values():
         if IUVCApplication.providedBy(object):
             old_site = getSite()
             setSite(object)
@@ -23,7 +22,7 @@ def handle_init(event):
                 folders = getUtility(IHomeFolderManager).homeFolderBase
                 for folder in folders.values():
                     for name, class_ in productfolders:
-                        if name in folder:
+                        if name in folder or not getattr(class_, 'inHomeFolder', True):
                             continue
                         folder[name] = class_()
             finally:

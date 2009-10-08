@@ -24,6 +24,9 @@ class HelpFolder(ProductFolder):
 
     contenttype(HelpPage)
 
+    # No autopopulation on Startup!!!
+    inHomeFolder = False
+
 
 class Hilfe(MenuItem):
     grok.name(_(u'Hilfe'))
