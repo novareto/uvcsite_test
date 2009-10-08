@@ -5,7 +5,7 @@
 import grok
 
 from zope.interface import Interface
-from megrok.z3cform.base import (PageAddForm, field,
+from megrok.z3cform.base import (PageAddForm, 
                    PageEditForm, PageDisplayForm, Fields)
 
 from uvcsite import Content, ApplicationAwareView
