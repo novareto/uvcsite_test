@@ -1,4 +1,5 @@
-<a href="#" class="logotype">
+<a href="#" class="logotype"
+   tal:attributes="href python:view.application_url()">
     <img src="" alt="Extranet BGHW"
          tal:attributes="src python: viewlet.app_url()+'/@@/styles/logotype.gif'" />
 </a>
