@@ -150,3 +150,23 @@ dl.error dd {
 }
 
 
+
+.right-col UL.miniman LI A:HOVER{
+        text-decoration: underline;
+        color: #6e6e6e;
+}
+.right-col UL.content {
+        list-style: none;
+        width: 450px;
+        border-bottom: 1px #b30b16 solid;
+}
+.right-col UL.content LI{
+        margin-bottom: 10px;
+        width: 100%;
+}
+.right-col UL.last {width: 400px;}
+.right-col UL.last LI{
+        margin-bottom: 10px;
+        width: 100%;
+}
+
