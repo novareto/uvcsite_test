@@ -43,6 +43,9 @@ class NotFound(megrok.layout.Page):
     grok.context(INotFound)
     grok.name('index.html')
 
+    def update(self):
+        self.request.response.setStatus(404)
+
     def application_url(self, name=None):
         obj = self.context.ob
         while obj is not None:
@@ -56,6 +59,9 @@ class SystemError(megrok.layout.Page):
     grok.context(IException)
     grok.name('index.html')
 
+    def update(self):
+        self.request.response.setStatus(500)
+
     def application_url(self, name=None):
         obj = self.context.ob
         while obj is not None:
@@ -68,6 +74,9 @@ class SystemError(megrok.layout.Page):
 class UserError(megrok.layout.Page):
     grok.context(IUserError)
     grok.name('index.html')
+
+    def update(self):
+        self.request.response.setStatus(500)
 
     def application_url(self, name=None):
         obj = self.context.ob
