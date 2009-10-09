@@ -13,6 +13,7 @@ from uvcsite.skin.skin import Forms
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 from uvcsite.content import Content, schema
+from uvcsite.helpsystem.portlet import HelpPortlet
 
 
 class HelpPage(Content):
@@ -69,3 +70,11 @@ class TTDisplay(grok.View):
     grok.name('index')
     grok.context(HelpPage)
     grok.require('zope.View')
+
+
+class HilfePortlet(HelpPortlet):
+    """ Portlet Hilfe"""
+    grok.context(IHelpFolder)
+
+    urls = [ {'href':'klaus','name':'hilfe'}, ]
+

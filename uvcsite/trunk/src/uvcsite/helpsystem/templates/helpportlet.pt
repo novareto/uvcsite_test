@@ -1,8 +1,3 @@
-<div class="portletHelp" 
-     tal:define="links viewlet/urls">
-     <ul tal:repeat="link links">
-       <li>
-          <a href="" tal:attributes="href link/href"> <span tal:replace="link/name"/> </a>
-       </li>
-     </ul>
-</div>     
+<li tal:repeat="link viewlet/urls">
+  <a href="" tal:attributes="href link/href"> <span tal:replace="link/name"/> </a>
+</li>
