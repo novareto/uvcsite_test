@@ -12,7 +12,7 @@ from hurry.workflow.interfaces import IWorkflowState
 from zope.dublincore.interfaces import IZopeDublinCore
 from uvcsite.workflow.basic_workflow import titleForState
 from uvcsite.interfaces import IFolderColumnTable
-
+from zope.traversing.browser import absoluteURL
 
 class CheckBox(CheckBoxColumn):
     grok.name('checkBox')
@@ -20,6 +20,14 @@ class CheckBox(CheckBoxColumn):
     weight = 0
     cssClasses = {'th': 'checkBox'}
     header = u""
+    
+    def renderCell(self, item):
+        state = IWorkflowState(item).getState()
+        if state != None:
+            state = titleForState(state)
+        if state == "Entwurf":
+            return CheckBoxColumn.renderCell(self, item)
+        return ''    
 
 
 class Link(LinkColumn):
@@ -28,6 +36,15 @@ class Link(LinkColumn):
     weight = 1
     header = _(u"Titel")
     linkName = u"edit"
+
+    def getLinkURL(self, item):
+        """Setup link url."""
+        state = IWorkflowState(item).getState()
+        if state != None:
+            state = titleForState(state)
+        if self.linkName is not None and state == "Entwurf":
+            return '%s/%s' % (absoluteURL(item, self.request), self.linkName)
+        return absoluteURL(item, self.request)
 
     def getLinkContent(self, item):
         return item.title
