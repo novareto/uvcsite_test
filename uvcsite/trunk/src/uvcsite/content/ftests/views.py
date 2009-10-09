@@ -161,12 +161,59 @@ We have a form in our add form:
   >>> form.submit("Add")
    
 
-The delete methods
-------------------
+Edit View
+---------
+
+  >>> print browser.contents
+  <html...
+    <tbody>
+      <tr class="even">
+        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="MyContent"  /></td>
+        <td><a href="http://localhost/pf1/MyContent/edit">Titel</a></td>
+        <td>MyContent</td>
+        <td>Entwurf</td>
+        <td>zope.mgr</td>
+        <td>...</td>
+      </tr>
+      <tr class="odd">
+        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent"  /></td>
+        <td><a href="http://localhost/pf1/mycontent/edit"></a></td>
+        <td>MyContent</td>
+        <td>Entwurf</td>
+        <td></td>
+        <td>...</td>
+      </tr>
+    </tbody>
+  ...
+  </html>
+
+Get the Link for edit and:
+
+  >>> edit_link = browser.getLink('Titel')
+  >>> print edit_link.url
+  http://localhost/pf1/MyContent/edit
+
+click on it:
+
+  >>> edit_link.click()
+  >>> print browser.headers['Status'].upper()
+  200 OK
+
+Index View 
+----------
+
+  >>> browser.open('http://localhost/pf1/MyContent')
+  >>> print browser.headers['Status'].upper()
+  200 OK
+
+
+Delete Objects from a ProductFolder
+-----------------------------------
 
 Let's get again the index View of our ProductFolder. 
 We should get 'mycontent' as item in the container.
 
+  >>> browser.open('http://localhost/pf1')
   >>> view = getMultiAdapter((pf, request), name=u"index")
   >>> folder = view.context
   >>> 'mycontent' in folder 
