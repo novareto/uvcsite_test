@@ -11,5 +11,3 @@ class HelpPortlet(grok.Viewlet):
 
     urls = []
 
-    def render(self):
-        return self.template.render(self)

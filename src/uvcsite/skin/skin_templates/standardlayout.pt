@@ -25,11 +25,12 @@
             <span tal:define="sidebar provider:uvcsite.sidebar"
                   tal:condition="sidebar" 
 	          tal:replace="structure sidebar"/>
-
-	    <span tal:define="help provider:uvcsite.help"
-	          tal:condition="help"
-	          tal:replace="structure help"/>
-	</div>      
+        </div>
+        <div class="box">
+           <span tal:define="help provider:uvcsite.help"
+	         tal:condition="help"
+	         tal:replace="structure help"/>
+        </div>         
       </div>
 
 
