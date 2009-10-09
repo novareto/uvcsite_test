@@ -6,7 +6,7 @@ import grok
 
 from megrok import z3ctable
 from megrok.z3cform import base as z3cform
-from uvcsite.content import IProductFolder, ApplicationAwareView
+from uvcsite.content import IContent, IProductFolder, ApplicationAwareView
 from z3c.form import form
 from megrok.z3cform.tabular import DeleteFormTablePage
 from uvcsite.content import ApplicationAwareView
@@ -44,3 +44,22 @@ class Add(z3cform.PageAddForm, ApplicationAwareView):
     def nextURL(self):
         self.flash('Added Content')
         return self.url(self.context)
+
+
+class Edit(z3cform.PageEditForm, ApplicationAwareView):
+    grok.context(IContent)
+    grok.require('uvc.EditContent')
+
+    @property
+    def fields(self):
+        return z3cform.Fields(*self.context.schema)
+
+
+class Display(z3cform.PageDisplayForm, ApplicationAwareView):
+    grok.context(IContent)
+    grok.name('index')
+    grok.require('uvc.ViewContent')
+
+    @property
+    def fields(self):
+        return z3cform.Fields(*self.context.schema)

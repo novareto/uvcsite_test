@@ -16,6 +16,8 @@ from zope.publisher.interfaces import INotFound
 from zope.interface.common.interfaces import IException
 from zope.exceptions.interfaces import IUserError
 
+from zope.app.exception.systemerror import SystemErrorView
+
 
 class Uvcsite(grok.Application, grok.Container):
     """ Application Object for uvc.site"""
@@ -37,14 +39,40 @@ class PersonalPanelView(megrok.layout.Page, ApplicationAwareView):
     grok.require('zope.View')
 
 
-class NotFound(megrok.layout.Page, ApplicationAwareView):
+class NotFound(megrok.layout.Page):
     grok.context(INotFound)
     grok.name('index.html')
 
-#class SystemError(megrok.layout.Page, ApplicationAwareView):
-#      grok.context(IException)
-#      grok.name('index.html')
+    def application_url(self, name=None):
+        obj = self.context.ob
+        while obj is not None:
+            if isinstance(obj, grok.Application):
+                return self.url(obj, name)
+            obj = obj.__parent__
+        return self.request.URL.get(0)
 
-#class UserError(megrok.layout.Page, ApplicationAwareView):
-#      grok.context(IUserError)
-#      grok.name('index.html')
+
+class SystemError(megrok.layout.Page):
+    grok.context(IException)
+    grok.name('index.html')
+
+    def application_url(self, name=None):
+        obj = self.context.ob
+        while obj is not None:
+            if isinstance(obj, grok.Application):
+                return self.url(obj, name)
+            obj = obj.__parent__
+        return self.request.URL.get(0)
+
+
+class UserError(megrok.layout.Page):
+    grok.context(IUserError)
+    grok.name('index.html')
+
+    def application_url(self, name=None):
+        obj = self.context.ob
+        while obj is not None:
+            if isinstance(obj, grok.Application):
+                return self.url(obj, name)
+            obj = obj.__parent__
+        return self.request.URL.get(0)
