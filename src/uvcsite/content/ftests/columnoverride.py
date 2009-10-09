@@ -47,7 +47,7 @@ import grok
 
 from megrok import z3cform
 from megrok import layout
-from megrok.z3ctable import LinkColumn
+from megrok.z3ctable import LinkColumn, table
 from zope.interface import Interface
 from zope.schema import TextLine, Int
 from uvcsite.content import ProductFolder, contenttype, Content, schema
@@ -80,7 +80,7 @@ class OverrideFolder(ProductFolder):
 
 class OverrideTitleColumn(LinkColumn):
     grok.name('link')
-    grok.context(IFolderColumnTable)
+    grok.context(OverrideFolder)
     header = u"OverrideTitle"
     weight = 1
     
