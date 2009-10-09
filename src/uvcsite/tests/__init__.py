@@ -50,7 +50,7 @@ def suiteFromPackage(name):
             dottedname, setUp=setUp, tearDown=tearDown,
             optionflags=(doctest.ELLIPSIS+
                          doctest.NORMALIZE_WHITESPACE+
-                         doctest.REPORT_NDIFF)
+                         doctest.REPORT_CDIFF)
             )
         test.layer = FunctionalLayer
         suite.addTest(test)
