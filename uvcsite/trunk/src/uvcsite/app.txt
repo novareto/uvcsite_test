@@ -41,17 +41,28 @@ Not Found View
 --------------
 
    >>> browser.handleErrors = True 
+
+We should get the Error Page:
+
    >>> browser.open('http://localhost/++skin++uvcsiteskin/app/not_found')
    Traceback (most recent call last):
    ...
    httperror_seek_wrapper: HTTP Error 404: Not Found
 
    >>> print browser.contents
-   <html><head>
+   <!DOCTYPE ... 
+         <h3>
+          The page that you are trying to access is not available
+         </h3>
+         <p><b>Please note the following:</b></p>
+         <ol>
+           <li>You might have misspelled the url</li>
+           <li>You might be trying to access a non-existing page</li>
+         </ol>
    ...
-   <title>NotFound</title></head>
-   <body><h2>NotFound</h2>
-   A server error occurred.
-   </body></html>
-   <BLANKLINE>
+   </html>
 
+And we should get a Status 404
+
+   >>> print browser.headers['Status'].upper()
+   404 NOT FOUND
