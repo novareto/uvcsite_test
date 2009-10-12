@@ -66,34 +66,9 @@ Main.css
   >>> 'main.css' in browser.contents
   True
 
-Jquery.js
+nva.css
 
-  #>>> 'jquery-1.3.2.js' in browser.contents
-  #True
-
-JTip.js
-
-  #>>> 'jtip.js' in browser.contents
-  True
-
-Myjs.js
-
-  #>>> 'myjs.js' in browser.contents
-  True
-
-Tooltip.js
-
-  #>>> 'tooltip.css' in browser.contents
-  True
-
-Tablesorter.js
-
-  #>>> 'jquery.tablesorter.js' in browser.contents
-  True
-
-mytable.js
-
-  #>>> 'mytable.js' in browser.contents
+  >>> 'nva.css' in browser.contents
   True
 
 favicon.ico

@@ -2,7 +2,7 @@
 	   xmlns:z3c="http://namespaces.zope.org/z3c">
 
    <z3c:template
-      template="form_templates/div-form.pt"
+      template="forms/div-form.pt"
       for="z3c.form.interfaces.IInputForm"
       layer="uvcsite.skin.skin.IUVCSiteLayer"
       />
