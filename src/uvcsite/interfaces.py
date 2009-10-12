@@ -53,3 +53,7 @@ class IPersonalPreferences(Interface):
 
 class IBreadCrumb(Interface):
     """ Marker for Breadcrumbs"""
+
+
+class IDocumentActions(Interface):
+    """ Marker for Breadcrumbs"""

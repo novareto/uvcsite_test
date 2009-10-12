@@ -81,3 +81,20 @@ Does the viewlet manager provide the right interfce IBreadcrumb?
    >>> from uvcsite.interfaces import IBreadCrumb
    >>> IBreadCrumb.providedBy(mgr)
    True
+
+
+Document Actions
+----------------
+
+Let´s call the Viewlet uvcsite.documentactions
+
+   >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
+   ...   'uvcsite.documentactions')
+   >>> mgr
+   <uvcsite.viewlets.managers.DocumentActions object at ...>
+
+Does the viewlet manager provide the right interfce IBreadcrumb?
+
+   >>> from uvcsite.interfaces import IDocumentActions
+   >>> IDocumentActions.providedBy(mgr)
+   True

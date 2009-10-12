@@ -21,7 +21,7 @@ class ErrorViewTemplateFactory(object):
 
 # Create the standard error view template
 StandardErrorViewTemplate = ErrorViewTemplateFactory(
-    os.path.join(os.path.dirname(uvcsite.content.__file__),
+    os.path.join(os.path.dirname(uvcsite.skin.forms.__file__),
     'error.pt'), 'text/html')
 
 zope.component.adapter(

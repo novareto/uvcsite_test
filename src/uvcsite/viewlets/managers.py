@@ -4,6 +4,11 @@ import grok
 from zope.interface import Interface
 from uvcsite.interfaces import *
 
+class DocumentActions(grok.ViewletManager):
+    grok.name('uvcsite.documentactions')
+    grok.context(Interface)
+    grok.implements(IDocumentActions)
+
 
 class Breadcrumb(grok.ViewletManager):
     grok.name('uvcsite.breadcrumb')
