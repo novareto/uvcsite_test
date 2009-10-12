@@ -4,6 +4,7 @@
 
 
 import grok
+from uvcsite import uvcsiteMF as _
 from zope.interface import Interface
 from uvcsite.interfaces import IFooter
 from uvcsite.viewlets.utils import MenuItem
@@ -15,6 +16,7 @@ class Impressum(MenuItem):
     grok.viewletmanager(IFooter)
     grok.order(1)
 
+    title = _(u'Impressum')
     urlEndings = "impressum"
     viewURL = "impressum"
 
@@ -25,6 +27,7 @@ class Barrierefreiheit(MenuItem):
     grok.viewletmanager(IFooter)
     grok.order(2)
 
+    title = _(u'Barrierefreiheit')
     urlEndings = "barrierefreiheit"
     viewURL = "barrierefreiheit"
 
@@ -35,7 +38,7 @@ class Kontakt(MenuItem):
     grok.viewletmanager(IFooter)
     grok.order(3)
 
+    title = _(u'Kontakt')
     css = "last"
-
     urlEndings = "kontakt"
     viewURL = "kontakt"

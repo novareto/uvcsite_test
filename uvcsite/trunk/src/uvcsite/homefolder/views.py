@@ -39,7 +39,7 @@ class Index(DeleteFormTablePage, ApplicationAwareView):
         return self.context.keys()
 
     def executeDelete(self, item):
-        self.flash(u'Ihre Dokumente wurden entfernt')
+        self.flash(_(u'Ihre Dokumente wurden entfernt'))
         del item.__parent__[item.__name__]
 
 

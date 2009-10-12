@@ -1,14 +1,10 @@
-<html>
-<head>
-</head>
-<body>
- <div>
+<div>
   <h1 tal:content="view/title"></h1>
   <p tal:content="view/description"/>
 
   <ul>
       <li tal:repeat="type view/getContentTypes"> 
-          <a href="" tal:attributes="href string:${view/url}?meta_type=${type}"> 
+          <a href="" tal:attributes="href string:${view/url}/type"> 
              <span tal:content="type"/>
 	  </a>   
       </li>
@@ -16,6 +12,4 @@
 
   <div tal:content="structure view/renderBatch" />
   <div tal:replace="structure view/renderFormTable" />
- </div>
-</body>
-</html>
+</div>

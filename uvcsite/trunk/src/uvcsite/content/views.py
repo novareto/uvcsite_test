@@ -10,7 +10,7 @@ from uvcsite.content import IContent, IProductFolder, ApplicationAwareView
 from z3c.form import form
 from megrok.z3cform.tabular import DeleteFormTablePage
 from uvcsite.content import ApplicationAwareView
-
+from uvcsite import uvcsiteMF as _
 
 class Index(DeleteFormTablePage, ApplicationAwareView):
     grok.context(IProductFolder)
@@ -20,7 +20,7 @@ class Index(DeleteFormTablePage, ApplicationAwareView):
     cssClassOdd = u'odd'
 
     def executeDelete(self, item):
-        self.flash(u'Ihre Dokumente wurden entfernt')
+        self.flash(_(u'Ihre Dokumente wurden entfernt'))
         del item.__parent__[item.__name__]
 
 
@@ -42,7 +42,7 @@ class Add(z3cform.PageAddForm, ApplicationAwareView):
         self.context.add(content)
 
     def nextURL(self):
-        self.flash('Added Content')
+        self.flash(_('Added Content'))
         return self.url(self.context)
 
 
