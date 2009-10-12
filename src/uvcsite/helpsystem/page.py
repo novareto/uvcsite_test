@@ -28,7 +28,7 @@ class HelpPage(Content):
         self.text = unicode(text)
 
 
-class HelpAdd(PageAddForm, ApplicationAwareView):
+class Add(PageAddForm, ApplicationAwareView):
     grok.context(IHelpFolder)
     fields = Fields(IHelpPage)
     grok.require('zope.ManageSite')

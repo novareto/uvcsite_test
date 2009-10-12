@@ -123,7 +123,7 @@ But first do we get the index of the container itself?
 
 Ok now we can add a new help page!
 
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/helpadd')
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/add')
    >>> print browser.headers['Status'].upper()
    200 OK
 
@@ -131,7 +131,7 @@ Get the form and look for the right action
 
    >>> form = browser.getForm()
    >>> print form.action
-   http://localhost/++skin++uvcsiteskin/app/hilfe/helpadd
+   http://localhost/++skin++uvcsiteskin/app/hilfe/add
 
 Fill out the form with the testbrowser
 

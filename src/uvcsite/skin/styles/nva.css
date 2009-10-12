@@ -1,3 +1,9 @@
+fieldset legend {
+   color: #B30B16;    
+   border: 1px solid #B30B16;
+   background-color:#EFEFEF;
+}
+
 /* tooltip with jquery tools */
 
 
