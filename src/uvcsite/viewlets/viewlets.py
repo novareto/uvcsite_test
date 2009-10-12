@@ -10,7 +10,7 @@ from zope.traversing.browser import absoluteURL
 from uvcsite.interfaces import ILogo, IStatusMessage, IHeaders, IBreadCrumb
 from z3c.flashmessage.interfaces import IMessageReceiver
 from z3c.breadcrumb.interfaces import IBreadcrumb, IBreadcrumbs
-
+from uvcsite import uvcsiteMF as _
 
 class Breadcrumb(grok.Viewlet):
     grok.name('breadcrumb')

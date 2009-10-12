@@ -71,7 +71,7 @@ class ENMSCreateUser(Form, grok.Form, ApplicationAwareView):
         for role in kw.get('rollen'):
             principal_roles = IPrincipalRoleManager(self.context[role])
             principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
-        self.flash('Der Mitbenutzer wurde gespeichert')
+        self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         self.redirect(self.url(self.context))
 
 
@@ -115,7 +115,7 @@ class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
         for role in kw.get('rollen'):
             principal_roles = IPrincipalRoleManager(self.context[role])
             principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
-        self.flash('Der Mitbenutzer wurde gespeichert')
+        self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         self.redirect(self.url(self.context))
 
     @grok.action(_(u"Entfernen"), validator=null_validator)
@@ -127,5 +127,5 @@ class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
             principal_roles = IPrincipalRoleManager(role)
             principal_roles.removeRoleFromPrincipal('uvc.Editor',
                             kw.get('mnr'))
-        self.flash('Der Mitbenutzer wurde entfernt.')
+        self.flash(_(u'Der Mitbenutzer wurde entfernt.'))
         self.redirect(self.url(self.context))
