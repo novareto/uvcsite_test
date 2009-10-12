@@ -6,7 +6,7 @@
     <browser:defaultSkin name="uvcsiteskin"/>
 
      <adapter
-         factory=".content.error.StandardErrorViewTemplate"
+         factory=".skin.forms.error.StandardErrorViewTemplate"
          />
 
 

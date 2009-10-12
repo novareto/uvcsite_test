@@ -15,7 +15,7 @@
   <include package="z3c.schema2xml" />
 
   <include package=".generations" />
-  <include package=".content" />
+  <include package=".skin" />
 
 
       <unauthenticatedPrincipal id="zope.anybody"

@@ -1,3 +1,6 @@
+
+/* The Lenend in Fieldsets */
+
 fieldset legend {
    color: #B30B16;    
    border: 1px solid #B30B16;
@@ -176,3 +179,33 @@ dl.error dd {
         width: 100%;
 }
 
+/* Document Actions" */
+
+.documentActions {
+    float:right;
+    margin:0.4em 0 0 0.5em;
+    padding:0;
+    text-align:right;
+}
+
+.documentActions ul {
+    display:block;
+    margin:1px 0 2px;
+    padding:0;
+}
+
+.documentActions li {
+    display:inline;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+
+.right-col .documentActions ul li {
+    line-height:1.5em;
+    list-style-image:none;
+    list-style-type:square;
+    color:transparent;
+}

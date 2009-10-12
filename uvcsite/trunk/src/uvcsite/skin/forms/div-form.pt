@@ -21,6 +21,19 @@
 <fieldset>
   <legend tal:condition="view/label|nothing"
           tal:content="view/label"/>
+
+    <div class="documentActions" 
+         tal:content="structure provider:uvcsite.documentactions"/>
+         <!--
+        <ul>
+          <li>
+            <a href="https://bghwextranet.bg-kooperation.de/Members/0000-00025/eunfallanzeige.2009-10-12.2910976413/pdf">
+            <img id="icon-Download PDF" title="Download PDF" alt="Download PDF" src="https://bghwextranet.bg-kooperation.de/pdf.png"/>
+            </a>
+        </li>
+        </ul>
+        </div>
+-->
   <metal:block define-macro="subform">
   <div class="viewspace" metal:define-slot="viewspace">
     <metal:block define-slot="header">
