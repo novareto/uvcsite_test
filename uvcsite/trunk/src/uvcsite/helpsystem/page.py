@@ -8,15 +8,15 @@ from zope.interface import Interface
 from megrok.z3cform.base import (PageAddForm, 
                    PageEditForm, PageDisplayForm, Fields)
 
-import megrok.menu
 from uvcsite import uvcsiteMF as _
 from uvcsite import Content, ApplicationAwareView
+from uvcsite.interfaces import IDocumentActions
 from uvcsite.skin.skin import Forms
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 from uvcsite.content import Content, schema
 from uvcsite.helpsystem.portlet import HelpPortlet
-from uvcsite.viewlets.actions import DocumentActions
+from uvcsite.viewlets.utils import DocumentAction
 
 
 class HelpPage(Content):
@@ -82,8 +82,20 @@ class HilfePortlet(HelpPortlet):
     urls = [ {'href':'klaus','name':'hilfe'}, ]
 
 
-class Pdf(grok.View):
-    megrok.menu.menuitem(DocumentActions, icon="pdf.png")
+# Document Actions
+
+class PdfIcon(DocumentAction):
+    grok.name(_(u'aspdf'))
+    grok.context(HelpPage)
+    grok.viewletmanager(IDocumentActions)
+
+    image = "pdf.png"
+    title = (_(u'aspdf'))
+    urlEndings = 'aspdf'
+    viewURL = 'aspdf'
+
+
+class AsPdf(grok.View):
     grok.context(HelpPage)
     grok.title('aspdf')
 

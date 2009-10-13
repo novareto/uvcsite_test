@@ -85,10 +85,3 @@ class UserError(megrok.layout.Page):
                 return self.url(obj, name)
             obj = obj.__parent__
         return self.request.URL.get(0)
-
-
-import megrok.menu
-class DocumentActions(megrok.menu.Menu):
-    grok.name('documentactions')
-    grok.title('Document Actions')
-

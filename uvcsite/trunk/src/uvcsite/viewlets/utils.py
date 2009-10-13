@@ -4,6 +4,7 @@
 import grok
 
 from z3c.menu.simple.menu import GlobalMenuItem
+from z3c.menu.simple.menu import ContextMenuItem
 from zope.app import zapi
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.app.homefolder.interfaces import IHomeFolderManager
@@ -14,7 +15,7 @@ from zope.i18n import translate
 
 class MenuItem(grok.Viewlet, GlobalMenuItem):
     grok.baseclass()
-    template = ViewPageTemplateFile('menu_item.pt')
+    template = ViewPageTemplateFile('templates/menu_item.pt')
 
     def home_folder_url(self, url=False):
         principal = self.request.principal
@@ -31,15 +32,16 @@ class MenuItem(grok.Viewlet, GlobalMenuItem):
 
 
 
-class DocumentAction(grok.Viewlet, GlobalMenuItem):
+class DocumentAction(grok.Viewlet, ContextMenuItem):
     grok.baseclass()
 
     image = "pdf.png"
     template = ViewPageTemplateFile('templates/document_action.pt')
 
-    @property
+    
     def image_url(self):
-        url = "%s/@@styles/%s" % (self.view.application_url, self.image)
+        url = "%s/@@/styles/%s" % (self.view.application_url(), self.image)
+        return url
 
     def render(self):
         # This method is for grok not to say template or render needed!

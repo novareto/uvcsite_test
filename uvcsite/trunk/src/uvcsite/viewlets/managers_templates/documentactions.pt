@@ -1,0 +1,6 @@
+<ul tal:define="actions viewletmanager/viewlets"
+    tal:condition="actions"
+    class="menu">
+   <li tal:repeat="tab actions"
+       tal:content="structure tab/render" />
+</ul>
