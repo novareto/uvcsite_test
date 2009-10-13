@@ -28,3 +28,19 @@ class MenuItem(grok.Viewlet, GlobalMenuItem):
     def render(self):
         # This method is for grok not to say template or render needed!
         return self.template()
+
+
+
+class DocumentAction(grok.Viewlet, GlobalMenuItem):
+    grok.baseclass()
+
+    image = "pdf.png"
+    template = ViewPageTemplateFile('templates/document_action.pt')
+
+    @property
+    def image_url(self):
+        url = "%s/@@styles/%s" % (self.view.application_url, self.image)
+
+    def render(self):
+        # This method is for grok not to say template or render needed!
+        return self.template()
