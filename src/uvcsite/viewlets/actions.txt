@@ -10,18 +10,6 @@ Let's first create an instance of Uvcsite at the top level:
   >>> uvcsite = Uvcsite()
   >>> root['app'] = uvcsite
 
-  >>> import zope.interface
-  >>> import zope.security.interfaces
-  >>> class DummyPrincipal(object):
-  ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
-  ...
-  ...     id = "someuser"
-  ...     title = "Some User's Name"
-  ...     description = "A User"
-
-We create a basic ContentType and persist it to our root 
-object!
-
   >>> import grok
   >>> class Unfallanzeige(grok.Model):
   ...    pass
@@ -34,53 +22,3 @@ Create some context for the ViewletManager
 
   >>> from zope.publisher.browser import TestRequest
   >>> request = TestRequest()
-  >>> #request.setPrincipal(DummyPrincipal())
-  >>> from zope.component import getUtility
-  >>> from zope.app.publisher.interfaces.browser import IBrowserMenu
-  >>> #zope.security.management.newInteraction(request)
-
-A menu is available as a named utility providing ``IBrowserMenu``.
-
-  >>> root = getRootFolder()
-  >>> menu = getUtility(IBrowserMenu, 'documentactions')
-  >>> menu
-  <uvcsite.app.DocumentActions object at ...>
-
-We don't have any menus registerd so we don't should get any back!
-
-  >>> menus = menu.getMenuItems(uaz, request)
-  >>> menus
-  []
-
-  >>> len(menus)
-  0
-
-
-So let's try to configure a simple view for this menu!
-
-  >>> from grokcore.component.testing import grok_component 
-  >>> from megrok.menu import menuitem
-
-  >>> class MyPdf(grok.View):
-  ...     grok.context(Unfallanzeige)
-  ...     grok.require('zope.Public')
-  ...     menuitem('documentactions')
-  ...     def render(self):
-  ...         return "YEAH"
-
-We grok the view.
-
-  >>> grok_component('MyPdf', MyPdf)
-  True
-
-Now we should get this view as MenuItem in our documentactions menu
-
-  >>> menu = getUtility(IBrowserMenu, 'documentactions')
-  >>> menus = menu.getMenuItems(uaz, request)
-  >>> len(menus)
-  1
-
-  >>> print menus[0].get('action')
-  mypdf
-
-
