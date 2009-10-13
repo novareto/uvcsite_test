@@ -42,7 +42,6 @@ setup(name='uvcsite',
                         'z3c.testsetup',
                         'zc.blist',
                         'zope.app.homefolder',
-                        'megrok.menu',
                             # Add extra requirements here
                             ],
           entry_points = """
