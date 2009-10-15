@@ -6,11 +6,12 @@ import grok
 
 from megrok import z3ctable
 from megrok.z3cform import base as z3cform
-from uvcsite.content import IContent, IProductFolder, ApplicationAwareView
+from uvcsite.content import IContent, IProductFolder
+from uvcsite import ApplicationAwareView
 from z3c.form import form
 from megrok.z3cform.tabular import DeleteFormTablePage
-from uvcsite.content import ApplicationAwareView
 from uvcsite import uvcsiteMF as _
+
 
 class Index(DeleteFormTablePage, ApplicationAwareView):
     grok.context(IProductFolder)
