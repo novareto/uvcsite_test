@@ -7,26 +7,14 @@ from uvcsite import uvcsiteMF as _
 from uvcsite import ApplicationAwareView
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
-from zope.formlib.form import setUpWidgets
+from zope.formlib.form import setUpWidgets, setUpEditWidgets
 from megrok.layout.components import Form
 from uvcsite.extranetmembership.interfaces import (IUserManagement,
                  IExtranetMember)
 from uvcsite.extranetmembership.custom_fields import *
-from zope.app.homefolder.interfaces import IHomeFolderManager
+from zope.app.homefolder.interfaces import IHomeFolderManager, IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder
-
-
-def null_validator(*args, **kwargs):
-    """A validator that doesn't validate anything.
-    This is somewhat lame, but if you have a "Cancel" type button that
-    won't want to validate the form, you need something like this.
-
-    @form.action(_(u"label_cancel", default=u"Cancel"),
-                 validator=null_validator,
-                 name=u'cancel')
-    """
-    return ()
 
 
 class ENMS(megrok.layout.Page, ApplicationAwareView):
@@ -71,7 +59,9 @@ class ENMSCreateUser(Form, grok.Form, ApplicationAwareView):
             principal_roles = IPrincipalRoleManager(self.context[role])
             principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
-        self.redirect(self.url(self.context))
+        principal = self.request.principal
+        homeFolder = IHomeFolder(principal).homeFolder
+        self.redirect(self.url(homeFolder, 'enms'))
 
 
 class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
@@ -82,6 +72,8 @@ class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
     template = grok.PageTemplateFile('templates/form.pt')
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
+    form_fields['passwort'].custom_widget = CustomPasswordWidget
+    form_fields['confirm'].custom_widget = CustomPasswordWidget
     grok.require('uvc.ManageCoUsers')
 
     def setUpWidgets(self, ignore_request=False):
@@ -93,6 +85,7 @@ class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
         if id:
             user = um.getUser(id)
             user['mnr'] = id
+            user['confirm'] = user['passwort']
         data=user
         self.adapters = {}
         self.widgets = setUpWidgets(
@@ -115,9 +108,11 @@ class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
             principal_roles = IPrincipalRoleManager(self.context[role])
             principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
-        self.redirect(self.url(self.context))
+        principal = self.request.principal
+        homeFolder = IHomeFolder(principal).homeFolder
+        self.redirect(self.url(homeFolder, 'enms'))
 
-    @grok.action(_(u"Entfernen"), validator=null_validator)
+    @grok.action(_(u"Entfernen"))
     def entfernen(self, **kw):
         um = getUtility(IUserManagement)
         key = kw.get('mnr')
@@ -127,4 +122,23 @@ class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
             principal_roles.removeRoleFromPrincipal('uvc.Editor',
                             kw.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde entfernt.'))
+        principal = self.request.principal
+        homeFolder = IHomeFolder(principal).homeFolder
+        self.redirect(self.url(homeFolder, 'enms'))
+
+
+class ChangePassword(Form, grok.Form, ApplicationAwareView):
+    """ A Form for updating a User in ENMS"""
+
+    grok.context(IUVCSite)
+    form_fields = grok.Fields(IExtranetMember).select('passwort', 'confirm')
+    template = grok.PageTemplateFile('templates/form.pt')
+    title = _(u'Passwort ändern')
+    label = _(u'Hier können Sie Ihr Passwort ändern')
+
+    @grok.action(_(u"Bearbeiten"))
+    def changePasswort(self, **kw):
+        um = getUtility(IUserManagement)
+        um.updatePasswort(**kw)
+        self.flash(_(u'Ihr Passwort wurde gespeichert!'))
         self.redirect(self.url(self.context))

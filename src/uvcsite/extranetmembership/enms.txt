@@ -80,7 +80,6 @@ Fill out the Form
 
    >>> form = browser.getForm()
    >>> form.getControl(name='form.rollen').value = '1'
-   >>> form.getControl(name='form.email').value = 'cklinger@novareto.de'
    >>> form.getControl(name='form.passwort').value = 'geheim'
    >>> form.getControl(name='form.confirm').value = 'geheim'
    >>> form.submit('Anlegen')
@@ -115,14 +114,27 @@ Here we click on the user we want to modify!
    <Link text='0101010001' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
    >>> update.click()
 
-Here we have the input form we check if we have the right value for email!
+Here we have the input form we check if we have the right value for passwort!
 
    >>> form = browser.getForm()
-   >>> print form.getControl(name='form.email').value
-   test@test.de
+   >>> print form.getControl(name='form.passwort').value
+   passwort 
 
-   >>> form.getControl(name='form.email').value = "lars@novareto.de"
+So let's check here if we check correctly the password and confirm:
+
+   >>> url = browser.url 
    >>> form.getControl(name='form.confirm').value = "passwort" 
+   >>> form.getControl(name='form.passwort').value = "notequal" 
+   >>> form.submit('Bearbeiten')
+   >>> '<span class="error">Das Passwort und die Wiederholung sind nicht gleich.</span>' in browser.contents
+   True
+
+Now try a good combination of passwort and confirm!
+
+   >>> browser.open(url)
+   >>> form = browser.getForm()
+   >>> form.getControl(name='form.confirm').value = "passwort" 
+   >>> form.getControl(name='form.passwort').value = "passwort" 
    >>> form.getControl(name='form.rollen').value = '1'
    >>> form.submit('Bearbeiten')
 
@@ -169,3 +181,26 @@ Click on the button
    >>> form.submit('Entfernen')
    >>> "<dd>Der Mitbenutzer wurde entfernt.</dd>" in browser.contents
    True
+
+
+Changing the Password
+=====================
+
+We still have form for changing the users password!
+
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/changepassword')
+   >>> print browser.headers['Status'].upper()
+   200 OK
+
+Let's get the form. We should get our two input forms for passwort and confirm
+
+   >>> form = browser.getForm()
+   >>> form.getControl(name='form.passwort').value = "passwort" 
+   >>> form.getControl(name='form.confirm').value = "passwort" 
+   >>> form.submit('Bearbeiten')
+
+We should get the right portal status, for changing the passwort!
+
+   >>> "<dd>Ihr Passwort wurde gespeichert!</dd>" in browser.contents
+   True
+

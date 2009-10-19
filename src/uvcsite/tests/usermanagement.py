@@ -30,3 +30,6 @@ class UserManagement(grok.GlobalUtility):
     def getUserGroups(self, mnr):
         """Return a group of Users"""
         return users
+
+    def updatePasswort(self, **kwargs):
+        """Change a passwort from a user"""
