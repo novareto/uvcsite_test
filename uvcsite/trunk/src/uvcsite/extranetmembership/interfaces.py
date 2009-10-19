@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from uvcsite import uvcsiteMF as _
-from zope.interface import Interface
-from zope.schema import TextLine, Tuple, Choice, List
+from zope.interface import Interface, invariant, Invalid
+from zope.schema import Password, TextLine, Tuple, Choice, List
 
 
 class IExtranetMember(Interface):
@@ -18,20 +18,26 @@ class IExtranetMember(Interface):
              value_type=Choice(vocabulary="VocabularyBerechtigungen"),
              required = False)
 
-    email = TextLine(
-             title=_(u"Email"),
-             description=_(u"Email"),
-             required = False)
-
-    passwort = TextLine(
+    passwort = Password(
               title = _(u"Passwort"),
               description = _(u"Passwort"),
+              min_length = 5,
+              max_length = 8,
               required = True)
 
-    confirm = TextLine(
+    confirm = Password(
               title = _(u"Bestaetigung"),
               description = _(u"Bestaetigung"),
+              min_length = 5,
+              max_length = 8,
               required = True)
+
+    @invariant
+    def arePasswordsEqual(user):
+        if user.passwort != user.confirm:
+            raise Invalid(
+                u"""Das Passwort und die Wiederholung sind nicht gleich.""")
+
 
     def getBaseUser():
         """ Return the User Representation"""
@@ -53,3 +59,6 @@ class IUserManagement(Interface):
 
     def deleteUser(mnr):
         """ Delete a specified user """
+
+    def updatePasswort(**kw):
+        """ Change a Users Passwort"""
