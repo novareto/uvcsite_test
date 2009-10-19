@@ -53,32 +53,3 @@ class NotFound(megrok.layout.Page):
                 return self.url(obj, name)
             obj = obj.__parent__
         return self.request.URL.get(0)
-
-
-class SystemError(megrok.layout.Page):
-    grok.baseclass()
-    grok.context(IException)
-    grok.name('index.html')
-
-    def update(self):
-        self.request.response.setStatus(500)
-
-    def application_url(self, name=None):
-        return self.request.URL.get(1)
-
-
-class UserError(megrok.layout.Page):
-    grok.context(IUserError)
-    grok.name('index.html')
-
-    def update(self):
-        self.request.response.setStatus(500)
-
-    def application_url(self, name=None):
-        import pdb; pdb.set_trace() 
-        obj = self.context.ob
-        while obj is not None:
-            if isinstance(obj, grok.Application):
-                return self.url(obj, name)
-            obj = obj.__parent__
-        return self.request.URL.get(0)
