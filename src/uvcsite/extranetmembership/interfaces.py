@@ -21,7 +21,7 @@ class IExtranetMember(Interface):
     email = TextLine(
              title=_(u"Email"),
              description=_(u"Email"),
-             required = True)
+             required = False)
 
     passwort = TextLine(
               title = _(u"Passwort"),

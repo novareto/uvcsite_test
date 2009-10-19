@@ -34,7 +34,7 @@ class ENMS(megrok.layout.Page, ApplicationAwareView):
     grok.require('uvc.ManageCoUsers')
 
     def getUserGroup(self):
-        principal = "0101010001" #self.request.principal.hauptuser
+        principal = self.request.principal.id
         um = getUtility(IUserManagement)
         return um.getUserGroups(principal)
 
@@ -48,8 +48,7 @@ class ENMSCreateUser(Form, grok.Form, ApplicationAwareView):
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
 
     def setUpWidgets(self, ignore_request=False):
-        #BBB Die Werte mussen hier erst noch errechnet werden.
-        principal = "0101010001" #self.request.principal.hauptuser
+        principal = self.request.principal.id
         um = getUtility(IUserManagement)
         ll = len(um.getUserGroups(principal))
         value = principal + '-' + str(ll+1)
@@ -87,7 +86,7 @@ class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
 
     def setUpWidgets(self, ignore_request=False):
         #BBB Die Werte mussen hier erst noch errechnet werden.
-        principal = "0101010001" #self.request.principal.hauptuser
+        principal = self.request.principal.id
         id = self.request.get('cn')
         um = getUtility(IUserManagement)
         user = {}
