@@ -48,3 +48,27 @@ Right combination of credentials
 
    >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'passwort'})
    PrincipalInfo('0101010001')
+
+Cache
+-----
+
+Ok the last lookup was successful! This means we get the real authenticated Princiapl back.
+This lookup happens now on all requests. This means we try to cache these expensive lookups.
+If we now call the authenticateCredentials again. We should get a cache hit in the form
+of a simple print.
+
+We have 0 hit's on this stage
+
+   >>> from uvcsite.auth.handler import authCache
+   >>> authCache.getStatistics()[0]['hits'] 
+   0
+
+Let's authenticate again with the same credentials
+
+   >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'passwort'})
+   PrincipalInfo('0101010001')
+
+Check if we get now an hit in the Cache 
+
+   >>> authCache.getStatistics()[0]['hits'] 
+   1

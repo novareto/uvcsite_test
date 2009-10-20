@@ -15,6 +15,9 @@ from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.authentication.httpplugins import HTTPBasicAuthCredentialsPlugin
 from zope.security.interfaces import IGroupAwarePrincipal
 
+from zope.app.cache.ram import RAMCache
+authCache = RAMCache()
+
 
 @grok.adapter(IGroupAwarePrincipal)
 @grok.adapter(IPrincipal)
@@ -51,7 +54,11 @@ class UVCAuthenticator(Persistent):
             return
         login, password = credentials['login'], credentials['password']
         utility = getUtility(IUserManagement)
-        user = utility.getUser(login)
+        key = dict(login=login, password=password)
+        user = authCache.query(self, key)
+        if not user:
+            user = utility.getUser(login)
+            authCache.set(user, self, key)
         if not user:
             return
         if password != user.get('passwort'):
