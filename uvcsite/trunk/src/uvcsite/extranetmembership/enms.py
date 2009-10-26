@@ -139,6 +139,8 @@ class ChangePassword(Form, grok.Form, ApplicationAwareView):
     @grok.action(_(u"Bearbeiten"))
     def changePasswort(self, **kw):
         um = getUtility(IUserManagement)
+        principal = self.request.principal.id
+        kw['mnr'] = principal
         um.updatePasswort(**kw)
         self.flash(_(u'Ihr Passwort wurde gespeichert!'))
         self.redirect(self.url(self.context))
