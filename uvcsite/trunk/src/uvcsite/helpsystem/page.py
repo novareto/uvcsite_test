@@ -100,4 +100,4 @@ class AsPdf(grok.View):
     grok.title('aspdf')
 
     def render(self):
-        return "BLA BLA"
+        return "This should be a PDF"

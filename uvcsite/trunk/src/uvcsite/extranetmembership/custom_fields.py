@@ -41,29 +41,24 @@ class CustomPasswordWidget(BasePasswordWidget):
     def __call__(self):
         value = self._getFormValue()
         displayMaxWidth = self.displayMaxWidth or 0
-        if displayMaxWidth > 0:
-            return renderElement(self.tag,
-                                 type=self.type,
-                                 name=self.name,
-                                 id=self.name,
-                                 value=value,
-                                 cssClass=self.cssClass,
-                                 style=self.style,
-                                 size=self.displayWidth,
-                                 maxlength=displayMaxWidth,
-                                 extra=self.extra)
-        else:
-            return renderElement(self.tag,
-                                 type=self.type,
-                                 name=self.name,
-                                 id=self.name,
-                                 cssClass=self.cssClass,
-                                 style=self.style,
-                                 size=self.displayWidth,
-                                 value = value,
-                                 extra=self.extra)
-
-    def hidden(self):
-        raise NotImplementedError(
-            'Cannot get a hidden tag for a password field')
-
+        #if displayMaxWidth > 0:
+        #    return renderElement(self.tag,
+        #                         type=self.type,
+        #                         name=self.name,
+        #                         id=self.name,
+        #                         value=value,
+        #                         cssClass=self.cssClass,
+        #                         style=self.style,
+        #                         size=self.displayWidth,
+        #                         maxlength=displayMaxWidth,
+        #                         extra=self.extra)
+        
+        return renderElement(self.tag,
+                             type=self.type,
+                             name=self.name,
+                             id=self.name,
+                             cssClass=self.cssClass,
+                             style=self.style,
+                             size=self.displayWidth,
+                             value = value,
+                             extra=self.extra)
