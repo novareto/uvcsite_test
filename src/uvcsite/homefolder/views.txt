@@ -3,6 +3,7 @@ Functional Doctests on homefolder views
 
 :Test-Layer: functional
 
+
 Setup
 -----
 
@@ -40,6 +41,12 @@ TableView
   >>> index = getMultiAdapter((homefolder, request), name="index")
   >>> index
   <Index 'index'>
+
+We don't have any folders inside our homefolder this means we don't get 
+any **content_types** for it.
+
+  >>> list(index.getContentTypes())
+  []
 
 Now we can render the Index Page of the Homefolder: 
 
@@ -124,6 +131,12 @@ Let's proof if the Homefolder Settings are correct!
 Now call the view with some contents...
 
   >>> index = getMultiAdapter((homefolder, request), name="index")
+
+Let's check again if we now get **contenttypes** in our homefolder:
+
+  >>> list(index.getContentTypes())
+  [u'personcontainer']
+
   >>> index.update()
   >>> print index.render()
   <form action="http://127.0.0.1" method="post"

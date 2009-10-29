@@ -165,6 +165,7 @@ Index
    >>> print browser.headers['Status'].upper()
    200 OK
 
+
 Edit
 ----
 
@@ -178,3 +179,16 @@ Do we get the default values from the add operation?
 
    >>> print form.getControl(name='form.widgets.title').value
    beschreibung 
+
+
+Are we have the DocumentAction for our overview?
+
+   >>> 'myhelp/aspdf' in browser.contents
+   True
+
+PDF Helper
+----------
+
+   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp/aspdf')
+   >>> 'This should be a PDF' in browser.contents
+   True

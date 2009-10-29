@@ -22,7 +22,6 @@ class ApplicationAwareView(object):
             if IUVCApplication.providedBy(obj):
                 return self.url(obj, name)
             obj = obj.__parent__
-        print self.context
         raise ValueError("No application found.")
 
     def flash(self, message, type='message'):

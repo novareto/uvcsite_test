@@ -35,15 +35,29 @@ At this point we don't have any versions
    >>> len(wv.versions)
    0
 
+Attention:
+----------
+
+These tests sucks because we don't have need for the WorkflowVersions
+utility. Bet we have to test them...
+
 Let's add a Version to the utility:
 
    >>> wv.addVersion(content)
    >>> len(wv.versions)
    1
 
+Test for hasVersionId:
+
    >>> wv.hasVersionId(1)
    False
+
+Test for has Version:
 
    >>> wv.hasVersion('', 1)
    False
 
+Test for getVersionsWithAutomaticTransitions:
+
+   >>> wv.getVersionsWithAutomaticTransitions()
+   [] 
