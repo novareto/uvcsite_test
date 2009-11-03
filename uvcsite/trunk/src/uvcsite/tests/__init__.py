@@ -12,7 +12,7 @@ import zope.component._api
 import zope.app.component.hooks
 
 ftesting_zcml = os.path.join(
-    os.path.dirname(uvcsite.__file__), 'ftesting.zcml')
+    os.path.dirname(uvcsite.__file__), 'ftesting_uvc.zcml')
 FunctionalLayer = ZCMLLayer(ftesting_zcml, __name__, 'FunctionalLayer',
                             allow_teardown=True)
 

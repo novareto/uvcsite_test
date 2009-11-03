@@ -5,7 +5,8 @@
    xmlns:grok="http://namespaces.zope.org/grok"
    >
 
-  <include package="uvcsite" />
+  <include package="uvcsite" file="ftesting.zcml"/>
+  <include package="uvcsite.tests" />
 
   <principal
       id="zope.mgr"
