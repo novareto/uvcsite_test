@@ -355,6 +355,10 @@ table td.center {
 	text-align: center;
 }
 
+table td.right {
+	text-align: right;
+}
+
 table tr.odd td {
 	background-color: #efefef;
 }
