@@ -12,8 +12,9 @@ from uvcsite.viewlets.utils import MenuItem
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
-from zope.app import zapi
 from uvcsite.api.interfaces import ICompanyInfo
+from zope.traversing.browser import absoluteURL
+
 
 
 class MyName(grok.Viewlet):
@@ -46,7 +47,7 @@ class MyFolder(MenuItem):
         if IUnauthenticatedPrincipal.providedBy(principal):
             return
         homeFolder = IHomeFolder(principal).homeFolder
-        return zapi.absoluteURL(homeFolder, self.request)
+        return absoluteURL(homeFolder, self.request)
 
 
 class Logout(MenuItem):
