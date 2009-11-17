@@ -5,7 +5,7 @@ import grok
 
 from z3c.menu.simple.menu import GlobalMenuItem
 from z3c.menu.simple.menu import ContextMenuItem
-from zope.app import zapi
+from zope.traversing.browser import absoluteURL
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
@@ -23,7 +23,7 @@ class MenuItem(grok.Viewlet, GlobalMenuItem):
             return
         homeFolder = IHomeFolder(principal).homeFolder
         if url:
-            homeFolder = zapi.absoluteURL(homeFolder, self.request)
+            homeFolder = absoluteURL(homeFolder, self.request)
         return homeFolder
 
     def render(self):
