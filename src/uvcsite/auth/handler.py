@@ -9,17 +9,16 @@ from zope.interface import implements
 from zope.location.interfaces import ILocation
 from interfaces import IUVCAuth, IMasterUser
 from zope.app.authentication.principalfolder import PrincipalInfo, Principal
-from zope.app.authentication.interfaces import IPrincipal
 from uvcsite.extranetmembership.interfaces import IUserManagement
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.authentication.httpplugins import HTTPBasicAuthCredentialsPlugin
 from zope.security.interfaces import IGroupAwarePrincipal
 
+from zope.security.interfaces import IPrincipal
 from zope.app.cache.ram import RAMCache
 authCache = RAMCache()
 
 
-@grok.adapter(IGroupAwarePrincipal)
 @grok.adapter(IPrincipal)
 @grok.implementer(IMasterUser)
 def masteruser(self):
