@@ -12,15 +12,21 @@ Setup
 Before we fire up the DatabaseOpendEvent we have to prepare a ZODB
 
   >>> from ZODB.tests.util import DB
+  >>> from zope.app.appsetup import bootstrap
+  >>> import zope.processlifetime
+  >>> from zope.app.component.hooks import getSite, setSite
+    
   >>> db = DB()
+  >>> bootstrap.bootStrapSubscriber(zope.processlifetime.DatabaseOpened(db))
   >>> conn = db.open()
   >>> root = conn.root()
-  >>> root[ZopePublication.root_name] = grok.Container() 
 
 Let's put our app in the ZODB
 
   >>> app = App()
-  >>> from zope.app.component.hooks import getSite, setSite
+  >>> app
+  <uvcsite.content.ftests.folderinit.App object at ...>
+
   >>> root[ZopePublication.root_name]['app'] = app
   >>> setSite(root[ZopePublication.root_name]['app'])
 
@@ -47,7 +53,7 @@ Let's check that this container is empty:
   []
 
   >>> import transaction
-  >>> transaction.commit()
+  >>> #transaction.commit()
 
 Let's call the event and look if it get called
 ----------------------------------------------
