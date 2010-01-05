@@ -41,6 +41,5 @@
   <grok:grok package="." />
 
   <includePlugins package="." />
-  <includeOverrides package="uvcsite" file="overrides.zcml"/>
 
 </configure>
