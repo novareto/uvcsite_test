@@ -11,6 +11,7 @@
   <include package="megrok.z3cform.base" file="meta.zcml" />
   <include package="megrok.z3cform.tabular" />
   <include package="megrok.z3cform.ui"/>
+  <include package="megrok.icon"/>
   <include package="z3c.schema2xml" />
 
   <include package=".generations" />
