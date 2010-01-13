@@ -44,6 +44,8 @@ setup(name='uvcsite',
                         'zope.app.homefolder',
                         'zope.app.cache',
                         'megrok.icon',
+                        'uvc.skin',
+                        'uvc.layout',
                             # Add extra requirements here
                             ],
           entry_points = """

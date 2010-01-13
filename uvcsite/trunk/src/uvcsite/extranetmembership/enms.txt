@@ -44,7 +44,7 @@ Now log on as a user and look if we get the index page
 
    >>> browser.handleErrors = False 
    >>> browser.addHeader('Authorization', 'Basic user:user')
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/')
+   >>> browser.open('http://localhost/app/')
    >>> 'Meine Einstellungen' in browser.contents
    True
 
@@ -52,19 +52,19 @@ Now we go to 'Meine Einstellungen'
 
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
-   <Link text='Meine Einstellungen' url='http://localhost/++skin++uvcsiteskin/app/personalpanelview'>
+   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
    >>> link.click()
 
 At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Benutzerverwaltung' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enms'>
+   <Link text='Benutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
 
    >>> benutzerverwaltung.click()
    >>> neuerUser = browser.getLink('neuen User anlegen')
    >>> neuerUser
-   <Link text='neuen User anlegen' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enmscreateuser'>
+   <Link text='neuen User anlegen' url='http://localhost/app/members/uvc.user/enmscreateuser'>
 
 After clicking on Benutzerverwaltung we can go to the "add a new User"
 
@@ -96,12 +96,12 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
-   <Link text='Meine Einstellungen' url='http://localhost/++skin++uvcsiteskin/app/personalpanelview'>
+   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
    >>> link.click()
 
    >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Benutzerverwaltung' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enms'>
+   <Link text='Benutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
 
 Here we click on the user we want to modify!
 
@@ -111,7 +111,7 @@ Here we click on the user we want to modify!
 
    >>> update = browser.getLink('0101010001')
    >>> update
-   <Link text='0101010001' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
+   <Link text='0101010001' url='http://localhost/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
    >>> update.click()
 
 Here we have the input form we check if we have the right value for passwort!
@@ -152,12 +152,12 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
-   <Link text='Meine Einstellungen' url='http://localhost/++skin++uvcsiteskin/app/personalpanelview'>
+   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
    >>> link.click()
 
    >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Benutzerverwaltung' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enms'>
+   <Link text='Benutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
 
 Here we click on the user we want to modify!
 
@@ -167,7 +167,7 @@ Here we click on the user we want to modify!
 
    >>> delete = browser.getLink('0101010001')
    >>> delete 
-   <Link text='0101010001' url='http://localhost/++skin++uvcsiteskin/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
+   <Link text='0101010001' url='http://localhost/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
    >>> delete.click()
 
 Here we have the input form!
@@ -188,7 +188,7 @@ Changing the Password
 
 We still have form for changing the users password!
 
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/changepassword')
+   >>> browser.open('http://localhost/app/changepassword')
    >>> print browser.headers['Status'].upper()
    200 OK
 

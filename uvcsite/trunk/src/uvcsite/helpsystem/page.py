@@ -11,7 +11,6 @@ from megrok.z3cform.base import (PageAddForm,
 from uvcsite import uvcsiteMF as _
 from uvcsite import Content, ApplicationAwareView
 from uvcsite.interfaces import IDocumentActions
-from uvcsite.skin.skin import Forms
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 from uvcsite.content import Content, schema
@@ -37,9 +36,6 @@ class Add(PageAddForm, ApplicationAwareView):
 
     label = _(u"Hilfe Seiten anlegen")
 
-    def update(self):
-        Forms.need()
-
     def create(self, data):
         return HelpPage(**data)
 
@@ -58,8 +54,6 @@ class Edit(PageEditForm, ApplicationAwareView):
     fields = Fields(IHelpPage).omit('name')
     grok.require('zope.ManageSite')
 
-    def update(self):
-        Forms.need()
 
 
 class HelpPageIndex(PageDisplayForm, ApplicationAwareView):

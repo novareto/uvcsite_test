@@ -56,13 +56,13 @@ GlobalMenu
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.headers")
    >>> manager 
-   <uvcsite.viewlets.managers.Headers object ...>
+   <uvc.layout.managers.Headers object ...>
 
 Show the viewlets:
 
    >>> manager.update()
    >>> [x for x in manager.viewlets]
-   [<uvcsite.viewlets.viewlets.Favicon object at ...>]
+   [<uvc.skin.viewlets.Favicon object at ...>]
  
 
 Toolbar
@@ -70,7 +70,7 @@ Toolbar
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.toolbar")
    >>> manager 
-   <uvcsite.viewlets.managers.Toolbar object ...>
+   <uvc.layout.managers.Toolbar object ...>
 
 Show the viewlets
 
@@ -84,7 +84,7 @@ PersonalPreferences
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.personalpreferences")
    >>> manager 
-   <uvcsite.viewlets.managers.PersonalPreferences object ...>
+   <uvc.layout.managers.PersonalPreferences object ...>
 
 Show the Viewlets:
 
@@ -102,7 +102,7 @@ Sidebar
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.sidebar")
    >>> manager 
-   <uvcsite.viewlets.managers.Sidebar object ...>
+   <uvc.layout.managers.Sidebar object ...>
 
 Show the Viewlets:
 
@@ -116,7 +116,7 @@ Footer
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.footer")
    >>> manager 
-   <uvcsite.viewlets.managers.Footer object ...>
+   <uvc.layout.managers.Footer object ...>
 
 Show the Viewlets:
 
@@ -136,14 +136,14 @@ Logo
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.logo")
    >>> manager 
-   <uvcsite.viewlets.managers.Logo object ...>
+   <uvc.layout.managers.Logo object ...>
 
 Show the Viewlets:
 
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <uvcsite.viewlets.viewlets.Image object at ...>
+   <uvc.skin.viewlets.Image object at ...>
 
 
 PersonalMenu
@@ -151,7 +151,7 @@ PersonalMenu
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.personalpanel")
    >>> manager 
-   <uvcsite.viewlets.managers.PersonalMenu object ...>
+   <uvc.layout.managers.PersonalMenu object ...>
 
 Show the Viewlets:
 
@@ -166,14 +166,14 @@ StatusMessage
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.statusmessage")
    >>> manager 
-   <uvcsite.viewlets.managers.StatusMessage object ...>
+   <uvc.layout.managers.StatusMessage object ...>
 
 GlobalMenu
 ----------
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.globalmenu")
    >>> manager 
-   <uvcsite.viewlets.managers.GlobalMenu object ...>
+   <uvc.layout.managers.GlobalMenu object ...>
 
 Show the Viewlets:
 
