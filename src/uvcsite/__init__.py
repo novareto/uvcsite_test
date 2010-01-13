@@ -4,4 +4,6 @@ from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
 from zope.i18nmessageid import MessageFactory
 uvcsiteMF = MessageFactory('uvcsite')
 
+from uvcsite.viewlets.utils import MenuItem
 from uvcsite.utils import TablePage, Page, ApplicationAwareView
+from uvcsite.interfaces import *
