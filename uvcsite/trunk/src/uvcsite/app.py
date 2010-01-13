@@ -53,3 +53,5 @@ class NotFound(megrok.layout.Page):
                 return self.url(obj, name)
             obj = obj.__parent__
         return self.request.URL.get(0)
+
+
