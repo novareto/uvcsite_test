@@ -1,9 +1,0 @@
-<div clss="breadcrum"
-    tal:define="tabs viewletmanager/viewlets"
-    tal:condition="tabs">
-    <p> Sie sind hier: 
-       <span tal:repeat="tab tabs"
-             tal:replace="structure tab/render" /> 
-    </p>
-</div>  
-<div class="relax"> </div>

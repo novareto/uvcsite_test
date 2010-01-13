@@ -1,8 +1,0 @@
-<div id="personalmenu"
-    tal:define="tabs viewletmanager/viewlets"
-    tal:condition="tabs">
-    <ul>
-       <li tal:repeat="tab tabs"
-           tal:content="structure tab/render" />
-    </ul>
-</div>    
