@@ -67,7 +67,7 @@ Let´s use the TestBrowser to look on the forms itself.
 
 But first do we get the index of the container itself?
 
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe')
+   >>> browser.open('http://localhost/app/hilfe')
    >>> print browser.contents
    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
              "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -85,7 +85,7 @@ But first do we get the index of the container itself?
          HelpPage anlegen  </a>
        </h3>  
      </div>
-     <form action="http://localhost/++skin++uvcsiteskin/app/hilfe/@@index"
+     <form action="http://localhost/app/hilfe/@@index"
          method="post" enctype="multipart/form-data"
          class="edit-form" name="deleteFormTable"
          id="deleteFormTable">
@@ -123,7 +123,7 @@ But first do we get the index of the container itself?
 
 Ok now we can add a new help page!
 
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/add')
+   >>> browser.open('http://localhost/app/hilfe/add')
    >>> print browser.headers['Status'].upper()
    200 OK
 
@@ -131,7 +131,7 @@ Get the form and look for the right action
 
    >>> form = browser.getForm()
    >>> print form.action
-   http://localhost/++skin++uvcsiteskin/app/hilfe/add
+   http://localhost/app/hilfe/add
 
 Fill out the form with the testbrowser
 
@@ -148,7 +148,7 @@ Submit the Form
 Display from JTip
 -----------------
 
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp')
+   >>> browser.open('http://localhost/app/hilfe/myhelp')
    >>> print browser.contents
    <html>
    <body>
@@ -161,7 +161,7 @@ Display from JTip
 Index
 -----
 
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp/overview')
+   >>> browser.open('http://localhost/app/hilfe/myhelp/overview')
    >>> print browser.headers['Status'].upper()
    200 OK
 
@@ -169,11 +169,11 @@ Index
 Edit
 ----
 
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp/edit')
+   >>> browser.open('http://localhost/app/hilfe/myhelp/edit')
    
    >>> form = browser.getForm()
    >>> print form.action
-   http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp/edit
+   http://localhost/app/hilfe/myhelp/edit
 
 Do we get the default values from the add operation?
 
@@ -189,6 +189,6 @@ Are we have the DocumentAction for our overview?
 PDF Helper
 ----------
 
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/hilfe/myhelp/aspdf')
+   >>> browser.open('http://localhost/app/hilfe/myhelp/aspdf')
    >>> 'This should be a PDF' in browser.contents
    True

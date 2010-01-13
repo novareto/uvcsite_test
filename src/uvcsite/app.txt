@@ -25,7 +25,7 @@ Only Authorzied people should get access
 
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/index')
+   >>> browser.open('http://localhost/app/index')
    Traceback (most recent call last):
    HTTPError: HTTP Error 401: Unauthorized 
 
@@ -33,7 +33,7 @@ Now log on as a user and look if we get the index page
 
    >>> browser.handleErrors = False 
    >>> browser.addHeader('Authorization', 'Basic user:user')
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/index')
+   >>> browser.open('http://localhost/app/index')
    >>> "Congratulations" in browser.contents
    True
 
@@ -44,7 +44,7 @@ Not Found View
 
 We should get the Error Page:
 
-   >>> browser.open('http://localhost/++skin++uvcsiteskin/app/not_found')
+   >>> browser.open('http://localhost/app/not_found')
    Traceback (most recent call last):
    ...
    HTTPError: HTTP Error 404: Not Found 
