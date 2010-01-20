@@ -3,5 +3,5 @@
                    class view/css"
    tal:condition="view/url"
    i18n:translate="">
-   <img src="" tal:attributes="src view/image_url"/>   
+   <img src="" tal:attributes="src view/image_url"/> PDF 
 </a>

@@ -3,6 +3,7 @@
 # cklinger@novareto.de
 
 import grok
+from grokcore.component import adapter
 from persistent import Persistent
 from zope.component import getUtility
 from zope.interface import implements
@@ -55,6 +56,8 @@ class UVCAuthenticator(Persistent):
         utility = getUtility(IUserManagement)
         key = dict(login=login, password=password)
         user = authCache.query(self, key)
+        if getattr(utility, 'pw_hash', False):
+            password = utility.pw_hash(password)
         if not user:
             user = utility.getUser(login)
             authCache.set(user, self, key)

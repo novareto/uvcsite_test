@@ -73,8 +73,8 @@ But first do we get the index of the container itself?
              "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
    <html xmlns="http://www.w3.org/1999/xhtml">
    ...
-   <div class="relax"> </div>
-            <div>
+   </div>
+            <div class="documentActions">
    </div>
             <div><div>
      <h1>Hilfe</h1>
@@ -83,7 +83,7 @@ But first do we get the index of the container itself?
        <h3>
          <a href="add">
          HelpPage anlegen  </a>
-       </h3>  
+       </h3>
      </div>
      <form action="http://localhost/app/hilfe/@@index"
          method="post" enctype="multipart/form-data"
@@ -119,6 +119,7 @@ But first do we get the index of the container itself?
    </div>
    </div>
    ...
+   </body>
    </html>
 
 Ok now we can add a new help page!
