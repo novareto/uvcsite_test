@@ -6,11 +6,23 @@ import grok
 import megrok.layout
 
 from uvcsite import ApplicationAwareView
-from uvcsite.interfaces import IUVCSite, IGlobalMenu
+from uvcsite.interfaces import IUVCSite, IGlobalMenu, IDocumentActions
+from uvcsite.viewlets.utils import DocumentAction
+
 
 
 class Index(megrok.layout.Page, ApplicationAwareView):
     grok.context(IUVCSite)
     grok.require('zope.View')
 
+
+class PdfIcon(DocumentAction):
+    grok.name(u'aspdf')
+    grok.context(IUVCSite)
+    grok.viewletmanager(IDocumentActions)
+
+    image = "pdf.png"
+    title = 'aspdf'
+    urlEndings = 'aspdf'
+    viewURL = 'aspdf'
 

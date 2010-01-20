@@ -40,7 +40,7 @@ class DocumentAction(grok.Viewlet, ContextMenuItem):
 
     
     def image_url(self):
-        url = "%s/@@/styles/%s" % (self.view.application_url(), self.image)
+        url = "%s/@@/uvc.skin/%s" % (self.view.application_url(), self.image)
         return url
 
     def render(self):
