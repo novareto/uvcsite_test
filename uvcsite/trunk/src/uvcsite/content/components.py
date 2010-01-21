@@ -8,14 +8,12 @@ from zope.schema.fieldproperty import FieldProperty
 from grokcore.component import directive
 from zope.app.container.interfaces import INameChooser
 
-from megrok.icon import icon, IconRegistry
-from grokcore.view import name, path
+from megrok.icon import name, path, icon, IconsRegistry
 
 
-class Icons(IconRegistry):
-    name('icons')
-    #path('iconsdirectory')
-    path('/Users/cklinger/community/site/uvcsite/src/uvcsite/content/iconsdirectory')
+class Icons(IconsRegistry):
+    name('common')
+    path('iconsdirectory')
 
 class ProductFolder(grok.Container):
     grok.implements(IProductFolder, IFolderColumnTable)
@@ -49,7 +47,7 @@ class ProductFolder(grok.Container):
 
 class Content(dolmen.content.Content):
     grok.baseclass()
-    icon('emblem-default.png', Icons)
+    #icon('emblem-default.png', registry="common")
     dolmen.content.nofactory()
 
     @property

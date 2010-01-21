@@ -14,7 +14,7 @@ Let's first create an Object which inherits from Content:
    >>> class Person(Content):
    ...    """ Base Class For Person """
    ...    name('Person')
-   ...    icon('emblem-default', Icons)
+   ...    icon('emblem-default', registry="common")
 
 Does Person implement the IContentType Interface?
 
@@ -47,7 +47,7 @@ We have a default icon for all of our Content Objects..
    >>> request = TestRequest()
 
    >>> get_component_icon_url(Person, request)
-   'http://127.0.0.1/++icon++icons/emblem-default'
+   'http://127.0.0.1/++icon++common/emblem-default'
 
 
 Of course it should be possilbe to override the default one:
@@ -55,8 +55,8 @@ Of course it should be possilbe to override the default one:
    >>> class CustomPerson(Content):
    ...    """ Base Class For Person """
    ...    name('Person')
-   ...    icon('emblem-system', Icons)
+   ...    icon('emblem-system', registry="common")
 
 
    >>> get_component_icon_url(CustomPerson, request)
-   'http://127.0.0.1/++icon++icons/emblem-system'
+   'http://127.0.0.1/++icon++common/emblem-system'
