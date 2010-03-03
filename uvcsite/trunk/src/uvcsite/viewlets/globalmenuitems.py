@@ -16,7 +16,6 @@ from uvcsite.api.interfaces import ICompanyInfo
 from zope.traversing.browser import absoluteURL
 
 
-
 class MyName(grok.Viewlet):
     grok.name('myname')
     grok.context(Interface)
