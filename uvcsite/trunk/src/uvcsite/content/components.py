@@ -8,12 +8,12 @@ from zope.schema.fieldproperty import FieldProperty
 from grokcore.component import directive
 from zope.app.container.interfaces import INameChooser
 
-from megrok.icon import name, path, icon, IconsRegistry
+#from megrok.icon import name, path, icon, IconsRegistry
 
 
-class Icons(IconsRegistry):
-    name('common')
-    path('iconsdirectory')
+#class Icons(IconsRegistry):
+#    name('common')
+#    path('iconsdirectory')
 
 class ProductFolder(grok.Container):
     grok.implements(IProductFolder, IFolderColumnTable)
