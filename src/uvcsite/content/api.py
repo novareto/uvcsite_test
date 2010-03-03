@@ -8,7 +8,7 @@ from zope.component import getMultiAdapter
 from zope.interface import Invalid
 from zope.schema import getFields, ValidationError
 from z3c.schema2xml import (serialize, serialize_to_tree,
-                        deserialize, DeserializationError)
+                        deserialize)
 from z3c.form.interfaces import IErrorViewSnippet
 import z3c.form.error
 from zope.pagetemplate.interfaces import IPageTemplate
@@ -54,7 +54,7 @@ class ProductFolderRest(grok.REST):
         interface = content.schema[0]
         try:
             deserialize(self.body, interface, content)
-        except DeserializationError, e:
+        except Error, e:
             for field, (exception, element) in e.field_errors.items():
                 snippet = getMultiAdapter((exception, self.request,
                     None, field, self, content), IErrorViewSnippet)

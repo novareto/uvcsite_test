@@ -18,10 +18,15 @@ from zope.exceptions.interfaces import IUserError
 
 from zope.app.exception.systemerror import SystemErrorView
 
+from dolmen.app.site import Dolmen
+from dolmen.app.layout import models, errors
 
-class Uvcsite(grok.Application, grok.Container):
+
+class Uvcsite(Dolmen):
     """ Application Object for uvc.site"""
     grok.implements(IUVCSite)
+
+    title = u"UVC Site by Novareto."
 
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
@@ -31,7 +36,7 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau)
 
 
-class PersonalPanelView(megrok.layout.Page, ApplicationAwareView):
+class PersonalPanelView(models.Page):
     """ Page for Personal Properties """
     title = _(u"Persönliche Einstellungen")
     description = _(u"Hier können Sie Einstellungen zu"
@@ -39,19 +44,5 @@ class PersonalPanelView(megrok.layout.Page, ApplicationAwareView):
     grok.require('zope.View')
 
 
-class NotFound(megrok.layout.Page):
-    grok.context(INotFound)
-    grok.name('index.html')
-
-    def update(self):
-        self.request.response.setStatus(404)
-
-    def application_url(self, name=None):
-        obj = self.context.ob
-        while obj is not None:
-            if isinstance(obj, grok.Application):
-                return self.url(obj, name)
-            obj = obj.__parent__
-        return self.request.URL.get(0)
-
-
+class NotFound(errors.NotFound):
+    pass
