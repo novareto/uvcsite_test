@@ -4,7 +4,6 @@ import grok
 import megrok.layout
 
 from uvcsite import uvcsiteMF as _
-from uvcsite import ApplicationAwareView
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
 from zope.formlib.form import setUpWidgets, setUpEditWidgets
@@ -17,7 +16,7 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder
 
 
-class ENMS(megrok.layout.Page, ApplicationAwareView):
+class ENMS(megrok.layout.Page):
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
 
@@ -27,7 +26,7 @@ class ENMS(megrok.layout.Page, ApplicationAwareView):
         return um.getUserGroups(principal)
 
 
-class ENMSCreateUser(Form, grok.Form, ApplicationAwareView):
+class ENMSCreateUser(Form):
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
     template = grok.PageTemplateFile('templates/form.pt')
@@ -64,7 +63,7 @@ class ENMSCreateUser(Form, grok.Form, ApplicationAwareView):
         self.redirect(self.url(homeFolder, 'enms'))
 
 
-class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
+class ENMSUpdateUser(Form):
     """ A Form for updating a User in ENMS"""
 
     grok.context(IMyHomeFolder)
@@ -127,7 +126,7 @@ class ENMSUpdateUser(Form, grok.Form, ApplicationAwareView):
         self.redirect(self.url(homeFolder, 'enms'))
 
 
-class ChangePassword(Form, grok.Form, ApplicationAwareView):
+class ChangePassword(Form):
     """ A Form for updating a User in ENMS"""
 
     grok.context(IUVCSite)

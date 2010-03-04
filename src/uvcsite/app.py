@@ -29,10 +29,10 @@ class Uvcsite(grok.Application, grok.Container):
 class PersonalPanelView(models.Page):
     """Page for Personal Properties
     """
+    grok.require('zope.View')
     title = _(u"Persönliche Einstellungen")
     description = _(u"Hier können Sie Einstellungen zu"
                      " Ihrem Benutzerprofil vornehmen.")
-    grok.require('zope.View')
 
 
 class NotFound(errors.NotFound):
