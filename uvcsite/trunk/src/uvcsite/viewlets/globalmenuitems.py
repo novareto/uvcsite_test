@@ -20,8 +20,8 @@ class MyName(grok.Viewlet):
     css = "blue"
 
     def render(self):
-        html = "<span> %s </span> " %self.request.principal.description
-        return html
+        return """<span class="user">%s</span>""" % (
+            self.request.principal.description)
 
 
 class MyFolder(MenuItem):

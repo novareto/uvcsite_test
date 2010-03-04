@@ -30,6 +30,7 @@ class PersonalPanelView(models.Page):
     """Page for Personal Properties
     """
     grok.require('zope.View')
+    
     title = _(u"Persönliche Einstellungen")
     description = _(u"Hier können Sie Einstellungen zu"
                      " Ihrem Benutzerprofil vornehmen.")
