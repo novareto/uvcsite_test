@@ -2,7 +2,7 @@
 
 from uvcsite import uvcsiteMF as _
 from zope.interface import Interface, invariant, Invalid
-from zope.schema import Password, TextLine, Tuple, Choice, List
+from zope.schema import Password, TextLine, Choice, List
 
 
 class IExtranetMember(Interface):

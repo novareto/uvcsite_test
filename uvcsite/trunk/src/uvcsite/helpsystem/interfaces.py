@@ -2,11 +2,7 @@
 # Copyright (c) 2007-2008 NovaReto GmbH
 # cklinger@novareto.de
 
-import grok
-
-from grok.interfaces import IContainer
 from uvcsite import IContent
-from zope.interface import Interface
 from zope.schema import TextLine, Text
 from uvcsite.interfaces import IFolderColumnTable
 
@@ -16,11 +12,19 @@ class IHelpFolder(IFolderColumnTable):
 
 
 class IHelpPage(IContent):
-    name = TextLine(title=u"Name",
-                    description=u"Bitte hier die Daten eingeben")
+    """A help page prototype.
+    """
+    name = TextLine(
+        title=u"Name",
+        description=u"Bitte hier die Daten eingeben",
+        )
 
-    title = TextLine(title=u"title",
-                     description=u"Bitte hier die Daten eingeben")
+    title = TextLine(
+        title=u"title",
+        description=u"Bitte hier die Daten eingeben",
+        )
 
-    text = Text(title=u"text",
-                description=u"Bitte hier die Daten eingeben")
+    text = Text(
+        title=u"text",
+        description=u"Bitte hier die Daten eingeben",
+        )

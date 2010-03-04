@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 
-
 import grok
 
 from uvcsite import uvcsiteMF as _
 from zope.interface import Interface
-from zope.component import getUtility
-from z3c.menu.simple.menu import GlobalMenuItem
-from uvcsite.interfaces import IGlobalMenu, IPersonalMenu, IPersonalPreferences
+from uvcsite.interfaces import IPersonalMenu, IPersonalPreferences
 from uvcsite.viewlets.utils import MenuItem
 from zope.app.homefolder.interfaces import IHomeFolder
-from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
-from uvcsite.api.interfaces import ICompanyInfo
 from zope.traversing.browser import absoluteURL
 
 

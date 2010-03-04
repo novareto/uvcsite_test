@@ -3,14 +3,12 @@
 # cklinger@novareto.de
 
 import grok
-import megrok.z3ctable
 
 from uvcsite import uvcsiteMF as _
 from zope.interface import Interface
 from uvcsite.viewlets.utils import MenuItem
 from uvcsite.interfaces import IUVCSite, IGlobalMenu
 from uvcsite.helpsystem.interfaces import IHelpFolder
-from zope.app.authentication.interfaces import IPrincipal
 from uvcsite.content import ProductFolder, IProductFolder, contenttype
 from page import HelpPage
 

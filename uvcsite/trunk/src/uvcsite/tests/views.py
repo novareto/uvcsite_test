@@ -4,7 +4,7 @@
 
 import grok
 import megrok.layout
-from uvcsite.interfaces import IUVCSite, IGlobalMenu, IDocumentActions
+from uvcsite.interfaces import IUVCSite, IDocumentActions
 from uvcsite.viewlets.utils import DocumentAction
 
 

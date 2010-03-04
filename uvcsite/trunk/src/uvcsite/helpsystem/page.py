@@ -4,14 +4,11 @@
 
 import grok
 
-from zope.interface import Interface
 from megrok.z3cform.base import (PageAddForm, 
                    PageEditForm, PageDisplayForm, Fields)
 
 from uvcsite import uvcsiteMF as _
-from uvcsite import Content
 from uvcsite.interfaces import IDocumentActions
-from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 from uvcsite.content import Content, schema
 from uvcsite.helpsystem.portlet import HelpPortlet

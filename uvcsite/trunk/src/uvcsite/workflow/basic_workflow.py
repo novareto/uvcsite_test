@@ -4,18 +4,14 @@
 
 import grok
 
-from hurry.workflow import workflow
-from hurry.workflow.interfaces import IWorkflow
-from hurry.workflow.interfaces import IWorkflowState
-from hurry.workflow.interfaces import IWorkflowInfo
-from hurry.workflow.interfaces import IWorkflowTransitionEvent
-
 from uvcsite import IContent
-
-from persistent.list import PersistentList
 from datetime import datetime
-
 from zc.blist import BList
+
+from hurry.workflow import workflow
+from hurry.workflow.interfaces import (
+    IWorkflow, IWorkflowState, IWorkflowInfo, IWorkflowTransitionEvent)
+
 
 CREATED = 0
 PUBLISHED = 1
@@ -85,7 +81,6 @@ class MyWorkflowVersions(grok.GlobalUtility, workflow.WorkflowVersions):
 
     def hasVersionId(self, id):
         """ """
-        result = []
         for version in self.versions:
             state_adapter = IWorkflowState(version)
             if state_adapter.getId() == id:

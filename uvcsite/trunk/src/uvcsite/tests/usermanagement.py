@@ -1,11 +1,13 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import grok
 from uvcsite.extranetmembership.interfaces import IUserManagement
-from zope.app.authentication.interfaces import IAuthenticatedPrincipalCreated
 
 users = [
-          {'mnr':'0101010001', 'passwort':'passwort', 'email':'test@test.de'},
-          {'mnr':'0101010002', 'passwort':'passwort', 'email':'test@test.de'},
-        ]
+    {'mnr':'0101010001', 'passwort':'passwort', 'email':'test@test.de'},
+    {'mnr':'0101010002', 'passwort':'passwort', 'email':'test@test.de'},
+    ]
 
 
 class UserManagement(grok.GlobalUtility):

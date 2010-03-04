@@ -2,9 +2,6 @@
 # Copyright (c) 2007-2008 NovaReto GmbH
 # cklinger@novareto.de
 
-from zope.schema import TextLine
-from zope.interface import implements
-from zope.schema.interfaces import ITextLine
 from zope.app.form.browser import MultiCheckBoxWidget
 from zope.app.form.browser.widget import renderElement
 from zope.app.form.browser.widget import SimpleInputWidget
@@ -24,7 +21,6 @@ class MultiCheckBoxVocabularyWidget(MultiCheckBoxWidget):
 class LoginNameWidgetHidden(SimpleInputWidget):
 
     def __call__(self):
-        context=self.context
         widget = ViewPageTemplateFile('templates/loginnamehidden.pt')
         return widget(self)
 
@@ -40,7 +36,7 @@ class CustomPasswordWidget(BasePasswordWidget):
 
     def __call__(self):
         value = self._getFormValue()
-        displayMaxWidth = self.displayMaxWidth or 0
+        #displayMaxWidth = self.displayMaxWidth or 0
         #if displayMaxWidth > 0:
         #    return renderElement(self.tag,
         #                         type=self.type,

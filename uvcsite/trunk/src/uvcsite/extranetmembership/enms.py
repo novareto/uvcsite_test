@@ -6,12 +6,12 @@ import megrok.layout
 from uvcsite import uvcsiteMF as _
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
-from zope.formlib.form import setUpWidgets, setUpEditWidgets
+from zope.formlib.form import setUpWidgets
 from megrok.layout.components import Form
 from uvcsite.extranetmembership.interfaces import (IUserManagement,
                  IExtranetMember)
 from uvcsite.extranetmembership.custom_fields import *
-from zope.app.homefolder.interfaces import IHomeFolderManager, IHomeFolder
+from zope.app.homefolder.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder
 
@@ -77,7 +77,6 @@ class ENMSUpdateUser(Form):
 
     def setUpWidgets(self, ignore_request=False):
         #BBB Die Werte mussen hier erst noch errechnet werden.
-        principal = self.request.principal.id
         id = self.request.get('cn')
         um = getUtility(IUserManagement)
         user = {}
