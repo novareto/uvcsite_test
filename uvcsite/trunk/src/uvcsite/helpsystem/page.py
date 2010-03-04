@@ -9,7 +9,7 @@ from megrok.z3cform.base import (PageAddForm,
                    PageEditForm, PageDisplayForm, Fields)
 
 from uvcsite import uvcsiteMF as _
-from uvcsite import Content, ApplicationAwareView
+from uvcsite import Content
 from uvcsite.interfaces import IDocumentActions
 from megrok.layout.components import Form
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
@@ -29,7 +29,7 @@ class HelpPage(Content):
         self.text = unicode(text)
 
 
-class Add(PageAddForm, ApplicationAwareView):
+class Add(PageAddForm):
     grok.context(IHelpFolder)
     fields = Fields(IHelpPage)
     grok.require('zope.ManageSite')
@@ -49,14 +49,14 @@ class Add(PageAddForm, ApplicationAwareView):
         return self.url(self.context)
 
 
-class Edit(PageEditForm, ApplicationAwareView):
+class Edit(PageEditForm):
     grok.context(IHelpPage)
     fields = Fields(IHelpPage).omit('name')
     grok.require('zope.ManageSite')
 
 
 
-class HelpPageIndex(PageDisplayForm, ApplicationAwareView):
+class HelpPageIndex(PageDisplayForm):
     grok.name('overview')
     grok.context(IHelpPage)
     grok.require('zope.View')

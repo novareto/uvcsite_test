@@ -6,14 +6,13 @@ import grok
 
 from megrok import z3ctable
 from megrok.z3cform import base as z3cform
-from uvcsite.content import IContent, IProductFolder
-from uvcsite import ApplicationAwareView
-from z3c.form import form
 from megrok.z3cform.tabular import DeleteFormTablePage
 from uvcsite import uvcsiteMF as _
+from uvcsite.content import IContent, IProductFolder
+from z3c.form import form
 
 
-class Index(DeleteFormTablePage, ApplicationAwareView):
+class Index(DeleteFormTablePage):
     grok.context(IProductFolder)
 
     cssClasses = {'table': 'tablesorter myTable'}
@@ -25,7 +24,7 @@ class Index(DeleteFormTablePage, ApplicationAwareView):
         del item.__parent__[item.__name__]
 
 
-class Add(z3cform.PageAddForm, ApplicationAwareView):
+class Add(z3cform.PageAddForm):
     grok.context(IProductFolder)
     grok.require('uvc.AddContent')
 
@@ -47,7 +46,7 @@ class Add(z3cform.PageAddForm, ApplicationAwareView):
         return self.url(self.context)
 
 
-class Edit(z3cform.PageEditForm, ApplicationAwareView):
+class Edit(z3cform.PageEditForm):
     grok.context(IContent)
     grok.require('uvc.EditContent')
 
@@ -56,7 +55,7 @@ class Edit(z3cform.PageEditForm, ApplicationAwareView):
         return z3cform.Fields(*self.context.schema)
 
 
-class Display(z3cform.PageDisplayForm, ApplicationAwareView):
+class Display(z3cform.PageDisplayForm):
     grok.context(IContent)
     grok.name('index')
     grok.require('uvc.ViewContent')

@@ -4,14 +4,11 @@
 
 import grok
 import megrok.layout
-
-from uvcsite import ApplicationAwareView
 from uvcsite.interfaces import IUVCSite, IGlobalMenu, IDocumentActions
 from uvcsite.viewlets.utils import DocumentAction
 
 
-
-class Index(megrok.layout.Page, ApplicationAwareView):
+class Index(megrok.layout.Page):
     grok.context(IUVCSite)
     grok.require('zope.View')
 
@@ -25,4 +22,3 @@ class PdfIcon(DocumentAction):
     title = 'aspdf'
     urlEndings = 'aspdf'
     viewURL = 'aspdf'
-
