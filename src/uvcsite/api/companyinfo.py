@@ -3,12 +3,13 @@
 # cklinger@novareto.de 
 
 import grok
-from zope.interface import Interface
 from uvcsite.api.interfaces import ICompanyInfo, ICompanyAddress
 from zope.app.authentication.interfaces import IPrincipal
 
+
 class CompanyInfo(grok.Adapter):
-    """ Adapter for General Company Things"""
+    """Adapter for General Company Things
+    """
     grok.implements(ICompanyInfo)
     grok.context(IPrincipal)
 
@@ -26,8 +27,10 @@ class CompanyInfo(grok.Adapter):
             return zuser[1]
         return '00'    
 
+
 class CompanyAddress(grok.Adapter):
-    """ Adapter for Company Adress"""
+    """Adapter for Company Adress
+    """
     grok.implements(ICompanyAddress)
     grok.context(IPrincipal)
 
@@ -37,13 +40,13 @@ class CompanyAddress(grok.Adapter):
     def getAddress(self):
         """ Return the Address of the principal(master)
 	    as a dict"""
-        return { 'name1': 'Novareto GmbH',
-	         'name2': 'Geschaeftsprozesse im Netz',
-		 'name3': '',
-		 'strasse': 'Karolinenstr.',
-		 'nr': '17',
-		 'plz': '91471',
-		 'ort': 'Illesheim',
-		 'mnr': '0101010001',
-	       }
-
+        return {
+            'name1': 'Novareto GmbH',
+            'name2': 'Geschaeftsprozesse im Netz',
+            'name3': '',
+            'strasse': 'Karolinenstr.',
+            'nr': '17',
+            'plz': '91471',
+            'ort': 'Illesheim',
+            'mnr': '0101010001',
+            }

@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import grok
-import megrok.layout
 
-from uvcsite import uvcsiteMF as _
 from uvcsite.interfaces import IMyHomeFolder
 from uvcsite.auth.interfaces import IMasterUser
-from zope.interface import Interface
-from zope.component import getMultiAdapter
 
-from zope.app.interface import queryType
 from zope.app.homefolder.homefolder import HomeFolderManager
 from zope.app.homefolder.interfaces import IHomeFolderManager
 import zope.app.homefolder.homefolder
@@ -27,7 +22,8 @@ class Members(grok.Container):
 
 
 class PortalMembership(HomeFolderManager):
-    """ """
+    """
+    """
     grok.implements(IHomeFolderManager)
 
     autoCreateAssignment = True

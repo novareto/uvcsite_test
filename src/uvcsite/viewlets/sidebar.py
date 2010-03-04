@@ -7,8 +7,6 @@ from zope.interface import Interface
 from uvcsite.interfaces import ISidebar
 from uvcsite.viewlets.utils import MenuItem
 
-from z3c.menu.simple.menu import GlobalMenuItem
-
 
 class Startseite(MenuItem):
     """ Image Things"""

@@ -5,14 +5,15 @@
 import grok
 
 from uvcsite import uvcsiteMF as _
-from megrok.z3ctable import (TablePage, Column, GetAttrColumn,
-            CheckBoxColumn, LinkColumn, ModifiedColumn, Values)
+from megrok.z3ctable import (
+    Column, GetAttrColumn, CheckBoxColumn, LinkColumn, ModifiedColumn)
 
 from hurry.workflow.interfaces import IWorkflowState
 from zope.dublincore.interfaces import IZopeDublinCore
 from uvcsite.workflow.basic_workflow import titleForState
 from uvcsite.interfaces import IFolderColumnTable
 from zope.traversing.browser import absoluteURL
+
 
 class CheckBox(CheckBoxColumn):
     grok.name('checkBox')

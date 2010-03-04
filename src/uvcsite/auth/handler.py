@@ -3,20 +3,18 @@
 # cklinger@novareto.de
 
 import grok
-from grokcore.component import adapter
+from interfaces import IUVCAuth, IMasterUser
 from persistent import Persistent
+from uvcsite.extranetmembership.interfaces import IUserManagement
+from zope.app.authentication.httpplugins import HTTPBasicAuthCredentialsPlugin
+from zope.app.authentication.interfaces import IAuthenticatorPlugin
+from zope.app.authentication.principalfolder import PrincipalInfo, Principal
+from zope.app.cache.ram import RAMCache
 from zope.component import getUtility
 from zope.interface import implements
 from zope.location.interfaces import ILocation
-from interfaces import IUVCAuth, IMasterUser
-from zope.app.authentication.principalfolder import PrincipalInfo, Principal
-from uvcsite.extranetmembership.interfaces import IUserManagement
-from zope.app.authentication.interfaces import IAuthenticatorPlugin
-from zope.app.authentication.httpplugins import HTTPBasicAuthCredentialsPlugin
-from zope.security.interfaces import IGroupAwarePrincipal
-
 from zope.security.interfaces import IPrincipal
-from zope.app.cache.ram import RAMCache
+
 authCache = RAMCache()
 
 

@@ -3,17 +3,9 @@
 # cklinger@novareto.de
 
 import grok
-
-from zope.component import Interface
 from uvcsite import uvcsiteMF as _
 from uvcsite.interfaces import IMyHomeFolder
-from megrok.z3ctable import (TablePage, Column, GetAttrColumn,
-            CheckBoxColumn, LinkColumn, ModifiedColumn, Values, table)
-
-from hurry.workflow.interfaces import IWorkflowState
-from zope.dublincore.interfaces import IZopeDublinCore
-from uvcsite.workflow.basic_workflow import titleForState
-from uvcsite.interfaces import IFolderColumnTable
+from megrok.z3ctable import Values
 from megrok.z3cform.tabular import DeleteFormTablePage
 
 

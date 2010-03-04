@@ -1,16 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import grok
+import z3c.form.error
 
 from lxml import etree
-from StringIO import StringIO
 from uvcsite.content import IProductFolder
-from zope.component import getMultiAdapter
-
-from zope.interface import Invalid
-from zope.schema import getFields, ValidationError
-from z3c.schema2xml import (serialize, serialize_to_tree,
-                        deserialize)
 from z3c.form.interfaces import IErrorViewSnippet
-import z3c.form.error
+from z3c.schema2xml import serialize_to_tree, deserialize
+from zope.component import getMultiAdapter
+from zope.interface import Invalid
 from zope.pagetemplate.interfaces import IPageTemplate
 
 
@@ -37,7 +36,6 @@ class ProductFolderRest(grok.REST):
 
     def GET(self):
         context = self.context
-        type = context.getContentType()
         container = etree.Element('container', id=context.__name__)
         for id, obj in self.context.items():
             schema = obj.schema[0]
@@ -54,7 +52,7 @@ class ProductFolderRest(grok.REST):
         interface = content.schema[0]
         try:
             deserialize(self.body, interface, content)
-        except Error, e:
+        except Exception, e: # Here should be a DeserializeError
             for field, (exception, element) in e.field_errors.items():
                 snippet = getMultiAdapter((exception, self.request,
                     None, field, self, content), IErrorViewSnippet)

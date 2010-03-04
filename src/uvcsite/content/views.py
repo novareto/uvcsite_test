@@ -4,7 +4,6 @@
 
 import grok
 
-from megrok import z3ctable
 from megrok.z3cform import base as z3cform
 from megrok.z3cform.tabular import DeleteFormTablePage
 from uvcsite import uvcsiteMF as _

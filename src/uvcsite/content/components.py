@@ -1,12 +1,10 @@
 import grok
 import dolmen.content
 
-from zope.dottedname.resolve import resolve
 from uvcsite.content.interfaces import IProductFolder, IFolderColumnTable
 from uvcsite.content.directive import contenttype
-from zope.schema.fieldproperty import FieldProperty
 from grokcore.component import directive
-from zope.app.container.interfaces import INameChooser
+from zope.container.interfaces import INameChooser
 
 #from megrok.icon import name, path, icon, IconsRegistry
 

@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 
-
 import grok
 
 from z3c.menu.simple.menu import GlobalMenuItem
 from z3c.menu.simple.menu import ContextMenuItem
 from zope.traversing.browser import absoluteURL
 from zope.app.homefolder.interfaces import IHomeFolder
-from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
-from zope.i18n import translate
 
 
 class MenuItem(grok.Viewlet, GlobalMenuItem):
