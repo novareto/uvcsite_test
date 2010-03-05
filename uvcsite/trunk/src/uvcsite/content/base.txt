@@ -8,13 +8,11 @@ Let's first create an Object which inherits from Content:
    >>> from uvcsite import Content, name
    >>> from uvcsite import IContent
    >>> from megrok.icon import icon
-   >>> from uvcsite.content.components import Icons
 
 
    >>> class Person(Content):
    ...    """ Base Class For Person """
    ...    name('Person')
-   ...    icon('emblem-default', registry="common")
 
 Does Person implement the IContentType Interface?
 
@@ -30,33 +28,3 @@ behaviour.
 
    >>> print klaus.meta_type
    Person
-
-
-Icons
------
-
-We have a default icon for all of our Content Objects..
-
-   >>> from zope.site.hooks import setSite
-   >>> root = getRootFolder()
-   >>> setSite(root)
-
-
-   >>> from megrok.icon import get_component_icon_url 
-   >>> from zope.publisher.browser import TestRequest
-   >>> request = TestRequest()
-
-   >>> get_component_icon_url(Person, request)
-   'http://127.0.0.1/++icon++common/emblem-default'
-
-
-Of course it should be possilbe to override the default one:
-
-   >>> class CustomPerson(Content):
-   ...    """ Base Class For Person """
-   ...    name('Person')
-   ...    icon('emblem-system', registry="common")
-
-
-   >>> get_component_icon_url(CustomPerson, request)
-   'http://127.0.0.1/++icon++common/emblem-system'

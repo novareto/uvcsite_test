@@ -6,12 +6,6 @@ from uvcsite.content.directive import contenttype
 from grokcore.component import directive
 from zope.container.interfaces import INameChooser
 
-#from megrok.icon import name, path, icon, IconsRegistry
-
-
-#class Icons(IconsRegistry):
-#    name('common')
-#    path('iconsdirectory')
 
 class ProductFolder(grok.Container):
     grok.implements(IProductFolder, IFolderColumnTable)
@@ -45,7 +39,6 @@ class ProductFolder(grok.Container):
 
 class Content(dolmen.content.Content):
     grok.baseclass()
-    #icon('emblem-default.png', registry="common")
     dolmen.content.nofactory()
 
     @property

@@ -8,7 +8,7 @@ from megrok.z3cform.base import (PageAddForm,
                    PageEditForm, PageDisplayForm, Fields)
 
 from uvcsite import uvcsiteMF as _
-from uvcsite.interfaces import IDocumentActions
+from uvcsite.interfaces import IAboveContent
 from uvcsite.helpsystem.interfaces import IHelpFolder, IHelpPage
 from uvcsite.content import Content, schema
 from uvcsite.helpsystem.portlet import HelpPortlet
@@ -78,7 +78,7 @@ class HilfePortlet(HelpPortlet):
 class PdfIcon(DocumentAction):
     grok.name(_(u'aspdf'))
     grok.context(HelpPage)
-    grok.viewletmanager(IDocumentActions)
+    grok.viewletmanager(IAboveContent)
 
     image = "pdf.png"
     title = (_(u'aspdf'))

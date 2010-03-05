@@ -4,21 +4,41 @@
 
 import grok
 import megrok.layout
-from uvcsite.interfaces import IUVCSite, IDocumentActions
-from uvcsite.viewlets.utils import DocumentAction
+
+from dolmen.menu import menuentry
+from zope.interface import Interface
+from uvcsite.interfaces import IUVCSite, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
 
 
+@menuentry(ISidebar)
 class Index(megrok.layout.Page):
     grok.context(IUVCSite)
     grok.require('zope.View')
 
 
-class PdfIcon(DocumentAction):
-    grok.name(u'aspdf')
-    grok.context(IUVCSite)
-    grok.viewletmanager(IDocumentActions)
+@menuentry(IFooter)
+class Kontakt(megrok.layout.Page):
+    grok.context(Interface)
+    grok.require('zope.View')
 
-    image = "pdf.png"
-    title = 'aspdf'
-    urlEndings = 'aspdf'
-    viewURL = 'aspdf'
+    def render(self):
+        return "Kontakt"
+
+
+@menuentry(IDocumentActions)
+class PdfIcon(grok.View):
+    grok.name('aspdf')
+    grok.context(IUVCSite)
+
+    def render(self):
+        return "PDF"
+
+@menuentry(IPersonalPreferences)
+class ENMS(megrok.layout.Page):
+    grok.title('Mitbenutzerverwaltung')
+    grok.name('Mitbenutzerverwaltung')
+    grok.context(Interface)
+
+    def render(self):
+        return "ENMS"
+

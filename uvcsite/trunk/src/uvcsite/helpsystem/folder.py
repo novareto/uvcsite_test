@@ -11,12 +11,14 @@ from uvcsite.interfaces import IUVCSite, IGlobalMenu
 from uvcsite.helpsystem.interfaces import IHelpFolder
 from uvcsite.content import ProductFolder, IProductFolder, contenttype
 from page import HelpPage
+from dolmen.menu import menuentry
+from uvc.layout.menus import GlobalMenu
 
-
+@menuentry(IGlobalMenu)
 class HelpFolder(ProductFolder):
     grok.implements(IProductFolder, IHelpFolder)
     grok.title('Hilfe')
-    grok.name(u'In diesem Ordner finden Sie Hilfe Dokumente')
+    grok.name('Hifle')
     grok.description(_(u'Sie koennen auf die einzelnen Dokumente'
                       ' klicken um die Hilfe anzueigen!'))
 
@@ -24,17 +26,6 @@ class HelpFolder(ProductFolder):
 
     # No autopopulation on Startup!!!
     inHomeFolder = False
-
-
-class Hilfe(MenuItem):
-    grok.name(_(u'Hilfe'))
-    grok.context(Interface)
-    grok.viewletmanager(IGlobalMenu)
-    grok.require('zope.ManageSite')
-
-    title= _(u'Hilfe')
-    urlEndings = "hilfe"
-    viewURL = "hilfe"
 
 
 @grok.subscribe(IUVCSite, grok.IObjectAddedEvent)
