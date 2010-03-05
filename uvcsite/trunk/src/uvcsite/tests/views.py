@@ -33,6 +33,7 @@ class PdfIcon(grok.View):
     def render(self):
         return "PDF"
 
+
 @menuentry(IPersonalPreferences)
 class ENMS(megrok.layout.Page):
     grok.title('Mitbenutzerverwaltung')
@@ -41,4 +42,3 @@ class ENMS(megrok.layout.Page):
 
     def render(self):
         return "ENMS"
-
