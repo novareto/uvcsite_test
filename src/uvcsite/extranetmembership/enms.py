@@ -13,10 +13,15 @@ from uvcsite.extranetmembership.interfaces import (IUserManagement,
 from uvcsite.extranetmembership.custom_fields import *
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
-from uvcsite.interfaces import IMyHomeFolder
+from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences
+from uvc.layout.menus import PersonalPreferences
+from dolmen.menu import menuentry
 
 
+@menuentry(PersonalPreferences)
 class ENMS(megrok.layout.Page):
+    grok.title('Mitbenutzerverwaltung')
+    grok.name('Mitbenutzerverwaltung')
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
 

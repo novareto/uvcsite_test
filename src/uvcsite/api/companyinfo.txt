@@ -14,7 +14,7 @@ First start with a fresh instance of a principal
 
 Does this user provide the IPrincipal interface?
 
-   >>> from zope.app.authentication.interfaces import IPrincipal
+   >>> from zope.security.interfaces import IPrincipal
    >>> IPrincipal.providedBy(user)
    True
 
