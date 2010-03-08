@@ -1,0 +1,5 @@
+<div>
+  <span tal:replace="structure view/renderTable"/>
+  <span tal:replace="structure view/renderBatch"/>
+
+</div>
