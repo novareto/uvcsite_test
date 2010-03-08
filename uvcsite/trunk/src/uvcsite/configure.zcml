@@ -8,6 +8,7 @@
   <includeDependenciesOverrides package="." />
 
   <include package="dolmen.menu" />
+  <include package="dolmen.app.layout" />
   <include package="dolmen.content" />
   <include package="megrok.z3cform.base" />
   <include package="megrok.z3cform.base" file="meta.zcml" />
