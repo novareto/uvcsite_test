@@ -9,6 +9,7 @@ from dolmen.menu import menuentry
 from zope.interface import Interface
 from uvcsite.interfaces import IUVCSite, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
 from uvc.layout.menus import SidebarMenu
+from megrok.z3ctable import TablePage, Column, table
 
 
 @menuentry(SidebarMenu)
@@ -53,3 +54,28 @@ class Logout(grok.View):
 
     def render(self):
         return "Logout"
+
+
+@menuentry(SidebarMenu)
+class Table(TablePage):
+    grok.context(IUVCSite)
+    grok.require('zope.View')
+
+    startBatchingAt = 5
+    batchSize = 5
+
+
+    @property
+    def values(self):
+        return range(100)
+
+
+class Number(Column):
+    table(Table)
+    grok.context(IUVCSite)
+    header = "Number"
+
+
+
+    def renderCell(self, item):
+        return item
