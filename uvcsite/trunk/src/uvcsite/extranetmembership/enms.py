@@ -13,7 +13,7 @@ from uvcsite.extranetmembership.interfaces import (IUserManagement,
 from uvcsite.extranetmembership.custom_fields import *
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
-from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences
+from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
 from dolmen.menu import menuentry
 
 
@@ -127,9 +127,11 @@ class ENMSUpdateUser(Form):
         self.redirect(self.url(homeFolder, 'enms'))
 
 
+@menuentry(IPersonalMenu)
 class ChangePassword(Form):
     """ A Form for updating a User in ENMS"""
 
+    grok.title(u'Passwort ändern')
     grok.context(IUVCSite)
     form_fields = grok.Fields(IExtranetMember).select('passwort', 'confirm')
     template = grok.PageTemplateFile('templates/form.pt')

@@ -7,7 +7,7 @@ from dolmen.menu import menuentry
 from uvcsite import uvcsiteMF as _
 from uvcsite.auth.handler import setup_pau
 from uvcsite.homefolder.homefolder import PortalMembership
-from uvcsite.interfaces import ISidebar
+from uvcsite.interfaces import IPersonalPreferences
 from uvcsite.interfaces import IUVCSite
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.authentication.interfaces import IAuthentication
@@ -27,12 +27,14 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau)
 
 
-@menuentry(ISidebar)
+@menuentry(IPersonalPreferences)
 class PersonalPanelView(models.Page):
     """Page for Personal Properties
     """
     grok.require('zope.View')
+    grok.order(35)
     
+    grok.title(u"Persönliche Einstellungen")
     title = _(u"Persönliche Einstellungen")
     description = _(u"Hier können Sie Einstellungen zu"
                      " Ihrem Benutzerprofil vornehmen.")
