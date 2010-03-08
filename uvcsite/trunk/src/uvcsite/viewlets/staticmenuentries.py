@@ -5,7 +5,7 @@
 import grok
 
 from uvcsite.interfaces import IPersonalPreferences
-from uvc.layout.menus import PersonalPreferences
+from uvc.layout.menus import PersonalPreferences, GlobalMenu
 
 from dolmen.menu import menu, menuentry, Entry
 from zope.app.homefolder.interfaces import IHomeFolder
@@ -13,6 +13,18 @@ from zope.app.homefolder.interfaces import IHomeFolder
 from zope.interface import Interface
 from zope.traversing.browser import absoluteURL
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
+
+
+class Hilfe(Entry):
+    grok.context(Interface)
+    grok.name('Hilfe')
+    grok.title('Hilfe')
+    menu(GlobalMenu)
+    grok.order(20)
+
+    @property
+    def url(self):
+        return self.view.application_url() + '/hilfe'
 
 
 class UserName(Entry):

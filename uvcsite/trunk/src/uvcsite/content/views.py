@@ -12,10 +12,11 @@ from z3c.form import form
 
 
 class Index(DeleteFormTablePage):
-    grok.name('Mein Ordner')
+    grok.title('Mein Ordner')
+    grok.name('index')
     grok.context(IProductFolder)
 
-    cssClasses = {'table': 'tablesorter myTable'}
+    cssClasses = {'table': 'myTable tablesorter'}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
 
