@@ -18,7 +18,7 @@ from uvc.layout.menus import GlobalMenu
 class HelpFolder(ProductFolder):
     grok.implements(IProductFolder, IHelpFolder)
     grok.title('Hilfe')
-    grok.name('Hifle')
+    grok.name('Hilfe')
     grok.description(_(u'Sie koennen auf die einzelnen Dokumente'
                       ' klicken um die Hilfe anzueigen!'))
 

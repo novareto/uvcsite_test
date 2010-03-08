@@ -8,9 +8,10 @@ import megrok.layout
 from dolmen.menu import menuentry
 from zope.interface import Interface
 from uvcsite.interfaces import IUVCSite, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
+from uvc.layout.menus import SidebarMenu
 
 
-@menuentry(ISidebar)
+@menuentry(SidebarMenu)
 class Index(megrok.layout.Page):
     grok.context(IUVCSite)
     grok.require('zope.View')
@@ -18,6 +19,7 @@ class Index(megrok.layout.Page):
 
 @menuentry(IFooter)
 class Kontakt(megrok.layout.Page):
+    grok.name('Kontakt')
     grok.context(Interface)
     grok.require('zope.View')
 

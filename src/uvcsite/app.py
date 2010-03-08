@@ -26,6 +26,9 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau)
 
 
+from dolmen.menu import menuentry
+from uvcsite.interfaces import ISidebar
+@menuentry(ISidebar)
 class PersonalPanelView(models.Page):
     """Page for Personal Properties
     """
