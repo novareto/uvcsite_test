@@ -17,10 +17,8 @@ from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences
 from dolmen.menu import menuentry
 
 
-@menuentry(IPersonalPreferences)
 class ENMS(megrok.layout.Page):
     grok.title('Mitbenutzerverwaltung')
-    grok.name('Mitbenutzerverwaltung')
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
 
