@@ -21,6 +21,7 @@ class Index(megrok.layout.Page):
         self.flash('MESSAGE', type="error")
         self.flash('Nachricht')
 
+
 @menuentry(IFooter)
 class Kontakt(megrok.layout.Page):
     grok.name('Kontakt')
@@ -39,15 +40,9 @@ class PdfIcon(grok.View):
     def render(self):
         return "PDF"
 
+    def image_url(self):
+        return self.application_url() + '/pdf.png'
 
-@menuentry(IPersonalMenu)
-class Logout(grok.View):
-    grok.title('Logout')
-    grok.name('Logout')
-    grok.context(Interface)
-
-    def render(self):
-        return "Logout"
 
 
 @menuentry(SidebarMenu)
