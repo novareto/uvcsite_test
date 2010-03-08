@@ -14,11 +14,10 @@ from page import HelpPage
 from dolmen.menu import menuentry
 from uvc.layout.menus import GlobalMenu
 
-@menuentry(IGlobalMenu)
 class HelpFolder(ProductFolder):
     grok.implements(IProductFolder, IHelpFolder)
     grok.title('Hilfe')
-    grok.name('Hilfe')
+    grok.name('index')
     grok.description(_(u'Sie koennen auf die einzelnen Dokumente'
                       ' klicken um die Hilfe anzueigen!'))
 

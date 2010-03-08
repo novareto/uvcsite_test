@@ -12,8 +12,9 @@ from uvc.layout.menus import SidebarMenu
 from megrok.z3ctable import TablePage, Column, table
 
 
-@menuentry(SidebarMenu)
+@menuentry(SidebarMenu, context=Interface)
 class Index(megrok.layout.Page):
+    grok.title('Startseite')
     grok.context(IUVCSite)
     grok.require('zope.View')
 

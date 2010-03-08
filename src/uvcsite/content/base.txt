@@ -7,7 +7,6 @@ Let's first create an Object which inherits from Content:
 
    >>> from uvcsite import Content, name
    >>> from uvcsite import IContent
-   >>> from megrok.icon import icon
 
 
    >>> class Person(Content):
