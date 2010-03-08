@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-
 import grok
 
 from dolmen.app.layout import models, errors
 from dolmen.app.site import IDolmen
+from dolmen.menu import menuentry
 from uvcsite import uvcsiteMF as _
 from uvcsite.auth.handler import setup_pau
 from uvcsite.homefolder.homefolder import PortalMembership
+from uvcsite.interfaces import ISidebar
 from uvcsite.interfaces import IUVCSite
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.authentication.interfaces import IAuthentication
@@ -26,8 +27,6 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau)
 
 
-from dolmen.menu import menuentry
-from uvcsite.interfaces import ISidebar
 @menuentry(ISidebar)
 class PersonalPanelView(models.Page):
     """Page for Personal Properties
