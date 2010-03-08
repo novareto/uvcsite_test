@@ -17,6 +17,9 @@ class Index(megrok.layout.Page):
     grok.context(IUVCSite)
     grok.require('zope.View')
 
+    def update(self):
+        self.flash('MESSAGE', type="error")
+        self.flash('Nachricht')
 
 @menuentry(IFooter)
 class Kontakt(megrok.layout.Page):
@@ -36,15 +39,6 @@ class PdfIcon(grok.View):
     def render(self):
         return "PDF"
 
-
-@menuentry(IPersonalPreferences)
-class ENMS(megrok.layout.Page):
-    grok.title('Mitbenutzerverwaltung')
-    grok.name('Mitbenutzerverwaltung')
-    grok.context(Interface)
-
-    def render(self):
-        return "ENMS"
 
 @menuentry(IPersonalMenu)
 class Logout(grok.View):
@@ -67,6 +61,7 @@ class Table(TablePage):
 
     @property
     def values(self):
+        print "values"
         return range(100)
 
 
@@ -74,8 +69,6 @@ class Number(Column):
     table(Table)
     grok.context(IUVCSite)
     header = "Number"
-
-
 
     def renderCell(self, item):
         return item
