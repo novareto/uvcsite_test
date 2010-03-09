@@ -7,9 +7,21 @@ import megrok.layout
 
 from dolmen.menu import menuentry
 from zope.interface import Interface
-from uvcsite.interfaces import IUVCSite, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
+from uvcsite.interfaces import IUVCSite, IHelp, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
 from uvc.layout.menus import SidebarMenu
 from megrok.z3ctable import TablePage, Column, table
+
+
+@menuentry(IHelp, context=Interface)
+class GlobaleHilfe(megrok.layout.Page):
+    grok.context(IUVCSite)
+    grok.title('Hilfe zum Extranet')
+
+    def namespace(self):
+        return {'settings_overrides': {'input_encoding': 'utf-8',
+                                       'output_encoding': 'utf-8',
+                                       }}
+
 
 
 @menuentry(SidebarMenu, context=Interface)
@@ -19,6 +31,7 @@ class Index(megrok.layout.Page):
     grok.require('zope.View')
 
     def update(self):
+        self.flash('Warning', type="warning")
         self.flash('MESSAGE', type="error")
         self.flash('Nachricht')
 
