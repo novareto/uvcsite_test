@@ -15,6 +15,7 @@ class UVCResources(resource.ResourceLibrary):
     resource.path('static')
 
     resource.resource('jquery.tablesorter.min.js')
+    resource.resource('jquery.tools.min.js')
     resource.resource('uvc_base.js')
     resource.resource('uvc_base.css')
 

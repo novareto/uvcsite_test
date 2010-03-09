@@ -42,6 +42,10 @@
   <i18n:registerTranslations directory="locales" />
   <grok:grok package="." />
 
+  <adapter
+      factory="z3c.form.hint.FieldDescriptionAsHint"
+      name="title"/>
+
 
   <includePlugins package="." />
 
