@@ -7,6 +7,7 @@ from uvcsite import uvcsiteMF as _
 from uvcsite.interfaces import IMyHomeFolder
 from megrok.z3ctable import Values
 from megrok.z3cform.tabular import DeleteFormTablePage
+from zope.traversing.browser import absoluteURL
 
 
 class Index(DeleteFormTablePage):
@@ -27,7 +28,9 @@ class Index(DeleteFormTablePage):
     description = _(u"Hier werden Ihre Dokumente abgelegt")
 
     def getContentTypes(self):
-        return self.context.keys()
+        for key, value in self.context.items():
+            yield dict(href = absoluteURL(value, self.request),
+                       name = key) 
 
     def executeDelete(self, item):
         self.flash(_(u'Ihre Dokumente wurden entfernt'))
