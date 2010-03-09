@@ -134,7 +134,9 @@ Now call the view with some contents...
 
 Let's check again if we now get **contenttypes** in our homefolder:
 
-  >>> list(index.getContentTypes())
+  >>> [x for x in index.getContentTypes()]
+  [{'href': 'http://127.0.0.1/hf/personcontainer', 'name': u'personcontainer'}]
+
   [u'personcontainer']
 
   >>> index.update()
