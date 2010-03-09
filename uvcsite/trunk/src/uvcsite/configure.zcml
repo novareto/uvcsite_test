@@ -15,6 +15,7 @@
   <include package="megrok.z3cform.tabular" />
   <include package="megrok.z3cform.ui"/>
   <include package="z3c.schema2xml" />
+  <include package="zope.pluggableauth" />
 
   <include package=".generations" />
 
@@ -36,6 +37,7 @@
       <role id="zope.Manager" title="Site Manager" />
       <role id="zope.Member" title="Site Member" />
       <grantAll role="zope.Manager" />
+      <grantAll role="zope.Authentication" />
 
 
 

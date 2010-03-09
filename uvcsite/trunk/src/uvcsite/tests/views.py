@@ -28,7 +28,6 @@ class GlobaleHilfe(megrok.layout.Page):
 class Index(megrok.layout.Page):
     grok.title('Startseite')
     grok.context(IUVCSite)
-    grok.require('zope.View')
 
     def update(self):
         self.flash('Warning', type="warning")
@@ -40,7 +39,6 @@ class Index(megrok.layout.Page):
 class Kontakt(megrok.layout.Page):
     grok.name('Kontakt')
     grok.context(Interface)
-    grok.require('zope.View')
 
     def render(self):
         return "Kontakt"
@@ -70,7 +68,6 @@ class Table(TablePage):
 
     @property
     def values(self):
-        print "values"
         return range(100)
 
 
