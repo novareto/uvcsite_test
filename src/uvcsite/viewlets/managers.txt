@@ -24,9 +24,9 @@ Sidebar
 Let´s call the Viewlet uvcsite.sidebar
 
    >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
-   ...   'uvcsite.sidebar')
+   ...   'uvc.user.sidebar')
    >>> mgr
-   <uvc.layout.managers.Sidebar object at ...>
+   <uvc.layout.menus.SidebarMenu object at ...>
 
 Does the viewlet manager provide the right interfce ISidebar?
 
@@ -42,7 +42,7 @@ Let´s call the Viewlet uvcsite.footer
    >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
    ...   'uvcsite.footer')
    >>> mgr
-   <uvc.layout.managers.Footer object at ...>
+   <uvc.layout.menus.Footer object at ...>
 
 Does the viewlet manager provide the right interfce IFooter?
 
@@ -56,30 +56,14 @@ GlobalMenu
 Let´s call the Viewlet uvcsite.globalmenu
 
    >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
-   ...   'uvcsite.globalmenu')
+   ...   'uvc.global.menu')
    >>> mgr
-   <uvc.layout.managers.GlobalMenu object at ...>
+   <uvc.layout.menus.GlobalMenu object at ...>
 
 Does the viewlet manager provide the right interfce IGlobalMenu?
 
    >>> from uvcsite.interfaces import IGlobalMenu
    >>> IGlobalMenu.providedBy(mgr)
-   True
-
-Breadcrumb
-----------
-
-Let´s call the Viewlet uvcsite.breadcrumb
-
-   >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
-   ...   'uvcsite.breadcrumb')
-   >>> mgr
-   <uvc.layout.managers.Breadcrumb object at ...>
-
-Does the viewlet manager provide the right interfce IBreadcrumb?
-
-   >>> from uvcsite.interfaces import IBreadCrumb
-   >>> IBreadCrumb.providedBy(mgr)
    True
 
 
@@ -89,9 +73,9 @@ Document Actions
 Let´s call the Viewlet uvcsite.documentactions
 
    >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
-   ...   'uvcsite.documentactions')
+   ...   'uvc.user.documentactions')
    >>> mgr
-   <uvc.layout.managers.DocumentActions object at ...>
+   <uvc.layout.menus.DocumentActionsMenu object at ...>
 
 Does the viewlet manager provide the right interfce IBreadcrumb?
 

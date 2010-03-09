@@ -65,121 +65,82 @@ Show the viewlets:
    [<uvc.skin.viewlets.Favicon object at ...>]
  
 
-Toolbar
--------
-
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.toolbar")
-   >>> manager 
-   <uvc.layout.managers.Toolbar object ...>
-
-Show the viewlets
-
-   >>> manager.update()
-   >>> [x for x in manager.viewlets]
-   []
-
-
 PersonalPreferences
 -------------------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.personalpreferences")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.user.preferences")
    >>> manager 
-   <uvc.layout.managers.PersonalPreferences object ...>
+   <uvc.layout.menus.PersonalPreferences object ...>
 
 Show the Viewlets:
 
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <uvcsite.viewlets.globalmenuitems.MyName object at ...>
-   <uvcsite.viewlets.globalmenuitems.MyFolder object at ...>
-   <uvcsite.viewlets.globalmenuitems.PersonalProperties object at ...>
-   <uvcsite.viewlets.globalmenuitems.Logout object at ...>
+   <MenuEntry `myname` for menu `uvc.user.preferences`>
+   <MenuEntry `Mein Ordner` for menu `uvc.user.preferences`>
+   <MenuEntry `Mitbenutzerverwaltung` for menu `uvc.user.preferences`>
+   <MenuEntry `Abmelden` for menu `uvc.user.preferences`>
 
 
 Sidebar
 -------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.sidebar")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.user.sidebar")
    >>> manager 
-   <uvc.layout.managers.Sidebar object ...>
+   <uvc.layout.menus.SidebarMenu object ...>
 
 Show the Viewlets:
 
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <uvcsite.viewlets.sidebar.Startseite object at ...>
+
 
 Footer
 ------
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.footer")
    >>> manager 
-   <uvc.layout.managers.Footer object ...>
+   <uvc.layout.menus.Footer object ...>
 
 Show the Viewlets:
 
    >>> manager.update()
    >>> len(manager.viewlets)
-   3
+   0 
 
    >>> for x in manager.viewlets:
    ...     print x
-   <uvcsite.viewlets.footer.Impressum object at ...>
-   <uvcsite.viewlets.footer.Barrierefreiheit object at ...>
-   <uvcsite.viewlets.footer.Kontakt object at ...>
-
-
-Logo
-----
-
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.logo")
-   >>> manager 
-   <uvc.layout.managers.Logo object ...>
-
-Show the Viewlets:
-
-   >>> manager.update()
-   >>> for x in manager.viewlets:
-   ...     print x
-   <uvc.skin.viewlets.Image object at ...>
 
 
 PersonalMenu
 ------------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.personalpanel")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.user.menu")
    >>> manager 
-   <uvc.layout.managers.PersonalMenu object ...>
+   <uvc.layout.menus.PersonalMenu object ...>
 
 Show the Viewlets:
 
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <uvcsite.extranetmembership.viewlets.ExtranetMembership object at ...>
-   <uvcsite.viewlets.globalmenuitems.ChangePassword object at ...>
 
-StatusMessage
--------------
-
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.statusmessage")
-   >>> manager 
-   <uvc.layout.managers.StatusMessage object ...>
 
 GlobalMenu
 ----------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.globalmenu")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.global.menu")
    >>> manager 
-   <uvc.layout.managers.GlobalMenu object ...>
+   <uvc.layout.menus.GlobalMenu object ...>
 
 Show the Viewlets:
 
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
+   <MenuEntry `Hilfe` for menu `uvc.global.menu`>
 
    >>> zope.security.management.endInteraction()
 
