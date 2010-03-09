@@ -48,6 +48,7 @@ setup(name='uvcsite',
                         'uvc.skin',
                         'uvc.layout',
                         'dolmen.app.layout',
+                        'd2m.rendersource',
                             # Add extra requirements here
                             ],
           entry_points = """
