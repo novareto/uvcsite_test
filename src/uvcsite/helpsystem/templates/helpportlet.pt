@@ -1,3 +1,0 @@
-<li tal:repeat="link viewlet/urls">
-  <a href="" tal:attributes="href link/href"> <span tal:replace="link/name"/> </a>
-</li>

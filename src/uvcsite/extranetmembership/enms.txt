@@ -57,9 +57,9 @@ Now we go to 'Meine Einstellungen'
 
 At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
 
-   >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
+   >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Benutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
 
    >>> benutzerverwaltung.click()
    >>> neuerUser = browser.getLink('neuen User anlegen')
@@ -69,12 +69,6 @@ At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
 After clicking on Benutzerverwaltung we can go to the "add a new User"
 
    >>> neuerUser.click()
-   >>> print browser.contents
-   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-   <html xmlns="http://www.w3.org/1999/xhtml">
-   ...
-   </html>
 
 Fill out the Form
 

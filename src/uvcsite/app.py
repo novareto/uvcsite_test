@@ -4,8 +4,8 @@ import grok
 from dolmen.app.layout import models, errors
 from dolmen.app.site import IDolmen
 from dolmen.menu import menuentry
-from uvcsite import uvcsiteMF as _
 from uvcsite.auth.handler import setup_pau
+from uvcsite import uvcsiteMF as _
 from uvcsite.homefolder.homefolder import PortalMembership
 from uvcsite.interfaces import IPersonalPreferences
 from uvcsite.interfaces import IUVCSite
@@ -31,13 +31,12 @@ class Uvcsite(grok.Application, grok.Container):
 class PersonalPanelView(models.Page):
     """Page for Personal Properties
     """
-    grok.require('zope.View')
     grok.order(35)
     
-    grok.title(u"Persönliche Einstellungen")
-    title = _(u"Persönliche Einstellungen")
-    description = _(u"Hier können Sie Einstellungen zu"
-                     " Ihrem Benutzerprofil vornehmen.")
+    grok.title(u"Meine Einstellungen")
+    title = _(u"Meine Einstellungen")
+    description = _(u"Hier werden Einstellungen zu"
+                     " Ihrem Benutzerprofil vorgenommen.")
 
 
 class NotFound(errors.NotFound):
