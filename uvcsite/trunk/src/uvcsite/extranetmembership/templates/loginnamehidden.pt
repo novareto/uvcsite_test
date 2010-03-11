@@ -1,18 +1,8 @@
-<div xmlns:tal="http://xml.zope.org/namespaces/tal"                                                                        
-     xmlns:five="http://namespaces.zope.org/five"
-     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-     i18n:domain="extranetmembership">
-<p tal:define="form_value python: view._getFormValue()">
-    <input class="textType" 
-         type="hidden" 
-         id="foo" 
-         name="foo" 
-         tal:attributes="id python: view.name; 
-                         name python: view.name; 
-                         value form_value" />
-    <b>
-       <span tal:content="python: form_value"/>
-    </b>
-</p>
-<br>
-</div>
+<input class="textType" 
+       type="hidden" 
+       id="foo" 
+       name="foo" 
+       tal:attributes="id python: view.name; 
+                       name python: view.name; 
+                       value python: view._getFormValue()" />
+<span style="width: 250px;" tal:content="python: view._getFormValue()" />

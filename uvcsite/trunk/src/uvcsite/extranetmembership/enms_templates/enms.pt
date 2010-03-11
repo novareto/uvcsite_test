@@ -2,7 +2,7 @@
 <head>
 </head>
 <body>
-<div>
+<div tal:define="url python: view.url(context)">
  <h1> Mitbenutzerverwaltung </h1>                                                                                        
  <fieldset>
  <legend > Benutzer </legend>
@@ -17,7 +17,7 @@
          tal:attributes="class string: even ">
             <a href="" 
                i18n:translate=""
-               tal:attributes="href string:enmsupdateuser?cn=${user/mnr}">
+               tal:attributes="href string:${url}/enmsupdateuser?cn=${user/mnr}">
                   <span i18n:name="updateUser" tal:content="string: ${user/mnr}"> user updaten </span>
             </a>
      </dd>
@@ -26,7 +26,7 @@
   <dd class="portletFooter">
      <a href="" 
         i18n:translate=""
-        tal:attributes="href string:enmscreateuser">
+        tal:attributes="href string:${url}/enmscreateuser">
         <span i18n:name="neuenUseranlegen" tal:content="string: neuen User anlegen"> neuen User anlegen </span>
      </a>
   </dd>

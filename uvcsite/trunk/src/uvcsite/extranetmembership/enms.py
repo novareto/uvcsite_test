@@ -17,21 +17,24 @@ from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMen
 from dolmen.menu import menuentry
 
 
-#class ENMS(megrok.layout.Page):
-#    grok.title('Mitbenutzerverwaltung')
-#    grok.context(IMyHomeFolder)
-#    grok.require('uvc.ManageCoUsers')
-#
-#    def getUserGroup(self):
-#        principal = self.request.principal.id
-#        um = getUtility(IUserManagement)
-#        return um.getUserGroups(principal)
+class ENMS(megrok.layout.Page):
+    grok.title('Mitbenutzerverwaltung')
+    grok.context(IMyHomeFolder)
+    grok.require('uvc.ManageCoUsers')
+
+    def getUserGroup(self):
+        principal = self.request.principal.id
+        um = getUtility(IUserManagement)
+        return um.getUserGroups(principal)
 
 
 class ENMSCreateUser(Form):
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
     template = grok.PageTemplateFile('templates/form.pt')
+    label = u"Mitbenutzer anlegen"
+    description = u"Nutzen Sie diese Form um einen neuen Mitbenutzer anzulegen"
+
     form_fields = grok.Fields(IExtranetMember)
     form_fields['mnr'].custom_widget = LoginNameWidgetHidden
     form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
