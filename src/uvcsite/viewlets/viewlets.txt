@@ -79,7 +79,6 @@ Show the Viewlets:
    ...     print x
    <MenuEntry `myname` for menu `uvc.user.preferences`>
    <MenuEntry `Mein Ordner` for menu `uvc.user.preferences`>
-   <MenuEntry `Mitbenutzerverwaltung` for menu `uvc.user.preferences`>
    <MenuEntry `Abmelden` for menu `uvc.user.preferences`>
 
 
@@ -126,6 +125,7 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
+   <MenuEntry `Mitbenutzerverwaltung` for menu `uvc.user.menu`> 
 
 
 GlobalMenu
