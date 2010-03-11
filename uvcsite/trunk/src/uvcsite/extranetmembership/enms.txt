@@ -45,6 +45,7 @@ Now log on as a user and look if we get the index page
    >>> browser.handleErrors = False 
    >>> browser.addHeader('Authorization', 'Basic user:user')
    >>> browser.open('http://localhost/app/')
+   >>> print browser.contents
    >>> 'Meine Einstellungen' in browser.contents
    True
 

@@ -5,7 +5,7 @@
 import grok
 
 from uvcsite.interfaces import IPersonalPreferences
-from uvc.layout.menus import PersonalPreferences, GlobalMenu
+from uvc.layout.menus import PersonalPreferences, GlobalMenu, PersonalMenu
 
 from dolmen.menu import menu, menuentry, Entry
 from zope.app.homefolder.interfaces import IHomeFolder
@@ -57,7 +57,7 @@ class Mitbenutzerverwaltung(Entry):
     grok.context(Interface)
     grok.name('Mitbenutzerverwaltung')
     grok.title('Mitbenutzerverwaltung')
-    menu(PersonalPreferences)
+    menu(PersonalMenu)
     grok.order(30)
 
     @property

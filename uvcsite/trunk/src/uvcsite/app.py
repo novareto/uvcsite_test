@@ -12,7 +12,7 @@ from uvcsite.interfaces import IUVCSite
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.authentication.interfaces import IAuthentication
 from zope.pluggableauth import PluggableAuthentication
-
+from zope.interface import Interface
 
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
@@ -27,7 +27,7 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau)
 
 
-@menuentry(IPersonalPreferences)
+@menuentry(IPersonalPreferences, context=Interface)
 class PersonalPanelView(models.Page):
     """Page for Personal Properties
     """

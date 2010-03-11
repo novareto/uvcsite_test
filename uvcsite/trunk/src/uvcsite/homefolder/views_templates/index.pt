@@ -4,8 +4,8 @@
 
   <ul>
       <li tal:repeat="type view/getContentTypes"> 
-          <a href="" tal:attributes="href string:${view/href}"> 
-             <span tal:content="${view/link}"/>
+          <a href="" tal:attributes="href type/href"> 
+             <span tal:content="type/name"/>
 	  </a>   
       </li>
   </ul>
