@@ -1,8 +1,0 @@
-<input class="textType" 
-       type="hidden" 
-       id="foo" 
-       name="foo" 
-       tal:attributes="id python: view.name; 
-                       name python: view.name; 
-                       value python: view._getFormValue()" />
-<span style="width: 250px;" tal:content="python: view._getFormValue()" />

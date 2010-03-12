@@ -10,11 +10,12 @@ from zope.formlib.form import setUpWidgets
 from megrok.layout.components import Form
 from uvcsite.extranetmembership.interfaces import (IUserManagement,
                  IExtranetMember)
-from uvcsite.extranetmembership.custom_fields import *
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
 from dolmen.menu import menuentry
+from megrok.z3cform.base import PageForm, Fields, button
+from z3c.form.browser.checkbox import CheckBoxFieldWidget
 
 
 class ENMS(megrok.layout.Page):
@@ -28,102 +29,100 @@ class ENMS(megrok.layout.Page):
         return um.getUserGroups(principal)
 
 
-class ENMSCreateUser(Form):
+class ENMSCreateUser(PageForm):
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
-    template = grok.PageTemplateFile('templates/form.pt')
+    #template = grok.PageTemplateFile('templates/form.pt')
     label = u"Mitbenutzer anlegen"
     description = u"Nutzen Sie diese Form um einen neuen Mitbenutzer anzulegen"
 
-    form_fields = grok.Fields(IExtranetMember)
-    form_fields['mnr'].custom_widget = LoginNameWidgetHidden
-    form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
+    fields = Fields(IExtranetMember)
+    fields['rollen'].widgetFactory = CheckBoxFieldWidget
 
-    def setUpWidgets(self, ignore_request=False):
+    def getContent(self):
         principal = self.request.principal.id
         um = getUtility(IUserManagement)
         ll = len(um.getUserGroups(principal))
         value = principal + '-' + str(ll+1)
-        data={'mnr': value}
-        self.adapters = {}
-        self.widgets = setUpWidgets(
-                         self.form_fields,
-                         self.prefix,
-                         self.context,
-                         self.request,
-                         ignore_request=ignore_request,
-                         data=data)
+        rollen = self.context.keys()
+        return {'mnr': value, 'rollen': rollen}
 
-    @grok.action(_(u"Anlegen"))
-    def anlegen(self, **kw):
+    def updateWidgets(self):
+        super(ENMSCreateUser, self).updateWidgets()
+        mnr = self.widgets['mnr']
+        mnr.disabled = 'disabled'
+
+    @button.buttonAndHandler(_(u"Anlegen"))
+    def anlegen(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.flash(self.formErrorsMessage, type='error')
+            return
         um = getUtility(IUserManagement)
-        um.addUser(**kw)
+        um.addUser(**data)
         # Setting Home Folder Rights
-        for role in kw.get('rollen'):
+        for role in data.get('rollen'):
             principal_roles = IPrincipalRoleManager(self.context[role])
-            principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
+            principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         principal = self.request.principal
         homeFolder = IHomeFolder(principal).homeFolder
         self.redirect(self.url(homeFolder, 'enms'))
 
 
-class ENMSUpdateUser(Form):
+class ENMSUpdateUser(PageForm):
     """ A Form for updating a User in ENMS"""
-
     grok.context(IMyHomeFolder)
-    form_fields = grok.Fields(IExtranetMember)
-    template = grok.PageTemplateFile('templates/form.pt')
-    form_fields['mnr'].custom_widget = LoginNameWidgetHidden
-    form_fields['rollen'].custom_widget = MultiCheckBoxVocabularyWidget
-    form_fields['passwort'].custom_widget = CustomPasswordWidget
-    form_fields['confirm'].custom_widget = CustomPasswordWidget
+    fields = Fields(IExtranetMember)
+    fields['rollen'].widgetFactory = CheckBoxFieldWidget
     grok.require('uvc.ManageCoUsers')
 
-    def setUpWidgets(self, ignore_request=False):
-        #BBB Die Werte mussen hier erst noch errechnet werden.
+    def updateWidgets(self):
+        super(ENMSUpdateUser, self).updateWidgets()
+        mnr = self.widgets['mnr']
+        mnr.disabled = 'disabled'
+
+    def getContent(self):
+        principal = self.request.principal.id
         id = self.request.get('cn')
-        um = getUtility(IUserManagement)
-        user = {}
-        if id:
+        user = {} 
+        if id: 
+            um = getUtility(IUserManagement)
             user = um.getUser(id)
             user['mnr'] = id
             user['confirm'] = user['passwort']
-        data=user
-        self.adapters = {}
-        self.widgets = setUpWidgets(
-                         self.form_fields,
-                         self.prefix,
-                         self.context,
-                         self.request,
-                         ignore_request=ignore_request,
-                         data=data)
+        return user 
 
-    @grok.action(_(u"Bearbeiten"))
-    def anlegen(self, **kw):
+    @button.buttonAndHandler(_(u"Bearbeiten"))
+    def anlegen(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.flash(self.formErrorsMessage, type='error')
+            return
         um = getUtility(IUserManagement)
-        um.updUser(**kw)
+        um.updUser(**data)
         for role in self.context.values():
             principal_roles = IPrincipalRoleManager(role)
             principal_roles.removeRoleFromPrincipal('uvc.Editor',
-                                                    kw.get('mnr'))
-        for role in kw.get('rollen'):
+                                                    data.get('mnr'))
+        for role in data.get('rollen'):
             principal_roles = IPrincipalRoleManager(self.context[role])
-            principal_roles.assignRoleToPrincipal('uvc.Editor', kw.get('mnr'))
+            principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         principal = self.request.principal
         homeFolder = IHomeFolder(principal).homeFolder
         self.redirect(self.url(homeFolder, 'enms'))
 
-    @grok.action(_(u"Entfernen"))
-    def entfernen(self, **kw):
+    @button.buttonAndHandler(_(u"Entfernen"))
+    def entfernen(self, action):
+        data, errors = self.extractData()
         um = getUtility(IUserManagement)
-        key = kw.get('mnr')
+        key = data.get('mnr')
         um.deleteUser(key)
         for role in self.context.values():
             principal_roles = IPrincipalRoleManager(role)
             principal_roles.removeRoleFromPrincipal('uvc.Editor',
-                            kw.get('mnr'))
+                            data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde entfernt.'))
         principal = self.request.principal
         homeFolder = IHomeFolder(principal).homeFolder
@@ -131,21 +130,25 @@ class ENMSUpdateUser(Form):
 
 
 @menuentry(IPersonalMenu)
-class ChangePassword(Form):
+class ChangePassword(PageForm):
     """ A Form for updating a User in ENMS"""
-
     grok.title(u'Passwort ändern')
     grok.context(IUVCSite)
-    form_fields = grok.Fields(IExtranetMember).select('passwort', 'confirm')
-    template = grok.PageTemplateFile('templates/form.pt')
     title = _(u'Passwort ändern')
     label = _(u'Hier können Sie Ihr Passwort ändern')
 
-    @grok.action(_(u"Bearbeiten"))
-    def changePasswort(self, **kw):
+    fields = Fields(IExtranetMember).select('passwort', 'confirm')
+    ignoreContext = True
+
+    @button.buttonAndHandler(_(u"Bearbeiten"))
+    def changePasswort(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.flash(self.formErrorsMessage, type='error')
+            return
         um = getUtility(IUserManagement)
         principal = self.request.principal.id
-        kw['mnr'] = principal
+        data['mnr'] = principal
         um.updatePasswort(**kw)
         self.flash(_(u'Ihr Passwort wurde gespeichert!'))
         self.redirect(self.url(self.context))
