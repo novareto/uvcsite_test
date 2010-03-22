@@ -10,6 +10,7 @@ from zope.interface import Interface
 from uvcsite.interfaces import IUVCSite, IHelp, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
 from uvc.layout.menus import SidebarMenu
 from megrok.z3ctable import TablePage, Column, table
+from uvcsite.resources import UVCResources
 
 
 @menuentry(IHelp, context=Interface)
@@ -47,13 +48,13 @@ class Kontakt(megrok.layout.Page):
 @menuentry(IDocumentActions)
 class PdfIcon(grok.View):
     grok.name('aspdf')
+    grok.title('pdf')
     grok.context(IUVCSite)
 
-    def render(self):
-        return "PDF"
+    title ="aspdf"
 
-    def image_url(self):
-        return self.application_url() + '/pdf.png'
+    def render(self):
+        return "FUCKU"
 
 
 
@@ -61,10 +62,11 @@ class PdfIcon(grok.View):
 class Table(TablePage):
     grok.context(IUVCSite)
     grok.require('zope.View')
+    cssClasses = {'table': 'tablesorter'}
+
 
     startBatchingAt = 5
     batchSize = 5
-
 
     @property
     def values(self):
@@ -75,6 +77,15 @@ class Number(Column):
     table(Table)
     grok.context(IUVCSite)
     header = "Number"
+
+    def renderCell(self, item):
+        return item
+
+class SortNumber(Column):
+    grok.name('hase')
+    table(Table)
+    grok.context(IUVCSite)
+    header = "SortNumber"
 
     def renderCell(self, item):
         return item
