@@ -6,9 +6,9 @@ import grok
 
 from z3c.form import interfaces
 from megrok.z3cform.base import WidgetTemplate, directives 
-from uvcsite.extranetmembership.enms import ENMSUpdateUser, ENMSCreateUser
-from uvcsite.interfaces import IMyHomeFolder
-import zope.schema.interfaces
+from uvcsite.extranetmembership.enms import ENMSUpdateUser#, ENMSCreateUser
+#from uvcsite.interfaces import IMyHomeFolder
+#import zope.schema.interfaces
 from zope.interface import Interface
 from uvc.skin.skin import IUVCSkin
 

@@ -13,6 +13,9 @@ from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.authentication.interfaces import IAuthentication
 from zope.pluggableauth import PluggableAuthentication
 from zope.interface import Interface
+from z3c.form.converter import DateDataConverter
+from zope.schema.interfaces import IDate
+from z3c.form.interfaces import IWidget, IDataConverter
 
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
@@ -41,3 +44,9 @@ class PersonalPanelView(models.Page):
 
 class NotFound(errors.NotFound):
     pass
+
+class CustomCalendarDataConverter(DateDataConverter, grok.MultiAdapter):
+    """A special calendar data converter for Dates"""
+    grok.adapts(IDate, IWidget)
+    grok.implements(IDataConverter)
+    length = 'medium'

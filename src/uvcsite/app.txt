@@ -66,3 +66,23 @@ And we should get a Status 404
 
    >>> print browser.headers['Status'].upper()
    404 NOT FOUND
+
+Date Data Converter
+-------------------
+
+   >>> import zope.schema
+   >>> age = zope.schema.Date(
+   ...     __name__='datum',
+   ...     title=u'datum')
+
+   >>> from z3c.form.testing import TestRequest
+   >>> from z3c.form import widget
+   >>> text = widget.Widget(TestRequest())
+
+   >>> from z3c.form.interfaces import IDataConverter
+   >>> from zope.component import getMultiAdapter
+   >>> conv = getMultiAdapter((age, text), IDataConverter)
+   >>> conv
+   <CustomCalendarDataConverter converts from Date to Widget>
+
+
