@@ -50,7 +50,6 @@ class ENMSCreateUser(PageForm):
     def updateWidgets(self):
         super(ENMSCreateUser, self).updateWidgets()
         mnr = self.widgets['mnr']
-        mnr.disabled = 'disabled'
 
     @button.buttonAndHandler(_(u"Anlegen"))
     def anlegen(self, action):
@@ -80,7 +79,7 @@ class ENMSUpdateUser(PageForm):
     def updateWidgets(self):
         super(ENMSUpdateUser, self).updateWidgets()
         mnr = self.widgets['mnr']
-        mnr.disabled = 'disabled'
+        #mnr.disabled = 'disabled'
 
     def getContent(self):
         principal = self.request.principal.id
@@ -149,6 +148,6 @@ class ChangePassword(PageForm):
         um = getUtility(IUserManagement)
         principal = self.request.principal.id
         data['mnr'] = principal
-        um.updatePasswort(**kw)
+        um.updatePasswort(**data)
         self.flash(_(u'Ihr Passwort wurde gespeichert!'))
         self.redirect(self.url(self.context))
