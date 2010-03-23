@@ -45,7 +45,6 @@ Now log on as a user and look if we get the index page
    >>> browser.handleErrors = False 
    >>> browser.addHeader('Authorization', 'Basic user:user')
    >>> browser.open('http://localhost/app/')
-   >>> print browser.contents
    >>> 'Meine Einstellungen' in browser.contents
    True
 
@@ -74,9 +73,9 @@ After clicking on Benutzerverwaltung we can go to the "add a new User"
 Fill out the Form
 
    >>> form = browser.getForm()
-   >>> form.getControl(name='form.rollen').value = '1'
-   >>> form.getControl(name='form.passwort').value = 'geheim'
-   >>> form.getControl(name='form.confirm').value = 'geheim'
+   >>> form.getControl(name='form.widgets.rollen:list').value = '1'
+   >>> form.getControl(name='form.widgets.passwort').value = 'geheim'
+   >>> form.getControl(name='form.widgets.confirm').value = 'geheim'
    >>> form.submit('Anlegen')
 
 And get the right status if no error occur!
@@ -89,14 +88,17 @@ Modify
 
 Again we have to navigate to 'Benutzerverwaltung'
 
+   >>> browser.open('http://localhost/app')
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
    <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
    >>> link.click()
 
-   >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
+   >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Benutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
 
 Here we click on the user we want to modify!
 
@@ -112,25 +114,25 @@ Here we click on the user we want to modify!
 Here we have the input form we check if we have the right value for passwort!
 
    >>> form = browser.getForm()
-   >>> print form.getControl(name='form.passwort').value
+   >>> print form.getControl(name='form.widgets.passwort').value
    passwort 
 
 So let's check here if we check correctly the password and confirm:
 
    >>> url = browser.url 
-   >>> form.getControl(name='form.confirm').value = "passwort" 
-   >>> form.getControl(name='form.passwort').value = "notequal" 
+   >>> form.getControl(name='form.widgets.confirm').value = "passwort" 
+   >>> form.getControl(name='form.widgets.passwort').value = "notequal" 
    >>> form.submit('Bearbeiten')
-   >>> '<span class="error">Das Passwort und die Wiederholung sind nicht gleich.</span>' in browser.contents
+   >>> '<dd>There were some errors.</dd>' in browser.contents
    True
 
 Now try a good combination of passwort and confirm!
 
    >>> browser.open(url)
    >>> form = browser.getForm()
-   >>> form.getControl(name='form.confirm').value = "passwort" 
-   >>> form.getControl(name='form.passwort').value = "passwort" 
-   >>> form.getControl(name='form.rollen').value = '1'
+   >>> form.getControl(name='form.widgets.confirm').value = "passwort" 
+   >>> form.getControl(name='form.widgets.passwort').value = "passwort" 
+   >>> #form.getControl(name='form.widgets.rollen:list').value = '1'
    >>> form.submit('Bearbeiten')
 
 Fill out the form and submit, and check if we get the right message!
@@ -145,14 +147,17 @@ Delete
 
 Again we have to navigate to 'Benutzerverwaltung'
 
+   >>> browser.open('http://localhost/app')
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
    <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
    >>> link.click()
 
-   >>> benutzerverwaltung = browser.getLink('Benutzerverwaltung')
+   >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Benutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
 
 Here we click on the user we want to modify!
 
@@ -190,8 +195,8 @@ We still have form for changing the users password!
 Let's get the form. We should get our two input forms for passwort and confirm
 
    >>> form = browser.getForm()
-   >>> form.getControl(name='form.passwort').value = "passwort" 
-   >>> form.getControl(name='form.confirm').value = "passwort" 
+   >>> form.getControl(name='form.widgets.passwort').value = "passwort" 
+   >>> form.getControl(name='form.widgets.confirm').value = "passwort" 
    >>> form.submit('Bearbeiten')
 
 We should get the right portal status, for changing the passwort!
