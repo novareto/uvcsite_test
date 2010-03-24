@@ -9,7 +9,6 @@ import grok
 from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
     IContent, Content, schema, name)
 
-from uvcsite.viewlets.utils import MenuItem
 from megrok.layout import Page
 from megrok.z3ctable import TablePage
 from uvcsite.interfaces import *
