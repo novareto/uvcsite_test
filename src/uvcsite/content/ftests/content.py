@@ -49,17 +49,17 @@ BaseClasses
 """
 
 import grok
-from uvcsite.content import IContent, Content, schema, name 
+from uvcsite import content
 from zope.schema import TextLine, Int
 
-class IContent(IContent):
+class IContent(content.IContent):
     name = TextLine(title = u"Name")
     age = Int(title = u"Int")
 
 
-class MyContent(Content):
+class MyContent(content.Content):
     grok.implements(IContent)
-    schema(IContent)
-    name('MyContent')
+    content.schema(IContent)
+    content.name('MyContent')
 
 
