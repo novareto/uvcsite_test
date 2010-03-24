@@ -120,7 +120,7 @@ We should get this document in our container
 We should now have 3 objects in our container!
 
   >>> len(root['uaz'])
-  3
+  3 
 
 An Invalid uaz_xml file!
 
@@ -160,9 +160,10 @@ import uvcsite.tests
 from uvcsite.content import ProductFolder, IContent, Content, schema, name, contenttype 
 from zope.schema import TextLine, Int
 from zope.interface import Invalid, invariant
+from dolmen import content
 
 class IUnfallanzeige(IContent):
-    name = TextLine(title = u"Name", max_length=20)
+    name1 = TextLine(title = u"Name", max_length=20)
     age = Int(title = u"Int")
  
     @invariant
@@ -170,12 +171,12 @@ class IUnfallanzeige(IContent):
         if unfallanzeige.name == "hans" and unfallanzeige.age == 10:
             raise Invalid("This combination of name and age is not valid")
 
+
 class Unfallanzeige(Content):
-    grok.implements(IContent)
-    schema(IUnfallanzeige)
-    name('Unfallanzeige')
+    grok.implements(IUnfallanzeige)
+    grok.name('Unfallanzeige')
+    content.schema(IUnfallanzeige)
+
 
 class UAZFolder(ProductFolder):
     contenttype(Unfallanzeige)
-
-
