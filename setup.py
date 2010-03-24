@@ -35,12 +35,7 @@ setup(name='uvcsite',
                         'megrok.z3cform.tabular',
                         'megrok.z3cform.ui',
                         'megrok.z3ctable',
-                        'z3c.breadcrumb',
-                        'z3c.formui',
-                        'z3c.macro',
-                        'z3c.menu.simple',
                         'z3c.schema2xml',
-                        'z3c.template', # Needed for my custom Template
                         'z3c.testsetup',
                         'zc.blist',
                         'zope.app.homefolder',
@@ -49,7 +44,6 @@ setup(name='uvcsite',
                         'uvc.layout',
                         'dolmen.app.layout',
                         'megrok.rendersource',
-                            # Add extra requirements here
                             ],
           entry_points = """
           [console_scripts]
