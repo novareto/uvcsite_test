@@ -18,21 +18,9 @@ FunctionalLayer = ZCMLLayer(ftesting_zcml, __name__, 'FunctionalLayer',
 
 def setUp(test):
     FunctionalTestSetup().setUp()
-    #registry = zope.component.globalregistry.BaseGlobalComponents(
-    #    'test', (zope.component.globalregistry.globalSiteManager,))
-    #zope.component.globalregistry.globalSiteManager = registry
-    #zope.component.globalregistry.base = registry
-    #zope.component._api.base = registry
-    #zope.app.component.hooks.setSite()
-    if getattr(sys.modules[test.name], '__grok__', True):
-       grok.testing.grok(test.name)
+
 
 def tearDown(test):    
-    #registry = zope.component.globalregistry.globalSiteManager.__bases__[0]
-    #zope.component.globalregistry.globalSiteManager = registry
-    #zope.component.globalregistry.base = registry 
-    #zope.component._api.base = registry 
-    #zope.app.component.hooks.setSite()
     FunctionalTestSetup().tearDown()
 
 
@@ -48,12 +36,9 @@ def suiteFromPackage(name):
         dottedname = '%s.%s' % (name, filename[:-3])
         test = doctest.DocTestSuite(
             dottedname, setUp=setUp, tearDown=tearDown,
-            optionflags=(doctest.ELLIPSIS+
-                         doctest.NORMALIZE_WHITESPACE+
-                         doctest.REPORT_CDIFF)
+            optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE
             )
         test.layer = FunctionalLayer
         suite.addTest(test)
     return suite
-
 

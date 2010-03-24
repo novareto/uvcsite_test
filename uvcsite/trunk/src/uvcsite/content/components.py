@@ -45,6 +45,6 @@ class Content(dolmen.content.Content):
     def meta_type(self):
         return self.__class__.__name__
 
-    @property
-    def schema(self):
-        return dolmen.content.schema.bind().get(self)
+#    @property
+#    def schema(self):
+#        return dolmen.content.schema.bind().get(self)

@@ -16,6 +16,7 @@ from zope.interface import Interface
 from z3c.form.converter import DateDataConverter
 from zope.schema.interfaces import IDate
 from z3c.form.interfaces import IWidget, IDataConverter
+from megrok.layout import Page
 
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
@@ -31,7 +32,7 @@ class Uvcsite(grok.Application, grok.Container):
 
 
 @menuentry(IPersonalPreferences, context=Interface)
-class PersonalPanelView(models.Page):
+class PersonalPanelView(Page):
     """Page for Personal Properties
     """
     grok.order(35)
