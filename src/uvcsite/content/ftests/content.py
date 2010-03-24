@@ -25,14 +25,6 @@ Schema
   >>> content.schema
   [<InterfaceClass uvcsite.content.ftests.content.IContent>] 
 
-Icon
-----
-
-  >>> from zope.component import getMultiAdapter
-  >>> from zope.publisher.browser import TestRequest
-  >>> icon_view = getMultiAdapter((content, TestRequest()),  name="contenttype_icon")
-  >>> print icon_view()
-  <img src="http://127.0.0.1/@@/uvcsite-content-ftests-content-IContent-contenttype_icon.png" alt="Content" width="16" height="16" border="0" />
 
 BaseClasses
 -----------
@@ -61,5 +53,3 @@ class MyContent(content.Content):
     grok.implements(IContent)
     content.schema(IContent)
     content.name('MyContent')
-
-

@@ -18,6 +18,8 @@ FunctionalLayer = ZCMLLayer(ftesting_zcml, __name__, 'FunctionalLayer',
 
 def setUp(test):
     FunctionalTestSetup().setUp()
+    if getattr(sys.modules[test.name], '__grok__', True):
+        grok.testing.grok(test.name)
 
 
 def tearDown(test):    

@@ -45,7 +45,7 @@ Note: There are default columns defined for IContainer in
     <div class="viewspace">
       <div>
       <div class="tabluarTable">
-        <table class="tablesorter myTable">
+        <table class="myTable tablesorter">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -93,7 +93,7 @@ If we call this class we should see our tableform in our simple Layout:
     <div class="viewspace">
       <div>
       <div class="tabluarTable">
-        <table class="tablesorter myTable">
+        <table class="myTable tablesorter">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -165,7 +165,9 @@ Edit View
 ---------
 
   >>> print browser.contents
-  <html...
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">...
     <tbody>
       <tr class="even">
         <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="MyContent"  /></td>
@@ -173,7 +175,7 @@ Edit View
         <td>MyContent</td>
         <td>Entwurf</td>
         <td>zope.mgr</td>
-        <td>...</td>
+        ...
       </tr>
       <tr class="odd">
         <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent"  /></td>
@@ -223,108 +225,42 @@ The Index View of the ProductFolder has a executeDelete method
 which get's called by the deleteAction of the form. So we test
 this here manually.
   
-  >>> print browser.contents
-  <html> <form action="http://localhost/pf1/@@index" method="post"
-        enctype="multipart/form-data" class="edit-form"
-        name="deleteFormTable" id="deleteFormTable">
-    <div class="viewspace">
-      <div>
-      <div class="tabluarTable">
-        <table class="tablesorter myTable">
-    <thead>
-      <tr>
-        <th class="checkBox"></th>
-        <th>Titel</th>
-        <th>Objekt</th>
-        <th>Status</th>
-        <th>Autor</th>
-        <th>Datum</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="even">
-        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="MyContent"  /></td>
-        <td><a href="http://localhost/pf1/MyContent/edit">Titel</a></td>
-        <td>MyContent</td>
-        <td>Entwurf</td>
-        <td>zope.mgr</td>
-        <td>...</td>
-      </tr>
-      <tr class="odd">
-        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent"  /></td>
-        <td><a href="http://localhost/pf1/mycontent/edit"></a></td>
-        <td>MyContent</td>
-        <td>Entwurf</td>
-        <td></td>
-        <td>...</td>
-      </tr>
-    </tbody>
-  </table>
-      </div>
-      <div class="tabluarForm">
-      </div>
-    </div>
-    </div>
-    <div>
-      <div class="buttons">
-  <input id="deleteFormTable-buttons-delete"
-         name="deleteFormTable.buttons.delete"
-         class="submit-widget button-field" value="Delete"
-         type="submit" />
-      </div>
-    </div>
-  </form>
-   </html>
-
+  >>> browser.headers['Status'].upper()
+  '200 OK'
 
   >>> form = browser.getForm()
   >>> form.getControl(name='deleteFormTable-checkBox-0-selectedItems').value = ['mycontent',]
   >>> form.submit('Delete')
   >>> print browser.contents 
-  <html> <form action="http://localhost/pf1/@@index" method="post"
-        enctype="multipart/form-data" class="edit-form"
-        name="deleteFormTable" id="deleteFormTable">
-    <div class="viewspace">
-      <div>
-      <div class="tabluarTable">
-        <table class="tablesorter myTable">
-    <thead>
-      <tr>
-        <th class="checkBox"></th>
-        <th>Titel</th>
-        <th>Objekt</th>
-        <th>Status</th>
-        <th>Autor</th>
-        <th>Datum</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="even">
-        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="MyContent"  /></td>
-        <td><a href="http://localhost/pf1/MyContent/edit">Titel</a></td>
-        <td>MyContent</td>
-        <td>Entwurf</td>
-        <td>zope.mgr</td>
-        <td>...</td>
-      </tr>
-    </tbody>
-  </table>
-      </div>
-      <div class="tabluarForm">
-      </div>
-    </div>
-    </div>
-    <div>
-      <div class="buttons">
-  <input id="deleteFormTable-buttons-delete"
-         name="deleteFormTable.buttons.delete"
-         class="submit-widget button-field" value="Delete"
-         type="submit" />
-      </div>
-    </div>
-  </form>
-   </html>
-
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">...
+    <table class="myTable tablesorter">
+      <thead>
+        <tr>
+          <th class="checkBox"></th>
+          <th>Titel</th>
+          <th>Objekt</th>
+          <th>Status</th>
+          <th>Autor</th>
+          <th>Datum</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="even">
+          <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="MyContent"  /></td>
+          <td><a href="http://localhost/pf1/MyContent/edit">Titel</a></td>
+          <td>MyContent</td>
+          <td>Entwurf</td>
+          <td>zope.mgr</td>
+          <td>...</td>
+        </tr>
+      </tbody>
+    </table>
+    ...
+    </html>
+ 
+  
 
 """
 import grok
