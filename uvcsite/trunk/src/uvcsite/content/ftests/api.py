@@ -162,8 +162,9 @@ from zope.schema import TextLine, Int
 from zope.interface import Invalid, invariant
 from dolmen import content
 
+
 class IUnfallanzeige(IContent):
-    name1 = TextLine(title = u"Name", max_length=20)
+    name = TextLine(title = u"Name", max_length=20)
     age = Int(title = u"Int")
  
     @invariant
