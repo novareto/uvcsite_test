@@ -12,3 +12,5 @@ from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
 from megrok.layout import Page
 from megrok.z3ctable import TablePage
 from uvcsite.interfaces import *
+from dolmen.menu import menuentry, Entry, menu
+from uvc.layout.menus import Footer 
