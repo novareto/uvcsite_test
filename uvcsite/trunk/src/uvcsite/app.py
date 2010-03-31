@@ -52,3 +52,12 @@ class CustomCalendarDataConverter(DateDataConverter, grok.MultiAdapter):
     grok.adapts(IDate, IWidget)
     grok.implements(IDataConverter)
     length = 'medium'
+
+
+class HelpPage(Page):
+    grok.baseclass()
+
+    def namespace(self):
+        return {'settings_overrides': {'input_encoding': 'utf-8',
+                                       'output_encoding': 'utf-8',
+                                       }}

@@ -11,18 +11,12 @@ from uvcsite.interfaces import IUVCSite, IHelp, IPersonalMenu, IDocumentActions,
 from uvc.layout.menus import SidebarMenu
 from megrok.z3ctable import TablePage, Column, table
 from uvcsite.resources import UVCResources
-
+from uvcsite import HelpPage
 
 @menuentry(IHelp, context=Interface)
-class GlobaleHilfe(megrok.layout.Page):
+class GlobaleHilfe(HelpPage):
     grok.context(IUVCSite)
     grok.title('Hilfe zum Extranet')
-
-    def namespace(self):
-        return {'settings_overrides': {'input_encoding': 'utf-8',
-                                       'output_encoding': 'utf-8',
-                                       }}
-
 
 
 @menuentry(SidebarMenu, context=Interface)
