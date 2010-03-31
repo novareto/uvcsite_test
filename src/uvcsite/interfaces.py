@@ -6,10 +6,14 @@ from uvc.layout.interfaces import *
 
 
 class IUVCSite(IUVCApplication):
-    """Markter Interface for UVC-Site Site
+    """Marker Interface for UVC-Site Site
     """
 
 
 class IMyHomeFolder(IContainer, IFolderColumnTable):
-    """Markter Interface for HomeFolder
+    """Marker Interface for HomeFolder
+    """
+
+class IGetHomeFolderUrl(Interface):
+    """Marker Interface for getting HomeFolderUrls
     """

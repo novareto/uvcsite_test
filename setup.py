@@ -44,6 +44,7 @@ setup(name='uvcsite',
                         'uvc.layout',
                         'dolmen.app.layout',
                         'megrok.rendersource',
+                        'megrok.chameleon',
                             ],
           entry_points = """
           [console_scripts]

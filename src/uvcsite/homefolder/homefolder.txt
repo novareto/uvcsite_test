@@ -96,8 +96,8 @@ PrincipalRoleMap with settings for lars
    [(u'uvc.MasterUser', 'lars', PermissionSetting: Allow), (u'uvc.Editor', 'lars', PermissionSetting: Allow), (u'uvc.User', 'lars', PermissionSetting: Allow)] 
    
 
-Adapter
--------
+Adapter for getting the instance of the HomeFolder
+--------------------------------------------------
 
    >>> from zope.app.authentication.principalfolder import PrincipalInfo, Principal
    >>> user = Principal('klaus', 'klaus', 'klaus')
@@ -108,3 +108,20 @@ Adapter
    >>> hf = IHomeFolder(user)
    >>> hf
    <uvcsite.homefolder.homefolder.HomeFolderForPrincipal object at ...>
+
+
+Adapter for getting the Url for the Homefolder
+----------------------------------------------
+
+   >>> from uvcsite import IGetHomeFolderUrl
+   >>> from zope.publisher.browser import TestRequest
+   >>> from zope.component import getMultiAdapter
+
+   >>> request = TestRequest()
+   >>> adapter = getMultiAdapter((user, request), IGetHomeFolderUrl)
+   >>> adapter.getURL() 
+   'http://127.0.0.1/app/members/klaus/'
+
+   >>> adapter.getAddURL(type='unfallanzeigen') 
+   'http://127.0.0.1/app/members/klaus/unfallanzeigen/@@add'
+

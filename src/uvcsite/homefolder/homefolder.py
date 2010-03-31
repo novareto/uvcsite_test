@@ -2,7 +2,7 @@
 
 import grok
 
-from uvcsite.interfaces import IMyHomeFolder
+from uvcsite.interfaces import IMyHomeFolder, IGetHomeFolderUrl
 from uvcsite.auth.interfaces import IMasterUser
 
 from zope.app.homefolder.homefolder import HomeFolderManager
@@ -11,6 +11,10 @@ import zope.app.homefolder.homefolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.dottedname.resolve import resolve
 from zope.security.interfaces import IPrincipal
+from zope.app.security.interfaces import IUnauthenticatedPrincipal
+from zope.app.homefolder.interfaces import IHomeFolder
+from zope.traversing.browser.absoluteurl import  absoluteURL
+from zope.publisher.interfaces.browser import IBrowserRequest
 
 
 class HomeFolder(grok.Container):
@@ -59,6 +63,28 @@ class HomeFolderForPrincipal(grok.Adapter,
 
     def __init__(self, principal):
         self.principal = IMasterUser(principal)
+
+
+
+class HomeFolderUrl(grok.MultiAdapter):
+    grok.adapts(IPrincipal, IBrowserRequest)
+    grok.implements(IGetHomeFolderUrl)
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def getURL(self, type=""):
+        principal = self.context
+        if IUnauthenticatedPrincipal.providedBy(principal):
+            return
+        homeFolder = IHomeFolder(principal).homeFolder
+        homeFolder = grok.url(self.request, homeFolder, type)
+        return homeFolder
+
+    def getAddURL(self, type=""):
+        url = "%s/@@add" % self.getURL(type) 
+        return url 
 
 
 @grok.subscribe(IHomeFolderManager, grok.IObjectAddedEvent)
