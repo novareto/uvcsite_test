@@ -58,3 +58,7 @@ div.tooltip {
     -moz-box-shadow:0 0 10px #000; 
     -webkit-box-shadow:0 0 10px #000; 
 }
+
+#contextual-actions {
+  display: none;
+}
