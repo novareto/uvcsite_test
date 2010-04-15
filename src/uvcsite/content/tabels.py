@@ -18,7 +18,7 @@ from uvcsite.homefolder.views import Index
 class CheckBox(CheckBoxColumn):
     grok.name('checkBox')
     grok.context(IFolderColumnTable)
-    table(Index)
+    #table(Index)
     weight = 0
     cssClasses = {'th': 'checkBox'}
     header = u""
@@ -36,7 +36,7 @@ class Link(LinkColumn):
     grok.name('link')
     grok.context(IFolderColumnTable)
     weight = 1
-    table(Index)
+    #table(Index)
     header = _(u"Titel")
     linkName = u"edit"
 
@@ -59,7 +59,7 @@ class MetaTypeColumn(GetAttrColumn):
     header = _(u'Objekt')
     attrName = 'meta_type'
     weight = 2
-    table(Index)
+    #table(Index)
 
 
 class CreatorColumn(Column):
@@ -67,7 +67,7 @@ class CreatorColumn(Column):
     grok.context(IFolderColumnTable)
     header = _(u"Autor")
     weight = 99
-    table(Index)
+    #table(Index)
 
     def renderCell(self, item):
         return ', '.join(IZopeDublinCore(item).creators)
@@ -78,7 +78,7 @@ class ModifiedColumn(ModifiedColumn):
     grok.context(IFolderColumnTable)
     header = _(u"Datum")
     weight = 100
-    table(Index)
+    #table(Index)
 
 
 class StateColumn(GetAttrColumn):
@@ -87,7 +87,7 @@ class StateColumn(GetAttrColumn):
     header = _(u'Status')
     attrName = 'status'
     weight = 3
-    table(Index)
+    #table(Index)
 
     def getValue(self, obj):
         state = IWorkflowState(obj).getState()
