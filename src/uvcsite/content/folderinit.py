@@ -1,5 +1,6 @@
 import grok
 import transaction
+import uvcsite
 import zope.app.appsetup.interfaces
 from zope.app.component.hooks import getSite, setSite
 from zope.component import getUtility
@@ -22,10 +23,17 @@ def handle_init(event):
                 folders = getUtility(IHomeFolderManager).homeFolderBase
                 for folder in folders.values():
                     for name, class_ in productfolders:
-                        if name in folder or not getattr(class_, 'inHomeFolder', True):
+                        if name in folder:
                             continue
                         folder[name] = class_()
             finally:
                 setSite(old_site)
     transaction.commit()
     connection.close()
+
+
+@grok.subscribe(uvcsite.IMyHomeFolder, grok.IObjectAddedEvent)
+def handle_homefolder(homefolder, event):
+    productfolders = list(getUtilitiesFor(IProductFolder))
+    for name, class_ in productfolders:
+        homefolder[name] = class_()

@@ -1,6 +1,6 @@
 """
-Event which set's all the ProductFolders
-========================================
+Events which set all the ProductFolders
+=======================================
 
 Setup
 -----
@@ -40,36 +40,42 @@ the HomeFolderManager
   >>> utility
   <uvcsite.homefolder.homefolder.PortalMembership object at ...>
 
-We create an empty HomeFolder for lars:
+Creating product folders in a new home folder
+---------------------------------------------
+
+We create a HomeFolder for lars:
 
   >>> utility.assignHomeFolder('lars')
   >>> 'lars' in utility.homeFolderBase
   True
 
-Let's check that this container is empty: 
+All known product folder types have been instantiated and added to the home
+folder in the process:
 
   >>> lars = utility.homeFolderBase['lars']
-  >>> [x for x in lars] 
+  >>> list(lars)
+  [u'ENW1Container', u'LastschriftContainer3', u'OverrideFolder',
+   u'uazfolder']
+
+Creating product folders when opening the DB
+--------------------------------------------
+
+In order to see the effect, we need to empty the home folder first:
+
+  >>> for name in list(lars.keys()): del lars[name]
+  >>> list(lars)
   []
-
-  >>> import transaction
-  >>> #transaction.commit()
-
-Let's call the event and look if it get called
-----------------------------------------------
 
   >>> import zope.app.appsetup.interfaces
   >>> grok.notify(zope.app.appsetup.interfaces.DatabaseOpenedWithRoot(db))
 
-Ok the event is fired up. Now we should found our ENW1Container in 
-the HomeFolder of Lars.
+After firing the event, all the product folders should be there again in the
+home folder:
 
-  >>> lars = utility.homeFolderBase['lars']
-  >>> 'ENW1Container' in lars 
-  True
+  >>> list(lars)
+  [u'ENW1Container', u'LastschriftContainer3', u'OverrideFolder',
+   u'uazfolder']
 
-  >>> 'NotInHomeFolder' not in lars
-  True
 """
 
 
@@ -90,12 +96,3 @@ class ENW1Container(ProductFolder):
     grok.title('This is a Lastschrift Container')
     grok.description('This is the Description')
     contenttype(MyContent)
-
-
-class NotInHomeFolder(ProductFolder):    
-    grok.name('NotInHomeFolder')
-    grok.title('This should not go into the HomeFolder')
-    grok.description('This is the Description')
-    contenttype(MyContent)
-
-    inHomeFolder = False 

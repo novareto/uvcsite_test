@@ -10,10 +10,6 @@ from zope.container.interfaces import INameChooser
 class ProductFolder(grok.Container):
     grok.implements(IProductFolder, IFolderColumnTable)
 
-    # per Default all ProductFolders should go into
-    # the Homefolder on startup
-    inHomeFolder = True
-
     @property
     def name(self):
         return directive.name.bind().get(self)
