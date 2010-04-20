@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import grok
+import uvcsite
 
+from uvcsite.content import IProductFolder
 from uvcsite.interfaces import IMyHomeFolder, IGetHomeFolderUrl
 from uvcsite.auth.interfaces import IMasterUser
 
 from zope.app.homefolder.homefolder import HomeFolderManager
 from zope.app.homefolder.interfaces import IHomeFolderManager
 import zope.app.homefolder.homefolder
+from zope.component import getUtilitiesFor
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.dottedname.resolve import resolve
 from zope.security.interfaces import IPrincipal
@@ -82,9 +85,12 @@ class HomeFolderUrl(grok.MultiAdapter):
         homeFolder = grok.url(self.request, homeFolder, type)
         return homeFolder
 
-    def getAddURL(self, type=""):
-        url = "%s/@@add" % self.getURL(type) 
-        return url 
+    def getAddURL(self, type):
+        productfolders = list(getUtilitiesFor(IProductFolder))
+        for name, class_ in productfolders:
+            if uvcsite.contenttype.bind().get(class_) is type:
+                url = "%s/@@add" % self.getURL(name)
+                return url 
 
 
 @grok.subscribe(IHomeFolderManager, grok.IObjectAddedEvent)

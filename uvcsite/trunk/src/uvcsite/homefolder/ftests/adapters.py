@@ -14,7 +14,7 @@ import uvcsite
 import zope.app.testing.functional
 
 
-zope.app.testing.functional.defineLayer('ftesting', '../../ftesting.zcml')
+zope.app.testing.functional.defineLayer('ftesting', 'ftesting.zcml')
 
 
 class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
@@ -24,6 +24,7 @@ class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
     def setUp(self):
         super(HomeFolderTest, self).setUp()
         self.user = Principal('klaus', 'klaus', 'klaus')
+        self.request = TestRequest()
         root = self.getRootFolder()
         root['app'] = Uvcsite()
         setSite(root['app'])
@@ -34,7 +35,24 @@ class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
                 uvcsite.homefolder.homefolder.HomeFolderForPrincipal))
 
     def test_homefolder_url(self):
-        request = TestRequest()
-        adapter = getMultiAdapter((self.user, request), IGetHomeFolderUrl)
+        adapter = getMultiAdapter((self.user, self.request),
+                                  IGetHomeFolderUrl)
         self.assertEquals('http://127.0.0.1/app/members/klaus/',
                           adapter.getURL())
+
+    def test_add_url(self):
+        adapter = getMultiAdapter((self.user, self.request),
+                                  IGetHomeFolderUrl)
+        self.assertEquals(
+            'http://127.0.0.1/app/members/klaus/unfallanzeigenfolder/@@add',
+            adapter.getAddURL(Unfallanzeige))
+
+
+class Unfallanzeige(uvcsite.Content):
+
+    name = 'unfallanzeige'
+
+
+class UnfallanzeigenFolder(uvcsite.ProductFolder):
+
+    uvcsite.contenttype(Unfallanzeige)
