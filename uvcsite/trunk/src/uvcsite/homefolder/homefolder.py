@@ -96,3 +96,19 @@ class HomeFolderUrl(grok.MultiAdapter):
 @grok.subscribe(IHomeFolderManager, grok.IObjectAddedEvent)
 def add_members_folder(object, event):
     object.__parent__.__parent__['members'] = Members()
+
+
+# import zope.securitypolicy.interfaces
+# import zope.securitypolicy.principalrole
+
+# class PrincipalRoleManager(
+#     zope.securitypolicy.principalrole.AnnotationPrincipalRoleManager,
+#     grok.Adapter):
+
+#     grok.context(IMyHomeFolder)
+
+#     def getRolesForPrincipal(self, principal_id):
+#         ''' See the interface IPrincipalRoleMap '''
+#         roles = super(PrincipalRoleManager, self).getRolesForPrincipal(principal_id)
+#         roles.append(('zope.Manager', zope.securitypolicy.interfaces.Allow))
+#         return roles
