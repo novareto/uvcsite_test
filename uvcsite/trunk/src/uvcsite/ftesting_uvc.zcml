@@ -8,27 +8,4 @@
   <include package="uvcsite" file="ftesting.zcml"/>
   <include package="uvcsite.tests" />
 
-  <principal
-      id="zope.mgr"
-      title="Manager"
-      login="mgr"
-      password="mgrpw"
-      />
-
-  <principal
-      id="uvc.personadd"
-      title="personadd"
-      login="personadd"
-      password="personadd"
-      />
-
-  <principal
-      id="uvc.user"
-      title="user"
-      login="user"
-      password="user"
-      />
-
-  <grant role="zope.Manager" principal="zope.mgr" />
-
 </configure>
