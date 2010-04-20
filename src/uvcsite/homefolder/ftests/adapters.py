@@ -14,7 +14,7 @@ import uvcsite
 import zope.app.testing.functional
 
 
-zope.app.testing.functional.defineLayer('ftesting', '../ftesting.zcml')
+zope.app.testing.functional.defineLayer('ftesting', '../../ftesting.zcml')
 
 
 class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
