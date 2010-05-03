@@ -1,9 +1,9 @@
 import grok
 import uvcsite
+import uvc.layout
 import zope.schema
 import zope.interface
 import zope.component
-
 
 class IContact(uvcsite.IContent):
 
@@ -35,7 +35,8 @@ class AddMenuEntry(uvcsite.Entry):
     grok.name('Buddy erstellen')
     grok.title('Buddy erstellen')
     grok.context(zope.interface.Interface)
-    uvcsite.menu(uvcsite.SidebarMenu)
+    uvcsite.menu(uvcsite.GlobalMenu)
+    uvc.layout.menus.category(u'Apps')
 
     @property
     def url(self):
