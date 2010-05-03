@@ -54,8 +54,7 @@ folder in the process:
 
   >>> lars = utility.homeFolderBase['lars']
   >>> list(lars)
-  [u'ENW1Container', u'LastschriftContainer3', u'OverrideFolder',
-   u'uazfolder']
+  [u'ENW1Container', u'LastschriftContainer1', u'OverrideFolder', u'adressbook', u'uazfolder', u'unfallanzeigecontainer1']
 
 Creating product folders when opening the DB
 --------------------------------------------
@@ -73,8 +72,7 @@ After firing the event, all the product folders should be there again in the
 home folder:
 
   >>> list(lars)
-  [u'ENW1Container', u'LastschriftContainer3', u'OverrideFolder',
-   u'uazfolder']
+  [u'ENW1Container', u'LastschriftContainer1', u'OverrideFolder', u'adressbook', u'uazfolder', u'unfallanzeigecontainer1']
 
 """
 

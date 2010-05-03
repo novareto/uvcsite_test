@@ -42,11 +42,10 @@ TableView
   >>> index
   <Index 'index'>
 
-We don't have any folders inside our homefolder this means we don't get 
-any **content_types** for it.
+We have one folder inside our homefolder.
 
   >>> list(index.getContentTypes())
-  []
+  [{'href': 'http://127.0.0.1/hf/adressbook', 'name': u'adressbook'}]
 
 Now we can render the Index Page of the Homefolder: 
 
@@ -118,7 +117,7 @@ Creating a Person Object
 Let's proof if the Homefolder Settings are correct!
 
   >>> len(homefolder)
-  0
+  1
 
   >>> homefolder['personcontainer'] = PersonContainer() 
   >>> 'personcontainer' in homefolder
@@ -135,7 +134,7 @@ Now call the view with some contents...
 Let's check again if we now get **contenttypes** in our homefolder:
 
   >>> [x for x in index.getContentTypes()]
-  [{'href': 'http://127.0.0.1/hf/personcontainer', 'name': u'personcontainer'}]
+  [{'href': 'http://127.0.0.1/hf/adressbook', 'name': u'adressbook'}, {'href': 'http://127.0.0.1/hf/personcontainer', 'name': u'personcontainer'}]
 
   [u'personcontainer']
 

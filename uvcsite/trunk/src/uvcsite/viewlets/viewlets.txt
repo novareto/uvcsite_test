@@ -94,6 +94,7 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
+   <MenuEntry `Buddy erstellen` for menu `uvc.user.sidebar`>
 
 
 Footer
