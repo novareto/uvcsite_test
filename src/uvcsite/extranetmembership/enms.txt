@@ -73,7 +73,7 @@ After clicking on Benutzerverwaltung we can go to the "add a new User"
 Fill out the Form
 
    >>> form = browser.getForm()
-   >>> form.getControl(name='form.widgets.rollen:list').value = '1'
+   >>> form.getControl(name='form.widgets.rollen:list').value = 'unfallanzeige',
    >>> form.getControl(name='form.widgets.passwort').value = 'geheim'
    >>> form.getControl(name='form.widgets.confirm').value = 'geheim'
    >>> form.submit('Anlegen')
