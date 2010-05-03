@@ -4,7 +4,7 @@
 
 import grok
 from uvcsite import uvcsiteMF as _
-from uvcsite.interfaces import IMyHomeFolder
+from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from megrok.z3ctable import Values
 from megrok.z3cform.tabular import DeleteFormTablePage
 from zope.traversing.browser import absoluteURL
@@ -12,6 +12,7 @@ from zope.traversing.browser import absoluteURL
 
 class Index(DeleteFormTablePage):
     grok.context(IMyHomeFolder)
+    grok.implements(IFolderListingTable)
 
     cssClasses = {'table': 'tablesorter myTable'}
     cssClassEven = u'even'

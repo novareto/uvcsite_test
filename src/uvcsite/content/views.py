@@ -9,11 +9,12 @@ from megrok.z3cform.tabular import DeleteFormTablePage
 from uvcsite import uvcsiteMF as _
 from uvcsite.content import IContent, IProductFolder
 from z3c.form import form
-
+from uvcsite.interfaces import IFolderListingTable
 
 class Index(DeleteFormTablePage):
     grok.title('Mein Ordner')
     grok.name('index')
+    grok.implements(IFolderListingTable) 
     grok.context(IProductFolder)
 
     cssClasses = {'table': 'myTable tablesorter'}

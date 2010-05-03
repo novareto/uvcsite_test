@@ -17,3 +17,9 @@ class IMyHomeFolder(IContainer, IFolderColumnTable):
 class IGetHomeFolderUrl(Interface):
     """Marker Interface for getting HomeFolderUrls
     """
+
+
+class IFolderListingTable(Interface):
+    """Marker Interface for tables with a listing interface
+       for contenttypes
+    """

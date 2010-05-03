@@ -7,7 +7,7 @@ import megrok.layout
 
 from dolmen.menu import menuentry
 from zope.interface import Interface
-from uvcsite.interfaces import IUVCSite, IHelp, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
+from uvcsite.interfaces import IMyHomeFolder, IUVCSite, IHelp, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
 from uvc.layout.menus import SidebarMenu
 from megrok.z3ctable import TablePage, Column, table
 from uvcsite.resources import UVCResources
@@ -54,7 +54,7 @@ class PdfIcon(grok.View):
 
 @menuentry(SidebarMenu)
 class Table(TablePage):
-    grok.context(IUVCSite)
+    grok.context(IMyHomeFolder)
     grok.require('zope.View')
     cssClasses = {'table': 'tablesorter'}
 
@@ -69,7 +69,7 @@ class Table(TablePage):
 
 class Number(Column):
     table(Table)
-    grok.context(IUVCSite)
+    grok.context(IMyHomeFolder)
     header = "Number"
 
     def renderCell(self, item):
@@ -78,7 +78,7 @@ class Number(Column):
 class SortNumber(Column):
     grok.name('hase')
     table(Table)
-    grok.context(IUVCSite)
+    grok.context(IMyHomeFolder)
     header = "SortNumber"
 
     def renderCell(self, item):
