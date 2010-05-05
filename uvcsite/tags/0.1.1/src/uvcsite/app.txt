@@ -1,0 +1,88 @@
+Do a functional doctest test on the app.
+========================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Let's first create an instance of Uvcsite at the top level:
+
+   >>> from zope.app.testing.functional import getRootFolder
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+
+Run tests in the testbrowser
+----------------------------
+
+The zope.testbrowser.browser module exposes a Browser class that
+simulates a web browser similar to Mozilla Firefox or IE.  We use that
+to test how our application behaves in a browser.  For more
+information, see http://pypi.python.org/pypi/zope.testbrowser.
+
+Only Authorzied people should get access
+----------------------------------------
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+   >>> browser.open('http://localhost/app/index')
+   Traceback (most recent call last):
+   HTTPError: HTTP Error 401: Unauthorized 
+
+Now log on as a user and look if we get the index page
+
+   >>> browser.handleErrors = False 
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.open('http://localhost/app/index')
+   >>> "Congratulations" in browser.contents
+   True
+
+Not Found View
+--------------
+
+   >>> browser.handleErrors = True 
+
+We should get the Error Page:
+
+   >>> browser.open('http://localhost/app/not_found')
+   Traceback (most recent call last):
+   ...
+   HTTPError: HTTP Error 404: Not Found 
+
+   >>> print browser.contents
+   <!DOCTYPE ... 
+         <h3>
+          The page that you are trying to access is not available
+         </h3>
+         <p><b>Please note the following:</b></p>
+         <ol>
+           <li>You might have misspelled the url</li>
+           <li>You might be trying to access a non-existing page</li>
+         </ol>
+   ...
+   </html>
+
+And we should get a Status 404
+
+   >>> print browser.headers['Status'].upper()
+   404 NOT FOUND
+
+Date Data Converter
+-------------------
+
+   >>> import zope.schema
+   >>> age = zope.schema.Date(
+   ...     __name__='datum',
+   ...     title=u'datum')
+
+   >>> from z3c.form.testing import TestRequest
+   >>> from z3c.form import widget
+   >>> text = widget.Widget(TestRequest())
+
+   >>> from z3c.form.interfaces import IDataConverter
+   >>> from zope.component import getMultiAdapter
+   >>> conv = getMultiAdapter((age, text), IDataConverter)
+   >>> conv
+   <CustomCalendarDataConverter converts from Date to Widget>
+
+
