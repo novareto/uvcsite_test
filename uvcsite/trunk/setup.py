@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.2dev'
+version = '0.1.1'
 
 setup(name='uvcsite',
       version=version,
@@ -10,10 +10,10 @@ setup(name='uvcsite',
       # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[], 
       keywords="",
-      author="",
-      author_email="",
-      url="",
-      license="",
+      author="UVC-WebCommnunity",
+      author_email="cklinger@novareto.de",
+      url="http://uvwebcommunity.bg-kooperation.de/",
+      license="GPL",
       package_dir={'': 'src'},
       packages=find_packages('src'),
       include_package_data=True,
