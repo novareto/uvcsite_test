@@ -1,0 +1,12 @@
+<div class="header">
+<a href="#" class="logotype"
+   tal:attributes="href python:view.application_url()">
+    <img src="" alt="Extranet BGHW"
+         tal:attributes="src python: viewlet.app_url()+'/@@/styles/logotype.gif'" />
+</a>
+</div>
+<div class="header-bg">
+    <img src="" alt="Extranet BGHW"
+         tal:attributes="src python: viewlet.app_url()+'/@@/styles/top-bg2.jpg'" />
+</div>
+<div class="relax"></div>

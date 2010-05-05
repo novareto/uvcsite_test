@@ -1,0 +1,4 @@
+<link rel="shortcut icon" 
+      type="image/x-icon"  
+      href="" 
+      tal:attributes="href string:${view/application_url}/@@/styles/favicon.gif"/>
