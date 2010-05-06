@@ -41,6 +41,7 @@ setup(name='uvcsite',
                         'zope.app.cache',
                         'uvc.skin',
                         'uvc.layout',
+                        'uvc.widgets'
                         'dolmen.app.layout',
                         'megrok.rendersource',
                             ],
