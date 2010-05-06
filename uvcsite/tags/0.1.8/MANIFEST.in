@@ -1,0 +1,3 @@
+recursive-include src *.txt *.py *.zcml *.pt *.mo *.po
+include src/uvcsite/locales *.* 
+
