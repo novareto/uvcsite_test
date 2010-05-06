@@ -53,6 +53,9 @@ class MyForm(PageForm):
     fields = Fields(IPerson)
     fields['geschlecht'].widgetFactory = RadioFieldWidget
 
+    label = u"Beispielform"
+    description = u"Beschreibung"
+
     def getContent(self):
         return dict(name="Klaus")
 
@@ -62,6 +65,8 @@ class MyForm(PageForm):
 
     def update(self):
         double.need()
+        DatePicker.need()
+        DatePickerCSS.need()
 
     @button.buttonAndHandler(u'EGON')
     def handleButton(self, action):
