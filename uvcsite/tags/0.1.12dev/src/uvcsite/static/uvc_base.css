@@ -1,0 +1,64 @@
+/* Table */
+
+table.tablesorter {
+  width: 100%;
+  border-width: 1px 0 0 1px;
+  border-style: solid;
+  border-color: #aaa;
+  border-collapse: collapse;
+  font-size: 90%;
+  margin: 0.5em 0;
+}
+
+table.tablesorter td, table.tablesorter th {
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  border-color: #aaa;
+  padding: 0.2em 0.5em;
+  line-height: 1.5em;
+  font-size: 0.8em;
+}
+
+table.tablesorter th {
+  padding-left: 16px;
+  font-weight: bold;
+}
+
+table.tablesorter thead tr .header {
+  background-image: url(bg.gif);
+  background-repeat: no-repeat;
+  background-position: center right;
+  cursor: pointer;
+}
+table.tablesorter thead tr .headerSortUp {
+  background-image: url(asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+  background-image: url(desc.gif);
+}
+
+table.tablesorter thead tr .checkBox {
+  width: 1px;
+}
+
+
+/* Tooltip */
+/* simple css-based tooltip */ 
+div.tooltip { 
+    background-color:#000; 
+    border:1px solid #fff; 
+    padding:10px 15px; 
+    width:200px; 
+    display:none; 
+    color:#fff; 
+    text-align:left; 
+    font-size:12px; 
+ 
+    /* outline radius for mozilla/firefox only */ 
+    -moz-box-shadow:0 0 10px #000; 
+    -webkit-box-shadow:0 0 10px #000; 
+}
+
+#contextual-actions {
+  display: none;
+}
