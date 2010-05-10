@@ -42,18 +42,3 @@ class AddMenuEntry(uvcsite.Entry):
     def url(self):
         adapter = zope.component.getMultiAdapter((self.request.principal, self.request), uvcsite.IGetHomeFolderUrl)
         return adapter.getAddURL(Contact)
-
-
-class iAddMenuEntry(uvcsite.Entry):
-    grok.name('Buiddy erstellen')
-    grok.title('Buiddy erstellen')
-    grok.context(zope.interface.Interface)
-    uvcsite.menu(uvcsite.GlobalMenu)
-    uvc.layout.menus.category(u'Apps')
-
-    @property
-    def url(self):
-        adapter = zope.component.getMultiAdapter((self.request.principal, self.request), uvcsite.IGetHomeFolderUrl)
-        return adapter.getAddURL(Contact)
-
-
