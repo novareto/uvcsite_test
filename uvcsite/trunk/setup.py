@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.1.10dev'
+version = '0.1.10'
 
 setup(name='uvcsite',
       version=version,
@@ -13,9 +13,9 @@ setup(name='uvcsite',
       author="UVC-WebCommnunity",
       author_email="cklinger@novareto.de",
       url="http://uvwebcommunity.bg-kooperation.de/",
-      license="GPL",
+      license="ZPL",
       package_dir={'': 'src'},
-      packages=find_packages('src'),
+      packages=find_packages('src', exclude=['ez_setup']),
       include_package_data=True,
       zip_safe=False,
       install_requires=['setuptools',
