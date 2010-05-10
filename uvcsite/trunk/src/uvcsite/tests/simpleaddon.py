@@ -42,3 +42,5 @@ class AddMenuEntry(uvcsite.Entry):
     def url(self):
         adapter = zope.component.getMultiAdapter((self.request.principal, self.request), uvcsite.IGetHomeFolderUrl)
         return adapter.getAddURL(Contact)
+
+

@@ -10,6 +10,8 @@ from uvcsite import uvcsiteMF as _
 from uvcsite.content import IContent, IProductFolder
 from z3c.form import form
 from uvcsite.interfaces import IFolderListingTable
+from zope.component import getMultiAdapter
+from uvcsite import IGetHomeFolderUrl
 
 class Index(DeleteFormTablePage):
     grok.title('Mein Ordner')
@@ -24,6 +26,10 @@ class Index(DeleteFormTablePage):
     def executeDelete(self, item):
         self.flash(_(u'Ihre Dokumente wurden entfernt'))
         del item.__parent__[item.__name__]
+
+    def getAddLinkUrl(self):
+        adapter = getMultiAdapter((self.request.principal, self.request), IGetHomeFolderUrl)
+        return adapter.getAddURL(self.context.getContentType())
 
 
 class Add(z3cform.PageAddForm):
