@@ -68,17 +68,26 @@ class HomeFolderForPrincipal(grok.Adapter,
         self.principal = IMasterUser(principal)
 
 
-
-class HomeFolderUrl(grok.MultiAdapter):
+class HomeFolderUrl_deprecated(grok.MultiAdapter):
     grok.adapts(IPrincipal, IBrowserRequest)
     grok.implements(IGetHomeFolderUrl)
 
     def __init__(self, context, request):
-        self.context = context
+        adapter = IGetHomeFolderUrl(request)
+        self.getURL = adapter.getURL
+        self.getAddURL = adapter.getAddURL
+
+
+class HomeFolderUrl(grok.Adapter):
+
+    grok.context(IBrowserRequest)
+    grok.implements(IGetHomeFolderUrl)
+
+    def __init__(self, request):
         self.request = request
 
     def getURL(self, type=""):
-        principal = self.context
+        principal = self.request.principal
         if IUnauthenticatedPrincipal.providedBy(principal):
             return
         homeFolder = IHomeFolder(principal).homeFolder
@@ -90,7 +99,7 @@ class HomeFolderUrl(grok.MultiAdapter):
         for name, class_ in productfolders:
             if uvcsite.contenttype.bind().get(class_) is type:
                 url = "%s/@@add" % self.getURL(name)
-                return url 
+                return url
 
 
 @grok.subscribe(IHomeFolderManager, grok.IObjectAddedEvent)
