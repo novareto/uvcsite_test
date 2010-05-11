@@ -67,4 +67,3 @@ class LastschriftContainer1(ProductFolder):
 
 class UnfallanzeigeContainer1(ProductFolder):
     contenttype(MyContent)
-
