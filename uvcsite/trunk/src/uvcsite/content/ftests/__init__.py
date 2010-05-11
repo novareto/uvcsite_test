@@ -1,6 +1,5 @@
-import os.path
-import uvcsite.content
-from zope.app.testing.functional import ZCMLLayer, HTTPCaller
+from zope.app.testing.functional import HTTPCaller
+
 
 def http_call(method, path, data=None, **kw):
     """Function to help make RESTful calls.
@@ -20,4 +19,3 @@ def http_call(method, path, data=None, **kw):
         request_string += '\r\n'
         request_string += data
     return HTTPCaller()(request_string, handle_errors=False)
-

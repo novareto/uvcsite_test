@@ -15,7 +15,7 @@ Before we fire up the DatabaseOpendEvent we have to prepare a ZODB
   >>> from zope.app.appsetup import bootstrap
   >>> import zope.processlifetime
   >>> from zope.app.component.hooks import getSite, setSite
-    
+
   >>> db = DB()
   >>> bootstrap.bootStrapSubscriber(zope.processlifetime.DatabaseOpened(db))
   >>> conn = db.open()
@@ -80,6 +80,7 @@ home folder:
 import grok
 from uvcsite.app import Uvcsite
 from uvcsite.content import ProductFolder, contenttype
+
 
 class App(Uvcsite):
     pass

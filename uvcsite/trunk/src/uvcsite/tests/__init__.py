@@ -2,19 +2,18 @@ import os.path
 import uvcsite
 import grok.testing
 
-from zope.app.testing.functional import ZCMLLayer, FunctionalTestSetup, getRootFolder
+from zope.app.testing.functional import ZCMLLayer, FunctionalTestSetup
 from zope.testing import doctest
 from pkg_resources import resource_listdir
 import unittest
 import sys
-import zope.component.globalregistry 
-import zope.component._api 
-import zope.app.component.hooks
+
 
 ftesting_zcml = os.path.join(
     os.path.dirname(uvcsite.__file__), 'ftesting_uvc.zcml')
 FunctionalLayer = ZCMLLayer(ftesting_zcml, __name__, 'FunctionalLayer',
                             allow_teardown=True)
+
 
 def setUp(test):
     FunctionalTestSetup().setUp()
@@ -22,7 +21,7 @@ def setUp(test):
         grok.testing.grok(test.name)
 
 
-def tearDown(test):    
+def tearDown(test):
     FunctionalTestSetup().tearDown()
 
 
@@ -38,9 +37,7 @@ def suiteFromPackage(name):
         dottedname = '%s.%s' % (name, filename[:-3])
         test = doctest.DocTestSuite(
             dottedname, setUp=setUp, tearDown=tearDown,
-            optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE
-            )
+            optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
         test.layer = FunctionalLayer
         suite.addTest(test)
     return suite
-
