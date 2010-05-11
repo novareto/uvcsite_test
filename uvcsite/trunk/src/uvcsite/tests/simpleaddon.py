@@ -5,6 +5,10 @@ import zope.schema
 import zope.interface
 import zope.component
 
+class ErrorDateFields(zope.interface.Invalid):
+    """Fehlerklasse """
+
+
 class IContact(uvcsite.IContent):
 
     name = zope.schema.TextLine(
@@ -16,6 +20,12 @@ class IContact(uvcsite.IContent):
         title = u"Alter",
         description = u"Wie ist ihr Alter",
         )
+
+    @zope.interface.invariant
+    def validate(obj):
+        if obj.name != "christian":
+            raise ErrorDateFields("klaus")
+
 
 
 class IAdressBook(uvcsite.IProductFolder):

@@ -33,6 +33,7 @@ class Index(megrok.layout.Page):
 @menuentry(IFooter)
 class Kontakt(megrok.layout.Page):
     grok.name('Kontakt')
+    grok.title('Kontakt')
     grok.context(Interface)
 
     def render(self):
