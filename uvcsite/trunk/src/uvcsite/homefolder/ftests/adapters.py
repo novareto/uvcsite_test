@@ -35,14 +35,12 @@ class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
                 uvcsite.homefolder.homefolder.HomeFolderForPrincipal))
 
     def test_homefolder_url(self):
-        adapter = getMultiAdapter((self.user, self.request),
-                                  IGetHomeFolderUrl)
+        adapter = IGetHomeFolderUrl(self.request)
         self.assertEquals('http://127.0.0.1/app/members/klaus/',
                           adapter.getURL())
 
     def test_add_url(self):
-        adapter = getMultiAdapter((self.user, self.request),
-                                  IGetHomeFolderUrl)
+        adapter = IGetHomeFolderUrl(self.request)
         self.assertEquals(
             'http://127.0.0.1/app/members/klaus/unfallanzeigenfolder/@@add',
             adapter.getAddURL(Unfallanzeige))
