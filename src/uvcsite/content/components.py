@@ -1,6 +1,7 @@
 import grok
 import dolmen.content
 
+from zope.schema import TextLine
 from uvcsite.content.interfaces import IProductFolder, IFolderColumnTable
 from uvcsite.content.directive import contenttype
 from grokcore.component import directive

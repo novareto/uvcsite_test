@@ -23,6 +23,9 @@ def setUp(test):
 
 def tearDown(test):
     FunctionalTestSetup().tearDown()
+    #from zope.testing.cleanup import cleanUp
+    #cleanUp()
+    #print "TEARDOWN"
 
 
 def suiteFromPackage(name):
