@@ -12,6 +12,7 @@ from zope.app.homefolder.interfaces import IHomeFolder
 import os.path
 import uvcsite
 import zope.app.testing.functional
+import zope.security
 from grok.testing import grok_component
 
 
@@ -23,9 +24,16 @@ class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
         super(HomeFolderTest, self).setUp()
         self.user = Principal('klaus', 'klaus', 'klaus')
         self.request = TestRequest()
+        self.request.setPrincipal(self.user)
+        zope.security.management.newInteraction(self.request)
         root = self.getRootFolder()
         root['app'] = Uvcsite()
         setSite(root['app'])
+
+    def tearDown(self):
+        zope.security.management.endInteraction()
+        super(HomeFolderTest, self).tearDown()
+
 
     def test_homefolder_instance(self):
         self.assert_(isinstance(
@@ -35,12 +43,12 @@ class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
     def test_homefolder_url(self):
         adapter = getMultiAdapter((self.user, self.request),
                                   IGetHomeFolderUrl)
+        adapter = IGetHomeFolderUrl(self.request)
         self.assertEquals('http://127.0.0.1/app/members/klaus/',
                           adapter.getURL())
 
     def test_add_url(self):
-        adapter = getMultiAdapter((self.user, self.request),
-                                  IGetHomeFolderUrl)
+        adapter = IGetHomeFolderUrl(self.request)
         self.assertEquals(
             'http://127.0.0.1/app/members/klaus/adressbook/@@add',
             adapter.getAddURL(uvcsite.tests.simpleaddon.Contact))

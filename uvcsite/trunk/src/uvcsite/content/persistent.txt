@@ -1,0 +1,38 @@
+ProductFolder
+=============
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+
+The Good Way
+------------
+
+First start with makeing an instance of the Container/Folder
+
+  >>> from zope.app.testing.functional import getRootFolder
+  >>> root = getRootFolder()
+
+  >>> from uvcsite.tests.simpleaddon import AdressBook
+  >>> adrbook = AdressBook()
+  >>> adrbook 
+  <uvcsite.tests.simpleaddon.AdressBook object at ...>
+
+  >>> import grok
+  >>> class Add(grok.View):
+  ...     grok.context(AdressBook)
+  ...     def render(self):
+  ...         return "Yes"
+
+  >>> from grok.testing import grok_component
+  >>> grok_component('Add', Add)
+  True
+
+  >>> root['book'] = adrbook 
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+
+
+  >>> view = getMultiAdapter((adrbook, TestRequest()), name=u"add")
+  >>> print view.render()
+  Yes
