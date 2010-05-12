@@ -1,6 +1,6 @@
 """
-:doctest:
-:functional-zcml-layer: ../../ftesting.zcml
+.. :doctest:
+.. :layer: uvcsite.tests.FunctionalLayer
 
 
 Events which set all the ProductFolders
@@ -13,10 +13,6 @@ Setup
   >>> from zope.app.testing.functional import getRootFolder
   >>> from zope.app.publication.zopepublication import ZopePublication
   >>> from grok.testing import grok_component
-  >>> from uvcsite.content.ftests.folderinit import App, MyContent, ENW1Container
-
-  >>> grok_component('ENW1Container', ENW1Container)
-  True
 
 Before we fire up the DatabaseOpendEvent we have to prepare a ZODB
 
@@ -32,9 +28,10 @@ Before we fire up the DatabaseOpendEvent we have to prepare a ZODB
 
 Let's put our app in the ZODB
 
-  >>> app = App()
+  >>> from uvcsite.app import Uvcsite
+  >>> app = Uvcsite() 
   >>> app
-  <uvcsite.content.ftests.folderinit.App object at ...>
+  <uvcsite.app.Uvcsite object at ...>
 
   >>> root[ZopePublication.root_name]['app'] = app
   >>> setSite(root[ZopePublication.root_name]['app'])
@@ -63,7 +60,7 @@ folder in the process:
 
   >>> lars = utility.homeFolderBase['lars']
   >>> list(lars)
-  [u'ENW1Container']
+  [u'adressbook']
 
 Creating product folders when opening the DB
 --------------------------------------------
@@ -81,26 +78,6 @@ After firing the event, all the product folders should be there again in the
 home folder:
 
   >>> list(lars)
-  [u'ENW1Container']
+  [u'adressbook']
 
 """
-
-
-import grok
-from uvcsite.app import Uvcsite
-from uvcsite.content import ProductFolder, contenttype
-
-
-class App(Uvcsite):
-    pass
-
-
-class MyContent(grok.Model):
-    """ """
-
-
-class ENW1Container(ProductFolder):
-    grok.name('ENW1Container')
-    grok.title('This is a Lastschrift Container')
-    grok.description('This is the Description')
-    contenttype(MyContent)
