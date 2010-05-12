@@ -12,14 +12,12 @@ from zope.app.homefolder.interfaces import IHomeFolder
 import os.path
 import uvcsite
 import zope.app.testing.functional
-
-
-zope.app.testing.functional.defineLayer('ftesting', 'ftesting.zcml')
+from grok.testing import grok_component
 
 
 class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
 
-    layer = ftesting
+    layer = uvcsite.tests.FunctionalLayer 
 
     def setUp(self):
         super(HomeFolderTest, self).setUp()
@@ -35,22 +33,14 @@ class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
                 uvcsite.homefolder.homefolder.HomeFolderForPrincipal))
 
     def test_homefolder_url(self):
-        adapter = IGetHomeFolderUrl(self.request)
+        adapter = getMultiAdapter((self.user, self.request),
+                                  IGetHomeFolderUrl)
         self.assertEquals('http://127.0.0.1/app/members/klaus/',
                           adapter.getURL())
 
     def test_add_url(self):
-        adapter = IGetHomeFolderUrl(self.request)
+        adapter = getMultiAdapter((self.user, self.request),
+                                  IGetHomeFolderUrl)
         self.assertEquals(
-            'http://127.0.0.1/app/members/klaus/unfallanzeigenfolder/@@add',
-            adapter.getAddURL(Unfallanzeige))
-
-
-class Unfallanzeige(uvcsite.Content):
-
-    name = 'unfallanzeige'
-
-
-class UnfallanzeigenFolder(uvcsite.ProductFolder):
-
-    uvcsite.contenttype(Unfallanzeige)
+            'http://127.0.0.1/app/members/klaus/adressbook/@@add',
+            adapter.getAddURL(uvcsite.tests.simpleaddon.Contact))
