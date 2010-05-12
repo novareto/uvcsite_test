@@ -1,27 +1,32 @@
-"""
 Check the dynamic table elements in the view of the productfolder 
 =================================================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
 
 Setup
 -----
 
   >>> from zope.app.testing.functional import getRootFolder
-  >>> r = getRootFolder()
-  >>> r['folder'] = folder = Folder()
+  >>> root = getRootFolder()
+
+  >>> from uvcsite.tests.simpleaddon import AdressBook, Contact
+
+  >>> root['folder'] = folder = AdressBook()
   >>> folder
-  <uvcsite.content.ftests.table.Folder object at ...> 
+  <uvcsite.tests.simpleaddon.AdressBook object at ...>
 
   >>> print folder.title
-  This is a Folder 
+  Adressbook 
 
-  >>> content1 = MyContent()
+  >>> content1 = Contact()
   >>> content1
-  <uvcsite.content.ftests.table.MyContent ...>
+  <uvcsite.tests.simpleaddon.Contact ...>
   >>> folder['mycontent1'] = content1
 
-  >>> content2 = MyContent()
+  >>> content2 = Contact()
   >>> content2
-  <uvcsite.content.ftests.table.MyContent ...>
+  <uvcsite.tests.simpleaddon.Contact ...>
   >>> folder['mycontent2'] = content2
 
 Views
@@ -47,16 +52,16 @@ of our table
     <tbody>
       <tr class="even">
         <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent1"  /></td>
-        <td><a href="http://127.0.0.1/folder/mycontent1/edit"></a></td>
-        <td>MyContent</td>
+        <td><a href="http://127.0.0.1/folder/mycontent1">mycontent1</a></td>
+        <td>Contact</td>
         <td>Entwurf</td>
         <td></td>
         <td>...</td>
       </tr>
       <tr class="odd">
         <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent2"  /></td>
-        <td><a href="http://127.0.0.1/folder/mycontent2/edit"></a></td>
-        <td>MyContent</td>
+        <td><a href="http://127.0.0.1/folder/mycontent2">mycontent2</a></td>
+        <td>Contact</td>
         <td>Entwurf</td>
         <td></td>
         <td>...</td>
@@ -82,16 +87,16 @@ edit action it now points on the view action.
     <tbody>
       <tr class="even">
         <td></td>
-        <td><a href="http://127.0.0.1/folder/mycontent1"></a></td>
-        <td>MyContent</td>
+        <td><a href="http://127.0.0.1/folder/mycontent1">mycontent1</a></td>
+        <td>Contact</td>
         <td>gesendet</td>
         <td></td>
         <td>...</td>
       </tr>
       <tr class="odd">
         <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent2"  /></td>
-        <td><a href="http://127.0.0.1/folder/mycontent2/edit"></a></td>
-        <td>MyContent</td>
+        <td><a href="http://127.0.0.1/folder/mycontent2">mycontent2</a></td>
+        <td>Contact</td>
         <td>Entwurf</td>
         <td></td>
         <td>...</td>
@@ -99,35 +104,3 @@ edit action it now points on the view action.
     </tbody>
   ...
   </form>
-
-"""
-import grok
-
-from megrok import z3cform
-from megrok import layout
-from zope.interface import Interface
-from zope.schema import TextLine, Int
-from uvcsite.content import ProductFolder, contenttype, Content, schema
-
-class MyLayout(layout.Layout):
-    grok.context(Interface)
-
-    def render(self):
-	return "<html> %s </html>" %(self.view.render())
-
-class IMyContent(Interface):
-    name = TextLine(title = u"Name")
-    age = Int(title = u"Age")
-
-
-class MyContent(Content):
-    grok.implements(IMyContent)    
-    grok.name('MyContent')
-    schema(IMyContent)
-
-
-class Folder(ProductFolder):
-    grok.name('LastschriftContainer3')
-    grok.title('This is a Folder')
-    grok.description('This is the Description')
-    contenttype(MyContent)

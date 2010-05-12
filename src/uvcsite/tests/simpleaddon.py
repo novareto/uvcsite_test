@@ -38,6 +38,9 @@ class Contact(uvcsite.Content):
 
 
 class AdressBook(uvcsite.ProductFolder):
+    grok.name('adressbook')
+    grok.title('Adressbook')
+    grok.description('Description of Adressbook')
     uvcsite.contenttype(Contact)
 
 
