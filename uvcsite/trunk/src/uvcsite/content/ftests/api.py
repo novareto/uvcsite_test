@@ -1,4 +1,7 @@
 """
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
 Rest API
 ========
 
@@ -9,6 +12,7 @@ First start with an instance of UAZFolder
   >>> from zope.app.testing.functional import getRootFolder
   >>> root = getRootFolder()
 
+  >>> from uvcsite.content.ftests.api import UAZFolder
   >>> folder = UAZFolder() 
   >>> folder 
   <uvcsite.content.ftests.api.UAZFolder object at ...> 
@@ -48,6 +52,7 @@ content objects in it so we only get an empty container listing.
 
 Now let's add objects to the container and see the GET Request again
 
+  >>> from uvcsite.content.ftests.api import Unfallanzeige
   >>> uaz = Unfallanzeige()
   >>> uaz.title = u"Mein Unfall"
   >>> uaz.name = u"Christian Klinger"
