@@ -1,4 +1,8 @@
 """
+:doctest:
+:functional-zcml-layer: ../../ftesting.zcml
+
+
 Events which set all the ProductFolders
 =======================================
 
@@ -8,6 +12,11 @@ Setup
   >>> import grok
   >>> from zope.app.testing.functional import getRootFolder
   >>> from zope.app.publication.zopepublication import ZopePublication
+  >>> from grok.testing import grok_component
+  >>> from uvcsite.content.ftests.folderinit import App, MyContent, ENW1Container
+
+  >>> grok_component('ENW1Container', ENW1Container)
+  True
 
 Before we fire up the DatabaseOpendEvent we have to prepare a ZODB
 
@@ -54,7 +63,7 @@ folder in the process:
 
   >>> lars = utility.homeFolderBase['lars']
   >>> list(lars)
-  [u'ENW1Container', u'LastschriftContainer1', u'OverrideFolder', u'adressbook', u'uazfolder', u'unfallanzeigecontainer1']
+  [u'ENW1Container']
 
 Creating product folders when opening the DB
 --------------------------------------------
@@ -72,7 +81,7 @@ After firing the event, all the product folders should be there again in the
 home folder:
 
   >>> list(lars)
-  [u'ENW1Container', u'LastschriftContainer1', u'OverrideFolder', u'adressbook', u'uazfolder', u'unfallanzeigecontainer1']
+  [u'ENW1Container']
 
 """
 
