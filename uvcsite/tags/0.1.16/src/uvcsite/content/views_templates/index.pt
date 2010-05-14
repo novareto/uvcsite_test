@@ -1,0 +1,10 @@
+<div>
+  <h1 tal:content="context/title"/>
+  <span class="big" tal:content="context/description"/> 
+  <div class="addContent">
+    <h3>
+      <a href="add" tal:attributes="href view/getAddLinkUrl"> anlegen  </a>
+    </h3>  
+  </div>
+  <span tal:replace="structure view/renderFormTable"/>
+</div>

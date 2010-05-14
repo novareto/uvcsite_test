@@ -1,0 +1,53 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:grok="http://namespaces.zope.org/grok">
+
+  <include package="grok" />
+
+  <includeDependencies package="." />
+  <includeDependenciesOverrides package="." />
+
+  <include package="dolmen.menu" />
+  <include package="dolmen.app.layout" />
+  <include package="dolmen.content" />
+  <include package="megrok.z3cform.base" />
+  <include package="megrok.z3cform.base" file="meta.zcml" />
+  <include package="megrok.z3cform.tabular" />
+  <include package="megrok.z3cform.ui"/>
+  <include package="z3c.schema2xml" />
+  <include package="zope.pluggableauth" />
+  <include package="zope.app.authentication" />
+
+  <include package=".generations" />
+
+
+      <unauthenticatedPrincipal id="zope.anybody"
+                                title="Unauthenticated User" />
+      <unauthenticatedGroup id="zope.Anybody"
+                            title="Unauthenticated Users" />
+      <authenticatedGroup id="zope.Authenticated"
+                        title="Authenticated Users" />
+      <everybodyGroup id="zope.Everybody"
+                      title="All Users" />
+
+      <grant permission="zope.View"
+             principal="zope.Authenticated" />
+      <grant permission="zope.app.dublincore.view"
+             principal="zope.Authenticated" />
+
+      <role id="zope.Manager" title="Site Manager" />
+      <role id="zope.Member" title="Site Member" />
+      <grantAll role="zope.Manager" />
+
+
+  <i18n:registerTranslations directory="locales" />
+  <grok:grok package="." />
+
+  <adapter
+      factory="z3c.form.hint.FieldDescriptionAsHint"
+      name="title"/>
+
+
+  <includePlugins package="." />
+
+</configure>
