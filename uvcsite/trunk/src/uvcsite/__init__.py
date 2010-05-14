@@ -14,4 +14,6 @@ from megrok.z3ctable import TablePage
 from uvcsite.interfaces import *
 from uvcsite.app import HelpPage
 from dolmen.menu import menuentry, Entry, menu
-from uvc.layout.menus import  Footer, SidebarMenu, GlobalMenu, category 
+from uvc.layout.menus import  (Footer, SidebarMenu, GlobalMenu, category, 
+         PersonalMenu, PersonalPreferences, HelpMenu, DocumentActionsMenu)
+
