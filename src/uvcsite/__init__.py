@@ -16,4 +16,4 @@ from uvcsite.app import HelpPage
 from dolmen.menu import menuentry, Entry, menu
 from uvc.layout.menus import  (Footer, SidebarMenu, GlobalMenu, category, 
          PersonalMenu, PersonalPreferences, HelpMenu, DocumentActionsMenu)
-
+from uvcsite.forms import BasicStep
