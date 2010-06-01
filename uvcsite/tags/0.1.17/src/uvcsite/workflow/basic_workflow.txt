@@ -1,0 +1,45 @@
+Do some unit tests for workflow.
+================================
+
+:Test-Layer: functional 
+
+Start with the reverse mapping of CREATING AND PUBLISHED
+-------------------------------------------------------
+   
+   >>> from uvcsite.workflow.basic_workflow import CREATED, PUBLISHED, titleForState
+   
+Is the constant CREATED really 0 and PUBLISHED 1 ?
+   
+   >>> CREATED
+   0
+
+   >>> PUBLISHED
+   1
+
+Do we get the right title for CREATED in this case 0
+
+   >>> print titleForState(CREATED)
+   Entwurf
+   
+Is the title for  PUBLISHED "gesendet"?
+
+   >>> print titleForState(PUBLISHED)
+   gesendet
+
+What happens if we put an unknown State in the Method.
+
+   >>> unknown = 9 
+   >>> print titleForState(unknown)
+   unbekannt
+
+Simple test for the basic setup of the workflow Utility
+-------------------------------------------------------
+
+   >>> from uvcsite.workflow.basic_workflow import create_workflow
+   >>> from hurry.workflow.interfaces import IWorkflow
+   >>> workflow = create_workflow()
+
+does the workflow provide the right Interface
+
+   >>> IWorkflow.providedBy(workflow)
+   True

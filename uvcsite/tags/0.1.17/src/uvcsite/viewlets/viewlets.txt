@@ -1,0 +1,147 @@
+Functional Doctest For Viewlets
+===============================
+
+:Test-Layer: functional
+
+Setup
+-----
+
+We have to setup view and context to get our ViewletManager!
+
+   >>> from zope.component import getMultiAdapter
+   >>> from zope.publisher.browser import TestRequest
+   >>> from zope.contentprovider.interfaces import IContentProvider
+   >>> from uvcsite.app import Uvcsite
+
+   >>> import zope.interface
+   >>> import zope.security.interfaces
+   >>> class DummyPrincipal(object):
+   ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
+   ...
+   ...     id = "someuser"
+   ...     title = "Some User's Name"
+   ...     description = "A User"
+
+
+   >>> import zope.security.management
+   >>> request = TestRequest()
+   >>> request.setPrincipal(DummyPrincipal())
+
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> from zope.securitypolicy.interfaces import IPrincipalRoleManager
+   >>> #import pdb; pdb.set_trace()
+   >>> root['app'] = uvcsite
+
+Context
+
+   >>> context = root['app']
+   >>> context
+   <uvcsite.app.Uvcsite object at ...>
+   >>> prm = IPrincipalRoleManager(context)
+   >>> prm.assignRoleToPrincipal('zope.View', 'someuser')
+   >>> zope.security.management.newInteraction(request)
+
+View
+
+   >>> view = getMultiAdapter((context, request), name=u"index")
+   >>> view   
+   <uvcsite.tests.views.Index object at ...>
+
+ViewletManagers and their Viewlets
+----------------------------------
+
+GlobalMenu
+----------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.headers")
+   >>> manager 
+   <uvc.layout.managers.Headers object ...>
+
+Show the viewlets:
+
+   >>> manager.update()
+   >>> [x for x in manager.viewlets]
+   [<uvc.skin.viewlets.Favicon object at ...>]
+ 
+
+PersonalPreferences
+-------------------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.user.preferences")
+   >>> manager 
+   <uvc.layout.menus.PersonalPreferences object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <MenuEntry `myname` for menu `uvc.user.preferences`>
+   <MenuEntry `Mein Ordner` for menu `uvc.user.preferences`>
+   <MenuEntry `Abmelden` for menu `uvc.user.preferences`>
+
+
+Sidebar
+-------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.user.sidebar")
+   >>> manager 
+   <uvc.layout.menus.SidebarMenu object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+
+
+Footer
+------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.footer")
+   >>> manager 
+   <uvc.layout.menus.Footer object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> len(manager.viewlets)
+   0 
+
+   >>> for x in manager.viewlets:
+   ...     print x
+
+
+PersonalMenu
+------------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.user.menu")
+   >>> manager 
+   <uvc.layout.menus.PersonalMenu object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <MenuEntry `Mitbenutzerverwaltung` for menu `uvc.user.menu`> 
+
+
+GlobalMenu
+----------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.global.menu")
+   >>> manager 
+   <uvc.layout.menus.GlobalMenu object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <MenuEntry `Buddy erstellen` for menu `uvc.global.menu`>
+   <MenuEntry `Hilfe` for menu `uvc.global.menu`>
+
+   >>> zope.security.management.endInteraction()
+
