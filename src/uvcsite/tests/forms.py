@@ -10,6 +10,7 @@ from zope.schema import TextLine, Choice, Date, Object, List
 from megrok.z3cform.base import PageAddForm, PageForm, Fields, button
 from dolmen.menu import menuentry
 from z3c.form.browser.radio import RadioFieldWidget 
+from z3c.form.browser.checkbox import CheckBoxFieldWidget 
 from z3c.form.converter import DateDataConverter
 import zope.schema.interfaces
 from z3c.form.interfaces import IWidget, IDataConverter
@@ -51,7 +52,7 @@ class MyForm(PageForm):
     grok.context(IUVCSite)
     ignoreContext = False 
     fields = Fields(IPerson)
-    fields['geschlecht'].widgetFactory = RadioFieldWidget
+    fields['geschlecht'].widgetFactory = CheckBoxFieldWidget
 
     label = u"Beispielform"
     description = u"Beschreibung"
