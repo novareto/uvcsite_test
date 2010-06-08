@@ -14,6 +14,10 @@ from zope.component import getUtility
 from zope.interface import implements
 from zope.location.interfaces import ILocation
 from zope.security.interfaces import IPrincipal
+from zope.app.authentication.session import SessionCredentialsPlugin
+from zope.app.authentication.interfaces import ICredentialsPlugin
+
+from grokcore import message
 
 authCache = RAMCache()
 
@@ -31,15 +35,24 @@ def masteruser(self):
 def setup_pau(pau):
     """ this set´s up the pluggable authentication utility"""
     pau['principals'] = UVCAuthenticator('contact.principals.')
-    pau.authenticatorPlugins = ('principals', 'groups')
-    pau['basic'] = HTTPBasicAuthCredentialsPlugin()
-    pau.credentialsPlugins = ('No Challenge if Authenticated', 'basic')
+    pau.authenticatorPlugins = ['principals']
+    #pau['basic'] = HTTPBasicAuthCredentialsPlugin()
+    pau.credentialsPlugins = ['credentials']
 
 
-class UVCAuthenticator(Persistent):
+class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
+    grok.provides(ICredentialsPlugin)
+    grok.name('credentials')
+
+    loginpagename = 'login'
+    loginfield = 'widgets.login'
+    passwordfield = 'widgets.password'
+
+
+class UVCAuthenticator(grok.LocalUtility):
     """ Custom Authenticator for UVC-Site"""
-    implements(IUVCAuth, IAuthenticatorPlugin, ILocation)
-    __parent__ = __name__ = None
+    grok.implements(IAuthenticatorPlugin)
+    grok.name('principals')
 
     def __init__(self, prefix=u''):
         self.prefix = prefix
@@ -51,12 +64,12 @@ class UVCAuthenticator(Persistent):
                 and 'password' in credentials):
             return
         login, password = credentials['login'], credentials['password']
-        utility = getUtility(IUserManagement)
         key = dict(login=login, password=password)
         user = authCache.query(self, key)
-        if getattr(utility, 'pw_hash', False):
-            password = utility.pw_hash(password)
+#        if getattr(utility, 'pw_hash', False):
+#            password = utility.pw_hash(password)
         if not user:
+            utility = getUtility(IUserManagement)
             user = utility.getUser(login)
             authCache.set(user, self, key)
         if not user:

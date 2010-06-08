@@ -40,11 +40,13 @@ class Kontakt(megrok.layout.Page):
         return "Kontakt"
 
 
+from uvc.layout.menus import css
 @menuentry(IDocumentActions)
 class PdfIcon(grok.View):
     grok.name('aspdf')
     grok.title('pdf')
     grok.context(IUVCSite)
+    css('pdf')
 
     title ="aspdf"
 
