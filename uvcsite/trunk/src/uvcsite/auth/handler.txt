@@ -10,10 +10,9 @@ Create an instance of the UVCAuthenticator Utility and
 check the methods
 
    >>> from uvcsite.auth.handler import UVCAuthenticator 
-   >>> from uvcsite.auth.interfaces import IUVCAuth
    >>> authenticator = UVCAuthenticator(prefix = "uvc") 
-   >>> IUVCAuth.providedBy(authenticator)
-   True
+   >>> authenticator
+   <uvcsite.auth.handler.UVCAuthenticator object at 0...>
 
 Check the principalInfo
 -----------------------
