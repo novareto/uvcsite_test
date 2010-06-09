@@ -45,6 +45,7 @@ setup(name='uvcsite',
                         'uvc.widgets',
                         'dolmen.app.layout',
                         'megrok.rendersource',
+                        'zope.sendmail',
                             ],
           entry_points = """
           [console_scripts]
