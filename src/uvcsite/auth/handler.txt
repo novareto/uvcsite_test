@@ -9,15 +9,23 @@ UVCAuthenticator Utility
 Create an instance of the UVCAuthenticator Utility and
 check the methods
 
-   >>> from uvcsite.auth.handler import UVCAuthenticator 
-   >>> authenticator = UVCAuthenticator(prefix = "uvc") 
-   >>> authenticator
-   <uvcsite.auth.handler.UVCAuthenticator object at 0...>
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> import zope.security.management
+
+  >>> request = TestRequest()
+  >>> zope.security.management.newInteraction(request)
+
+  >>> from uvcsite.auth.handler import UVCAuthenticator 
+  >>> authenticator = UVCAuthenticator(prefix = "uvc") 
+  >>> authenticator
+  <uvcsite.auth.handler.UVCAuthenticator object at 0...>
 
 Check the principalInfo
 -----------------------
 
-   >>> authenticator.principalInfo(id="id")
+  >>> authenticator.principalInfo(id="id")
 
 
 Check the authenticateCredentials
@@ -25,49 +33,29 @@ Check the authenticateCredentials
 
 Without any credentials
 
-   >>> authenticator.authenticateCredentials({})
+  >>> authenticator.authenticateCredentials({})
 
 Only login
 
-   >>> authenticator.authenticateCredentials({'login':'0101010001'})
+  >>> authenticator.authenticateCredentials({'login':'0101010001'})
 
 Only password
 
-   >>> authenticator.authenticateCredentials({'password':'secret'})
+  >>> authenticator.authenticateCredentials({'password':'secret'})
 
 Both but wrong password 
 
-   >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'klaus'})
+  >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'klaus'})
 
 This user is not in the Database!
 
-   >>> authenticator.authenticateCredentials({'login':'0101010009', 'password':'klaus'})
+  >>> authenticator.authenticateCredentials({'login':'0101010009', 'password':'klaus'})
 
 Right combination of credentials
 
-   >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'passwort'})
-   PrincipalInfo('0101010001')
+  >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'passwort'})
+  PrincipalInfo('0101010001')
 
-Cache
------
+We have to finsish the Interaction.
 
-Ok the last lookup was successful! This means we get the real authenticated Princiapl back.
-This lookup happens now on all requests. This means we try to cache these expensive lookups.
-If we now call the authenticateCredentials again. We should get a cache hit in the form
-of a simple print.
-
-We have 0 hit's on this stage
-
-   >>> from uvcsite.auth.handler import authCache
-   >>> authCache.getStatistics()[0]['hits'] 
-   0
-
-Let's authenticate again with the same credentials
-
-   >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'passwort'})
-   PrincipalInfo('0101010001')
-
-Check if we get now an hit in the Cache 
-
-   >>> authCache.getStatistics()[0]['hits'] 
-   1
+  >>> zope.security.management.endInteraction()

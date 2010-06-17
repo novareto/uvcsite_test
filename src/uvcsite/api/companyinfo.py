@@ -27,16 +27,6 @@ class CompanyInfo(grok.Adapter):
             return zuser[1]
         return '00'    
 
-
-class CompanyAddress(grok.Adapter):
-    """Adapter for Company Adress
-    """
-    grok.implements(ICompanyAddress)
-    grok.context(IPrincipal)
-
-    def __init__(self, principal):
-        self.principal = principal
-
     def getAddress(self):
         """ Return the Address of the principal(master)
 	    as a dict"""

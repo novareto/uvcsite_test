@@ -14,6 +14,7 @@ from z3c.form.interfaces import HIDDEN_MODE
 from megrok.z3cform.base import PageForm, Fields, button
 
 from zope.app.security.interfaces import IAuthentication, IUnauthenticatedPrincipal, ILogout
+from zope.session.interfaces import ISession
 
 class ILoginForm(Interface):
     login = schema.BytesLine(title=u'Mitgliedsnummer', required=True)
@@ -45,9 +46,8 @@ class Logout(uvcsite.Page):
     grok.require('zope.Public') 
  
     def update(self): 
-        if not IUnauthenticatedPrincipal.providedBy(self.request.principal): 
-            auth = component.getUtility(IAuthentication) 
-            ILogout(auth).logout(self.request) 
+        session = ISession(self.request)
+        session.delete()
 
     def render(self):
         return "Sie Sind Jetzt Ausgeloggt"
