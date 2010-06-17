@@ -48,12 +48,10 @@ Suffix '01'=
 
 
 CompanyAddress
---------------
 
-   >>> from uvcsite.api.interfaces import ICompanyAddress
    >>> user = Principal('0101010001')
-   >>> address = ICompanyAddress(user)
-   >>> ICompanyAddress.providedBy(address)
+   >>> address = ICompanyInfo(user)
+   >>> ICompanyInfo.providedBy(address)
    True
 
    >>> novareto = address.getAddress()
