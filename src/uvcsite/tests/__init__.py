@@ -9,10 +9,21 @@ import unittest
 import sys
 
 
+product_config = """ 
+ <product-config mailer>
+    queue-path /Users/cklinger/community/uvcsite/var/mailer-queue
+    hostname localhost
+    port 25
+#    username
+#    password
+ </product-config>
+"""
+
+
 ftesting_zcml = os.path.join(
     os.path.dirname(uvcsite.__file__), 'ftesting_uvc.zcml')
 FunctionalLayer = ZCMLLayer(ftesting_zcml, __name__, 'FunctionalLayer',
-                            allow_teardown=True)
+                            allow_teardown=True, product_config=product_config)
 
 
 def setUp(test):
