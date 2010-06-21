@@ -4,6 +4,7 @@ import uvc.layout
 import zope.schema
 import zope.interface
 import zope.component
+from uvc.layout.directives import bound_resource
 
 class ErrorDateFields(zope.interface.Invalid):
     """Fehlerklasse """
@@ -44,6 +45,7 @@ class AdressBook(uvcsite.ProductFolder):
     uvcsite.contenttype(Contact)
 
 
+@bound_resource('entgelt.jpg', name="uvc.tests.entgelt")
 class AddMenuEntry(uvcsite.Entry):
     grok.name('Buddy erstellen')
     grok.title('Buddy erstellen')

@@ -15,16 +15,16 @@ from zope.traversing.browser import absoluteURL
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
 
 
-class Hilfe(Entry):
-    grok.context(Interface)
-    grok.name('Hilfe')
-    grok.title('Hilfe')
-    menu(GlobalMenu)
-    grok.order(20)
-
-    @property
-    def url(self):
-        return self.view.application_url() + '/hilfe'
+#class Hilfe(Entry):
+#    grok.context(Interface)
+#    grok.name('Hilfe')
+#    grok.title('Hilfe')
+#    menu(GlobalMenu)
+#    grok.order(20)
+#
+#    @property
+#    def url(self):
+#        return self.view.application_url() + '/hilfe'
 
 
 class UserName(Entry):

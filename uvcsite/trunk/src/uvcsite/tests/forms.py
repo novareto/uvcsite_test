@@ -49,6 +49,7 @@ from uvc.widgets import DatePicker, DatePickerCSS, double
 @menuentry(IGlobalMenu)
 class MyForm(PageForm):
     grok.title(u'Beispielform')
+    grok.description(u"Beschreibugn Beschreibugn")
     grok.context(IUVCSite)
     ignoreContext = False 
     fields = Fields(IPerson)
