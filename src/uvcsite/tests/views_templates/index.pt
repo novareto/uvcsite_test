@@ -17,7 +17,6 @@
   <li>
     <a href="google.de">
       <img src="" tal:attributes="src view/getIcon" />
-      <img src="" tal:attributes="src icons/myiamge"/>
     </a>
   </li>
 </ul>

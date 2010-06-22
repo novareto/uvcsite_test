@@ -21,7 +21,7 @@ from megrok.icon import IconRegistry
 
 class Icons(IconRegistry):
     grok.name('icons')
-    grok.path('/Users/cklinger/community/uvcsite/src/uvcsite/icons')
+    grok.path('/Users/christian/community/uvcsite/src/uvcsite/icons')
 
 
 class Uvcsite(grok.Application, grok.Container):
