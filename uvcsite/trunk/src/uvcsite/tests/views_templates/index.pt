@@ -11,11 +11,16 @@
     <span class="">vom 2008-12-15  08:15:40</span>
     </li>
 
-
-
-
 </ul>
 
+<ul>
+  <li>
+    <a href="google.de">
+      <img src="" tal:attributes="src view/getIcon" />
+      <img src="" tal:attributes="src icons/myiamge"/>
+    </a>
+  </li>
+</ul>
 
 <ul>
    <li><span>Text</span></li>

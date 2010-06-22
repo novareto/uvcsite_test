@@ -18,6 +18,8 @@ class GlobaleHilfe(HelpPage):
     grok.context(IUVCSite)
     grok.title('Hilfe zum Extranet')
 
+def searchIcon(name=""):
+    import pdb; pdb.set_trace() 
 
 @menuentry(SidebarMenu, context=Interface)
 class Index(megrok.layout.Page):
@@ -29,6 +31,13 @@ class Index(megrok.layout.Page):
         self.flash('MESSAGE', type="error")
         self.flash('Nachricht')
 
+
+    def getIcon(self):
+        from megrok.icon.utils import get_icon_url
+        from zope.component import getUtility
+        from megrok.icon import IIconRegistry
+        icons = getUtility(IIconRegistry, name="icons")
+        return get_icon_url(icons, self.request, 'icon_pdf')
 
 @menuentry(IFooter)
 class Kontakt(megrok.layout.Page):
