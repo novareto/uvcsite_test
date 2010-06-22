@@ -17,6 +17,11 @@ from z3c.form.converter import DateDataConverter
 from zope.schema.interfaces import IDate
 from z3c.form.interfaces import IWidget, IDataConverter
 from megrok.layout import Page
+from megrok.icon import IconRegistry
+
+class Icons(IconRegistry):
+    grok.name('icons')
+    grok.path('/Users/cklinger/community/uvcsite/src/uvcsite/icons')
 
 
 class Uvcsite(grok.Application, grok.Container):

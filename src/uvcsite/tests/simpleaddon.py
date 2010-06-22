@@ -4,7 +4,7 @@ import uvc.layout
 import zope.schema
 import zope.interface
 import zope.component
-from uvc.layout.directives import bound_resource
+
 
 class ErrorDateFields(zope.interface.Invalid):
     """Fehlerklasse """
@@ -28,7 +28,6 @@ class IContact(uvcsite.IContent):
             raise ErrorDateFields("klaus")
 
 
-
 class IAdressBook(uvcsite.IProductFolder):
     """ Marker Interface """
 
@@ -44,14 +43,21 @@ class AdressBook(uvcsite.ProductFolder):
     grok.description('Description of Adressbook')
     uvcsite.contenttype(Contact)
 
+class Cat(object):
+    title = u""
+    url = ""
 
-@bound_resource('entgelt.jpg', name="uvc.tests.entgelt")
+    def __init__(self, title=u"", url=""):
+        self.title = title
+        self.url = url
+
+
 class AddMenuEntry(uvcsite.Entry):
     grok.name('Buddy erstellen')
     grok.title('Buddy erstellen')
     grok.context(zope.interface.Interface)
     uvcsite.menu(uvcsite.GlobalMenu)
-    uvc.layout.menus.category(u'Apps')
+    uvc.layout.menus.category(u'Title', url='focus')
 
     @property
     def url(self):

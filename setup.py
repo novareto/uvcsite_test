@@ -47,6 +47,7 @@ setup(name='uvcsite',
                         'megrok.rendersource',
                         'dolmen.beaker',
                         'zope.sendmail',
+                        'megrok.icon',
                             ],
           entry_points = """
           [console_scripts]
