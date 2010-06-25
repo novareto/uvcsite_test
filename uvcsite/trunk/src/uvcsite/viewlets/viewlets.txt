@@ -141,6 +141,7 @@ Show the Viewlets:
    >>> for x in manager.viewlets:
    ...     print x
    <MenuEntry `Buddy erstellen` for menu `uvc.global.menu`>
+   <MenuEntry `Auskunft` for menu `uvc.global.menu`>
 
    >>> zope.security.management.endInteraction()
 

@@ -20,8 +20,8 @@ from megrok.layout import Page
 from megrok.icon import IconRegistry
 
 class Icons(IconRegistry):
-    grok.name('icons')
-    grok.path('/Users/christian/community/uvcsite/src/uvcsite/icons')
+    grok.name('uvc-icons')
+    grok.path('icons')
 
 
 class Uvcsite(grok.Application, grok.Container):
