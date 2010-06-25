@@ -28,7 +28,6 @@ class IAuskunft(interface.Interface):
     """ Marker Interface für Auskunft"""
 
 
-@uvcsite.menuentry(uvcsite.IDocumentActions, view=IAuskunft)
 class Auskunft(uvcsite.Page):
     grok.implements(IAuskunft)
     grok.context(uvcsite.IUVCSite)
@@ -37,10 +36,18 @@ class Auskunft(uvcsite.Page):
         return "<h2> Ich bin eine Auskunftsseite </h2>"
 
 
-class AuskunftDokumentAction(uvcsite.Entry):
+@uvcsite.menuentry(uvcsite.IDocumentActions, view=IAuskunft)
+class AuskunftPdf(grok.View):
     grok.context(uvcsite.IUVCSite)
-    grok.view(Auskunft)
-    uvcsite.menu(uvcsite.DocumentActionsMenu)
 
     def render(self):
         return "PDF"
+
+
+#class AuskunftDokumentAction(uvcsite.Entry):
+#    grok.context(uvcsite.IUVCSite)
+#    grok.view(Auskunft)
+#    uvcsite.menu(uvcsite.DocumentActionsMenu)
+#
+#    def render(self):
+##        return "PDF"
