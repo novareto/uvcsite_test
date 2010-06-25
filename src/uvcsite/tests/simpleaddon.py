@@ -6,6 +6,8 @@ import zope.interface
 import zope.component
 
 
+from uvc.validation import validation
+
 class ErrorDateFields(zope.interface.Invalid):
     """Fehlerklasse """
 
@@ -20,6 +22,7 @@ class IContact(uvcsite.IContent):
     alter = zope.schema.TextLine(
         title = u"Alter",
         description = u"Wie ist ihr Alter",
+        constraint = validation.validateZahl
         )
 
     @zope.interface.invariant
