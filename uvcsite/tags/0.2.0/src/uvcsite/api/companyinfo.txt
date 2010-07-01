@@ -1,0 +1,61 @@
+Do a functional doctest test on the app.
+========================================
+
+:Test-Layer: functional 
+
+CompanyInfo
+-----------
+
+First start with a fresh instance of a principal
+
+   >>> from zope.app.authentication.principalfolder import Principal
+   >>> from uvcsite.api.interfaces import ICompanyInfo
+   >>> user = Principal('0101010001')
+
+Does this user provide the IPrincipal interface?
+
+   >>> from zope.security.interfaces import IPrincipal
+   >>> IPrincipal.providedBy(user)
+   True
+
+Can we adapt the user to ICompanyInfo
+
+   >>> ICompanyInfo(user)
+   <uvcsite.api.companyinfo.CompanyInfo object at ...>
+   >>> user = ICompanyInfo(user)
+
+Do we get the MasterUser for our User
+
+    >>> user.getHauptUser()
+    '0101010001'
+
+There is a convention that our MasterUser get the suffix '00'
+
+    >>> user.getSuffix()
+    '00'
+
+What happens if we get a CoUser?
+
+    >>> uu = Principal('0101010001-01')
+    >>> user = ICompanyInfo(uu)
+    >>> user.getHauptUser()
+    '0101010001'
+
+Suffix '01'=
+
+    >>> user.getSuffix()
+    '01'
+
+
+CompanyAddress
+
+   >>> user = Principal('0101010001')
+   >>> address = ICompanyInfo(user)
+   >>> ICompanyInfo.providedBy(address)
+   True
+
+   >>> novareto = address.getAddress()
+   >>> 'name1' in novareto.keys()
+   True
+   >>> 'name2' in novareto.keys()
+   True
