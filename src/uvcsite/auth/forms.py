@@ -26,7 +26,7 @@ class Login(PageForm):
     grok.context(Interface)
     grok.require('zope.Public')
     label = "Herzlich Willkommen im Extranet"
-    description = u"In diesem Bereich können Sie verschiedene Application nutzten! "
+    description = u"In diesem Bereich können Sie verschiedene Application nutzen! "
 
     prefix = ''
     fields = Fields(ILoginForm)
@@ -50,4 +50,4 @@ class Logout(uvcsite.Page):
         session.delete()
 
     def render(self):
-        return "Sie Sind Jetzt Ausgeloggt"
+        return "Sie Sind jetzt ausgeloggt"
