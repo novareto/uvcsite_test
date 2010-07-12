@@ -47,7 +47,7 @@ class PdfIcon(grok.View):
     grok.name('aspdf')
     grok.title('pdf')
     grok.context(IUVCSite)
-    menus.icon('pdf')
+    menus.icon('word')
 
     title ="aspdf"
 
