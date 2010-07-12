@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.2.1dev'
+version = '0.2.1'
 
 setup(name='uvcsite',
       version=version,
@@ -49,6 +49,7 @@ setup(name='uvcsite',
                         'dolmen.beaker',
                         'zope.sendmail',
                         'megrok.icon',
+                        'uvckickstart',
                             ],
           entry_points = """
           [console_scripts]
