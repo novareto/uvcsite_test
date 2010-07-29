@@ -1,0 +1,35 @@
+Check the dynamic table elements in the view of the productfolder 
+=================================================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Setup
+-----
+
+  >>> from zope.app.testing.functional import getRootFolder
+  >>> root = getRootFolder()
+
+  >>> from uvcsite.tests.simpleaddon import AdressBook, Contact
+
+  >>> root['folder'] = folder = AdressBook()
+  >>> folder
+  <uvcsite.tests.simpleaddon.AdressBook object at ...>
+
+Views
+-----
+
+This are some imports which helps us to call the IndexTable 
+of our folder.
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> request = TestRequest()
+
+  >>> add = getMultiAdapter((folder, request), name='add')
+  >>> add
+  <uvcsite.content.views.Add object at ...>
+
+  >>> add.fields.keys()
+  ['title', 'name', 'alter']
+
