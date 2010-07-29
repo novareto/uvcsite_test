@@ -19,13 +19,13 @@ First start with makeing an instance of the Container/Folder
   <uvcsite.tests.simpleaddon.AdressBook object at ...>
 
   >>> import grok
-  >>> class Add(grok.View):
+  >>> class MyView(grok.View):
   ...     grok.context(AdressBook)
   ...     def render(self):
   ...         return "Yes"
 
   >>> from grok.testing import grok_component
-  >>> grok_component('Add', Add)
+  >>> grok_component('MyView', MyView)
   True
 
   >>> root['book'] = adrbook 
@@ -33,6 +33,6 @@ First start with makeing an instance of the Container/Folder
   >>> from zope.publisher.browser import TestRequest
 
 
-  >>> view = getMultiAdapter((adrbook, TestRequest()), name=u"add")
+  >>> view = getMultiAdapter((adrbook, TestRequest()), name=u"myview")
   >>> print view.render()
   Yes

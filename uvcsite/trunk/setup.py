@@ -50,7 +50,11 @@ setup(name='uvcsite',
                         'zope.sendmail',
                         'megrok.icon',
                         'uvckickstart',
-                            ],
+                        'zeam.form.layout',
+                        'dolmen.forms.base',
+                        'dolmen.forms.crud',
+                        'ipdb',
+                       ],
           entry_points = """
           [console_scripts]
           uvcsite-debug = grokcore.startup:interactive_debug_prompt

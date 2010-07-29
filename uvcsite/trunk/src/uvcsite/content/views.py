@@ -3,6 +3,8 @@
 # cklinger@novareto.de
 
 import grok
+import uvcsite
+from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 
 from megrok.z3cform import base as z3cform
 from megrok.z3cform.tabular import DeleteFormTablePage
@@ -12,6 +14,8 @@ from z3c.form import form
 from uvcsite.interfaces import IFolderListingTable
 from zope.component import getMultiAdapter
 from uvcsite import IGetHomeFolderUrl
+from dolmen.content import schema
+from zeam.form import base
 
 class Index(DeleteFormTablePage):
     grok.title('Mein Ordner')
@@ -32,18 +36,19 @@ class Index(DeleteFormTablePage):
         return adapter.getAddURL(self.context.getContentType())
 
 
-class Add(z3cform.PageAddForm):
+class Add(uvcsite.AddForm):
     grok.context(IProductFolder)
     grok.require('uvc.AddContent')
 
     @property
     def fields(self):
-        fields = z3cform.meta.get_auto_fields(self.context.getContentType())
-        return z3cform.Fields(fields)
+        content_object = self.context.getContentType()
+        schemas = schema.bind().get(content_object)
+        return Fields(*schemas)
 
     def create(self, data):
         content = self.context.getContentType()()
-        form.applyChanges(self, content, data)
+        set_fields_data(self.fields, content, data)
         return content
 
     def add(self, content):
@@ -54,20 +59,41 @@ class Add(z3cform.PageAddForm):
         return self.url(self.context)
 
 
-class Edit(z3cform.PageEditForm):
+class Edit(uvcsite.Form):
     grok.context(IContent)
     grok.require('uvc.EditContent')
+    ignoreContent = False
 
     @property
     def fields(self):
-        return z3cform.Fields(*self.context.schema)
+        content_object = self.context
+        schemas = schema.bind().get(content_object)
+        return Fields(*schemas)
+
+    @base.action(u'Speichern')
+    def handle_apply(self):
+        data, errors = self.extractData()
+        if errors:
+            self.flash('Es sind Fehler aufgetreten', type="error")
+            return
+        changes = apply_data_event(self.fields, self.context, data)
+        if changes:
+            self.flash(u'Ihre Daten wurden erfolgreich gendert', type="info")
+            return
+        else:
+            self.flash('Kein Änderung', type="info")
 
 
-class Display(z3cform.PageDisplayForm):
+class Display(uvcsite.Form):
     grok.context(IContent)
     grok.name('index')
     grok.require('uvc.ViewContent')
 
+    mode = base.DISPLAY
+    ignoreContent = False
+
     @property
     def fields(self):
-        return z3cform.Fields(*self.context.schema)
+        content_object = self.context
+        schemas = schema.bind().get(content_object)
+        return Fields(*schemas)

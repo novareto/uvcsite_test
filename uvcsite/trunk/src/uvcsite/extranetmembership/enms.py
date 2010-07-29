@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2007-2010 NovaReto GmbH
+# cklinger@novareto.de 
 
 import grok
+import uvcsite
 import megrok.layout
 
+from zeam.form import base
+from dolmen.menu import menuentry
 from uvcsite import uvcsiteMF as _
+from dolmen.forms.base import Fields 
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
-from zope.formlib.form import setUpWidgets
-from megrok.layout.components import Form
-from uvcsite.extranetmembership.interfaces import (IUserManagement,
-                 IExtranetMember)
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
-from dolmen.menu import menuentry
-from megrok.z3cform.base import PageForm, Fields, button
-from z3c.form.browser.checkbox import CheckBoxFieldWidget
+from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
 
 
 class ENMS(megrok.layout.Page):
@@ -29,33 +29,35 @@ class ENMS(megrok.layout.Page):
         return um.getUserGroups(principal)
 
 
-class ENMSCreateUser(PageForm):
+class ENMSCreateUser(uvcsite.Form):
+    """ Simple Form which displays values from a Dict"""
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
-    #template = grok.PageTemplateFile('templates/form.pt')
+
     label = u"Mitbenutzer anlegen"
     description = u"Nutzen Sie diese Form um einen neuen Mitbenutzer anzulegen"
 
-    fields = Fields(IExtranetMember)
-    fields['rollen'].widgetFactory = CheckBoxFieldWidget
+    ignoreContent = False
 
-    def getContent(self):
+    fields = Fields(IExtranetMember)
+
+    def getDefaultData(self):
         principal = self.request.principal.id
         um = getUtility(IUserManagement)
-        ll = len(um.getUserGroups(principal))
-        value = principal + '-' + str(ll+1)
+        all_users = len(um.getUserGroups(principal)) + 1
+        user = principal + '-' + str(all_users).zfill(2)
         rollen = self.context.keys()
-        return {'mnr': value, 'rollen': rollen}
+        return {'mnr': user, 'rollen': rollen}
 
-    def updateWidgets(self):
-        super(ENMSCreateUser, self).updateWidgets()
-        mnr = self.widgets['mnr']
+    def update(self):
+        data = self.getDefaultData() 
+        self.setContentData(base.DictDataManager(data))
 
-    @button.buttonAndHandler(_(u"Anlegen"))
-    def anlegen(self, action):
+    @base.action(_(u"Anlegen"))
+    def anlegen(self):
         data, errors = self.extractData()
         if errors:
-            self.flash(self.formErrorsMessage, type='error')
+            self.flash('Es sind Fehler aufgetreten', type='error')
             return
         um = getUtility(IUserManagement)
         um.addUser(**data)
@@ -69,19 +71,18 @@ class ENMSCreateUser(PageForm):
         self.redirect(self.url(homeFolder, 'enms'))
 
 
-class ENMSUpdateUser(PageForm):
+class ENMSUpdateUser(uvcsite.Form):
     """ A Form for updating a User in ENMS"""
     grok.context(IMyHomeFolder)
-    fields = Fields(IExtranetMember)
-    fields['rollen'].widgetFactory = CheckBoxFieldWidget
     grok.require('uvc.ManageCoUsers')
 
-    def updateWidgets(self):
-        super(ENMSUpdateUser, self).updateWidgets()
-        mnr = self.widgets['mnr']
-        #mnr.disabled = 'disabled'
+    label = u"Mitbenutzer verwalten"
+    description = u"Nutzen Sie diese Form um die Daten eines Mitbenutzers zu pflegen."
 
-    def getContent(self):
+    fields = Fields(IExtranetMember)
+    ignoreContent = False
+
+    def getDefaultData(self):
         principal = self.request.principal.id
         id = self.request.get('cn')
         user = {} 
@@ -92,11 +93,25 @@ class ENMSUpdateUser(PageForm):
             user['confirm'] = user['passwort']
         return user 
 
-    @button.buttonAndHandler(_(u"Bearbeiten"))
-    def anlegen(self, action):
+    def update(self):
+        data = self.getDefaultData() 
+        self.setContentData(base.DictDataManager(data))
+
+    def updateForm(self):
+        super(ENMSUpdateUser, self).updateForm()
+        mnr = self.fieldWidgets.get('form.field.mnr')
+        pw = self.fieldWidgets.get('form.field.passwort')
+        confirm = self.fieldWidgets.get('form.field.confirm')
+
+        mnr.template = grok.PageTemplateFile('templates/mnr.pt')
+        pw.template = grok.PageTemplateFile('templates/password.pt')
+        confirm.template = grok.PageTemplateFile('templates/password.pt')
+
+    @base.action(_(u"Bearbeiten"))
+    def anlegen(self):
         data, errors = self.extractData()
         if errors:
-            self.flash(self.formErrorsMessage, type='error')
+            self.flash('Es sind Fehler aufgetreten', type='error')
             return
         um = getUtility(IUserManagement)
         um.updUser(**data)
@@ -112,8 +127,8 @@ class ENMSUpdateUser(PageForm):
         homeFolder = IHomeFolder(principal).homeFolder
         self.redirect(self.url(homeFolder, 'enms'))
 
-    @button.buttonAndHandler(_(u"Entfernen"))
-    def entfernen(self, action):
+    @base.action(_(u"Entfernen"))
+    def entfernen(self):
         data, errors = self.extractData()
         um = getUtility(IUserManagement)
         key = data.get('mnr')
@@ -129,21 +144,21 @@ class ENMSUpdateUser(PageForm):
 
 
 @menuentry(IPersonalMenu)
-class ChangePassword(PageForm):
+class ChangePassword(uvcsite.Form):
     """ A Form for updating a User in ENMS"""
     grok.title(u'Passwort ändern')
     grok.context(IUVCSite)
     title = _(u'Passwort ändern')
-    label = _(u'Hier können Sie Ihr Passwort ändern')
+    description = _(u'Hier können Sie Ihr Passwort ändern')
 
     fields = Fields(IExtranetMember).select('passwort', 'confirm')
     ignoreContext = True
 
-    @button.buttonAndHandler(_(u"Bearbeiten"))
-    def changePasswort(self, action):
+    @base.action(_(u"Bearbeiten"))
+    def changePasswort(self):
         data, errors = self.extractData()
         if errors:
-            self.flash(self.formErrorsMessage, type='error')
+            self.flash('Es sind Fehler aufgetreten', type='error')
             return
         um = getUtility(IUserManagement)
         principal = self.request.principal.id

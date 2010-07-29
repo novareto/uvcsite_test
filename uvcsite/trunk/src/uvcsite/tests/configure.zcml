@@ -7,5 +7,6 @@
   <grok:grok package=".usermanagement" />
   <grok:grok package=".simpleaddon" />
   <grok:grok package=".fragen_andreas" />
+  <grok:grok package=".zforms" />
 
 </configure>
