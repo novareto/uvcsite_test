@@ -18,7 +18,7 @@ class AuskunftEntry(uvcsite.Entry):
     grok.context(interface.Interface)
     uvcsite.menu(uvcsite.GlobalMenu)
     layout.menus.category(u'Auskunft', url='auskunft', dropdown=False)
-    grok.order(100)
+    grok.order(20000)
 
     def render(self):
         return '<a href="www.google.de"> Google </a>'
@@ -42,12 +42,3 @@ class AuskunftPdf(grok.View):
 
     def render(self):
         return "PDF"
-
-
-#class AuskunftDokumentAction(uvcsite.Entry):
-#    grok.context(uvcsite.IUVCSite)
-#    grok.view(Auskunft)
-#    uvcsite.menu(uvcsite.DocumentActionsMenu)
-#
-#    def render(self):
-##        return "PDF"
