@@ -1,0 +1,99 @@
+<div class="input-form">
+
+  <h1 tal:condition="view/label"
+      tal:content="view/label">Label</h1>
+
+  <p class="big"
+     tal:condition="view/description"
+     tal:content="view/description">Description</p>
+
+    <ol class="wizard-steps">
+      <li tal:repeat="form view/subforms"
+         class="wizard-step-link">
+        <tal:current tal:define="current python: repeat['form'].index()">
+          <a tal:content="form/label"
+            class="previous"
+            tal:condition="python: current < view.step"
+            tal:attributes="href string:${request/URL}?page=${repeat/form/index}">
+            Link to step
+
+          </a>
+          <span tal:content="form/label"
+                tal:attributes="class python: view.step == current and 'current' or 'next'"
+                tal:condition="python: current >= view.step">
+            Current step
+          </span>
+        </tal:current>
+      </li>
+    </ol>
+
+
+
+<form action="." tal:attributes="action request/URL" method="post"
+      enctype="multipart/form-data">
+
+
+  <fieldset>
+
+      <h2 tal:condition="view/current/label" tal:content="view/current/label">
+        Subform title
+      </h2>
+
+
+      <p class="form-status"
+         tal:condition="view/status"
+         tal:content="view/status">Status</p>
+
+      <div class="form-error"
+          tal:condition="view/current/errors">
+        There were errors:
+          <ul tal:condition="view/current/formErrors"
+              tal:repeat="error view/current/formErrors">
+            <li> <span tal:replace="error/title" /> </li>
+          </ul>
+      </div>
+      
+      <div class="step-fields"
+           tal:condition="view/current/fieldWidgets">
+          <div class="row" 
+               tal:attributes="class python: widget.error is not None and 'row row_error' or 'row';
+                               id string:field-${widget/htmlId}"
+               tal:repeat="widget view/current/fieldWidgets">
+            <label>
+              <span class="label" for="#"
+                    tal:attributes="for widget/htmlId"
+                    tal:content="widget/title">
+                    Label </span>
+               <span class="field-required"
+                     tal:condition="widget/required"></span>
+              <tal:description tal:condition="widget/description">
+                <span class="small"
+                      tal:content="widget/description">
+                </span>
+              </tal:description>
+            </label>
+            <div class="widget">
+               <tal:widget tal:content="structure widget/render" />
+            </div>   
+            <div class="error"
+                 tal:define="error widget/error"
+                 tal:condition="error">
+              <span tal:content="error/title"> Error </span>
+            </div>
+          </div>
+      </div>
+
+      <div class="actions"
+           tal:condition="view/actionWidgets">
+        <span class="action" tal:repeat="widget view/actionWidgets">
+          <tal:widget tal:content="structure widget/render" />
+        </span>
+        <span class="action" tal:repeat="widget view/current/actionWidgets">
+          <tal:widget tal:content="structure widget/render" />
+        </span>
+      </div>
+
+
+  </fieldset>
+</form>
+</div>

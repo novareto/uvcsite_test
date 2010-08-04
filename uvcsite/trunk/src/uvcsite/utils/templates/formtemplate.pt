@@ -30,7 +30,7 @@
          tal:condition="view/fieldWidgets">
       <div class="row" 
            tal:attributes="class python: widget.error is not None and 'row row_error' or 'row';
-                           id widget/htmlId"
+                           id string:form-${widget/htmlId}"
            tal:repeat="widget view/fieldWidgets">
         <label>
           <span class="label" for="#"

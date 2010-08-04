@@ -11,10 +11,8 @@ from zope import schema
 from dolmen.forms import base
 from zeam.form.base import action, DictDataManager 
 
-from zope.interface import Interface
-from dolmen.menu import menuentry
-import zope.schema.interfaces
-from z3c.form.interfaces import IWidget, IDataConverter
+from uvc.widgets import DatePicker, DatePickerCSS, double
+from zeam.form import composed
 
 
 class IPerson(interface.Interface):
@@ -45,13 +43,19 @@ class IPerson(interface.Interface):
         description = u"Bitte wählen Sie ein Datum aus",
         )
 
-from uvc.widgets import DatePicker, DatePickerCSS, double
 
-@menuentry(uvcsite.IGlobalMenu)
+class FormBeispiele(uvcsite.Category):
+    grok.title('FormBeispiele')
+    grok.context(interface.Interface)
+    uvcsite.topmenu(uvcsite.IGlobalMenu)
+
+
 class MyForm(uvcsite.Form):
     grok.title(u'Beispielform')
     grok.description(u"Beschreibugn Beschreibugn")
     grok.context(uvcsite.IUVCSite)
+    uvcsite.menu(FormBeispiele)
+
     ignoreContent = False 
     fields = base.Fields(IPerson)
 
@@ -60,7 +64,7 @@ class MyForm(uvcsite.Form):
 
     def updateWidgets(self):
         super(MyForm, self).updateWidgets()
-        self.fieldWidgets.get('form.field.datum').htmlClass = lambda x='datepicker': x 
+        self.fieldWidgets.get('form.field.datum').htmlId = lambda x='datepicker': x 
 
     def update(self):
         self.setContentData(DictDataManager(dict(name="Klaus")))
@@ -77,15 +81,14 @@ class MyForm(uvcsite.Form):
        self.flash('Alles Klar')
        return 
 
-from zeam.form.layout import ComposedForm
-from zeam.form import composed
-from megrok.layout.components import UtilityView
+#
+## GroupForm
+#
 
-@menuentry(uvcsite.IGlobalMenu)
-class SplitContact(ComposedForm, UtilityView):
-    grok.title(u'Beispielform')
-    grok.description(u"Beschreibugn Beschreibugn")
+class SplitContact(uvcsite.GroupForm):
+    grok.title(u'FieldsetBasedForm')
     grok.context(uvcsite.IUVCSite)
+    uvcsite.menu(FormBeispiele)
 
 
 class Father(uvcsite.SubForm):
@@ -99,6 +102,7 @@ class Father(uvcsite.SubForm):
     def handleButton(self):
         data, errors = self.extractData()
 
+
 class Mother(uvcsite.SubForm):
     composed.context(uvcsite.IUVCSite)
     composed.view(SplitContact)
@@ -109,3 +113,31 @@ class Mother(uvcsite.SubForm):
     @action(u'Abschicken')
     def handleButton(self):
         data, errors = self.extractData()
+
+#
+## Wizard
+#
+
+class MyWizard(uvcsite.Wizard):
+    grok.title('Wizard')
+    grok.context(uvcsite.IUVCSite)
+    uvcsite.menu(FormBeispiele)
+
+
+class Step1(uvcsite.Step):
+    grok.title('Step1')
+    grok.context(uvcsite.IUVCSite)
+    composed.view(MyWizard)
+    fields = base.Fields(IPerson)
+
+    label = "Step 1"
+
+
+
+class Step2(uvcsite.Step):
+    grok.title('Step2')
+    grok.context(uvcsite.IUVCSite)
+    composed.view(MyWizard)
+    fields = base.Fields(IPerson)
+
+    label = "Step 2"
