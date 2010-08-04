@@ -6,6 +6,7 @@ import grok
 import uvcsite
 import megrok.layout
 
+from megrok import navigation
 from zeam.form import base
 from dolmen.menu import menuentry
 from uvcsite import uvcsiteMF as _
@@ -143,13 +144,13 @@ class ENMSUpdateUser(uvcsite.Form):
         self.redirect(self.url(homeFolder, 'enms'))
 
 
-@menuentry(IPersonalMenu)
 class ChangePassword(uvcsite.Form):
     """ A Form for updating a User in ENMS"""
     grok.title(u'Passwort ändern')
     grok.context(IUVCSite)
     title = _(u'Passwort ändern')
     description = _(u'Hier können Sie Ihr Passwort ändern')
+    navigation.sitemenuitem(uvcsite.IPersonalMenu)
 
     fields = Fields(IExtranetMember).select('passwort', 'confirm')
     ignoreContext = True

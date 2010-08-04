@@ -54,15 +54,13 @@ class Cat(object):
         self.title = title
         self.url = url
 
-
-class AddMenuEntry(uvcsite.Entry):
+from megrok import navigation
+class AddMenuEntry(grok.View):
     grok.name('Buddy erstellen')
     grok.title('Buddy erstellen')
     grok.context(zope.interface.Interface)
-    uvcsite.menu(uvcsite.GlobalMenu)
-    uvc.layout.menus.category(u'Title', url='focus')
+    navigation.sitemenuitem(uvcsite.IGlobalMenu)
 
-    @property
-    def url(self):
+    def render(self):
         adapter = zope.component.getMultiAdapter((self.request.principal, self.request), uvcsite.IGetHomeFolderUrl)
-        return adapter.getAddURL(Contact)
+        return self.response.redirect(adapter.getAddURL(Contact))

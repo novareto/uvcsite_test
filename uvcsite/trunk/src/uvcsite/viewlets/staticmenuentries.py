@@ -3,11 +3,11 @@
 # cklinger@novareto.de 
 
 import grok
+import uvcsite
 
-from uvcsite.interfaces import IPersonalPreferences
 from uvc.layout.menus import PersonalPreferences, GlobalMenu, PersonalMenu
 
-from dolmen.menu import menu, menuentry, Entry
+from megrok import navigation
 from zope.app.homefolder.interfaces import IHomeFolder
 
 from zope.interface import Interface
@@ -15,33 +15,21 @@ from zope.traversing.browser import absoluteURL
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
 
 
-#class Hilfe(Entry):
-#    grok.context(Interface)
-#    grok.name('Hilfe')
-#    grok.title('Hilfe')
-#    menu(GlobalMenu)
-#    grok.order(20)
-#
-#    @property
-#    def url(self):
-#        return self.view.application_url() + '/hilfe'
-
-
-class UserName(Entry):
-    grok.name('myname')
+class UserName(grok.View):
+    grok.title("USERSNAME")
     grok.context(Interface)
-    menu(PersonalPreferences)
+    grok.viewletmanager(uvcsite.IPersonalPreferences)
     grok.order(10)
 
     def render(self):
         return '<a href="#"> %s </a>' % self.request.principal.description or self.request.principal.id
 
 
-class MeinOrdner(Entry):
+class MeinOrdner(grok.View):
     grok.context(Interface)
     grok.name('Mein Ordner')
     grok.title('Mein Ordner')
-    menu(PersonalPreferences)
+    navigation.sitemenuitem(uvcsite.IPersonalPreferences)
     grok.order(20)
 
     @property
@@ -52,12 +40,15 @@ class MeinOrdner(Entry):
         homeFolder = IHomeFolder(principal).homeFolder
         return absoluteURL(homeFolder, self.request)
 
+    def render(self):
+        return self.response.redirect(self.url)
 
-class Mitbenutzerverwaltung(Entry):
+
+class Mitbenutzerverwaltung(grok.View):
     grok.context(Interface)
     grok.name('Mitbenutzerverwaltung')
     grok.title('Mitbenutzerverwaltung')
-    menu(PersonalMenu)
+    navigation.sitemenuitem(uvcsite.IPersonalMenu)
     grok.order(30)
 
     @property
@@ -68,13 +59,5 @@ class Mitbenutzerverwaltung(Entry):
         homeFolder = IHomeFolder(principal).homeFolder
         return absoluteURL(homeFolder, self.request) + '/enms'
 
-
-class Logout(Entry):
-    grok.name('Abmelden')
-    grok.context(Interface)
-    menu(PersonalPreferences)
-    grok.order(40)
-
-    @property
-    def url(self):
-        return "https://www.google.de"
+    def render(self):
+        return self.response.redirect(self.url)

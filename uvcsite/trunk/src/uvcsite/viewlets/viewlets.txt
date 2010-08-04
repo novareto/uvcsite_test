@@ -77,23 +77,8 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <MenuEntry `myname` for menu `uvc.user.preferences`>
-   <MenuEntry `Mein Ordner` for menu `uvc.user.preferences`>
-   <MenuEntry `Abmelden` for menu `uvc.user.preferences`>
-
-
-Sidebar
--------
-
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.user.sidebar")
-   >>> manager 
-   <uvc.layout.menus.SidebarMenu object ...>
-
-Show the Viewlets:
-
-   >>> manager.update()
-   >>> for x in manager.viewlets:
-   ...     print x
+   <megrok.navigation.util.AutoSiteMenuItem_0 object at ...>
+   <megrok.navigation.util.AutoSiteMenuItem_2 object at ...>
 
 
 Footer
@@ -107,10 +92,11 @@ Show the Viewlets:
 
    >>> manager.update()
    >>> len(manager.viewlets)
-   0 
+   1 
 
    >>> for x in manager.viewlets:
    ...     print x
+   <megrok.navigation.util.AutoSiteMenuItem_11 object at ...>
 
 
 PersonalMenu
@@ -125,7 +111,8 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <MenuEntry `Mitbenutzerverwaltung` for menu `uvc.user.menu`> 
+   <megrok.navigation.util.AutoSiteMenuItem_1 object at ...>
+   <megrok.navigation.util.AutoSiteMenuItem_3 object at ...>
 
 
 GlobalMenu
@@ -140,8 +127,11 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <MenuEntry `Buddy erstellen` for menu `uvc.global.menu`>
-   <MenuEntry `Auskunft` for menu `uvc.global.menu`>
+   <megrok.navigation.util.AutoMenuItem_0 object at ...>
+   <megrok.navigation.util.AutoSiteMenuItem_6 object at ...>
+   <megrok.navigation.util.AutoSiteMenuItem_7 object at ...>
+   <megrok.navigation.util.AutoMenuItem_1 object at ...>
+
 
    >>> zope.security.management.endInteraction()
 

@@ -59,7 +59,7 @@ At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/Mitbenutzerverwaltung'>
 
    >>> benutzerverwaltung.click()
    >>> neuerUser = browser.getLink('neuen User anlegen')
@@ -98,7 +98,7 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/Mitbenutzerverwaltung'>
 
 Here we click on the user we want to modify!
 
@@ -157,7 +157,7 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/enms'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/Mitbenutzerverwaltung'>
 
 Here we click on the user we want to modify!
 

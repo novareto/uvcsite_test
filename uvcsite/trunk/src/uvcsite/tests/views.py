@@ -8,21 +8,27 @@ import megrok.layout
 from dolmen.menu import menuentry, global_menuentry
 from zope.interface import Interface
 from uvcsite.interfaces import IMyHomeFolder, IUVCSite, IHelp, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
-from uvc.layout.menus import SidebarMenu, DocumentActionsMenu
+from uvc.layout.menus import DocumentActionsMenu
 from megrok.z3ctable import TablePage, Column, table
 from uvcsite.resources import UVCResources
 from uvcsite import HelpPage
-
-@menuentry(IHelp, context=Interface)
-class GlobaleHilfe(HelpPage):
-    grok.context(IUVCSite)
-    grok.title('Hilfe zum Extranet')
+from megrok import navigation
+import uvcsite
+from uvc.layout.menus import SubMenu
 
 
-@menuentry(SidebarMenu, context=Interface)
+class BausAuskunft(SubMenu):
+    grok.name('BausAuskunft')
+    grok.title('BausAuskunftsdienste')
+    navigation.parentmenu(uvcsite.IGlobalMenu)
+    grok.order(2500)
+
+
+
 class Index(megrok.layout.Page):
     grok.title('Startseite')
     grok.context(IUVCSite)
+    navigation.sitemenuitem(BausAuskunft)
 
     def update(self):
         self.flash('Warning', type="warning")
@@ -31,8 +37,8 @@ class Index(megrok.layout.Page):
 
 
 
-@menuentry(IFooter)
 class Kontakt(megrok.layout.Page):
+    navigation.sitemenuitem(BausAuskunft)
     grok.name('Kontakt')
     grok.title('Kontakt')
     grok.context(Interface)
@@ -41,22 +47,8 @@ class Kontakt(megrok.layout.Page):
         return "Kontakt"
 
 
-from uvc.layout import menus
-#@menuentry(IDocumentActions)
-class PdfIcon(grok.View):
-    grok.name('aspdf')
-    grok.title('pdf')
-    grok.context(IUVCSite)
-    menus.icon('word')
 
-    title ="aspdf"
 
-    def render(self):
-        return "FUCKU"
-
-global_menuentry(PdfIcon, DocumentActionsMenu)
-
-@menuentry(SidebarMenu)
 class Table(TablePage):
     grok.context(IMyHomeFolder)
     grok.require('zope.View')
@@ -75,6 +67,7 @@ class Number(Column):
     table(Table)
     grok.context(IMyHomeFolder)
     header = "Number"
+    cssClasses = {'td':'right',}
 
     def renderCell(self, item):
         return item

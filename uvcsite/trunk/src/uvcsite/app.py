@@ -1,25 +1,23 @@
 # -*- coding: utf-8 -*-
 import grok
+import uvcsite
 
-from dolmen.app.layout import models, errors
-from dolmen.app.site import IDolmen
-from dolmen.menu import menuentry
-from uvcsite.auth.handler import setup_pau
+from uvcsite import menu
 from uvcsite import uvcsiteMF as _
-from uvcsite.homefolder.homefolder import PortalMembership
-from uvcsite.interfaces import IPersonalPreferences
-from uvcsite.interfaces import IUVCSite
-from zope.app.homefolder.interfaces import IHomeFolderManager
-from zope.authentication.interfaces import IAuthentication
+from dolmen.app.site import IDolmen
+from dolmen.app.layout import errors
+from uvcsite.auth.handler import setup_pau
 from zope.pluggableauth import PluggableAuthentication
-from zope.interface import Interface
+from uvcsite.homefolder.homefolder import PortalMembership
+from zope.authentication.interfaces import IAuthentication
+from zope.app.homefolder.interfaces import IHomeFolderManager
+
 from z3c.form.converter import DateDataConverter
 from zope.schema.interfaces import IDate
 from z3c.form.interfaces import IWidget, IDataConverter
-from megrok.layout import Page
-from megrok.icon import IconRegistry
 
-class Icons(IconRegistry):
+
+class Icons(grok.DirectoryResource):
     grok.name('uvc-icons')
     grok.path('icons')
 
@@ -27,7 +25,7 @@ class Icons(IconRegistry):
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
     """
-    grok.implements(IUVCSite, IDolmen)
+    grok.implements(uvcsite.IUVCSite, IDolmen)
 
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
@@ -37,20 +35,22 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau)
 
 
-@menuentry(IPersonalPreferences, context=Interface)
-class PersonalPanelView(Page):
+class PersonalPanelView(uvcsite.Page):
     """Page for Personal Properties
     """
     grok.order(35)
-    
+
     grok.title(u"Meine Einstellungen")
     title = _(u"Meine Einstellungen")
     description = _(u"Hier werden Einstellungen zu"
                      " Ihrem Benutzerprofil vorgenommen.")
 
+    menu(uvcsite.IPersonalPreferences)
+
 
 class NotFound(errors.NotFound):
     pass
+
 
 class CustomCalendarDataConverter(DateDataConverter, grok.MultiAdapter):
     """A special calendar data converter for Dates"""
@@ -59,7 +59,7 @@ class CustomCalendarDataConverter(DateDataConverter, grok.MultiAdapter):
     length = 'medium'
 
 
-class HelpPage(Page):
+class HelpPage(uvcsite.Page):
     grok.baseclass()
 
     def namespace(self):
