@@ -11,7 +11,7 @@ import sys
 
 product_config = """ 
  <product-config mailer>
-    queue-path /Users/christian/community/uvcsite/var/mailer-queue
+    queue-path /tmp/mailer-queue
     hostname localhost
     port 25
 #    username

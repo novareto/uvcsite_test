@@ -7,8 +7,9 @@ import uvcsite
 
 from uvc import layout
 from zope import interface
+from megrok import navigation
 
-class AuskunftEntry(uvcsite.Entry):
+class AuskunftEntry(grok.View):
     """ Ein Eintrag im Globalen Menu ohne Dropdown
         Achtung in der Zeile layout.menus.category
         dropdown=False
@@ -16,8 +17,7 @@ class AuskunftEntry(uvcsite.Entry):
     grok.name('Auskunft')
     grok.title('Auskunft')
     grok.context(interface.Interface)
-    uvcsite.menu(uvcsite.GlobalMenu)
-    layout.menus.category(u'Auskunft', url='auskunft', dropdown=False)
+    navigation.sitemenuitem(uvcsite.IGlobalMenu)
     grok.order(20000)
 
     def render(self):
@@ -34,11 +34,3 @@ class Auskunft(uvcsite.Page):
 
     def render(self):
         return "<h2> Ich bin eine Auskunftsseite </h2>"
-
-
-@uvcsite.menuentry(uvcsite.IDocumentActions, view=IAuskunft)
-class AuskunftPdf(grok.View):
-    grok.context(uvcsite.IUVCSite)
-
-    def render(self):
-        return "PDF"

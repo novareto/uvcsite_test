@@ -18,22 +18,6 @@ Create some context for the ViewletManager
    >>> view = component.getMultiAdapter((uvcsite, request), name='index')
    >>> from zope.contentprovider.interfaces import IContentProvider
 
-Sidebar
--------
-
-Let´s call the Viewlet uvcsite.sidebar
-
-   >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
-   ...   'uvc.user.sidebar')
-   >>> mgr
-   <uvc.layout.menus.SidebarMenu object at ...>
-
-Does the viewlet manager provide the right interfce ISidebar?
-
-   >>> from uvcsite.interfaces import ISidebar
-   >>> ISidebar.providedBy(mgr)
-   True
-
 Footer
 ------
 

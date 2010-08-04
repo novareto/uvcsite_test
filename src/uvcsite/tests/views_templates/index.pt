@@ -13,10 +13,9 @@
 
 </ul>
 
-<ul tal:define="images nocall: context/@@image_req">
+<ul>
   <li>
-    <a href="google.de">
-      <img src="" tal:attributes="src python: images.get_icon_url('icon_pdf')" />
+    <a href="google.de"> LINK
     </a>
   </li>
 </ul>
