@@ -18,6 +18,10 @@ import zope.event
 import zope.lifecycleevent
 
 from zeam.form.composed import SubForm as BaseSubForm
+from zeam.form.composed import ComposedForm
+from zope.schema.interfaces import IField
+
+from dolmen.forms import wizard
 
 grok.templatedir('templates')
 
@@ -31,6 +35,24 @@ class Form(ApplicationForm):
         if error is None or ICollection.providedBy(error):
             return error
         return [error]
+
+
+class GroupForm(ComposedForm, Form):
+    grok.baseclass()
+
+
+class Wizard(wizard.Wizard, Form):
+    grok.baseclass()
+
+    def validateData(self, fields, data):
+        fields = [x for x in fields if IField.providedBy(x)]
+        if not fields:
+            return super(ApplicationForm, self).validateData(fields, data)
+        return super(wizard.Wizard, self).validate(fields, data)
+
+
+class Step(wizard.WizardStep, Form):
+    grok.baseclass()
 
 
 class AddForm(Form):
@@ -72,7 +94,6 @@ class AddForm(Form):
 
 class SubForm(BaseSubForm):
     grok.baseclass()
-    pass
 
 
 class FormTemplate(pt.PageTemplate):
@@ -93,3 +114,10 @@ class SubFormTemplate(pt.PageTemplate):
     """
     template = grok.PageTemplateFile('templates/formtemplate.pt')
     pt.view(SubForm)
+
+
+class WizardTemplate(pt.PageTemplate):
+    """Template for a layout aware form.
+    """
+    template = grok.PageTemplateFile('templates/wizardtemplate.pt')
+    pt.view(Wizard)
