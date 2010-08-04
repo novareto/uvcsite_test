@@ -26,6 +26,8 @@
           </ul>
       </div>
 
+    <div id="extrainfo" tal:replace="structure provider:uvc.layout.extrainfo"/>
+
     <div class="fields"
          tal:condition="view/fieldWidgets">
       <div class="row" 

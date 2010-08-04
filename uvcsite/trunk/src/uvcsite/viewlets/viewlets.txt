@@ -96,7 +96,7 @@ Show the Viewlets:
 
    >>> for x in manager.viewlets:
    ...     print x
-   <megrok.navigation.util.AutoSiteMenuItem_11 object at ...>
+   <megrok.navigation.util.AutoSiteMenuItem_14 object at ...>
 
 
 PersonalMenu
@@ -127,10 +127,11 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <megrok.navigation.util.AutoMenuItem_0 object at ...>
-   <megrok.navigation.util.AutoSiteMenuItem_6 object at ...>
-   <megrok.navigation.util.AutoSiteMenuItem_7 object at ...>
-   <megrok.navigation.util.AutoMenuItem_1 object at ...>
+   <megrok.navigation.util.AutoMenuItem_0 object at 0...>
+   <megrok.navigation.util.AutoMenuItem_1 object at 0...>
+   <megrok.navigation.util.AutoSiteMenuItem_9 object at 0...>
+   <megrok.navigation.util.AutoSiteMenuItem_10 object at 0...>
+   <megrok.navigation.util.AutoMenuItem_2 object at 0...>
 
 
    >>> zope.security.management.endInteraction()
