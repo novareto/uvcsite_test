@@ -26,7 +26,7 @@ class Login(uvcsite.Form):
     grok.context(Interface)
     grok.require('zope.Public')
     label = "Herzlich Willkommen im Extranet"
-    description = u"In diesem Bereich können Sie verschiedene Application nutzen! "
+    description = u"In diesem Bereich können Sie verschiedene Online-Dienste nutzen! "
 
     fields = Fields(ILoginForm)
     fields['camefrom'].mode = "hidden"
