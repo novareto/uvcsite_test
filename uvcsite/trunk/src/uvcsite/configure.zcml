@@ -49,4 +49,5 @@
 
 
   <includePlugins package="." />
+  <includePluginsOverrides package="." />
 </configure>
