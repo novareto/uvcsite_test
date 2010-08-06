@@ -15,14 +15,15 @@ from zope.traversing.browser import absoluteURL
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
 
 
-class UserName(grok.View):
+class UserName(grok.Viewlet):
     grok.title("USERSNAME")
     grok.context(Interface)
     grok.viewletmanager(uvcsite.IPersonalPreferences)
     grok.order(10)
+    group = ''
 
     def render(self):
-        return '<a href="#"> %s </a>' % self.request.principal.description or self.request.principal.id
+        return '<a href="#">  %s </a>' % self.request.principal.description or self.request.principal.id
 
 
 class MeinOrdner(grok.View):

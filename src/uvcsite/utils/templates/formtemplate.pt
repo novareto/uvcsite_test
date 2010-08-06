@@ -44,7 +44,7 @@
           <tal:description tal:condition="widget/description">
             <span class="small"
                   tal:content="widget/description">
-            </span><br />
+            </span>
           </tal:description>
         </label>
         <div class="widget">
