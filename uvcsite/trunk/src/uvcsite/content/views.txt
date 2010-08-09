@@ -55,11 +55,15 @@ Let's check this with the testbrowser!
   >>> browser.getControl(name="form.field.name").value = "christian"
   >>> browser.getControl(name="form.field.alter").value = "30"
 
-  >>> browser.getControl(name="form.action.48696e7a7566c3bc67656e").click()
+  >>> save = browser.getControl(name="form.action.48696e7a7566c3bc67656e")
+  >>> save
+  <SubmitControl name='form.action.48696e7a7566c3bc67656e' type='submit'>
+  
+  >>> save.click()
 
 We should see this contact now in the folder!
 
-  >>> '<td><a href="http://127.0.0.1/folder/Contact/edit">Titel</a></td>' in  browser.contents
+  >>> '<td><a href="http://127.0.0.1/folder/Contact">Contact</a></td>' in  browser.contents
   True
 
   >>> "<dd>Added Content</dd>" in browser.contents
