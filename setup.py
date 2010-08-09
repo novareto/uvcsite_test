@@ -50,8 +50,6 @@ setup(name='uvcsite',
                         'dolmen.forms.base',
                         'dolmen.forms.crud',
                         'dolmen.forms.wizard',
-                        'ipdb',
-                        'repoze.profile',
                        ],
           entry_points = """
           [console_scripts]
