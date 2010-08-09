@@ -14,6 +14,8 @@ from zeam.form.base import action, DictDataManager
 from uvc.widgets import DatePicker, DatePickerCSS, double
 from zeam.form import composed
 
+from uvc.widgets.fields import OptionalChoice
+
 
 class IPerson(interface.Interface):
 
@@ -32,7 +34,7 @@ class IPerson(interface.Interface):
         description = u"Bitte geben Sie den Vornamen ein",
         )
 
-    geschlecht = schema.Choice(
+    geschlecht = OptionalChoice(
         title = u"Gender",
         description = u"Bitte geben Sie das Geschlecht ein",
         values = ('men', 'woman', 'kid', 'grandpa', 'sister', 'brother'),
@@ -57,6 +59,7 @@ class MyForm(uvcsite.Form):
     uvcsite.menu(FormBeispiele)
 
     ignoreContent = False 
+    ignoreRequest = False
     fields = base.Fields(IPerson)
 
     label = u"Beispielform"
