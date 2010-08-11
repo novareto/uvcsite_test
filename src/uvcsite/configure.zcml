@@ -10,10 +10,6 @@
   <include package="dolmen.menu" />
   <include package="dolmen.app.layout" />
   <include package="dolmen.content" />
-  <include package="megrok.z3cform.base" />
-  <include package="megrok.z3cform.base" file="meta.zcml" />
-  <include package="megrok.z3cform.tabular" />
-  <include package="megrok.z3cform.ui"/>
   <include package="z3c.schema2xml" />
   <include package="zope.pluggableauth" />
   <include package="zope.app.authentication" />
@@ -42,10 +38,6 @@
 
   <i18n:registerTranslations directory="locales" />
   <grok:grok package="." />
-
-  <adapter
-      factory="z3c.form.hint.FieldDescriptionAsHint"
-      name="title"/>
 
 
   <includePlugins package="." />

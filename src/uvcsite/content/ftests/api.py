@@ -137,14 +137,11 @@ An Invalid uaz_xml file!
   ...    </Unfallanzeige>'''
   >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz', uaz_xml_with_error)
   >>> print response.getBody()
-  <failure>...
+  <failure>
     <error field="name" message="Value is too long"><name>Christian Klinger Junior</name>
-       </error>...
-  </failure>
-  >>> print response.getBody()
-  <failure>...
-    <error field="age" message="The system could not process the given value."><age>twenty nine</age>
-     </error>...
+       </error>
+    <error field="age" message="Inappropriate argument value (of correct type)."><age>twenty nine</age>
+     </error>
   </failure>
 
 An invariant uaz_xml file
