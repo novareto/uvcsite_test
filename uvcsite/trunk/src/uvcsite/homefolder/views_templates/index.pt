@@ -11,5 +11,11 @@
   </ul>
 
   <div tal:content="structure view/renderBatch" />
-  <div tal:replace="structure view/renderFormTable" />
+  <form action="."
+        method="post"
+        tal:attributes="action python: view.url(context)">
+
+    <div tal:replace="structure view/renderTable" />
+    <input type="submit" value="Entfernen" name="form.button.delete"/>
+  </form>
 </div>

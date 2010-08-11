@@ -19,12 +19,12 @@ Setup
   >>> print folder.title
   Adressbook 
 
-  >>> content1 = Contact()
+  >>> content1 = Contact(title=u"mycontent1")
   >>> content1
   <uvcsite.tests.simpleaddon.Contact ...>
   >>> folder['mycontent1'] = content1
 
-  >>> content2 = Contact()
+  >>> content2 = Contact(title=u"mycontent2")
   >>> content2
   <uvcsite.tests.simpleaddon.Contact ...>
   >>> folder['mycontent2'] = content2
@@ -35,10 +35,21 @@ Views
 This are some imports which helps us to call the IndexTable 
 of our folder.
 
+  >>> import zope.interface
+  >>> import zope.security.interfaces
+  >>> class DummyPrincipal(object):
+  ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
+  ...
+  ...     id = "someuser" 
+  ...     title = "Some User's Name"
+  ...     description = "A User"
+
   >>> from zope.component import getMultiAdapter
   >>> from zope.publisher.browser import TestRequest
   >>> request = TestRequest()
-
+  >>> request.setPrincipal(DummyPrincipal())
+  >>> zope.security.management.newInteraction(request)
+  
 Let's call the IndexTable of the folder:
 
   >>> view = getMultiAdapter((folder, request), name=u"index")
@@ -48,10 +59,10 @@ So if we render we should see our two content objects in the tbody
 of our table
   
   >>> print view.render()
-  <form...
+  <div...
     <tbody>
       <tr class="even">
-        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent1"  /></td>
+        <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="mycontent1"  /></td>
         <td><a href="http://127.0.0.1/folder/mycontent1">mycontent1</a></td>
         <td>Contact</td>
         <td>Entwurf</td>
@@ -59,7 +70,7 @@ of our table
         <td>...</td>
       </tr>
       <tr class="odd">
-        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent2"  /></td>
+        <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="mycontent2"  /></td>
         <td><a href="http://127.0.0.1/folder/mycontent2">mycontent2</a></td>
         <td>Contact</td>
         <td>Entwurf</td>
@@ -68,7 +79,7 @@ of our table
       </tr>
     </tbody>
   ...
-  </form>
+  </div>
 
 View with content in the Workflow Status gesendet
 -------------------------------------------------
@@ -83,18 +94,18 @@ checkbox is gone. And the link does not point on the
 edit action it now points on the view action.
 
   >>> print view.render()
-  <form...
+  <div...
     <tbody>
       <tr class="even">
         <td></td>
         <td><a href="http://127.0.0.1/folder/mycontent1">mycontent1</a></td>
         <td>Contact</td>
         <td>gesendet</td>
-        <td></td>
+        <td>someuser</td>
         <td>...</td>
       </tr>
       <tr class="odd">
-        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="mycontent2"  /></td>
+        <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="mycontent2"  /></td>
         <td><a href="http://127.0.0.1/folder/mycontent2">mycontent2</a></td>
         <td>Contact</td>
         <td>Entwurf</td>
@@ -103,4 +114,6 @@ edit action it now points on the view action.
       </tr>
     </tbody>
   ...
-  </form>
+  </div>
+
+  >>> zope.security.management.endInteraction()

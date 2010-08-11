@@ -29,15 +29,27 @@ Setup
   >>> folder
   <uvcsite.tests.simpleaddon.AdressBook object at ...>
 
+
+  >>> import zope.interface
+  >>> import zope.security.interfaces
+  >>> class DummyPrincipal(object):
+  ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
+  ...
+  ...     id = "someuser" 
+  ...     title = "Some User's Name"
+  ...     description = "A User"
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> request = TestRequest()
+  >>> request.setPrincipal(DummyPrincipal())
+  >>> zope.security.management.newInteraction(request)
+
 Views
 -----
 
 This are some imports which helps us to call the IndexTable 
 of our folder.
-
-  >>> from zope.component import getMultiAdapter
-  >>> from zope.publisher.browser import TestRequest
-  >>> request = TestRequest()
 
 Let's call the IndexTable of the folder:
 
@@ -47,7 +59,16 @@ Let's call the IndexTable of the folder:
 Instead of the <th>Title<th> we should get <th>OverrideTable</th>:
   
   >>> print view.render()
-  <form...
+  <div>
+    <h1>Adressbook</h1>
+    <span class="big">Description of Adressbook</span>
+    <div class="addContent">
+      <h3>
+        <a href="http://127.0.0.1/adressbook/@@add"> anlegen  </a>
+      </h3>
+    </div>
+    <form action="http://127.0.0.1/folder/index" method="post">
+      <table class="myTable tablesorter">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -58,5 +79,11 @@ Instead of the <th>Title<th> we should get <th>OverrideTable</th>:
         <th>Datum</th>
       </tr>
     </thead>
-  ...
-  </form>
+    <tbody>
+    </tbody>
+  </table>
+      <input type="submit" value="Entfernen" name="form.button.delete">
+    </form>
+  </div>
+
+  >>> zope.security.management.endInteraction()

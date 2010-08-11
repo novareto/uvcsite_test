@@ -63,6 +63,7 @@ Let's check this with the testbrowser!
 
 We should see this contact now in the folder!
 
+
   >>> '<td><a href="http://127.0.0.1/folder/Contact">Contact</a></td>' in  browser.contents
   True
 

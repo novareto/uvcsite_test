@@ -16,8 +16,10 @@ from zope.component import getMultiAdapter
 from uvcsite import IGetHomeFolderUrl
 from dolmen.content import schema
 from zeam.form import base
+from megrok.z3ctable import TablePage
 
-class Index(DeleteFormTablePage):
+
+class Index(TablePage):
     grok.title('Mein Ordner')
     grok.name('index')
     grok.implements(IFolderListingTable) 
@@ -26,6 +28,16 @@ class Index(DeleteFormTablePage):
     cssClasses = {'table': 'myTable tablesorter'}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
+
+    def update(self): 
+        items = self.request.form.get('table-checkBox-0-selectedItems')
+        if items and self.request.has_key('form.button.delete'):
+            if isinstance(items, (str, unicode)):
+                items = [items,]
+            for key in items:
+                if self.context.has_key(key):
+                    self.executeDelete(self.context[key])
+        TablePage.update(self)
 
     def executeDelete(self, item):
         self.flash(_(u'Ihre Dokumente wurden entfernt'))
