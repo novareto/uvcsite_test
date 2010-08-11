@@ -12,10 +12,6 @@ from uvcsite.homefolder.homefolder import PortalMembership
 from zope.authentication.interfaces import IAuthentication
 from zope.app.homefolder.interfaces import IHomeFolderManager
 
-from z3c.form.converter import DateDataConverter
-from zope.schema.interfaces import IDate
-from z3c.form.interfaces import IWidget, IDataConverter
-
 
 class Icons(grok.DirectoryResource):
     grok.name('uvc-icons')
@@ -50,13 +46,6 @@ class PersonalPanelView(uvcsite.Page):
 
 class NotFound(errors.NotFound):
     pass
-
-
-class CustomCalendarDataConverter(DateDataConverter, grok.MultiAdapter):
-    """A special calendar data converter for Dates"""
-    grok.adapts(IDate, IWidget)
-    grok.implements(IDataConverter)
-    length = 'medium'
 
 
 class HelpPage(uvcsite.Page):

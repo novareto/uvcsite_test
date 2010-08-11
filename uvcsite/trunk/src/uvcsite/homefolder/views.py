@@ -4,11 +4,10 @@
 
 import grok
 from uvcsite import uvcsiteMF as _
-from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from megrok.z3ctable import Values
-from megrok.z3cform.tabular import DeleteFormTablePage
-from zope.traversing.browser import absoluteURL
 from megrok.z3ctable import TablePage
+from zope.traversing.browser import absoluteURL
+from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 
 class Index(TablePage):
     grok.context(IMyHomeFolder)

@@ -2,11 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import grok
-import z3c.form.error
 
 from lxml import etree
 from uvcsite.content import IProductFolder
-from z3c.form.interfaces import IErrorViewSnippet
 from z3c.schema2xml import serialize_to_tree, deserialize
 from zope.component import getMultiAdapter
 from zope.interface import Invalid
@@ -16,18 +14,6 @@ from zope.pagetemplate.interfaces import IPageTemplate
 class RestLayer(grok.IRESTLayer):
     """ Layer for Rest Access"""
     grok.restskin('api')
-
-
-class RestErrorViewSnippet(grok.MultiAdapter):
-    grok.adapts(z3c.form.error.ErrorViewSnippet, RestLayer)
-    grok.provides(IPageTemplate)
-
-    def __init__(self, context, request):
-        self.context = context
-        self.request = request
-
-    def __call__(self, snippet):
-        return self.context.createMessage()
 
 
 class ProductFolderRest(grok.REST):
@@ -54,11 +40,8 @@ class ProductFolderRest(grok.REST):
             deserialize(self.body, interface, content)
         except Exception, e: # Here should be a DeserializeError
             for field, (exception, element) in e.field_errors.items():
-                snippet = getMultiAdapter((exception, self.request,
-                    None, field, self, content), IErrorViewSnippet)
-                snippet.update()
                 error = etree.Element('error', field=field.__name__,
-                    message=snippet.render())
+                    message=exception.__doc__)
                 error.append(element)
                 errors.append(error)
         try:

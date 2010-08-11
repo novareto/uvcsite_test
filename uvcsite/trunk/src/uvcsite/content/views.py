@@ -6,11 +6,8 @@ import grok
 import uvcsite
 from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 
-from megrok.z3cform import base as z3cform
-from megrok.z3cform.tabular import DeleteFormTablePage
 from uvcsite import uvcsiteMF as _
 from uvcsite.content import IContent, IProductFolder
-from z3c.form import form
 from uvcsite.interfaces import IFolderListingTable
 from zope.component import getMultiAdapter
 from uvcsite import IGetHomeFolderUrl
