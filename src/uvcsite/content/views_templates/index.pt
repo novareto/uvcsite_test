@@ -6,5 +6,10 @@
       <a href="add" tal:attributes="href view/getAddLinkUrl"> anlegen  </a>
     </h3>  
   </div>
-  <span tal:replace="structure view/renderFormTable"/>
+  <form action="." 
+        method="post"
+        tal:attributes="action view/url">
+    <span tal:replace="structure view/renderTable"/>
+    <input type="submit" value="Entfernen" name="form.button.delete">
+  </form>
 </div>

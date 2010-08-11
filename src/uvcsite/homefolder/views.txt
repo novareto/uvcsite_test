@@ -42,6 +42,7 @@ TableView
   >>> index
   <Index 'index'>
 
+
 We have one folder inside our homefolder.
 
   >>> list(index.getContentTypes())
@@ -51,13 +52,19 @@ Now we can render the Index Page of the Homefolder:
 
   >>> index.update()
   >>> print index.render()
-  <form action="http://127.0.0.1" method="post"
-        enctype="multipart/form-data" class="edit-form"
-        name="deleteFormTable" id="deleteFormTable">
-    <div class="viewspace">
-      <div>
-      <div class="tabluarTable">
-        <table class="tablesorter myTable">
+  <div>
+    <h1>Some User's Name</h1>
+    <p>Hier werden Ihre Dokumente abgelegt</p>
+    <ul>
+        <li>
+            <a href="http://127.0.0.1/hf/adressbook">
+               <span>adressbook</span>
+      </a>
+        </li>
+    </ul>
+    <div></div>
+    <form action="http://127.0.0.1/hf" method="post">
+      <table class="tablesorter myTable">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -71,16 +78,9 @@ Now we can render the Index Page of the Homefolder:
     <tbody>
     </tbody>
   </table>
-      </div>
-      <div class="tabluarForm">
-      </div>
-    </div>
-    </div>
-    <div>
-      <div class="buttons">
-      </div>
-    </div>
-  </form>
+      <input type="submit" value="Entfernen" name="form.button.delete" />
+    </form>
+  </div>
 
 
 There is no table in the view? This is because there
@@ -140,13 +140,24 @@ Let's check again if we now get **contenttypes** in our homefolder:
 
   >>> index.update()
   >>> print index.render()
-  <form action="http://127.0.0.1" method="post"
-        enctype="multipart/form-data" class="edit-form"
-        name="deleteFormTable" id="deleteFormTable">
-    <div class="viewspace">
-      <div>
-      <div class="tabluarTable">
-        <table class="tablesorter myTable">
+  <div>
+    <h1>Some User's Name</h1>
+    <p>Hier werden Ihre Dokumente abgelegt</p>
+    <ul>
+        <li>
+            <a href="http://127.0.0.1/hf/adressbook">
+               <span>adressbook</span>
+      </a>
+        </li>
+        <li>
+            <a href="http://127.0.0.1/hf/personcontainer">
+               <span>personcontainer</span>
+      </a>
+        </li>
+    </ul>
+    <div></div>
+    <form action="http://127.0.0.1/hf" method="post">
+      <table class="tablesorter myTable">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -159,7 +170,7 @@ Let's check again if we now get **contenttypes** in our homefolder:
     </thead>
     <tbody>
       <tr class="even">
-        <td><input type="checkbox" class="checkbox-widget" name="deleteFormTable-checkBox-0-selectedItems" value="hans"  /></td>
+        <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="hans"  /></td>
         <td><a href="http://127.0.0.1/hf/personcontainer/hans/edit"></a></td>
         <td>Person</td>
         <td>Entwurf</td>
@@ -168,21 +179,9 @@ Let's check again if we now get **contenttypes** in our homefolder:
       </tr>
     </tbody>
   </table>
-      </div>
-      <div class="tabluarForm">
-      </div>
-    </div>
-    </div>
-    <div>
-      <div class="buttons">
-  <input id="deleteFormTable-buttons-delete"
-         name="deleteFormTable.buttons.delete"
-         class="submit-widget button-field" value="Delete"
-         type="submit" />
-      </div>
-    </div>
-  </form>
-
+      <input type="submit" value="Entfernen" name="form.button.delete" />
+    </form>
+  </div>
 
 
 Delete Item Form

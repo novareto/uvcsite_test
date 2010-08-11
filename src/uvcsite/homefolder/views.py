@@ -8,9 +8,9 @@ from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from megrok.z3ctable import Values
 from megrok.z3cform.tabular import DeleteFormTablePage
 from zope.traversing.browser import absoluteURL
+from megrok.z3ctable import TablePage
 
-
-class Index(DeleteFormTablePage):
+class Index(TablePage):
     grok.context(IMyHomeFolder)
     grok.implements(IFolderListingTable)
 
@@ -36,6 +36,18 @@ class Index(DeleteFormTablePage):
     def executeDelete(self, item):
         self.flash(_(u'Ihre Dokumente wurden entfernt'))
         del item.__parent__[item.__name__]
+
+    def update(self): 
+        items = self.request.form.get('table-checkBox-0-selectedItems')
+        if items and self.request.has_key('form.button.delete'):
+            if isinstance(items, (str, unicode)):
+                items = [items,]
+            for key in items:
+                for pf in self.context.values():
+                    if pf.has_key(key):
+                        self.executeDelete(pf[key])
+        super(Index, self).update()
+        
 
 
 class HomeFolderValues(Values):
