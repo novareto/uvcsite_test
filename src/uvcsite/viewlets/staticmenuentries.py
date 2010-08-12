@@ -26,15 +26,16 @@ class UserName(grok.Viewlet):
         return '<a href="#">  %s </a>' % self.request.principal.description or self.request.principal.id
 
 
-class MeinOrdner(grok.View):
+class MeinOrdner(grok.Viewlet):
     grok.context(Interface)
     grok.name('Mein Ordner')
     grok.title('Mein Ordner')
-    navigation.sitemenuitem(uvcsite.IPersonalPreferences)
+    grok.viewletmanager(uvcsite.IPersonalPreferences)
     grok.order(20)
+    group = ''
 
     @property
-    def url(self):
+    def hfurl(self):
         principal = self.request.principal
         if IUnauthenticatedPrincipal.providedBy(principal):
             return
@@ -42,7 +43,7 @@ class MeinOrdner(grok.View):
         return absoluteURL(homeFolder, self.request)
 
     def render(self):
-        return self.response.redirect(self.url)
+        return "<a href='%s'> Mein Ordner" %self.hfurl
 
 
 class Mitbenutzerverwaltung(grok.View):

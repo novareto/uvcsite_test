@@ -1,4 +1,27 @@
-  <h1>Congratulations!</h1>
+      <html>
+      <head>
+      </head>
+      <body>
+        <h1>Me Grok manages dates</h1>
+          <p>Event manager to help with coordination</p>
+          <table>
+            <tr tal:repeat="row view/daterows">
+              <td tal:repeat="rowitem row/items">
+                <h2 class="dateitem_date" tal:content="rowitem/date">1. Jan 2010</h2>
+                <div class="dateitem_content" tal:content="structure rowitem/content">
+                   <ul><li>This is an example of an entry!</li></ul>
+                </div>
+              </td>
+            </tr>
+          </table>
+        <h1>Edit</h1>
+      </body>
+      </html>
+
+
+
+<!--
+<h1>Congratulations!</h1>
 
   <p class="big">Your Grok application is up and running.
   Edit <code>restest/app_templates/index.pt</code> to change
@@ -23,3 +46,4 @@
 <ul>
    <li><span>Text</span></li>
 </ul>
+-->
