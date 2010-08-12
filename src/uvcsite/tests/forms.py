@@ -52,6 +52,7 @@ class FormBeispiele(uvcsite.Category):
     uvcsite.topmenu(uvcsite.IGlobalMenu)
 
 
+
 class MyForm(uvcsite.Form):
     grok.title(u'Beispielform')
     grok.description(u"Beschreibugn Beschreibugn")
@@ -83,6 +84,13 @@ class MyForm(uvcsite.Form):
            return
        self.flash('Alles Klar')
        return 
+
+
+
+class MyFormHilfe(uvcsite.HelpPage):
+    grok.context(uvcsite.IUVCSite)
+    grok.view(MyForm)
+
 
 #
 ## GroupForm

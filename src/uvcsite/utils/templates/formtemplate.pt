@@ -1,15 +1,19 @@
 <div class="input-form">
 
+
+
+ <div id="formHeader">
   <h1 tal:condition="view/label"
       tal:content="view/label">Label</h1>
-
   <p class="big"
      tal:condition="view/description"
      tal:content="view/description">Description</p>
+ </div>
+
+    <div tal:replace="structure provider:uvc.hilfen" />
 
 <form action="." tal:attributes="action request/URL" method="post"
       enctype="multipart/form-data">
-
 
   <fieldset>
 

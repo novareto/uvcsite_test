@@ -46,12 +46,3 @@ class PersonalPanelView(uvcsite.Page):
 
 class NotFound(errors.NotFound):
     pass
-
-
-class HelpPage(uvcsite.Page):
-    grok.baseclass()
-
-    def namespace(self):
-        return {'settings_overrides': {'input_encoding': 'utf-8',
-                                       'output_encoding': 'utf-8',
-                                       }}

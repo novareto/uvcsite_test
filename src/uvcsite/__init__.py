@@ -18,7 +18,7 @@ from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
 from megrok.layout import Page
 from megrok.z3ctable import TablePage
 from uvcsite.interfaces import *
-from uvcsite.app import HelpPage
+from uvcsite.utils.help import HelpPage
 from uvc.layout.menus import  (Footer, GlobalMenu, 
          PersonalMenu, PersonalPreferences, DocumentActionsMenu)
 from uvcsite.utils.zeamform import Form, AddForm, SubForm, GroupForm, Wizard, Step

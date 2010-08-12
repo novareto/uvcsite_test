@@ -9,6 +9,10 @@ $(document).ready(function()
             opacity: 0.7, 
             tip: '.tooltip' 
         });
+
+        $("#accordion").accordion({ collapsible: true, active: false });
+
+
     }
 );
 
