@@ -52,3 +52,19 @@ def suiteFromPackage(name):
         test.layer = FunctionalLayer
         suite.addTest(test)
     return suite
+
+
+import sys
+from IPython.Shell import IPShellEmbed
+
+def ipython(locals=None):
+    savestdout = sys.stdout
+    sys.stdout = sys.stderr
+    sys.stderr.write('='*70)
+    embedshell  = IPShellEmbed(
+        argv = [], 
+        banner = """IPython Novareto Shell""",
+        user_ns = locals)
+    embedshell()
+    sys.stdout.write('='*70+'\n')
+    sys.stdout = savestdout

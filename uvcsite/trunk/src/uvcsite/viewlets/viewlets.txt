@@ -78,7 +78,24 @@ Show the Viewlets:
    >>> for x in manager.viewlets:
    ...     print x
    <megrok.navigation.util.AutoSiteMenuItem_0 object at ...>
-   <megrok.navigation.util.AutoSiteMenuItem_2 object at ...>
+
+We render the individual viewlets:
+
+  >>> [x for x in manager.viewlets]
+  [<megrok.navigation.util.AutoSiteMenuItem_0 object at 0...>, 
+   <uvcsite.viewlets.staticmenuentries.UserName object at 0...>, 
+   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>]
+  >>> prefs, username, meinordner = manager.viewlets
+
+Username:
+
+  >>> print username.render()
+  <a href="#">  A User </a>
+
+MeinOrdner:
+
+  >>> print meinordner.render()
+  <a href='http://127.0.0.1'> Mein Ordner
 
 
 Footer
@@ -96,7 +113,7 @@ Show the Viewlets:
 
    >>> for x in manager.viewlets:
    ...     print x
-   <megrok.navigation.util.AutoSiteMenuItem_14 object at ...>
+   <megrok.navigation.util.AutoSiteMenuItem_13 object at ...>
 
 
 PersonalMenu
@@ -112,7 +129,7 @@ Show the Viewlets:
    >>> for x in manager.viewlets:
    ...     print x
    <megrok.navigation.util.AutoSiteMenuItem_1 object at ...>
-   <megrok.navigation.util.AutoSiteMenuItem_3 object at ...>
+   <megrok.navigation.util.AutoSiteMenuItem_2 object at ...>
 
 
 GlobalMenu
@@ -129,8 +146,8 @@ Show the Viewlets:
    ...     print x
    <megrok.navigation.util.AutoMenuItem_0 object at 0...>
    <megrok.navigation.util.AutoMenuItem_1 object at 0...>
+   <megrok.navigation.util.AutoSiteMenuItem_8 object at 0...>
    <megrok.navigation.util.AutoSiteMenuItem_9 object at 0...>
-   <megrok.navigation.util.AutoSiteMenuItem_10 object at 0...>
    <megrok.navigation.util.AutoMenuItem_2 object at 0...>
 
 

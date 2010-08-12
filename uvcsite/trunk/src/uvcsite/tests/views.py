@@ -30,6 +30,14 @@ class Index(megrok.layout.Page):
     grok.context(IUVCSite)
     navigation.sitemenuitem(BausAuskunft)
 
+    daterows = [{
+                'items' : [{
+                        'date' : 'Yesterday!',
+                        'content' : 'lolcontent'
+                }]
+        }]
+
+
     def update(self):
         self.flash('Warning', type="warning")
         self.flash('MESSAGE', type="error")
