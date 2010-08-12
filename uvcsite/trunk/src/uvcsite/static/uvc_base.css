@@ -62,3 +62,19 @@ div.tooltip {
 #contextual-actions {
   display: none;
 }
+
+div#accordion h3 {
+  text-align: right;
+  width: 99%;
+  border: none;
+  margin-top: -30px;
+  background: transparent;
+}
+
+#content #page-body div#accordion h3 a {
+  text-decoration: none
+}
+
+#content #page-body div#accordion h3 span {
+  margin-left: 860px;
+}

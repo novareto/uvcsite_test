@@ -1,0 +1,8 @@
+<div id="accordion"
+     tal:define="viewlets viewletmanager/viewlets"
+     tal:condition="viewlets">
+     <h3> Hilfe </h3>
+     <div tal:repeat="viewlet viewlets">
+       <span tal:content="structure viewlet/render"/>
+     </div> 
+</div>

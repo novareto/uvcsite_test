@@ -36,6 +36,32 @@ We should reach to forms
 
 2) logout
 
-   >>> browser.open('http://localhost/app/login')
+   >>> browser.open('http://localhost/app/logout')
    >>> browser.headers['status'].upper()
    '200 OK'
+
+
+Try to Authenticate
+-------------------
+
+   >>> 'beaker.session.id' in browser.cookies.keys()
+   False 
+
+   >>> browser.open('http://localhost/app/login')
+   >>> browser.getControl(name="form.field.login").value = ""
+   >>> browser.getControl(name="form.field.password").value = "password"
+   >>> browser.getControl(name="form.action.anmelden").click()
+
+   >>> 'beaker.session.id' in browser.cookies.keys()
+   True
+
+Let's check if we get errors if we don't have a loginname:
+   
+   >>> browser = Browser()
+   >>> browser.open('http://localhost/app/login')
+   >>> browser.getControl(name="form.field.login").value = ""
+   >>> browser.getControl(name="form.field.password").value = "password"
+   >>> browser.getControl(name="form.action.anmelden").click()
+
+   >>> "There were errors:" in browser.contents
+   True

@@ -6,6 +6,7 @@ import grok
 
 from megrok import resource
 from hurry.jquery import jquery
+from hurry.jqueryui import jqueryui
 from zope.interface import Interface
 from uvc.layout.interfaces import IHeaders
 
@@ -18,6 +19,7 @@ class UVCResources(resource.ResourceLibrary):
     resource.resource('jquery.tools.min.js')
     resource.resource('uvc_base.js')
     resource.resource('uvc_base.css')
+    resource.resource('uvc_hilfen.css')
 
 
 class UVCResourceViewlet(grok.Viewlet):
@@ -26,6 +28,7 @@ class UVCResourceViewlet(grok.Viewlet):
 
     def render(self):
         jquery.need()
+        jqueryui.need()
         UVCResources.need()
         return u''
 
