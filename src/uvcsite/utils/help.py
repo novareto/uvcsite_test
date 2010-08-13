@@ -27,7 +27,7 @@ class HelpPage(grok.Viewlet):
     def namespace(self):
         return {'settings_overrides': {'input_encoding': 'utf-8',
                                        'output_encoding': 'utf-8',
-                                       'stylesheet': 'kkk',
+                                       'stylesheet': '',
                                        'stylesheet_path': None,
                                        'embed_stylesheet' :0,
                 }}
