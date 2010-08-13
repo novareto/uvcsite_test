@@ -47,6 +47,7 @@ setup(name='uvcsite',
                         'dolmen.forms.base',
                         'dolmen.forms.crud',
                         'dolmen.forms.wizard',
+                        'reportlab',
                         'ipdb',
                        ],
           entry_points = """
