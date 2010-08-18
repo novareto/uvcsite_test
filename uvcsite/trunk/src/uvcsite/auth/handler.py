@@ -47,8 +47,8 @@ class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
     grok.name('credentials')
 
     loginpagename = 'login'
-    loginfield = 'widgets.login'
-    passwordfield = 'widgets.password'
+    loginfield = 'form.field.login'
+    passwordfield = 'form.field.password'
 
 
 class UVCAuthenticator(grok.LocalUtility):
