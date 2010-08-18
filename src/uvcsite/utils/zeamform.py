@@ -19,8 +19,9 @@ import zope.lifecycleevent
 
 from zeam.form.composed import SubForm as BaseSubForm
 from zeam.form.composed import ComposedForm
+from zeam.form.base.errors import Errors, Error
 from zope.schema.interfaces import IField
-
+from zeam.form.ztk.validation import InvariantsValidation
 from dolmen.forms import wizard
 
 grok.templatedir('templates')
@@ -45,14 +46,29 @@ class Wizard(wizard.Wizard, Form):
     grok.baseclass()
 
     def validateData(self, fields, data):
-        fields = [x for x in fields if IField.providedBy(x)]
-        if not fields:
-            return super(ApplicationForm, self).validateData(fields, data)
-        return super(wizard.Wizard, self).validate(fields, data)
+        # Invariants validation
+        schema_fields = [field for field in fields if hasattr(field, '_field')]
+        invalids = InvariantsValidation(schema_fields).validate(data)
+        if len(invalids):
+            self.errors.append(Errors(
+                *[Error(unicode(invalid)) for invalid in invalids],
+                identifier=self.prefix))
+        if len(self.errors):
+            return self.errors
+        return super(ApplicationForm, self).validateData(fields, data)
 
 
 class Step(wizard.WizardStep, Form):
     grok.baseclass()
+
+    def validateStep(self, data):
+        return False
+
+    def validateData(self, fields, data):
+        super(Step, self).validateData(fields, data)
+        self.validateStep(data)
+        if len(self.errors):
+            return self.errors
 
 
 class AddForm(Form):
