@@ -34,7 +34,7 @@ class IPerson(interface.Interface):
         description = u"Bitte geben Sie den Vornamen ein",
         )
 
-    geschlecht = OptionalChoice(
+    geschlecht = schema.Choice(
         title = u"Gender",
         description = u"Bitte geben Sie das Geschlecht ein",
         values = ('men', 'woman', 'kid', 'grandpa', 'sister', 'brother'),
@@ -62,6 +62,7 @@ class MyForm(uvcsite.Form):
     ignoreContent = False 
     ignoreRequest = False
     fields = base.Fields(IPerson)
+    #fields['geschlecht'].mode = "radio"
 
     label = u"Beispielform"
     description = u"Beschreibung"
@@ -134,21 +135,34 @@ class MyWizard(uvcsite.Wizard):
     grok.context(uvcsite.IUVCSite)
     uvcsite.menu(FormBeispiele)
 
+    def __init__(self, context, request):
+        super(MyWizard, self).__init__(context, request)
+        self.setContentData(DictDataManager({}))
+
 
 class Step1(uvcsite.Step):
     grok.title('Step1')
     grok.context(uvcsite.IUVCSite)
     composed.view(MyWizard)
-    fields = base.Fields(IPerson)
+    fields = base.Fields(IPerson).select('datum')
+    ignoreContent = False
 
     label = "Step 1"
-
 
 
 class Step2(uvcsite.Step):
     grok.title('Step2')
     grok.context(uvcsite.IUVCSite)
     composed.view(MyWizard)
-    fields = base.Fields(IPerson)
+    fields = base.Fields(IPerson).select('vorname')
 
     label = "Step 2"
+
+
+class Step3(uvcsite.Step):
+    grok.title('Step3')
+    grok.context(uvcsite.IUVCSite)
+    composed.view(MyWizard)
+    fields = base.Fields(IPerson).select('name')
+
+    label = "Step 3"

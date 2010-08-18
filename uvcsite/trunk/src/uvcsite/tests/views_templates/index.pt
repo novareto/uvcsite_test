@@ -1,41 +1,3 @@
-<body>
-  <h1>Me Grok manages dates</h1>
-  <p>Event manager to help with coordination</p>
-  <table id="dateitemtable" tal:define="daterowslist view/daterows">
-  <tr tal:repeat="row daterowslist">
-        <td tal:repeat="rowitem row/items">
-                <h2 class="dateitem_date" tal:content="rowitem/date">1. Jan 2010</h2>
-                <div class="dateitem_content">
-                        <ul>
-                        <tal:subitem repeat="subitem rowitem/subentries">
-                        <li tal:attributes="style string:'background-color:${subitem/htmlcolour}'">
-                                <tal:subitem replace="subitem/content">
-                                        Some example event
-                                </tal:subitem>
-                                <span tal:content="string:(${subitem/categorydesc})">
-                                        (Test category)
-                                </span>
-                                <tal:subitem condition="python:rowitem['showdeletebuttons']==1">
-                                        <form method="POST" tal:attributes="action view/url">
-                                                <input type="submit" value="X" name="deleteitem">
-                                        </form>
-                                </tal:subitem>
-                        </li>
-                        </tal:subitem>
-                        </ul>
-                        <tal:subitem condition="python:rowitem['showeditbutton']==1">
-                                <form method="POST" tal:attributes="action view/url">
-                                        <input type="submit" value=".." name="edititem">
-                                </form>
-                        </tal:subitem>
-                </div>
-        </td>
-  </tr>
-  </table>
-</body>
-
-
-<!--
 <h1>Congratulations!</h1>
 
   <p class="big">Your Grok application is up and running.
@@ -61,4 +23,3 @@
 <ul>
    <li><span>Text</span></li>
 </ul>
--->
