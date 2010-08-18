@@ -85,6 +85,14 @@
           </div>
       </div>
 
+      <div class="fields"
+          tal:condition="view/fieldWidgets">
+        <span class="field" tal:repeat="widget view/fieldWidgets">
+          <tal:widget tal:content="structure widget/render" />
+        </span>
+      </div>
+
+
       <div class="actions"
            tal:condition="view/actionWidgets">
         <span class="action" tal:repeat="widget view/actionWidgets">
