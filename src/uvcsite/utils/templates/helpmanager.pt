@@ -1,8 +1,20 @@
-<div id="accordion"
+<script>
+$(document).ready(function() {
+  $("a#help_button").click(function() {
+      $("#effect").toggle('blind')
+      return false;
+  });
+})  
+</script>
+
+<div id="uvc_help"
      tal:define="viewlets viewletmanager/viewlets"
      tal:condition="viewlets">
-     <h3> Hilfe </h3>
-     <div tal:repeat="viewlet viewlets">
-       <span tal:content="structure viewlet/render"/>
-     </div> 
+       <a href id="help_button"> Hilfe </a>
+       <div id="toggler"
+            tal:repeat="viewlet viewlets">
+         <div id="effect" class="ui-widget-content ui-corner-all">
+            <span tal:content="structure viewlet/render"/>
+         </div> 
+       </div>
 </div>

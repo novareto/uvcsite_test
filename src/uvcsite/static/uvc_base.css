@@ -63,18 +63,19 @@ div.tooltip {
   display: none;
 }
 
-div#accordion h3 {
+div#uvc_help {
   text-align: right;
-  width: 99%;
+  width: 66%;
   border: none;
-  margin-top: -30px;
+  margin-top: -48px;
+  margin-bottom: 2em;
+  margin-left: 23em;
   background: transparent;
 }
 
-#content #page-body div#accordion h3 a {
-  text-decoration: none
+div#toggler {
+ text-align:left;
+ text-indent:20px;
+ display: none;
 }
 
-#content #page-body div#accordion h3 span {
-  margin-left: 860px;
-}

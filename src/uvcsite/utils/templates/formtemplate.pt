@@ -1,7 +1,4 @@
 <div class="input-form">
-
-
-
  <div id="formHeader">
   <h1 tal:condition="view/label"
       tal:content="view/label">Label</h1>
@@ -31,6 +28,8 @@
       </div>
 
     <div id="extrainfo" tal:replace="structure provider:uvc.layout.extrainfo"/>
+
+    <div class="relax"/>
 
     <div class="fields"
          tal:condition="view/fieldWidgets">
