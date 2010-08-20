@@ -7,7 +7,7 @@
      tal:condition="view/description"
      tal:content="view/description">Description</p>
 
-    <ol class="wizard-steps">
+    <ul class="wizard-steps">
       <li tal:repeat="form view/subforms"
          class="wizard-step-link">
         <tal:current tal:define="current python: repeat['form'].index()">
@@ -25,7 +25,7 @@
           </span>
         </tal:current>
       </li>
-    </ol>
+    </ul>
 
 
 
@@ -53,7 +53,7 @@
           </ul>
       </div>
     
-        <div id="extrainfo" tal:replace="structure provider:uvc.layout.extrainfo"/>
+      <div id="extrainfo" tal:replace="structure provider:uvc.layout.extrainfo"/>
 
       <div class="step-fields"
            tal:condition="view/current/fieldWidgets">
