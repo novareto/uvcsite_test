@@ -12,6 +12,8 @@ from uvcsite.homefolder.homefolder import PortalMembership
 from zope.authentication.interfaces import IAuthentication
 from zope.app.homefolder.interfaces import IHomeFolderManager
 
+from zeam.form.ztk.widgets.date import DateWidgetExtractor
+from zope.i18n.format import DateTimeParseError
 
 class Icons(grok.DirectoryResource):
     grok.name('uvc-icons')
@@ -46,3 +48,19 @@ class PersonalPanelView(uvcsite.Page):
 
 class NotFound(errors.NotFound):
     pass
+
+
+class CustomDateWidgetExtractor(DateWidgetExtractor):
+    """ Extractor for German Date Notation
+    """
+
+    def extract(self):
+        value, error = super(DateWidgetExtractor, self).extract()
+        if value is not uvcsite.NO_VALUE:
+            locale = self.request.locale
+            formatter = locale.dates.getFormatter(self.valueType, 'medium')
+            try:
+                value = formatter.parse(value)
+            except (ValueError, DateTimeParseError), error:
+                return None, str(error)
+        return value, error

@@ -76,7 +76,9 @@ class MyForm(uvcsite.Form):
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
        data, errors = self.extractData()
-       if errors:
+       if data.get('name') == "hans":
+           self.errors.append(uvcsite.Error('Hans ist doof', identifier=self.prefix))
+       if errors or self.errors:
            self.flash(u"FEHLER", type="error")
            return
        self.flash('Alles Klar')
