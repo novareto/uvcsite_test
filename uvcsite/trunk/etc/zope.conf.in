@@ -42,7 +42,7 @@ site-definition ${site_zcml:output}
 devmode on
 
 <product-config mailer>
-    queue-path ${buildout:directory}/var/mailer-queue
+    queue-path /tmp/mailer-queue
     hostname localhost
     port 25
 #    username
