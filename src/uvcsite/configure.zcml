@@ -6,7 +6,7 @@
 
   <includeDependencies package="." />
   <includeDependenciesOverrides package="." />
-
+  
   <include package="dolmen.menu" />
   <include package="dolmen.app.layout" />
   <include package="dolmen.content" />

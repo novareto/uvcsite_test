@@ -128,8 +128,15 @@ class AddFormTemplate(pt.PageTemplate):
 class SubFormTemplate(pt.PageTemplate):
     """Template for a layout aware form.
     """
-    template = grok.PageTemplateFile('templates/formtemplate.pt')
+    template = grok.PageTemplateFile('templates/subformtemplate.pt')
     pt.view(SubForm)
+
+
+class ComposedFormTemplate(pt.PageTemplate):
+    """Template for a layout aware form.
+    """
+    template = grok.PageTemplateFile('templates/composedformtemplate.pt')
+    pt.view(GroupForm)
 
 
 class WizardTemplate(pt.PageTemplate):

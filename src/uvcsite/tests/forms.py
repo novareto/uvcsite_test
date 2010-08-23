@@ -8,12 +8,7 @@ import uvcsite
 from zope import interface
 from zope import schema
 
-from dolmen.forms import base
-from zeam.form.base import action, DictDataManager 
-
 from uvc.widgets import DatePicker, DatePickerCSS, double
-from zeam.form import composed
-
 from uvc.widgets.fields import OptionalChoice
 
 
@@ -22,6 +17,7 @@ class IPerson(interface.Interface):
     id = schema.TextLine(
        title = u"Id",
        description = u"Id",
+       max_length=3,
        )
 
     name = schema.TextLine(
@@ -61,7 +57,7 @@ class MyForm(uvcsite.Form):
 
     ignoreContent = False 
     ignoreRequest = False
-    fields = base.Fields(IPerson)
+    fields = uvcsite.Fields(IPerson)
     #fields['geschlecht'].mode = "radio"
 
     label = u"Beispielform"
@@ -72,12 +68,12 @@ class MyForm(uvcsite.Form):
         self.fieldWidgets.get('form.field.datum').htmlId = lambda x='datepicker': x 
 
     def update(self):
-        self.setContentData(DictDataManager(dict(name="Klaus")))
+        self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))
         double.need()
         DatePicker.need()
         DatePickerCSS.need()
 
-    @action(u'Abschicken')
+    @uvcsite.action(u'Abschicken')
     def handleButton(self):
        data, errors = self.extractData()
        if errors:
@@ -104,25 +100,25 @@ class SplitContact(uvcsite.GroupForm):
 
 
 class Father(uvcsite.SubForm):
-    composed.context(uvcsite.IUVCSite)
-    composed.view(SplitContact)
-    fields = base.Fields(IPerson)
+    grok.context(uvcsite.IUVCSite)
+    grok.view(SplitContact)
+    fields = uvcsite.Fields(IPerson)
 
     label = "Father"
 
-    @action(u'Abschicken')
+    @uvcsite.action(u'Abschicken')
     def handleButton(self):
         data, errors = self.extractData()
 
 
 class Mother(uvcsite.SubForm):
-    composed.context(uvcsite.IUVCSite)
-    composed.view(SplitContact)
-    fields = base.Fields(IPerson)
+    grok.context(uvcsite.IUVCSite)
+    grok.view(SplitContact)
+    fields = uvcsite.Fields(IPerson)
 
     label = "Mother"
 
-    @action(u'Abschicken')
+    @uvcsite.action(u'Abschicken')
     def handleButton(self):
         data, errors = self.extractData()
 
@@ -134,17 +130,19 @@ class MyWizard(uvcsite.Wizard):
     grok.title('Wizard')
     grok.context(uvcsite.IUVCSite)
     uvcsite.menu(FormBeispiele)
+    label = u"Wizard"
+    description = u"Ein Beispiel WIZARD"
 
     def __init__(self, context, request):
         super(MyWizard, self).__init__(context, request)
-        self.setContentData(DictDataManager({}))
+        #self.setContentData(DictDataManager({}))
 
 
 class Step1(uvcsite.Step):
     grok.title('Step1')
     grok.context(uvcsite.IUVCSite)
-    composed.view(MyWizard)
-    fields = base.Fields(IPerson).select('datum')
+    grok.view(MyWizard)
+    fields = uvcsite.Fields(IPerson).select('datum')
     ignoreContent = False
 
     label = "Step 1"
@@ -153,16 +151,24 @@ class Step1(uvcsite.Step):
 class Step2(uvcsite.Step):
     grok.title('Step2')
     grok.context(uvcsite.IUVCSite)
-    composed.view(MyWizard)
-    fields = base.Fields(IPerson).select('vorname')
+    grok.view(MyWizard)
+    fields = uvcsite.Fields(IPerson).select('vorname')
+    ignoreContent = False
 
-    label = "Step 2"
+    label = "Step 2 GANZ LANGER STEP"
 
 
 class Step3(uvcsite.Step):
     grok.title('Step3')
     grok.context(uvcsite.IUVCSite)
-    composed.view(MyWizard)
-    fields = base.Fields(IPerson).select('name')
+    grok.view(MyWizard)
+    fields = uvcsite.Fields(IPerson).select('name')
+    ignoreContent = False
 
     label = "Step 3"
+
+
+class MyFormHilfe(uvcsite.HelpPage):
+    grok.context(uvcsite.IUVCSite)
+    grok.view(MyWizard)
+

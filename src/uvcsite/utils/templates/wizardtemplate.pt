@@ -1,11 +1,6 @@
 <div class="input-form">
 
-  <h1 tal:condition="view/label"
-      tal:content="view/label">Label</h1>
-
-  <p class="big"
-     tal:condition="view/description"
-     tal:content="view/description">Description</p>
+   <div tal:replace="structure provider:uvc.hilfen" />
 
     <ul class="wizard-steps">
       <li tal:repeat="form view/subforms"
@@ -18,7 +13,7 @@
             Link to step
 
           </a>
-          <span tal:content="form/label"
+          <span tal:content="python: form.label[:20]"
                 tal:attributes="class python: view.step == current and 'current' or 'next'"
                 tal:condition="python: current >= view.step">
             Current step
@@ -27,6 +22,12 @@
       </li>
     </ul>
 
+  <h1 tal:condition="view/label"
+      tal:content="view/label">Label</h1>
+
+  <p class="big"
+     tal:condition="view/description"
+     tal:content="view/description">Description</p>
 
 
 <form action="." tal:attributes="action request/URL" method="post"
