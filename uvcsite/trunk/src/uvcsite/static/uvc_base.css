@@ -65,17 +65,12 @@ div.tooltip {
 
 div#uvc_help {
   text-align: right;
-  width: 66%;
-  border: none;
-  margin-top: -48px;
-  margin-bottom: 2em;
-  margin-left: 23em;
-  background: transparent;
+  float: right;
+  width: 500px;
 }
 
 div#toggler {
  text-align:left;
  text-indent:20px;
- display: none;
 }
 

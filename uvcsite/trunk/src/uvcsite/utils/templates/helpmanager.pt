@@ -1,7 +1,10 @@
 <script>
 $(document).ready(function() {
+  $('#toggler').dialog({
+            autoOpen: false,
+  });
   $("a#help_button").click(function() {
-      $("#effect").toggle('blind')
+      $("#toggler").dialog('open');
       return false;
   });
 })  
@@ -12,8 +15,9 @@ $(document).ready(function() {
      tal:condition="viewlets">
        <a href id="help_button"> Hilfe </a>
        <div id="toggler"
+            title="Hilfe"
             tal:repeat="viewlet viewlets">
-         <div id="effect" class="ui-widget-content ui-corner-all">
+         <div id="effect">
             <span tal:content="structure viewlet/render"/>
          </div> 
        </div>
