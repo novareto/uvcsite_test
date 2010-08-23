@@ -1,0 +1,24 @@
+<script>
+$(document).ready(function() {
+  $('#toggler').dialog({
+            autoOpen: false,
+  });
+  $("a#help_button").click(function() {
+      $("#toggler").dialog('open');
+      return false;
+  });
+})  
+</script>
+
+<div id="uvc_help"
+     tal:define="viewlets viewletmanager/viewlets"
+     tal:condition="viewlets">
+       <a href id="help_button"> Hilfe </a>
+       <div id="toggler"
+            title="Hilfe"
+            tal:repeat="viewlet viewlets">
+         <div id="effect">
+            <span tal:content="structure viewlet/render"/>
+         </div> 
+       </div>
+</div>

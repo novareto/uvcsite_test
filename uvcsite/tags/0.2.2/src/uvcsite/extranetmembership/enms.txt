@@ -1,0 +1,206 @@
+Functional Extranetmembership 
+=============================
+
+:Test-Layer: functional
+
+Setup
+-----
+
+   >>> from uvcsite.app import Uvcsite
+   >>> from zope.app.component.hooks import getSite, setSite
+
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+   >>> root['app']
+   <uvcsite.app.Uvcsite object at ...>
+ 
+   >>> setSite(uvcsite)
+
+   >>> from zope.component import getUtility
+   >>> import grok
+
+   >>> unfallanzeigen = grok.Container()
+
+   >>> from zope.app.homefolder.interfaces import IHomeFolderManager
+   >>> utility = getUtility(IHomeFolderManager)
+   >>> utility
+   <uvcsite.homefolder.homefolder.PortalMembership object at ...>
+
+   >>> hf = utility.getHomeFolder('uvc.user')
+   >>> print hf
+   <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+
+   >>> hf['unfallanzeige'] = unfallanzeigen
+
+Add
+---
+
+Now log on as a user and look if we get the index page
+
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+
+   >>> browser.handleErrors = False 
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.open('http://localhost/app/')
+   >>> 'Meine Einstellungen' in browser.contents
+   True
+
+Now we go to 'Meine Einstellungen'
+
+   >>> link = browser.getLink('Meine Einstellungen')
+   >>> link
+   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
+   >>> link.click()
+
+At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
+
+   >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
+   >>> benutzerverwaltung
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/Mitbenutzerverwaltung'>
+
+   >>> benutzerverwaltung.click()
+   >>> neuerUser = browser.getLink('neuen User anlegen')
+   >>> neuerUser
+   <Link text='neuen User anlegen' url='http://localhost/app/members/uvc.user/enmscreateuser'>
+
+After clicking on Benutzerverwaltung we can go to the "add a new User"
+
+   >>> neuerUser.click()
+
+Fill out the Form
+
+   >>> form = browser.getForm()
+   >>> form.getControl(name='form.field.rollen').value = 'unfallanzeige',
+   >>> form.getControl(name='form.field.passwort').value = 'geheim'
+   >>> form.getControl(name='form.field.confirm').value = 'geheim'
+   >>> form.submit('Anlegen')
+
+And get the right status if no error occur!
+
+   >>> '<dd>Der Mitbenutzer wurde gespeichert</dd>' in browser.contents
+   True
+
+Modify
+------
+
+Again we have to navigate to 'Benutzerverwaltung'
+
+   >>> browser.open('http://localhost/app')
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+
+   >>> link = browser.getLink('Meine Einstellungen')
+   >>> link
+   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
+   >>> link.click()
+
+   >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
+   >>> benutzerverwaltung
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/Mitbenutzerverwaltung'>
+
+Here we click on the user we want to modify!
+
+   >>> benutzerverwaltung.click()
+   >>> "<span> 0101010001</span>" in browser.contents
+   True
+
+   >>> update = browser.getLink('0101010001')
+   >>> update
+   <Link text='0101010001' url='http://localhost/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
+   >>> update.click()
+
+Here we have the input form we check if we have the right value for passwort!
+
+   >>> form = browser.getForm()
+   >>> print form.getControl(name='form.field.passwort').value
+   passwort 
+
+So let's check here if we check correctly the password and confirm:
+
+   >>> url = browser.url 
+   >>> form.getControl(name='form.field.confirm').value = "passwort" 
+   >>> form.getControl(name='form.field.passwort').value = "notequal" 
+   >>> form.submit('Bearbeiten')
+   >>> '<dd>Es sind Fehler aufgetreten</dd>' in browser.contents
+   True
+
+Now try a good combination of passwort and confirm!
+
+   >>> browser.open(url)
+   >>> form = browser.getForm()
+   >>> form.getControl(name='form.field.confirm').value = "passwort" 
+   >>> form.getControl(name='form.field.passwort').value = "passwort" 
+   >>> #form.getControl(name='form.field.rollen:list').value = '1'
+   >>> form.submit('Bearbeiten')
+
+Fill out the form and submit, and check if we get the right message!
+
+   >>> "Der Mitbenutzer wurde gespeichert" in browser.contents
+   True
+
+
+
+Delete
+------
+
+Again we have to navigate to 'Benutzerverwaltung'
+
+   >>> browser.open('http://localhost/app')
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+
+   >>> link = browser.getLink('Meine Einstellungen')
+   >>> link
+   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
+   >>> link.click()
+
+   >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
+   >>> benutzerverwaltung
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/Mitbenutzerverwaltung'>
+
+Here we click on the user we want to modify!
+
+   >>> benutzerverwaltung.click()
+   >>> "<span> 0101010001</span>" in browser.contents
+   True
+
+   >>> delete = browser.getLink('0101010001')
+   >>> delete 
+   <Link text='0101010001' url='http://localhost/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
+   >>> delete.click()
+
+Here we have the input form!
+
+   >>> form = browser.getForm()
+   >>> "Entfernen" in browser.contents
+   True
+
+Click on the button
+
+   >>> form.submit('Entfernen')
+   >>> "<dd>Der Mitbenutzer wurde entfernt.</dd>" in browser.contents
+   True
+
+
+Changing the Password
+=====================
+
+We still have form for changing the users password!
+
+   >>> browser.open('http://localhost/app/changepassword')
+   >>> print browser.headers['Status'].upper()
+   200 OK
+
+Let's get the form. We should get our two input forms for passwort and confirm
+
+   >>> form = browser.getForm()
+   >>> form.getControl(name='form.field.passwort').value = "passwort" 
+   >>> form.getControl(name='form.field.confirm').value = "passwort" 
+   >>> form.submit('Bearbeiten')
+
+We should get the right portal status, for changing the passwort!
+
+   >>> "<dd>Ihr Passwort wurde gespeichert!</dd>" in browser.contents
+   True
+

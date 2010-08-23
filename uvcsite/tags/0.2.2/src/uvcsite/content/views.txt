@@ -1,0 +1,76 @@
+Check the dynamic table elements in the view of the productfolder 
+=================================================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Setup
+-----
+
+  >>> from zope.app.testing.functional import getRootFolder
+  >>> root = getRootFolder()
+  >>> from zope.site.hooks import setSite
+  >>> setSite(root)
+
+  >>> from uvcsite.tests.simpleaddon import AdressBook, Contact
+
+  >>> root['folder'] = folder = AdressBook()
+  >>> folder
+  <uvcsite.tests.simpleaddon.AdressBook object at ...>
+
+The folder should be empty:
+  
+  >>> len(folder)
+  0
+
+Views
+-----
+
+This are some imports which helps us to call the IndexTable 
+of our folder.
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> request = TestRequest()
+
+  >>> add = getMultiAdapter((folder, request), name='add')
+  >>> add
+  <uvcsite.content.views.Add object at ...>
+
+  >>> add.fields.keys()
+  ['title', 'name', 'alter']
+
+
+Let's check this with the testbrowser!
+--------------------------------------
+
+  >>> from zope.testbrowser.testing import Browser
+  >>> browser = Browser()
+  >>> browser.handleErrors = False
+  >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+
+  >>> browser.open('http://127.0.0.1/folder/@@add')
+
+  >>> browser.getControl(name="form.field.title").value = "Titel"
+  >>> browser.getControl(name="form.field.name").value = "christian"
+  >>> browser.getControl(name="form.field.alter").value = "30"
+
+  >>> save = browser.getControl(name="form.action.48696e7a7566c3bc67656e")
+  >>> save
+  <SubmitControl name='form.action.48696e7a7566c3bc67656e' type='submit'>
+  
+  >>> save.click()
+
+We should see this contact now in the folder!
+
+
+  >>> '<td><a href="http://127.0.0.1/folder/Contact">Contact</a></td>' in  browser.contents
+  True
+
+  >>> "<dd>Added Content</dd>" in browser.contents
+  True
+
+Of course the len of the folder should now be one:
+
+  >>> len(folder)
+  1

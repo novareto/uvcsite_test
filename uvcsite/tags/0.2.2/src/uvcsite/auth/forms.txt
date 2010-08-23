@@ -1,0 +1,67 @@
+Do a functional doctest test on the app.
+========================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Let's first create an instance of Uvcsite at the top level:
+
+   >>> from zope.app.testing.functional import getRootFolder
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+
+Run tests in the testbrowser
+----------------------------
+
+The zope.testbrowser.browser module exposes a Browser class that
+simulates a web browser similar to Mozilla Firefox or IE.  We use that
+to test how our application behaves in a browser.  For more
+information, see http://pypi.python.org/pypi/zope.testbrowser.
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+
+
+We should reach to forms
+------------------------
+
+1) login
+
+
+   >>> browser.open('http://localhost/app/login')
+   >>> browser.headers['status'].upper()
+   '200 OK'
+
+2) logout
+
+   >>> browser.open('http://localhost/app/logout')
+   >>> browser.headers['status'].upper()
+   '200 OK'
+
+
+Try to Authenticate
+-------------------
+
+   >>> 'beaker.session.id' in browser.cookies.keys()
+   False 
+
+   >>> browser.open('http://localhost/app/login')
+   >>> browser.getControl(name="form.field.login").value = ""
+   >>> browser.getControl(name="form.field.password").value = "password"
+   >>> browser.getControl(name="form.action.anmelden").click()
+
+   >>> 'beaker.session.id' in browser.cookies.keys()
+   True
+
+Let's check if we get errors if we don't have a loginname:
+   
+   >>> browser = Browser()
+   >>> browser.open('http://localhost/app/login')
+   >>> browser.getControl(name="form.field.login").value = ""
+   >>> browser.getControl(name="form.field.password").value = "password"
+   >>> browser.getControl(name="form.action.anmelden").click()
+
+   >>> "There were errors:" in browser.contents
+   True
