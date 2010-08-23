@@ -30,7 +30,7 @@ from zeam.form.base.markers import DISPLAY, INPUT, HIDDEN
 from zeam.form.base.markers import SUCCESS, FAILURE, DEFAULT
 from zeam.form.base.markers import NO_VALUE, NO_CHANGE, NOTHING_DONE
 from zeam.form.ztk.actions import CancelAction
-
+from zeam.form.base.errors import Error
 
 ### DOLMEN-FORMS-API 
 from dolmen.forms.base.models import ApplicationForm
