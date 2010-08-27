@@ -1,4 +1,4 @@
-<div class="input-form">
+<div class="input-form" i18n:domain="dolmen.forms.wizard">
 
    <div tal:replace="structure provider:uvc.hilfen" />
 
@@ -47,7 +47,7 @@
 
       <div class="form-error"
           tal:condition="view/current/errors">
-        There were errors:
+          <span i18n:domain="zeam.form.base" i18n:translate="text_errors">There were errors:</span>
           <ul tal:condition="view/current/formErrors"
               tal:repeat="error view/current/formErrors">
             <li> <span tal:replace="error/title" /> </li>
@@ -97,7 +97,7 @@
       <div class="actions"
            tal:condition="view/actionWidgets">
         <span class="action" tal:repeat="widget view/actionWidgets">
-          <tal:widget tal:content="structure widget/render" />
+          <tal:widget  tal:content="structure widget/render" />
         </span>
         <span class="action" tal:repeat="widget view/current/actionWidgets">
           <tal:widget tal:content="structure widget/render" />
