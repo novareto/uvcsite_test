@@ -46,13 +46,11 @@ class AdressBook(uvcsite.ProductFolder):
     grok.description('Description of Adressbook')
     uvcsite.contenttype(Contact)
 
-class Cat(object):
-    title = u""
-    url = ""
 
-    def __init__(self, title=u"", url=""):
-        self.title = title
-        self.url = url
+@grok.subscribe(Contact, uvcsite.IAfterSaveEvent)
+def handle_save(obj, event):
+    print "AfterSaveEvent"
+
 
 from megrok import navigation
 class AddMenuEntry(grok.View):

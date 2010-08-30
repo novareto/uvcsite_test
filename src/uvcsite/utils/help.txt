@@ -50,7 +50,7 @@ These two checks are needed for ReST:
   <zope.publisher.browser.BrowserResponse object at ...>
 
   >>> help_page.namespace()
-  {'settings_overrides': {'input_encoding': 'utf-8', 'stylesheet': '', 'embed_stylesheet': 0, 'output_encoding': 'utf-8', 'stylesheet_path': None}}
+  {'settings_overrides': {'input_encoding': 'utf-8', 'stylesheet': '', 'embed_stylesheet': 0, 'output_encoding': 'unicode', 'stylesheet_path': None}}
 
 Finallay we can render the page:
 
