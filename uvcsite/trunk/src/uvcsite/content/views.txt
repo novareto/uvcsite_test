@@ -58,8 +58,11 @@ Let's check this with the testbrowser!
   >>> save = browser.getControl(name="form.action.48696e7a7566c3bc67656e")
   >>> save
   <SubmitControl name='form.action.48696e7a7566c3bc67656e' type='submit'>
-  
+ 
+We have a subscriber for the AfterSaveEvent for uvcsite which prints "AfterSaveEvent".
+
   >>> save.click()
+  AfterSaveEvent
 
 We should see this contact now in the folder!
 

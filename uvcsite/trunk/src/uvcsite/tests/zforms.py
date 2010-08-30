@@ -8,10 +8,23 @@ from dolmen.forms.base import Fields
 from zope import interface
 from zope import schema
 from uvc import validation
+from zope.component.interfaces import IFactory
 
+
+class ITelefonnummern(interface.Interface):
+
+    typ = schema.Choice(
+        title=u"Art",
+        values=['mobil','fax','arbeit']
+        )
+
+    nummer = schema.TextLine(
+        title=u"Telefonnummer",
+        description=u"Telefonnummer",
+        required=True
+        )
 
 class IMyFields(interface.Interface):
-
 
     name = schema.TextLine(
         title=u"Name", 
@@ -20,10 +33,13 @@ class IMyFields(interface.Interface):
         constraint = validation.validation.validateZahl
         )
 
-    gender = schema.Choice(
-        title = u"Geschlecht",
-        description = u"Geschlecht",
-        values = ['klaus', 'egon']
+    telefonnummern = schema.List(
+        title = u"Telefonnummern",
+        description = u"Telefonnummern",
+        required = False,
+        value_type = schema.Object(
+            title=u"Telefonummern",
+            schema=ITelefonnummern),
         )
 
 class MailForm(uvcsite.Form):
@@ -31,18 +47,25 @@ class MailForm(uvcsite.Form):
     label = u"Send a mail"
     description = u"to people"
     fields = Fields(IMyFields)
-    submissionError = None
-
-
-    def update(self):
-        super(MailForm, self).update()
-        self.fields.get('gender').mode = 'radio'
 
     @base.action(u'Senden', 'idsind')
     def send(self):
         data, errors = self.extractData()
         print data
-        if errors:
-            self.flash(u'Achtung Fehler', 'error')
-            return
+        print errors
+
+
+class Nummern(grok.Model):
+    grok.implements(ITelefonnummern)
+
+    def __init__(self, typ=None, nummer=None):
+        self.typ = typ
+        self.nummer = nummer
+
+class TelefonnummernFactory(grok.GlobalUtility):
+    grok.implements(IFactory)
+    grok.name('uvcsite.tests.zforms.ITelefonnummern')
+
+    def __call__(self, typ=None, nummer=None):
+        return  Nummern(typ, nummer)
 

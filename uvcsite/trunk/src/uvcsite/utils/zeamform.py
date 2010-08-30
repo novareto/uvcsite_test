@@ -23,6 +23,10 @@ from zeam.form.base.errors import Errors, Error
 from zope.schema.interfaces import IField
 from zeam.form.ztk.validation import InvariantsValidation
 from dolmen.forms import wizard
+from uvcsite.utils.event import AfterSaveEvent
+from zeam.form.base.markers import SUCCESS, FAILURE
+from dolmen.forms.wizard import MF as _
+
 
 grok.templatedir('templates')
 
@@ -42,8 +46,22 @@ class GroupForm(ComposedForm, Form):
     grok.baseclass()
 
 
+class MySaveAction(wizard.actions.SaveAction):
+    def __call__(self, form):
+        if super(MySaveAction, self).__call__(form) is SUCCESS:
+            grok.notify(AfterSaveEvent(form.context))
+            form.redirect(form.url(self.redirect_url))
+            return SUCCESS
+        return FAILURE
+
+
 class Wizard(wizard.Wizard, Form):
     grok.baseclass()
+
+    actions = base.Actions(
+        wizard.actions.PreviousAction(_(u"Back")),
+        MySaveAction(_(u"Save")),
+        wizard.actions.NextAction(_(u"Continue")))    
 
     def validateData(self, fields, data):
         # Invariants validation
@@ -85,6 +103,7 @@ class AddForm(Form):
         if obj is not None:
             # mark only as finished if we get the new object
             self._finishedAdd = True
+            grok.notify(AfterSaveEvent(obj, self.request.principal))
 
     def createAndAdd(self, data):
         obj = self.create(data)
