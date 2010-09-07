@@ -41,6 +41,11 @@ class IPerson(interface.Interface):
         description = u"Bitte wählen Sie ein Datum aus",
         )
 
+    datum1 = schema.Date(
+        title = u"Datum1",
+        description = u"Bitte wählen Sie ein Datum aus",
+        )
+
 
 class FormBeispiele(uvcsite.Category):
     grok.title('FormBeispiele')
@@ -63,9 +68,6 @@ class MyForm(uvcsite.Form):
     label = u"Beispielform"
     description = u"Beschreibung"
 
-    def updateWidgets(self):
-        super(MyForm, self).updateWidgets()
-        self.fieldWidgets.get('form.field.datum').htmlId = lambda x='datepicker': x 
 
     def update(self):
         self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))
@@ -75,10 +77,6 @@ class MyForm(uvcsite.Form):
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
-       from time import sleep
-       print "JO"
-       sleep(5)
-       print "JO2"
        data, errors = self.extractData()
        if data.get('name') == "hans":
            self.errors.append(uvcsite.Error('Hans ist doof', identifier=self.prefix))
@@ -87,34 +85,6 @@ class MyForm(uvcsite.Form):
            return
        self.flash('Alles Klar')
        return 
-
-
-JS =""" 
-<script>  
-$(document).ready(function() {
-
-$.fn.extend({
-  preventDoubleSubmit: function(id) {
-    if (this.beenSubmitted)
-      return false;
-    else
-      this.beenSubmitted = true;
-  }});
-
-
- $('#form').preventDoubleSubmit();
-
-
-});
-</script>"""
-
-class CHanfhelp(grok.Viewlet):
-    grok.view(MyForm)
-    grok.context(uvcsite.IUVCSite)
-    grok.viewletmanager(uvcsite.IExtraInfo)
-
-    def render(self):
-        return JS
 
 
 

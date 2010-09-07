@@ -24,6 +24,9 @@ class UVCResources(resource.ResourceLibrary):
 Overlay = resource.ResourceInclusion(
     UVCResources, 'overlay.js', depends=[jquery])
 
+Tooltip = resource.ResourceInclusion(
+    UVCResources, 'tooltip.js', depends=[jquery])
+
 
 class UVCResourceViewlet(grok.Viewlet):
     grok.viewletmanager(IHeaders)
