@@ -50,7 +50,7 @@ class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
     loginfield = 'form.field.login'
     passwordfield = 'form.field.password'
 
-
+from grokcore import message
 class UVCAuthenticator(grok.LocalUtility):
     """ Custom Authenticator for UVC-Site"""
     grok.implements(IAuthenticatorPlugin)

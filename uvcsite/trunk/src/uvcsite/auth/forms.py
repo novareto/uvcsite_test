@@ -31,12 +31,19 @@ class Login(uvcsite.Form):
     fields = Fields(ILoginForm)
     fields['camefrom'].mode = "hidden"
 
+    def update(self):
+        super(Login, self).update()
+        uvcsite.Overlay.need()
+
     @base.action(u'Anmelden')
     def handle_login(self):
         data, errors = self.extractData()
         if errors:
             self.flash(u'Bitte korrigieren Sie Ihre Eingaben', type="error")
-            return
+        principal = self.request.principal
+        if IUnauthenticatedPrincipal.providedBy(principal):
+             self.flash(u"Benutzername und oder Passwort falsch.", type="error")
+             return uvcsite.FAILURE
         self.redirect(self.request.form.get('camefrom', self.url(grok.getSite())))
 
 

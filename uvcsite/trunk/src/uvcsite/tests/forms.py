@@ -75,6 +75,10 @@ class MyForm(uvcsite.Form):
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
+       from time import sleep
+       print "JO"
+       sleep(5)
+       print "JO2"
        data, errors = self.extractData()
        if data.get('name') == "hans":
            self.errors.append(uvcsite.Error('Hans ist doof', identifier=self.prefix))
@@ -83,6 +87,34 @@ class MyForm(uvcsite.Form):
            return
        self.flash('Alles Klar')
        return 
+
+
+JS =""" 
+<script>  
+$(document).ready(function() {
+
+$.fn.extend({
+  preventDoubleSubmit: function(id) {
+    if (this.beenSubmitted)
+      return false;
+    else
+      this.beenSubmitted = true;
+  }});
+
+
+ $('#form').preventDoubleSubmit();
+
+
+});
+</script>"""
+
+class CHanfhelp(grok.Viewlet):
+    grok.view(MyForm)
+    grok.context(uvcsite.IUVCSite)
+    grok.viewletmanager(uvcsite.IExtraInfo)
+
+    def render(self):
+        return JS
 
 
 
