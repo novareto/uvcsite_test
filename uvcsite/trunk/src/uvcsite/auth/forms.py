@@ -17,9 +17,22 @@ from zope.app.security.interfaces import IAuthentication, IUnauthenticatedPrinci
 from zope.session.interfaces import ISession
 
 class ILoginForm(Interface):
-    login = schema.BytesLine(title=u'Mitgliedsnummer', required=True)
-    password = schema.Password(title=u'Passwort', required=True)
-    camefrom = schema.BytesLine(title=u'camefrom', required=False)
+
+    login = schema.BytesLine(
+        title=u'Mitgliedsnummer', 
+        description=u'Bitte geben Sie hier Ihre Mitgliedsnummer an.',
+        required=True
+        )
+
+    password = schema.Password(
+        title=u'Passwort', 
+        required=True
+        )
+
+    camefrom = schema.BytesLine(
+        title=u'camefrom', 
+        required=False
+        )
 
 
 class Login(uvcsite.Form):
@@ -33,7 +46,8 @@ class Login(uvcsite.Form):
 
     def update(self):
         super(Login, self).update()
-        uvcsite.Overlay.need()
+        #uvcsite.Overlay.need()
+        uvcsite.Tooltip.need()
 
     @base.action(u'Anmelden')
     def handle_login(self):
