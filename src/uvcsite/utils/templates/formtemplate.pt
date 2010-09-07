@@ -9,7 +9,11 @@
  </div>
 
 
-<form action="." tal:attributes="action request/URL" method="post"
+<form action="." 
+      method="post"
+      class="edit-form"
+      tal:attributes="action request/URL;
+                      id view/id"
       enctype="multipart/form-data">
 
   <fieldset>

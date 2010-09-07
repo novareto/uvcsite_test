@@ -46,10 +46,14 @@ class Unfallbelastung(uvcsite.Page):
 
 
 
-class DownloadAsPdf(grok.View):
+class DownloadAsPdf(grok.Viewlet):
     grok.title(" ")
     grok.context(uvcsite.IUVCSite)
-    uvcsite.menu(uvcsite.IDocumentActions, order=0, icon="@@/uvc-icons/icon_pdf.gif")
+    grok.view(Kontakt)
+    uvcsite.menu(uvcsite.IDocumentActions, order=0, icon="/@@/uvc-icons/icon_pdf.gif")
+    group = ""
+
+    
 
     def render(self):
         return "I could be a PDF"

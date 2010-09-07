@@ -35,6 +35,10 @@ class Form(ApplicationForm):
     grok.baseclass()
 
     @property
+    def id(self):
+        return self.prefix + '-' + self.__class__.__name__.lower()
+
+    @property
     def formErrors(self):
         error = self.errors.get(self.prefix, None)
         if error is None or ICollection.providedBy(error):
