@@ -17,10 +17,11 @@ from megrok.z3ctable import TablePage
 
 
 class Index(TablePage):
-    grok.title('Mein Ordner')
+    grok.title(u'Übersicht')
     grok.name('index')
     grok.implements(IFolderListingTable) 
     grok.context(IProductFolder)
+    uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     cssClasses = {'table': 'myTable tablesorter'}
     cssClassEven = u'even'
