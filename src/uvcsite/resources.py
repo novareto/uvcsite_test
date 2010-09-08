@@ -6,6 +6,7 @@ import grok
 
 from megrok import resource
 from hurry.jquery import jquery
+from hurry.jquerytools import jquerytools
 from zope.interface import Interface
 from uvc.layout.interfaces import IHeaders
 
@@ -15,7 +16,6 @@ class UVCResources(resource.ResourceLibrary):
     resource.path('static')
 
     resource.resource('jquery.tablesorter.min.js')
-    resource.resource('jquery.tools.min.js')
     resource.resource('uvc_base.js')
     resource.resource('uvc_base.css')
     resource.resource('uvc_hilfen.css')
@@ -34,6 +34,7 @@ class UVCResourceViewlet(grok.Viewlet):
 
     def render(self):
         jquery.need()
+        jquerytools.need()
         UVCResources.need()
         return u''
 
