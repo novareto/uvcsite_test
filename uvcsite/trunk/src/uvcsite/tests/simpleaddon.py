@@ -6,6 +6,7 @@ import zope.interface
 import zope.component
 
 
+from megrok import navigation
 from uvc.validation import validation
 
 class ErrorDateFields(zope.interface.Invalid):
@@ -47,12 +48,21 @@ class AdressBook(uvcsite.ProductFolder):
     uvcsite.contenttype(Contact)
 
 
+class Stat(uvcsite.Page):
+    grok.name('stat')
+    grok.title('Statistik')
+    grok.context(AdressBook)
+    uvcsite.sectionmenu(uvcsite.IExtraViews)
+
+    def render(self):
+        return "Statistiks"
+
+
 @grok.subscribe(Contact, uvcsite.IAfterSaveEvent)
 def handle_save(obj, event):
     print "AfterSaveEvent"
 
 
-from megrok import navigation
 class AddMenuEntry(grok.View):
     grok.name('Buddy erstellen')
     grok.title('Buddy erstellen')

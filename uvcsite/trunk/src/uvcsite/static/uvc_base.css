@@ -45,18 +45,18 @@ table.tablesorter thead tr .checkBox {
 /* Tooltip */
 /* simple css-based tooltip */ 
 div.tooltip { 
-    background-color:#000; 
-    border:1px solid #fff; 
-    padding:10px 15px; 
-    width:200px; 
-    display:none; 
-    color:#fff; 
-    text-align:left; 
-    font-size:12px; 
- 
-    /* outline radius for mozilla/firefox only */ 
-    -moz-box-shadow:0 0 10px #000; 
-    -webkit-box-shadow:0 0 10px #000; 
+  background-color:#000; 
+  border:1px solid #fff; 
+  padding:10px 15px; 
+  width:200px; 
+  display:none; 
+  color:#fff; 
+  text-align:left; 
+  font-size:12px; 
+
+  /* outline radius for mozilla/firefox only */ 
+  -moz-box-shadow:0 0 10px #000; 
+  -webkit-box-shadow:0 0 10px #000; 
 }
 
 #contextual-actions {
@@ -76,4 +76,26 @@ div#toggler {
 
 div#form-form-field-camefrom {
  display: none;
+}
+
+
+div.extraviews {
+ background-color:transparent;
+ padding-left: 2em;
+ margin-top: -10px;
+ height: 16px;
+ width: 925px;
+ margin-bottom: 1em;
+ text-align: right;
+ position: absolute;
+}
+
+div.extraviews ul a {
+ border-right: 2px solid #B30B16;
+ border-bottom: 2px solid #B30B16;
+ height:auto;
+ margin-left:3px;
+ margin-right:0.5em;
+ padding:0 7px;
+ text-decoration:none;
 }
