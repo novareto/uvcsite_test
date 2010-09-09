@@ -8,6 +8,8 @@ from megrok.z3ctable import Values
 from megrok.z3ctable import TablePage
 from zope.traversing.browser import absoluteURL
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
+from uvc.layout import interfaces
+
 
 class Index(TablePage):
     grok.context(IMyHomeFolder)
@@ -47,6 +49,12 @@ class Index(TablePage):
                         self.executeDelete(pf[key])
         super(Index, self).update()
         
+
+class DirectAccess(grok.Viewlet):
+    grok.view(Index)
+    grok.order(25)
+    grok.context(IMyHomeFolder)
+    grok.viewletmanager(interfaces.IAboveContent)
 
 
 class HomeFolderValues(Values):

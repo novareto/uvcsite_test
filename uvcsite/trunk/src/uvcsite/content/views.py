@@ -7,21 +7,23 @@ import uvcsite
 from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 
 from uvcsite import uvcsiteMF as _
+from uvc.layout import interfaces
 from uvcsite.content import IContent, IProductFolder
 from uvcsite.interfaces import IFolderListingTable
 from zope.component import getMultiAdapter
 from uvcsite import IGetHomeFolderUrl
 from dolmen.content import schema
+from dolmen import menu
 from zeam.form import base
 from megrok.z3ctable import TablePage
 
 
+@menu.menuentry(uvcsite.IExtraViews)
 class Index(TablePage):
     grok.title(u'Übersicht')
     grok.name('index')
     grok.implements(IFolderListingTable) 
     grok.context(IProductFolder)
-    uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     cssClasses = {'table': 'myTable tablesorter'}
     cssClassEven = u'even'
@@ -42,8 +44,16 @@ class Index(TablePage):
         del item.__parent__[item.__name__]
 
     def getAddLinkUrl(self):
-        adapter = getMultiAdapter((self.request.principal, self.request), IGetHomeFolderUrl)
+        adapter = getMultiAdapter(
+            (self.request.principal, self.request), IGetHomeFolderUrl)
         return adapter.getAddURL(self.context.getContentType())
+
+
+class AddMenu(grok.Viewlet):
+    grok.view(Index)
+    grok.order(30)
+    grok.context(IProductFolder)
+    grok.viewletmanager(interfaces.IAboveContent)
 
 
 class Add(uvcsite.AddForm):

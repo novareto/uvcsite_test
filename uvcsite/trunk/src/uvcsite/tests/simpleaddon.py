@@ -5,7 +5,7 @@ import zope.schema
 import zope.interface
 import zope.component
 
-
+from dolmen import menu
 from megrok import navigation
 from uvc.validation import validation
 
@@ -48,11 +48,11 @@ class AdressBook(uvcsite.ProductFolder):
     uvcsite.contenttype(Contact)
 
 
+@menu.menuentry(uvcsite.IExtraViews)
 class Stat(uvcsite.Page):
     grok.name('stat')
     grok.title('Statistik')
     grok.context(AdressBook)
-    uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     def render(self):
         return "Statistiks"
