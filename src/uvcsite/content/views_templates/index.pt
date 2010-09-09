@@ -1,15 +1,14 @@
 <div>
   <h1 tal:content="context/title"/>
-  <span class="big" tal:content="context/description"/> 
-  <div class="addContent">
-    <h3>
-      <a href="add" tal:attributes="href view/getAddLinkUrl"> anlegen  </a>
-    </h3>  
+  <p class="description" tal:content="context/description" /> 
+
+  <div class="page-content">
+    <form action="." 
+	  method="post"
+	  tal:attributes="action view/url">
+      <span tal:replace="structure view/renderTable"/>
+      <input type="submit" value="Entfernen" name="form.button.delete" />
+    </form>
   </div>
-  <form action="." 
-        method="post"
-        tal:attributes="action view/url">
-    <span tal:replace="structure view/renderTable"/>
-    <input type="submit" value="Entfernen" name="form.button.delete">
-  </form>
+
 </div>

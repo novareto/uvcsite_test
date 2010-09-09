@@ -1,21 +1,17 @@
-<div>
+<div id="homefolder">
   <h1 tal:content="view/title"></h1>
-  <p tal:content="view/description"/>
+  <p class="description" tal:content="view/description"/>
 
-  <ul>
-      <li tal:repeat="type view/getContentTypes"> 
-          <a href="" tal:attributes="href type/href"> 
-             <span tal:content="type/name"/>
-	  </a>   
-      </li>
-  </ul>
+  <div class="page-content">
+    <div class="batch" tal:content="structure view/renderBatch" />
+    
+    <form action="."
+	  method="post"
+	  tal:attributes="action python: view.url(context)">
+      
+      <div tal:replace="structure view/renderTable" />
+      <input type="submit" value="Entfernen" name="form.button.delete"/>
+    </form>
+  </div>
 
-  <div tal:content="structure view/renderBatch" />
-  <form action="."
-        method="post"
-        tal:attributes="action python: view.url(context)">
-
-    <div tal:replace="structure view/renderTable" />
-    <input type="submit" value="Entfernen" name="form.button.delete"/>
-  </form>
 </div>
