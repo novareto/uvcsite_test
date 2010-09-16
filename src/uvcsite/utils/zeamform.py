@@ -167,15 +167,3 @@ class WizardTemplate(pt.PageTemplate):
     """
     template = grok.PageTemplateFile('templates/wizardtemplate.pt')
     pt.view(Wizard)
-
-
-#
-##
-#
-
-import martian
-from megrok.attributetraverser.meta import AttributeTraversableGrokker
-
-
-class MyAttributeTraversalbleGrokker(AttributeTraversableGrokker):
-    martian.component(Form)

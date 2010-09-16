@@ -53,10 +53,10 @@ class Index(TablePage):
     def getAddTitle(self):
         return self.context.getContentName()
 
-
+from zope.interface import Interface
 class ExtraViewsViewlet(ContextualActions):
     grok.order(20)
-    grok.view(Index)
+    grok.view(Interface)
     grok.name('extra-views')
     grok.viewletmanager(interfaces.IAboveContent)
     grok.require("zope.Public")

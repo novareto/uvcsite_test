@@ -45,26 +45,20 @@ class Index(megrok.layout.Page):
 
 
 
-class Kontakt(megrok.layout.Page):
-    navigation.sitemenuitem(BausAuskunft)
-    grok.name('Kontakt')
-    grok.title('Kontakt')
-    grok.context(Interface)
-
-    def render(self):
-        return "Kontakt"
-
-
-
-
 class Table(TablePage):
+    """
+    """
     grok.context(IMyHomeFolder)
     grok.require('zope.View')
     cssClasses = {'table': 'tablesorter'}
+    grok.title('Tabelle')
+    title = "Tabelle"
+    description = "Beispieltabelle"
+    uvcsite.sectionmenu(uvcsite.IExtraViews)
 
 
-    startBatchingAt = 5
-    batchSize = 5
+    startBatchingAt = 10 
+    batchSize = 10 
 
     @property
     def values(self):
