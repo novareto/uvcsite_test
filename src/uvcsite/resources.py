@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2010 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import grok
 
@@ -37,4 +37,3 @@ class UVCResourceViewlet(grok.Viewlet):
         jquerytools.need()
         UVCResources.need()
         return u''
-

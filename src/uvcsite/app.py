@@ -15,7 +15,10 @@ from zope.app.homefolder.interfaces import IHomeFolderManager
 from zeam.form.ztk.widgets.date import DateWidgetExtractor
 from zope.i18n.format import DateTimeParseError
 
+
 class Icons(grok.DirectoryResource):
+    """Directory Resource for Icons like pdf.png
+    """
     grok.name('uvc-icons')
     grok.path('icons')
 
@@ -47,6 +50,8 @@ class PersonalPanelView(uvcsite.Page):
 
 
 class NotFound(errors.NotFound):
+    """Not Found Error View
+    """
     pass
 
 

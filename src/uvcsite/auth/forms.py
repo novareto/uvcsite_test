@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2010 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 
 import grok
@@ -13,13 +13,15 @@ from zope.interface import Interface
 from zeam.form import base
 from dolmen.forms.base import Fields
 
-from zope.app.security.interfaces import IAuthentication, IUnauthenticatedPrincipal, ILogout
+from zope.app.security.interfaces import (IAuthentication,
+    IUnauthenticatedPrincipal, ILogout)
 from zope.session.interfaces import ISession
+
 
 class ILoginForm(Interface):
 
     login = schema.BytesLine(
-        title=u'Mitgliedsnummer', 
+        title=u'Mitgliedsnummer',
         description=u'Bitte geben Sie hier Ihre Mitgliedsnummer an.',
         required=True
         )
@@ -39,14 +41,14 @@ class Login(uvcsite.Form):
     grok.context(Interface)
     grok.require('zope.Public')
     label = "Herzlich Willkommen im Extranet"
-    description = u"In diesem Bereich knnen Sie verschiedene Online-Dienste nutzen! "
+    description = u"In diesem Bereich knnen Sie verschiedene Online-Dienste nutzen!"
 
     fields = Fields(ILoginForm)
     fields['camefrom'].mode = "hidden"
 
     def update(self):
         super(Login, self).update()
-        #uvcsite.Overlay.need()
+        uvcsite.Overlay.need()
         uvcsite.Tooltip.need()
 
     @base.action(u'Anmelden')
