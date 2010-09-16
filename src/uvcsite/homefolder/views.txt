@@ -52,19 +52,13 @@ Now we can render the Index Page of the Homefolder:
 
   >>> index.update()
   >>> print index.render()
-  <div>
+  <div id="homefolder">
     <h1>Some User's Name</h1>
-    <p>Hier werden Ihre Dokumente abgelegt</p>
-    <ul>
-        <li>
-            <a href="http://127.0.0.1/hf/adressbook">
-               <span>adressbook</span>
-      </a>
-        </li>
-    </ul>
-    <div></div>
-    <form action="http://127.0.0.1/hf" method="post">
-      <table class="tablesorter myTable">
+    <p class="description">Hier werden Ihre Dokumente abgelegt</p>
+    <div class="page-content">
+      <div class="batch"></div>
+      <form action="http://127.0.0.1/hf" method="post">
+        <table class="tablesorter myTable">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -78,9 +72,10 @@ Now we can render the Index Page of the Homefolder:
     <tbody>
     </tbody>
   </table>
-      <input type="submit" value="Entfernen" name="form.button.delete" />
-    </form>
-  </div>
+        <input type="submit" value="Entfernen" name="form.button.delete" />
+      </form>
+    </div>
+  </div> 
 
 
 There is no table in the view? This is because there
@@ -140,24 +135,13 @@ Let's check again if we now get **contenttypes** in our homefolder:
 
   >>> index.update()
   >>> print index.render()
-  <div>
+  <div id="homefolder">
     <h1>Some User's Name</h1>
-    <p>Hier werden Ihre Dokumente abgelegt</p>
-    <ul>
-        <li>
-            <a href="http://127.0.0.1/hf/adressbook">
-               <span>adressbook</span>
-      </a>
-        </li>
-        <li>
-            <a href="http://127.0.0.1/hf/personcontainer">
-               <span>personcontainer</span>
-      </a>
-        </li>
-    </ul>
-    <div></div>
-    <form action="http://127.0.0.1/hf" method="post">
-      <table class="tablesorter myTable">
+    <p class="description">Hier werden Ihre Dokumente abgelegt</p>
+    <div class="page-content">
+      <div class="batch"></div>
+      <form action="http://127.0.0.1/hf" method="post">
+        <table class="tablesorter myTable">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -179,8 +163,9 @@ Let's check again if we now get **contenttypes** in our homefolder:
       </tr>
     </tbody>
   </table>
-      <input type="submit" value="Entfernen" name="form.button.delete" />
-    </form>
+        <input type="submit" value="Entfernen" name="form.button.delete" />
+      </form>
+    </div>
   </div>
 
 

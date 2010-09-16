@@ -17,7 +17,7 @@ Setup
   <uvcsite.tests.simpleaddon.AdressBook object at ...>
 
   >>> print folder.title
-  Adressbook 
+  Adressbuch
 
   >>> content1 = Contact(title=u"mycontent1")
   >>> content1

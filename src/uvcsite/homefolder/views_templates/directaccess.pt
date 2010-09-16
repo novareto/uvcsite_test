@@ -1,5 +1,5 @@
 <dl class="dropdown" id="homefolder-contenttypes">
-  <dt>Quick access</dt>
+  <dt>Quick Navigation</dt>
   <dd>
     <ul>
       <li tal:repeat="type view/getContentTypes" class="entry"> 

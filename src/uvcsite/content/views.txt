@@ -64,12 +64,6 @@ We have a subscriber for the AfterSaveEvent for uvcsite which prints "AfterSaveE
   >>> save.click()
   AfterSaveEvent
 
-We should see this contact now in the folder!
-
-
-  >>> '<td><a href="http://127.0.0.1/folder/Contact">Contact</a></td>' in  browser.contents
-  True
-
   >>> "<dd>Added Content</dd>" in browser.contents
   True
 

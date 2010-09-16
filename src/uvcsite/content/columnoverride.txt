@@ -59,17 +59,7 @@ Let's call the IndexTable of the folder:
 Instead of the <th>Title<th> we should get <th>OverrideTable</th>:
   
   >>> print view.render()
-  <div>
-    <h1>Adressbook</h1>
-    <span class="big">Description of Adressbook</span>
-    <div class="addContent">
-      <h3>
-        <a href="http://127.0.0.1/adressbook/@@add"> anlegen  </a>
-      </h3>
-    </div>
-    <form action="http://127.0.0.1/folder/index" method="post">
-      <table class="myTable tablesorter">
-    <thead>
+  <div>...
       <tr>
         <th class="checkBox"></th>
         <th>OverrideTitle</th>
@@ -77,13 +67,7 @@ Instead of the <th>Title<th> we should get <th>OverrideTable</th>:
         <th>Status</th>
         <th>Autor</th>
         <th>Datum</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-      <input type="submit" value="Entfernen" name="form.button.delete">
-    </form>
+      </tr>...  
   </div>
 
   >>> zope.security.management.endInteraction()

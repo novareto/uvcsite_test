@@ -1,9 +1,9 @@
 <dl class="dropdown" id="addContent">
-  <dt>Add content</dt>
+  <dt>Hinzufügen</dt>
   <dd>
     <ul>
       <li>
-	<a href="add" tal:attributes="href view/getAddLinkUrl">anlegen</a>
+	<a href="add" tal:attributes="href view/getAddLinkUrl"> <span tal:content="view/getAddTitle"/></a>
       </li>
     </ul>
   </dd>  

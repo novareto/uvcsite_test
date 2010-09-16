@@ -72,6 +72,9 @@ div#uvc_help {
 div#toggler {
  text-align:left;
  text-indent:20px;
+ border: 2px solid #B30B16;
+ padding: 2em;
+ height:41px;
 }
 
 div#form-form-field-camefrom {
