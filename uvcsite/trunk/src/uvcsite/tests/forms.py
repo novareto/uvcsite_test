@@ -8,8 +8,11 @@ import uvcsite
 from zope import interface
 from zope import schema
 
+from zeam.form.base.widgets import getWidgetExtractor
 from uvc.widgets import DatePicker, DatePickerCSS, double
+from uvc.widgets.resources import validation
 from uvc.widgets.fields import OptionalChoice
+from zope.i18n import translate
 
 
 class IPerson(interface.Interface):
@@ -59,6 +62,7 @@ class MyForm(uvcsite.Form):
     grok.description(u"Beschreibugn Beschreibugn")
     grok.context(uvcsite.IUVCSite)
     uvcsite.menu(FormBeispiele)
+    grok.traversable('json_validator')
 
     ignoreContent = False 
     ignoreRequest = False
@@ -68,24 +72,26 @@ class MyForm(uvcsite.Form):
     label = u"Beispielform"
     description = u"Beschreibung"
 
+    def validateData(self, fields, data):
+        super(MyForm, self).validateData(fields, data)
+        if data.get('name') == "hans":
+            self.errors.append(uvcsite.Error('Hans ist doof', identifier=self.prefix))
 
     def update(self):
         self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))
         double.need()
-        DatePicker.need()
         DatePickerCSS.need()
+        uvcsite.Overlay.need()
+        validation.need()
+        DatePicker.need()
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
-       data, errors = self.extractData()
-       if data.get('name') == "hans":
-           self.errors.append(uvcsite.Error('Hans ist doof', identifier=self.prefix))
-       if errors or self.errors:
-           self.flash(u"FEHLER", type="error")
-           return
-       self.flash('Alles Klar')
-       return 
-
+        data, errors = self.extractData()
+        if errors or self.errors:
+            self.flash(u"FEHLER", type="error")
+            return
+        self.flash('Alles Klar')
 
 
 class MyFormHilfe(uvcsite.HelpPage):
@@ -170,9 +176,4 @@ class Step3(uvcsite.Step):
     ignoreContent = False
 
     label = "Step 3"
-
-
-class MyFormHilfe(uvcsite.HelpPage):
-    grok.context(uvcsite.IUVCSite)
-    grok.view(MyWizard)
 

@@ -26,12 +26,12 @@ name
 title
 
   >>> print adressbook.title
-  Adressbook
+  Adressbuch
 
 description
 
   >>> print adressbook.description
-  Description of Adressbook
+  Adressbuch ... 
 
 And we should get back our class with the get ContentType method
 

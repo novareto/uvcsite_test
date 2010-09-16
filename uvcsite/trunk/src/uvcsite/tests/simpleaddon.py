@@ -9,6 +9,7 @@ from dolmen import menu
 from megrok import navigation
 from uvc.validation import validation
 
+
 class ErrorDateFields(zope.interface.Invalid):
     """Fehlerklasse """
 
@@ -43,19 +44,20 @@ class Contact(uvcsite.Content):
 
 class AdressBook(uvcsite.ProductFolder):
     grok.name('adressbook')
-    grok.title('Adressbook')
-    grok.description('Description of Adressbook')
+    grok.title('Adressbuch')
+    grok.description('Adressbuch ...')
     uvcsite.contenttype(Contact)
 
 
-@menu.menuentry(uvcsite.IExtraViews)
+#@menu.menuentry(uvcsite.IExtraViews)
 class Stat(uvcsite.Page):
     grok.name('stat')
     grok.title('Statistik')
     grok.context(AdressBook)
+    uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     def render(self):
-        return "Statistiks"
+        return "<div> <h1>Statistiks</h1> </div>"
 
 
 @grok.subscribe(Contact, uvcsite.IAfterSaveEvent)
