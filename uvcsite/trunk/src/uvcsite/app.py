@@ -46,7 +46,7 @@ class PersonalPanelView(uvcsite.Page):
     description = _(u"Hier werden Einstellungen zu"
                      " Ihrem Benutzerprofil vorgenommen.")
 
-    menu(uvcsite.IPersonalPreferences)
+    menu(uvcsite.IPersonalPreferences, order=40)
 
 
 class NotFound(errors.NotFound):
