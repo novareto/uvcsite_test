@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*- 
-# Copyright (c) 2007-2008 NovaReto GmbH 
-# cklinger@novareto.de 
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2008 NovaReto GmbH
+# cklinger@novareto.de
 
 import grok
-from uvcsite.api.interfaces import ICompanyInfo, ICompanyAddress
+from uvcsite.api.interfaces import ICompanyInfo
 from zope.security.interfaces import IPrincipal
 
 
@@ -25,11 +25,11 @@ class CompanyInfo(grok.Adapter):
         zuser = str(self.principal.id).split('-')
         if len(zuser) == 2:
             return zuser[1]
-        return '00'    
+        return '00'
 
     def getAddress(self):
-        """ Return the Address of the principal(master)
-	    as a dict"""
+        """ Return the Address of the principal(master) as a dict
+        """
         return {
             'name1': 'Novareto GmbH',
             'name2': 'Geschaeftsprozesse im Netz',

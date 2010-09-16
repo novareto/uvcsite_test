@@ -8,7 +8,7 @@ uvcsiteMF = MessageFactory('uvcsite')
 from uvc.layout.menus import SubMenu as Category
 from megrok.navigation import sitemenuitem as menu
 from megrok.navigation import parentmenu as topmenu
-from megrok.navigation import menuitem as sectionmenu 
+from megrok.navigation import menuitem as sectionmenu
 
 
 import grok
@@ -19,9 +19,10 @@ from megrok.layout import Page
 from megrok.z3ctable import TablePage
 from uvcsite.interfaces import *
 from uvcsite.utils.help import HelpPage
-from uvc.layout.menus import  (Footer, GlobalMenu, 
-         PersonalMenu, PersonalPreferences, DocumentActionsMenu)
-from uvcsite.utils.zeamform import Form, AddForm, SubForm, GroupForm, Wizard, Step
+from uvc.layout.menus import  (Footer, GlobalMenu,
+    PersonalMenu, PersonalPreferences, DocumentActionsMenu)
+from uvcsite.utils.zeamform import (Form, AddForm,
+    SubForm, GroupForm, Wizard, Step)
 from uvcsite.utils.event import IAfterSaveEvent
 from uvcsite.resources import Overlay, Tooltip
 
@@ -33,7 +34,7 @@ from zeam.form.base.markers import NO_VALUE, NO_CHANGE, NOTHING_DONE
 from zeam.form.ztk.actions import CancelAction
 from zeam.form.base.errors import Error
 
-### DOLMEN-FORMS-API 
+### DOLMEN-FORMS-API
 from dolmen.forms.base.models import ApplicationForm
 from dolmen.forms.base.interfaces import IFieldUpdate
 from dolmen.forms.base.utils import (
