@@ -2,25 +2,27 @@
 
    <div tal:replace="structure provider:uvc.hilfen" />
 
-    <ul class="wizard-steps">
-      <li tal:repeat="form view/subforms"
-         class="wizard-step-link">
-        <tal:current tal:define="current python: repeat['form'].index()">
-          <a tal:content="form/label"
-            class="previous"
-            tal:condition="python: current < view.step"
-            tal:attributes="href string:${request/URL}?page=${repeat/form/index}">
-            Link to step
-
-          </a>
-          <span tal:content="python: form.label[:20]"
-                tal:attributes="class python: view.step == current and 'current' or 'next'"
-                tal:condition="python: current >= view.step">
-            Current step
-          </span>
-        </tal:current>
-      </li>
-    </ul>
+   <fieldset class="wizard-steps">
+     <legend>Steps</legend>
+     <ul>
+       <li class="wizard-step-link"
+	   tal:repeat="form view/subforms">
+	 <tal:current tal:define="current repeat/form/index">
+	   <a class="previous"
+	      tal:content="form/label"
+	      tal:condition="python: current < view.step"
+	      tal:attributes="href string:${request/URL}?page=${current}"
+	      >Link to step</a>
+	   <span tal:content="python: form.label[:20]"
+		 tal:attributes="class python: view.step == current
+				               and 'current' or 'next'"
+		 tal:condition="python: current >= view.step">
+	     Current step
+	   </span>
+	 </tal:current>
+       </li>
+     </ul>
+   </fieldset>     
 
   <h1 tal:condition="view/label"
       tal:content="view/label">Label</h1>
