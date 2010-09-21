@@ -24,14 +24,6 @@ class Impressum(uvcsite.Page):
         return "IMPRESSUM"
 
 
-class HelpIndex(uvcsite.Page):
-    grok.context(uvcsite.IMyHomeFolder)
-    uvcsite.sectionmenu(uvcsite.IGlobalMenu, order=9)
-    grok.title('Hilfe')
-
-    def render(self):
-        return "<h1> HelpINdex </h1>"
-
 class Auskunftsdienste(uvcsite.Category):
     grok.title('Auskunftsdienste')
     uvcsite.topmenu(uvcsite.IGlobalMenu, order=1)
