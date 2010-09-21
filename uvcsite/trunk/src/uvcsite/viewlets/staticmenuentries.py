@@ -43,7 +43,7 @@ class MeinOrdner(grok.Viewlet):
         return absoluteURL(homeFolder, self.request)
 
     def render(self):
-        return "<a href='%s'> Mein Ordner" %self.hfurl
+        return "<a href='%s'> Mein Ordner </a>" %self.hfurl
 
 
 class Mitbenutzerverwaltung(grok.View):

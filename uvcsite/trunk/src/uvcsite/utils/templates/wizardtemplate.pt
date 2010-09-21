@@ -38,7 +38,7 @@
 
   <fieldset>
 
-      <h2 tal:condition="view/current/label" tal:content="view/current/label">
+      <h2 id="step-title" tal:condition="view/current/label" tal:content="view/current/label">
         Subform title
       </h2>
 
