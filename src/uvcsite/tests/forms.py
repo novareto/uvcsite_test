@@ -14,6 +14,9 @@ from uvc.widgets.resources import validation
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
 
+from uvc.skin.skin import IUVCSkin
+
+grok.layer(IUVCSkin)
 
 class IPerson(interface.Interface):
 

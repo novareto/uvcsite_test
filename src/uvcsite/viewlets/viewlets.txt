@@ -77,15 +77,17 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
+   <uvcsite.viewlets.staticmenuentries.UserName object at ...>
+   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at ...>
    <megrok.navigation.util.AutoSiteMenuItem_0 object at ...>
 
 We render the individual viewlets:
 
   >>> [x for x in manager.viewlets]
-  [<megrok.navigation.util.AutoSiteMenuItem_... object at 0...>, 
-   <uvcsite.viewlets.staticmenuentries.UserName object at 0...>, 
-   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>]
-  >>> prefs, username, meinordner = manager.viewlets
+  [<uvcsite.viewlets.staticmenuentries.UserName object at 0...>, 
+   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>,
+   <megrok.navigation.util.AutoSiteMenuItem_... object at 0...>] 
+  >>> username, meinordner, prefs = manager.viewlets
 
 Username:
 
@@ -95,7 +97,7 @@ Username:
 MeinOrdner:
 
   >>> print meinordner.render()
-  <a href='http://127.0.0.1'> Mein Ordner
+  <a href='http://127.0.0.1'> Mein Ordner </a>
 
 
 Footer
@@ -142,13 +144,8 @@ GlobalMenu
 Show the Viewlets:
 
    >>> manager.update()
-   >>> for x in manager.viewlets:
-   ...     print x
-   <megrok.navigation.util.AutoMenuItem_... object at 0...>
-   <megrok.navigation.util.AutoMenuItem_... object at 0...>
-   <megrok.navigation.util.AutoSiteMenuItem_... object at 0...>
-   <megrok.navigation.util.AutoSiteMenuItem_... object at 0...>
-   <megrok.navigation.util.AutoMenuItem_... object at 0...>
+   >>> len(manager.viewlets)
+   4
 
 
    >>> zope.security.management.endInteraction()
