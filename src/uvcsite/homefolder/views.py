@@ -3,6 +3,8 @@
 # cklinger@novareto.de
 
 import grok
+import uvcsite
+
 from uvcsite import uvcsiteMF as _
 from megrok.z3ctable import Values
 from megrok.z3ctable import TablePage
@@ -12,8 +14,10 @@ from uvc.layout import interfaces
 
 
 class Index(TablePage):
+    grok.title(u'Mein Ordner')
     grok.context(IMyHomeFolder)
     grok.implements(IFolderListingTable)
+    uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     cssClasses = {'table': 'tablesorter myTable'}
     cssClassEven = u'even'

@@ -6,6 +6,7 @@ import grok
 import uvcsite
 from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 
+from zope.interface import Interface
 from uvcsite import uvcsiteMF as _
 from uvc.layout import interfaces, menus
 from dolmen.app.layout import MenuViewlet
@@ -18,14 +19,15 @@ from dolmen import menu
 from zeam.form import base
 from megrok.z3ctable import TablePage
 from dolmen.app.layout.viewlets import ContextualActions
+from zeam.form.base.interfaces import ISimpleForm
 
 
-@menu.menuentry(uvcsite.IExtraViews)
 class Index(TablePage):
     grok.title(u'Übersicht')
     grok.name('index')
     grok.implements(IFolderListingTable) 
     grok.context(IProductFolder)
+    uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     cssClasses = {'table': 'myTable tablesorter'}
     cssClassEven = u'even'
@@ -53,7 +55,7 @@ class Index(TablePage):
     def getAddTitle(self):
         return self.context.getContentName()
 
-from zope.interface import Interface
+
 class ExtraViewsViewlet(ContextualActions):
     grok.order(20)
     grok.view(Interface)
@@ -65,14 +67,14 @@ class ExtraViewsViewlet(ContextualActions):
 
     def update(self):
         MenuViewlet.update(self)
-        if not len(self.menu.viewlets):
+        if not len(self.menu.viewlets) or ISimpleForm.providedBy(self.view):
             self.actions = None
         else:
             self.actions = self.compute_actions(self.menu.viewlets)
 
     def compute_actions(self, viewlets):
         for action in viewlets:
-            selected = action.__name__ == self.view.__name__
+            selected = action.viewName == self.view.__name__
             context_url = self.menu.view.url(self.menu.context)
             url = not selected and "%s/%s" % (context_url, action.viewName) or None
             yield {

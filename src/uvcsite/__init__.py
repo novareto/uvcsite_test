@@ -21,7 +21,7 @@ from uvcsite.interfaces import *
 from uvcsite.utils.help import HelpPage
 from uvc.layout.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
-from uvcsite.utils.zeamform import (Form, AddForm,
+from uvc.layout.zeamform import (Form, AddForm,
     SubForm, GroupForm, Wizard, Step)
 from uvcsite.utils.event import IAfterSaveEvent
 from uvcsite.resources import Overlay, Tooltip
