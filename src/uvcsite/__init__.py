@@ -23,7 +23,7 @@ from uvc.layout.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
 from uvc.layout.zeamform import (Form, AddForm,
     SubForm, GroupForm, Wizard, Step)
-from uvcsite.utils.event import IAfterSaveEvent
+from uvc.layout.event import IAfterSaveEvent
 from uvcsite.resources import Overlay, Tooltip
 
 ### ZEAM-FORM-API
