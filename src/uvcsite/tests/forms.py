@@ -9,7 +9,7 @@ from zope import interface
 from zope import schema
 
 from zeam.form.base.widgets import getWidgetExtractor
-from uvc.widgets import DatePicker, DatePickerCSS, double
+from uvc.widgets import DatePicker, DatePickerCSS, double, jqt_helper
 from uvc.widgets.resources import validation
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
@@ -58,6 +58,58 @@ class FormBeispiele(uvcsite.Category):
     grok.context(interface.Interface)
     uvcsite.topmenu(uvcsite.IGlobalMenu)
 
+from zeam.form.base import Form
+from zope import component
+from megrok.layout.interfaces import ILayout
+from zope.publisher.publish import mapply
+
+class PopUpForm(uvcsite.Form):
+    grok.title(u'PopUp Beispielform')
+    grok.description('Beschreibung')
+    grok.context(uvcsite.IUVCSite)
+    uvcsite.menu(FormBeispiele)
+
+    ignoreContent = False 
+    ignoreRequest = False
+    fields = uvcsite.Fields(IPerson)
+
+    label = u"PopUp Form"
+    description = u"Beispiel PopUp Form"
+
+    def update(self):
+        jqt_helper.need()
+        DatePicker.need()
+        DatePickerCSS.need()
+
+    @uvcsite.action(u'Abschicken')
+    def handleButton(self):
+        data, errors = self.extractData()
+        print data, errors
+        return "HALLO"
+
+
+    def __call__(self):
+        mapply(self.update, (), self.request)
+        if self.request.response.getStatus() in (302, 303):
+            # A redirect was triggered somewhere in update().  Don't
+            # continue processing the form
+            return
+
+        self.updateForm()
+        if self.request.response.getStatus() in (302, 303):
+            return
+        
+        if self.request.get('ajax'):
+            return "<html> %s </html>" %self.content()
+
+        self.layout = component.getMultiAdapter(
+            (self.request, self.context), ILayout)
+        return self.layout(self)
+
+
+class kkk(grok.View):
+    grok.context(uvcsite.IUVCSite)
+
 
 
 class MyForm(uvcsite.Form):
@@ -65,7 +117,6 @@ class MyForm(uvcsite.Form):
     grok.description(u"Beschreibugn Beschreibugn")
     grok.context(uvcsite.IUVCSite)
     uvcsite.menu(FormBeispiele)
-    grok.traversable('json_validator')
 
     ignoreContent = False 
     ignoreRequest = False
