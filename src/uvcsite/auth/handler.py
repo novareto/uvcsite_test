@@ -5,21 +5,21 @@
 import grok
 import zope.security
 
-from interfaces import IUVCAuth, IMasterUser
+from grokcore import message
 from persistent import Persistent
-from uvcsite.extranetmembership.interfaces import IUserManagement
-from zope.app.authentication.httpplugins import HTTPBasicAuthCredentialsPlugin
-from zope.app.authentication.interfaces import IAuthenticatorPlugin
-from zope.pluggableauth.factories import PrincipalInfo, Principal
 from zope.component import getUtility
 from zope.interface import implements
+from zope.session.interfaces import ISession
 from zope.location.interfaces import ILocation
 from zope.security.interfaces import IPrincipal
-from zope.app.authentication.session import SessionCredentialsPlugin
-from zope.app.authentication.interfaces import ICredentialsPlugin
-from zope.session.interfaces import ISession
 
-from grokcore import message
+from zope.pluggableauth.factories import PrincipalInfo, Principal
+from zope.pluggableauth.interfaces import IAuthenticatorPlugin
+from zope.pluggableauth.interfaces import ICredentialsPlugin
+from zope.pluggableauth.plugins.session import SessionCredentialsPlugin
+
+from interfaces import IUVCAuth, IMasterUser
+from uvcsite.extranetmembership.interfaces import IUserManagement
 
 USER_SESSION_KEY = "uvcsite.authentication"
 
@@ -38,7 +38,6 @@ def setup_pau(pau):
     """ this set´s up the pluggable authentication utility"""
     pau['principals'] = UVCAuthenticator('contact.principals.')
     pau.authenticatorPlugins = ['principals']
-    #pau['basic'] = HTTPBasicAuthCredentialsPlugin()
     pau.credentialsPlugins = ['credentials']
 
 
@@ -50,7 +49,7 @@ class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
     loginfield = 'form.field.login'
     passwordfield = 'form.field.password'
 
-from grokcore import message
+
 class UVCAuthenticator(grok.LocalUtility):
     """ Custom Authenticator for UVC-Site"""
     grok.implements(IAuthenticatorPlugin)
