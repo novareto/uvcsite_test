@@ -12,8 +12,9 @@
   <include package="dolmen.content" />
   <include package="z3c.schema2xml" />
   <include package="zope.pluggableauth" />
+  <!--
   <include package="zope.app.authentication" />
-
+  -->
   <include package=".generations" />
 
 

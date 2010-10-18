@@ -2,7 +2,7 @@
 # Copyright (c) 2007-2008 NovaReto GmbH
 # cklinger@novareto.de
 
-import zope.app.generations.utility
+import zope.generations.utility
 
 
 def evolve(context):
