@@ -6,8 +6,8 @@ from uvcsite import IGetHomeFolderUrl
 from uvcsite.app import Uvcsite
 from zope.publisher.browser import TestRequest
 from zope.component import getMultiAdapter
-from zope.app.authentication.principalfolder import PrincipalInfo, Principal
-from zope.app.component.hooks import getSite, setSite
+from zope.pluggableauth import PrincipalInfo, Principal
+from zope.site.hooks import getSite, setSite
 from zope.app.homefolder.interfaces import IHomeFolder
 import os.path
 import uvcsite
