@@ -33,6 +33,7 @@ class Uvcsite(grok.Application, grok.Container):
 
     grok.local_utility(PluggableAuthentication,
                        IAuthentication,
+                       public=True,
                        setup=setup_pau)
 
 

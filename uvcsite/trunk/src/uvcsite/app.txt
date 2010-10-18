@@ -8,9 +8,11 @@ Let's first create an instance of Uvcsite at the top level:
 
    >>> from zope.app.testing.functional import getRootFolder
    >>> from uvcsite.app import Uvcsite
+   >>> from zope.site.hooks import setSite
    >>> root = getRootFolder()
    >>> uvcsite = Uvcsite()
    >>> root['app'] = uvcsite
+   >>> setSite(root['app'])
 
 Run tests in the testbrowser
 ----------------------------
@@ -28,6 +30,7 @@ Only Authorzied people should get access
 
 This means if we open the index page. We get redirected
 to the login page.
+
 
    >>> browser.open('http://localhost/app/index')
    >>> browser.url

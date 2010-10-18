@@ -3,7 +3,7 @@ import uvcsite
 import grok.testing
 
 from zope.app.testing.functional import ZCMLLayer, FunctionalTestSetup
-from zope.testing import doctest
+import doctest
 from pkg_resources import resource_listdir
 import unittest
 import sys
