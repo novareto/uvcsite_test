@@ -4,7 +4,7 @@
 
 import grok
 from zope.app.homefolder.interfaces import IHomeFolder
-from zope.app.schema.vocabulary import IVocabularyFactory
+from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 

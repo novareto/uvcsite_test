@@ -1,4 +1,4 @@
-from zope.app.generations.generations import SchemaManager
+from zope.generations.generations import SchemaManager
 
 UVCSchemaManager = SchemaManager(
     minimum_generation = 1,
