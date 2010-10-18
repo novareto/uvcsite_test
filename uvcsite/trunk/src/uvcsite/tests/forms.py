@@ -107,10 +107,6 @@ class PopUpForm(uvcsite.Form):
         return self.layout(self)
 
 
-class kkk(grok.View):
-    grok.context(uvcsite.IUVCSite)
-
-
 
 class MyForm(uvcsite.Form):
     grok.title(u'Beispielform')
