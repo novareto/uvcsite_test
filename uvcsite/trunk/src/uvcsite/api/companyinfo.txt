@@ -8,7 +8,7 @@ CompanyInfo
 
 First start with a fresh instance of a principal
 
-   >>> from zope.app.authentication.principalfolder import Principal
+   >>> from zope.pluggableauth.factories import Principal
    >>> from uvcsite.api.interfaces import ICompanyInfo
    >>> user = Principal('0101010001')
 

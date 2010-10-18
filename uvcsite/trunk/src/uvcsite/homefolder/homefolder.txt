@@ -13,7 +13,7 @@ Let's first create an instance of of our Application at the top level:
 Let´s set the Site this is a hack because traversal set´s the site
 
    >>> from zope.component import getUtility
-   >>> from zope.app.component.hooks import getSite, setSite
+   >>> from zope.site.hooks import getSite, setSite
    >>> setSite(uvcsite)
 
 Check the HomeFolderBase which should be the Members Container

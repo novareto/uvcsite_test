@@ -7,7 +7,7 @@ Setup
 -----
 
    >>> from uvcsite.app import Uvcsite
-   >>> from zope.app.component.hooks import getSite, setSite
+   >>> from zope.site.hooks import getSite, setSite
 
    >>> root = getRootFolder()
    >>> uvcsite = Uvcsite()

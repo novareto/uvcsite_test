@@ -10,7 +10,7 @@ from persistent import Persistent
 from uvcsite.extranetmembership.interfaces import IUserManagement
 from zope.app.authentication.httpplugins import HTTPBasicAuthCredentialsPlugin
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
-from zope.app.authentication.principalfolder import PrincipalInfo, Principal
+from zope.pluggableauth.factories import PrincipalInfo, Principal
 from zope.component import getUtility
 from zope.interface import implements
 from zope.location.interfaces import ILocation

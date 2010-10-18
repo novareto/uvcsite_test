@@ -65,7 +65,7 @@ First start with makeing an instance of the Content
   >>> folder
   <uvcsite.app.Uvcsite object at ...>
 
-  >>> from zope.component.hooks import setSite
+  >>> from zope.site.hooks import setSite
   >>> setSite(folder)
 
   >>> from zope.component import getUtility
