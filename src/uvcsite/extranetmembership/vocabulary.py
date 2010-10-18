@@ -4,7 +4,7 @@
 
 import grok
 from zope.app.homefolder.interfaces import IHomeFolder
-from zope.schema.interfaces import IVocabularyFactory
+from zope.schema.interfaces import IVocabularyFactory, IVocabularyTokenized
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 
@@ -22,3 +22,10 @@ class VocabularyBerechtigungen(grok.GlobalUtility):
     def __call__(self, context):
         items = sorted((c, c, c) for c in context.keys())
         return vocabulary(items)
+
+
+
+#grok.global_utility(VocabularyBerechtigungen,
+#    provides=IVocabularyFactory,
+#    direct=True,
+#    name="VocabularyBerechtigungen")

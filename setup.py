@@ -50,6 +50,10 @@ setup(name='uvcsite',
                         'dolmen.forms.wizard',
                         'reportlab',
                         'ipdb',
+                        'docutils',
+                        'zope.app.renderer',
+                        'zope.pluggableauth',
+                        'zope.generations',
                        ],
           entry_points = """
           [console_scripts]
