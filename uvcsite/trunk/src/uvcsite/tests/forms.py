@@ -121,10 +121,11 @@ class MyForm(uvcsite.Form):
     label = u"Beispielform"
     description = u"Beschreibung"
 
-    def validateData(self, fields, data):
-        super(MyForm, self).validateData(fields, data)
+    def validateData(self, fields, data, errors):
+        super(MyForm, self).validateData(fields, data, errors)
         if data.get('name') == "hans":
-            self.errors.append(uvcsite.Error('Hans ist doof', identifier=self.prefix))
+            errors.append(uvcsite.Error('Hans ist doof', identifier=self.prefix))
+        return errors
 
     def update(self):
         self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))

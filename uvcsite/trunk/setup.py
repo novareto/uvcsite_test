@@ -20,6 +20,7 @@ setup(name='uvcsite',
       zip_safe=False,
       install_requires=[
           'docutils',
+          'dolmen.app.site',
           'dolmen.app.layout',
           'dolmen.beaker',
           'dolmen.content',
