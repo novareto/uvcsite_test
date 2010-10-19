@@ -24,19 +24,18 @@ class BausAuskunft(SubMenu):
     grok.order(2500)
 
 
+class Klaus(grok.View):
+    grok.context(IUVCSite)
+
+    def render(self):
+        return "BLA"
+
 
 class Index(megrok.layout.Page):
     grok.title('Startseite')
     grok.context(IUVCSite)
-    navigation.sitemenuitem(BausAuskunft)
-
-    daterows = [{
-                'items' : [{
-                        'date' : 'Yesterday!',
-                        'content' : 'lolcontent'
-                }]
-        }]
-
+    #navigation.sitemenuitem(BausAuskunft)
+    grok.require('zope.View')
 
     def update(self):
         self.flash('Warning', type="warning")

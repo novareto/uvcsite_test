@@ -71,14 +71,8 @@ class UVCAuthenticator(grok.Model):
         Check if username and password match
         get the credentials from the IUserManagement Utility
         """
-        print "==== AUTHENTICATING WITH UCV ===="
-        try:
-            request = zope.security.management.getInteraction().participations[0]
-            session = ISession(request)['uvcsite.authentication']
-        except:
-            import pdb
-            pdb.set_trace()
-
+        request = zope.security.management.getInteraction().participations[0]
+        session = ISession(request)['uvcsite.authentication']
         authenticated = session.get(USER_SESSION_KEY)
         if authenticated is None:
             if not (credentials and 'login' in credentials
@@ -96,6 +90,7 @@ class UVCAuthenticator(grok.Model):
                 title = login,
                 description = login,
                 login = login)
+        print "JOJOJO"
         return PrincipalInfo(**authenticated)
 
     def principalInfo(self, id):
