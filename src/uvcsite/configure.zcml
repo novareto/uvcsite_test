@@ -9,7 +9,6 @@
   <include package="zope.i18n" />
   <include package="zope.session" />
   <include package="zope.dublincore" />
-  <include package="zope.app.homefolder" />
 
   <include package="z3c.schema2xml" />
 
@@ -31,8 +30,9 @@
   <include package="zeam.form.ztk" />
   <include package="zeam.form.composed" />
 
-
   <includeOverrides package="uvc.skin" file="overrides.zcml" />
+
+  <browser:defaultView name="index.html" />
 
 <!--
   <includeDependenciesOverrides package="." />
