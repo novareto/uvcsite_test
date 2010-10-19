@@ -9,6 +9,13 @@
   <include package="zope.i18n" />
   <include package="zope.session" />
   <include package="zope.dublincore" />
+  <include package="zope.authentication" />
+  <include package="zope.pluggableauth" />
+  <include package="zope.pluggableauth.plugins" file="generic.zcml" />
+  <include package="zope.security"/>
+  <include package="zope.security" file="meta.zcml" />
+  <include package="zope.securitypolicy" />
+
 
   <include package="z3c.schema2xml" />
 
@@ -32,12 +39,23 @@
   <includeOverrides package="uvc.skin" file="overrides.zcml" />
 
   <browser:defaultView name="index.html" />
+<!--
+  <browser:defaultView
+      for="zope.authentication.interfaces.IAuthentication"
+      name="index.html"
+      />
+-->
+<!--
+  <browser:defaultView
+      for="zope.security.interfaces.IUnauthorized"
+      name="klaus"
+      />
+-->
 
 <!--
   <includeDependenciesOverrides package="." />
   
   <include package="z3c.schema2xml" />
-  <include package="zope.pluggableauth" />
   <include package="zope.pluggableauth.plugins" file="generic.zcml" />
   <include package="zope.session" />
   <include package="zope.browserpage" />
@@ -69,8 +87,6 @@
   <i18n:registerTranslations directory="locales" />
   <grok:grok package="." />
 
-<!--
   <includePlugins package="." />
   <includePluginsOverrides package="." />
-  -->
 </configure>

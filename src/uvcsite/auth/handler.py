@@ -8,7 +8,8 @@ import zope.security
 from grokcore import message
 from persistent import Persistent
 from zope.component import getUtility
-from zope.interface import implements
+from zope.interface import implements, Interface
+from zope.schema import ASCIILine
 from zope.session.interfaces import ISession
 from zope.location.interfaces import ILocation
 from zope.security.interfaces import IPrincipal
@@ -40,14 +41,25 @@ def setup_pau(pau):
     pau.credentialsPlugins = ('credentials',)
 
 
+class ICookieCredentials(Interface):
+    """A Credentials Plugin based on cookies.
+    """
+    cookie_name = ASCIILine(
+        title=u'Cookie name',
+        description=u'Name of the cookie for storing credentials.',
+        required=True)
+
+
 class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
     grok.provides(ICredentialsPlugin)
+    grok.implements(ICredentialsPlugin, ICookieCredentials)
     grok.name('credentials')
 
     loginpagename = 'login'
     loginfield = 'form.field.login'
     passwordfield = 'form.field.password'
 
+    challengeProtocol = None
 
 class UVCAuthenticator(grok.Model):
     """ Custom Authenticator for UVC-Site"""
