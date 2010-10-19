@@ -2,18 +2,21 @@
 import grok
 import uvcsite
 
-from uvcsite import menu
-from uvcsite import uvcsiteMF as _
+
 from dolmen.app.site import IDolmen
 from dolmen.app.layout import errors
-from uvcsite.auth.handler import setup_pau
-from zope.pluggableauth import PluggableAuthentication
+from zeam.form.ztk.widgets.date import DateWidgetExtractor
+
+from uvcsite import menu
+from uvcsite import uvcsiteMF as _
+from uvcsite.auth.handler import setup_pau, UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
+
+from zope.i18n.format import DateTimeParseError
+from zope.pluggableauth import PluggableAuthentication
 from zope.authentication.interfaces import IAuthentication
 from zope.app.homefolder.interfaces import IHomeFolderManager
-
-from zeam.form.ztk.widgets.date import DateWidgetExtractor
-from zope.i18n.format import DateTimeParseError
+from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 
 
 class Icons(grok.DirectoryResource):
@@ -30,6 +33,10 @@ class Uvcsite(grok.Application, grok.Container):
 
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
+
+    grok.local_utility(UVCAuthenticator,
+                       name=u"principals",
+                       provides=IAuthenticatorPlugin)
 
     grok.local_utility(PluggableAuthentication,
                        IAuthentication,

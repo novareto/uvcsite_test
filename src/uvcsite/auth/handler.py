@@ -36,9 +36,8 @@ def masteruser(self):
 
 def setup_pau(pau):
     """ this set´s up the pluggable authentication utility"""
-    pau['principals'] = UVCAuthenticator('contact.principals.')
-    pau.authenticatorPlugins = ['principals']
-    pau.credentialsPlugins = ['credentials']
+    pau.authenticatorPlugins = ('principals',)
+    pau.credentialsPlugins = ('credentials',)
 
 
 class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
@@ -50,19 +49,23 @@ class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
     passwordfield = 'form.field.password'
 
 
-class UVCAuthenticator(grok.LocalUtility):
+class UVCAuthenticator(grok.Model):
     """ Custom Authenticator for UVC-Site"""
     grok.implements(IAuthenticatorPlugin)
-    grok.name('principals')
-
-    def __init__(self, prefix=u''):
-        self.prefix = prefix
+    prefix = 'contact.principals.'
 
     def authenticateCredentials(self, credentials):
-        """check if username and password match
-           get the credentials from the IUserManagement Utility"""
-        request = zope.security.management.getInteraction().participations[0]   
-        session = ISession(request)['uvcsite.authentication']
+        """
+        Check if username and password match
+        get the credentials from the IUserManagement Utility
+        """
+        print "==== AUTHENTICATING WITH UCV ===="
+        try:
+            request = zope.security.management.getInteraction().participations[0]
+            session = ISession(request)['uvcsite.authentication']
+        except:
+            import pdb
+            pdb.set_trace()
 
         authenticated = session.get(USER_SESSION_KEY)
         if authenticated is None:
