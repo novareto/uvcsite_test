@@ -22,6 +22,7 @@ information, see http://pypi.python.org/pypi/zope.testbrowser.
 
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
+   >>> browser.handleErrors = False
 
 
 We should reach to forms
