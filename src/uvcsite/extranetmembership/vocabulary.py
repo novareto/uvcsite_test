@@ -13,19 +13,19 @@ def vocabulary(terms):
     return SimpleVocabulary([SimpleTerm(value, token, title) for value, token, title in terms])
 
 
-class VocabularyBerechtigungen(grok.GlobalUtility):
+class VocabularyBerechtigungen(object):
     """Vocabulary factory for workflow states.
     """
     grok.implements(IVocabularyFactory)
-    grok.name('VocabularyBerechtigungen')
 
     def __call__(self, context):
         items = sorted((c, c, c) for c in context.keys())
         return vocabulary(items)
 
 
+voc = VocabularyBerechtigungen()
 
-#grok.global_utility(VocabularyBerechtigungen,
-#    provides=IVocabularyFactory,
-#    direct=True,
-#    name="VocabularyBerechtigungen")
+grok.global_utility(voc,
+    provides=IVocabularyFactory,
+    direct=True,
+    name="VocabularyBerechtigungen")

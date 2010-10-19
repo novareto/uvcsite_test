@@ -6,19 +6,48 @@
   <include package="grok" />
   <include package="grokui.admin" />
 
-  <includeDependencies package="." />
+  <include package="zope.i18n" />
+  <include package="zope.session" />
+  <include package="zope.dublincore" />
+  <include package="zope.app.homefolder" />
+
+  <include package="z3c.schema2xml" />
+
+  <include package="megrok.layout" />
+  <include package="megrok.navigation" />
+  <include package="megrok.resource" />
+  <include package="megrok.z3ctable" />
+  <include package="megrok.rendersource" />
+
+  <include package="dolmen.beaker" />
+  <include package="dolmen.app.site" />
+
+  <include package="uvc.layout" />
+  <include package="uvc.skin" />
+  <include package="uvc.widgets" />
+
+  <include package="zeam.form.base" />
+  <include package="zeam.form.layout" />
+  <include package="zeam.form.ztk" />
+  <include package="zeam.form.composed" />
+
+
+  <includeOverrides package="uvc.skin" file="overrides.zcml" />
+
+<!--
   <includeDependenciesOverrides package="." />
   
   <include package="z3c.schema2xml" />
   <include package="zope.pluggableauth" />
   <include package="zope.pluggableauth.plugins" file="generic.zcml" />
-  <include package="zope.dublincore" />
+  <include package="zope.session" />
+  <include package="zope.browserpage" />
+  <include package="zope.annotation"/>
+  <include package="zope.authentication"/>
   <include package="zope.i18n" />
 
-  <!--
-  <include package="zope.app.authentication" />
-  -->
   <include package=".generations" />
+  -->
 
       <unauthenticatedPrincipal id="zope.anybody"
                                 title="Unauthenticated User" />
@@ -41,7 +70,8 @@
   <i18n:registerTranslations directory="locales" />
   <grok:grok package="." />
 
-
+<!--
   <includePlugins package="." />
   <includePluginsOverrides package="." />
+  -->
 </configure>
