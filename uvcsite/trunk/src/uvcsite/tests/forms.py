@@ -107,7 +107,6 @@ class PopUpForm(uvcsite.Form):
         return self.layout(self)
 
 
-
 class MyForm(uvcsite.Form):
     grok.title(u'Beispielform')
     grok.description(u"Beschreibugn Beschreibugn")
