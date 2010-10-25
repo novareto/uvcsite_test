@@ -35,31 +35,6 @@ def masteruser(self):
     return Principal(master_id)
 
 
-def setup_pau(pau):
-    """ this set´s up the pluggable authentication utility"""
-    pau.authenticatorPlugins = ('principals',)
-    pau.credentialsPlugins = ('credentials',)
-
-
-class ICookieCredentials(Interface):
-    """A Credentials Plugin based on cookies.
-    """
-    cookie_name = ASCIILine(
-        title=u'Cookie name',
-        description=u'Name of the cookie for storing credentials.',
-        required=True)
-
-
-class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
-    grok.provides(ICredentialsPlugin)
-    grok.implements(ICredentialsPlugin, ICookieCredentials)
-    grok.name('credentials')
-
-    loginpagename = 'login'
-    loginfield = 'form.field.login'
-    passwordfield = 'form.field.password'
-
-    challengeProtocol = None
 
 class UVCAuthenticator(grok.Model):
     """ Custom Authenticator for UVC-Site"""
@@ -74,6 +49,7 @@ class UVCAuthenticator(grok.Model):
         request = zope.security.management.getInteraction().participations[0]
         session = ISession(request)['uvcsite.authentication']
         authenticated = session.get(USER_SESSION_KEY)
+        print "Credentials", credentials
         if authenticated is None:
             if not (credentials and 'login' in credentials
                     and 'password' in credentials):
@@ -90,7 +66,6 @@ class UVCAuthenticator(grok.Model):
                 title = login,
                 description = login,
                 login = login)
-        print "JOJOJO"
         return PrincipalInfo(**authenticated)
 
     def principalInfo(self, id):

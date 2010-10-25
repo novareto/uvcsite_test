@@ -23,9 +23,13 @@ class BausAuskunft(SubMenu):
     navigation.parentmenu(uvcsite.IGlobalMenu)
     grok.order(2500)
 
-
+from zope import interface
 class Klaus(grok.View):
-    grok.context(IUVCSite)
+    grok.context(interface.Interface)
+    grok.require('zope.Public')
+
+    def update(self):
+        print "ROLES", self.request.principal.groups
 
     def render(self):
         return "BLA"
@@ -38,9 +42,7 @@ class Index(megrok.layout.Page):
     grok.require('zope.View')
 
     def update(self):
-        self.flash('Warning', type="warning")
-        self.flash('MESSAGE', type="error")
-        self.flash('Nachricht')
+        print self.request.principal.groups
 
 
 

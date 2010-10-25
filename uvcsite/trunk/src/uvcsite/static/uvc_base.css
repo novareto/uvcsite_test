@@ -123,3 +123,7 @@ h2#step-title {
    font-size: 0.9em;
    text-decoration: none;
 }
+
+dl#user-actions {
+   display:none;
+}

@@ -6,32 +6,31 @@
   <include package="grok" />
   <include package="grokui.admin" />
 
+
   <include package="zope.i18n" />
   <include package="zope.session" />
   <include package="zope.dublincore" />
-  <include package="zope.authentication" />
-  <include package="zope.pluggableauth" />
+  <include package="uvcsite" file="principals.zcml"/>
   <include package="zope.app.exception.browser" />
-  <include package="zope.security" />
-  <include package="zope.security" file="meta.zcml"/>
-  <include package="zope.securitypolicy" />
-  <include package="zope.app.publication" />
 
   <include package="z3c.schema2xml" />
 
   <include package="megrok.layout" />
   <include package="megrok.navigation" />
+  <include package="megrok.navigation" file="meta.zcml" />
   <include package="megrok.resource" />
   <include package="megrok.z3ctable" />
   <include package="megrok.rendersource" />
 
-  <include package="dolmen.beaker" />
-  <include package="dolmen.menu" />
-  <include package="dolmen.app.security" />
-
   <include package="uvc.layout" />
   <include package="uvc.skin" />
   <include package="uvc.widgets" />
+
+  <include package="dolmen.beaker" />
+  <include package="dolmen.menu" />
+  <include package="dolmen.app.security" />
+  <include package="dolmen.app.authentication" />
+
 
   <include package="zeam.form.base" />
   <include package="zeam.form.layout" />
@@ -41,26 +40,6 @@
   <includeOverrides package="uvc.skin" file="overrides.zcml" />
 
   <browser:defaultView name="index.html" />
-
-      <unauthenticatedPrincipal id="zope.anybody"
-                                title="Unauthenticated User" />
-      <unauthenticatedGroup id="zope.Anybody"
-                            title="Unauthenticated Users" />
-      <authenticatedGroup id="zope.Authenticated"
-                        title="Authenticated Users" />
-      <everybodyGroup id="zope.Everybody"
-                      title="All Users" />
-
-      <grant permission="zope.View"
-             principal="zope.Authenticated" />
-      <grant permission="zope.dublincore.view"
-             principal="zope.Authenticated" />
-      <grant permission="dolmen.content.View" 
-             principal="zope.Authenticated" />
-
-      <role id="zope.Manager" title="Site Manager" />
-      <role id="zope.Member" title="Site Member" />
-      <grantAll role="zope.Manager" />
 
   <i18n:registerTranslations directory="locales" />
   <grok:grok package="." />
