@@ -124,6 +124,7 @@ h2#step-title {
    text-decoration: none;
 }
 
+dl#anonymous-actions,
 dl#user-actions {
    display:none;
 }

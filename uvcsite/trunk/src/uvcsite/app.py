@@ -20,7 +20,7 @@ from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 
 
 def setup_pau_dolmen(PAU):
-    PAU.authenticatorPlugins = ('principals', 'globalregistry')
+    PAU.authenticatorPlugins = ('principals', )
     PAU.credentialsPlugins = ("cookies", "No Challenge if Authenticated")
 
 
