@@ -10,9 +10,9 @@
   <include package="zope.i18n" />
   <include package="zope.session" />
   <include package="zope.dublincore" />
-  <include package="uvcsite" file="principals.zcml"/>
+  <include package="zope.authentication" />
+  <include package="zope.pluggableauth.plugins" file="generic.zcml"/>
   <include package="zope.app.exception.browser" />
-
   <include package="z3c.schema2xml" />
 
   <include package="megrok.layout" />
@@ -42,6 +42,8 @@
   <browser:defaultView name="index.html" />
 
   <i18n:registerTranslations directory="locales" />
+
+  <include package="uvcsite" file="principals.zcml"/>
   <grok:grok package="." />
 
   <includePlugins package="." />

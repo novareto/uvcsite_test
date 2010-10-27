@@ -14,6 +14,25 @@ Let's first create an instance of Uvcsite at the top level:
    >>> root['app'] = uvcsite
    >>> setSite(root['app'])
 
+Let's look if we have our authenticate infrastucture
+----------------------------------------------------
+
+   >>> from zope.component import getUtility
+   >>> from zope.authentication.interfaces import IAuthentication
+
+   >>> auth = getUtility(IAuthentication)
+   >>> print auth
+   <zope.pluggableauth.authentication.PluggableAuthentication object at ...>
+
+   >>> for plugin in auth.getCredentialsPlugins():
+   ...     print plugin
+   ('cookies', <dolmen.app.authentication.plugins.cookies.CookiesCredentials object at 0...>)
+
+   >>> for plugin in auth.getAuthenticatorPlugins():
+   ...     print plugin
+   ('principals', <uvcsite.auth.handler.UVCAuthenticator object at 0...>)
+
+
 Run tests in the testbrowser
 ----------------------------
 
@@ -27,6 +46,7 @@ Only Authorzied people should get access
 
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
+   >>> browser.handleErrors = True 
 
 This means if we open the index page. We get redirected
 to the login page.
@@ -36,12 +56,18 @@ to the login page.
    >>> browser.url
    'http://localhost/app/@@login?camefrom=%2Fapp%2Findex'
 
+   >>> browser.open('http://localhost/app/defaultsecurity')
+   >>> browser.url
+   'http://localhost/app/@@login?camefrom=%2Fapp%2Fdefaultsecurity'
 
 Now log on as a user and look if we get the index page
 
-   >>> browser.handleErrors = False 
+   >>> browser.handleErrors = True 
    >>> browser.addHeader('Authorization', 'Basic user:user')
    >>> browser.open('http://localhost/app/index')
+   >>> 'uvc.user' in browser.contents
+   True
+
    >>> "Congratulations" in browser.contents
    True
 

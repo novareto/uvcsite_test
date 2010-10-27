@@ -11,12 +11,10 @@
 
     <grant permission="zope.View"
            principal="zope.Authenticated" />
-    <grant permission="zope.dublincore.view"
-           principal="zope.Authenticated" />
-    <grant permission="dolmen.content.View" 
-           principal="zope.Authenticated" />
+
 
     <role id="zope.Manager" title="Site Manager" />
     <role id="zope.Member" title="Site Member" />
     <grantAll role="zope.Manager" />
+
 </configure>

@@ -49,7 +49,6 @@ class UVCAuthenticator(grok.Model):
         request = zope.security.management.getInteraction().participations[0]
         session = ISession(request)['uvcsite.authentication']
         authenticated = session.get(USER_SESSION_KEY)
-        print "Credentials", credentials
         if authenticated is None:
             if not (credentials and 'login' in credentials
                     and 'password' in credentials):
