@@ -27,6 +27,13 @@ Overlay = resource.ResourceInclusion(
 Tooltip = resource.ResourceInclusion(
     UVCResources, 'tooltip.js', depends=[jquerytools])
 
+JQMobileJS = resource.ResourceInclusion(
+    UVCResources, 'jquery.mobile-1.0a1.js', depends=[jquery])
+
+JQMobileCSS = resource.ResourceInclusion(
+    UVCResources, 'jquery.mobile-1.0a1.css', depends=[jquery])
+
+JQMobile = resource.GroupInclusion([JQMobileJS, JQMobileCSS])
 
 class UVCResourceViewlet(grok.Viewlet):
     grok.viewletmanager(IHeaders)
