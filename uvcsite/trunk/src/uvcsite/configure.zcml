@@ -20,6 +20,7 @@
   <include package="megrok.navigation" file="meta.zcml" />
   <include package="megrok.resource" />
   <include package="megrok.z3ctable" />
+  <include package="megrok.z3ctable" file="meta.zcml" />
   <include package="megrok.rendersource" />
 
   <include package="uvc.layout" />
@@ -30,6 +31,7 @@
   <include package="dolmen.menu" />
   <include package="dolmen.app.security" />
   <include package="dolmen.app.authentication" />
+  <include package="dolmen.app.breadcrumbs" />
 
 
   <include package="zeam.form.base" />
