@@ -6,24 +6,32 @@ import grok
 import uvcsite
 
 from zope import interface
-from uvcsite.resources import JQMobile
+from megrok import layout
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
 
 grok.templatedir('app_templates')
 
 
-class MobileLayer(IDefaultBrowserLayer):
+class IMobileLayer(IDefaultBrowserLayer):
+    pass
+
+
+class MobileLayer(IMobileLayer):
     grok.skin('mobile')
 
 
-class LandingPage(grok.View):
+class MobileLayout(layout.Layout):
+    """ Base Layout for JQuery Mobile Applications
+    """
+    grok.context(interface.Interface)
+    grok.layer(MobileLayer)
+
+
+class LandingPage(layout.Page):
     grok.name('index')
     grok.layer(MobileLayer)
     grok.context(uvcsite.IUVCSite)
-
-    def update(self):
-        JQMobile.need()
 
 
 class IMobilePagesManager(interface.Interface):
@@ -42,6 +50,10 @@ class MobilePagesManager(grok.ViewletManager):
 
 class MobilePage(grok.Viewlet):
     grok.baseclass()
-    grok.view(LandingPage)
     grok.layer(MobileLayer)
     grok.viewletmanager(IMobilePagesManager)
+
+
+class MobileMacros(grok.View):
+    grok.layer(MobileLayer)
+    grok.context(uvcsite.IUVCSite)
