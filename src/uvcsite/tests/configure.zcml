@@ -9,5 +9,6 @@
   <grok:grok package=".fragen_andreas" />
   <grok:grok package=".zforms" />
   <grok:grok package=".menustuff" />
+  <grok:grok package=".mobile_app" />
 
 </configure>
