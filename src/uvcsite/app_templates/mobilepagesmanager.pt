@@ -1,0 +1,11 @@
+<div data-role="page"
+     tal:define="viewlets viewletmanager/viewlets"
+     tal:condition="viewlets">
+
+   <div metal:use-macro="context/@@mobilemacros/macros/header"/>
+
+    <div tal:repeat="viewlet viewlets"
+         tal:content="structure viewlet/render" />
+
+   <div metal:use-macro="context/@@mobilemacros/macros/footer"/>
+</div>

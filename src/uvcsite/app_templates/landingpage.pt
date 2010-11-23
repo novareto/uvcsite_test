@@ -1,7 +1,1 @@
-<html>
- <head>
- </head>
- <body>
-    <div tal:replace="structure provider:uvc.mobilepagesmanager" />
- </body>
-</html>
+<div tal:replace="structure provider:uvc.mobilepagesmanager" />
