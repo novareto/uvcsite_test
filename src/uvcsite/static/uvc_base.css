@@ -64,9 +64,8 @@ div.tooltip {
 }
 
 div#uvc_help {
-  text-align: right;
   float: right;
-  width: 500px;
+  clear: both;
 }
 
 div#toggler {

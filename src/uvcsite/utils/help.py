@@ -5,7 +5,7 @@
 import grok
 import uvcsite
 
-from zope import interface
+from zope import interface, component, viewlet
 
 grok.templatedir('templates')
 
@@ -15,6 +15,21 @@ class HelpManager(grok.ViewletManager):
     """
     grok.context(interface.Interface)
     grok.name('uvc.hilfen')
+
+
+class Help(grok.Viewlet):
+    grok.viewletmanager(uvcsite.IAboveContent)
+    grok.context(interface.Interface)
+    grok.order(9999)
+
+    def render(self):
+        helpmanager = component.getMultiAdapter(
+            (self.context, self.request, self.view), 
+            viewlet.interfaces.IViewletManager,
+            name=u'uvc.hilfen')
+        helpmanager.update()
+        return helpmanager.render()
+
 
 
 class HelpPage(grok.Viewlet):
