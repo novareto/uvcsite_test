@@ -1,12 +1,9 @@
 /* the overlayed element */
 .simple_overlay {
-    
     /* must be initially hidden */
     display:none;
-    
     /* place overlay on top of other elements */
     z-index:10000;
-    
     /* styling */
     background-color:#EFEFEF;
     width:675px;        
