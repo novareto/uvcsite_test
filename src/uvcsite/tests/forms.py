@@ -134,6 +134,7 @@ class MyForm(uvcsite.Form):
         uvcsite.Overlay.need()
         validation.need()
         DatePicker.need()
+        uvcsite.Tooltip.need()
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):

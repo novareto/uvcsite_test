@@ -1,14 +1,33 @@
 $(document).ready(function()
     {
-      $('input#form-action-senden-mit-ajax').click(function(event) {
-          var data = 'KLAUS';
-          var uri = window.location;
-          $.getJSON(uri+'/@@getData', data, function(data) {
-                $('div#above-page').append(data);
-              }) 
-          event.preventDefault();
-          $('form :input').first().focus();
-      });
+
+        $.each($('div.row'), function() {
+            var description = $(this).children('label').children('span.small').text();
+            if (description != '') { 
+                $(this).children('div.widget').children('input').attr('title', description).attr('tooltip','1');
+                $(this).children('label').children('span.small').hide();
+            }
+            else {
+                $(this).children('div.widget').children('input').attr('title', '0');
+            }
+        });
+
+
+/*
+        $("form :input").tooltip();
+
+        $('#form-field-id').attr('title', 'EGON');
+        $('#form-field-id').tooltip();
+        alert($('#form-field-id').attr('title'));
+*/
+
+        $("form :input[tooltip='1']").not(":button").tooltip({ 
+            position: "center right", 
+            offset: [-2, 10], 
+            effect: "fade", 
+            opacity: 0.8, 
+        });
+
     }
-)
-    
+);
+
