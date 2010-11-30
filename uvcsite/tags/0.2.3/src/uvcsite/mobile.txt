@@ -1,0 +1,63 @@
+Do a functional doctest test on the app.
+========================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Let's first create an instance of Uvcsite at the top level:
+
+   >>> from zope.app.testing.functional import getRootFolder
+   >>> from uvcsite.app import Uvcsite
+   >>> from zope.site.hooks import setSite
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+   >>> setSite(root['app'])
+
+We have a special Layout for mobile applications:
+
+   >>> from megrok.layout.interfaces import ILayout
+   >>> from zope.component import getMultiAdapter
+   >>> from zope.interface import Interface
+   >>> from zope.publisher.browser import TestRequest
+   >>> from uvcsite import IMobileLayer, MobileLayer
+   >>> from zope.interface import alsoProvides
+
+
+   >>> request = TestRequest()
+   >>> from zope.publisher.browser import applySkin
+   >>> applySkin(request, MobileLayer)
+   >>> #alsoProvides(request, IMobileLayer)
+
+   >>> IMobileLayer.providedBy(request)
+   True
+
+   >>> print getMultiAdapter((request, Interface), ILayout)
+   <uvcsite.mobile.MobileLayout object at ...>
+
+
+Now we look, if we can access our mobile layer:
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+   >>> browser.handleErrors = True 
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.open('http://localhost/++skin++mobile/app/index')
+   >>> browser.headers['STATUS'].upper()
+   '200 OK'
+
+   >>> print browser.contents
+   <!DOCTYPE html>
+   <html>
+    <head>
+      <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
+      <script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+      <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
+      <link rel="shortcut icon" type="image/x-icon"
+            href="/@@/uvc.skin/favicon.gif" />
+    </head>
+    <body>
+       <div...
+       </div>
+    </body>
+   </html>

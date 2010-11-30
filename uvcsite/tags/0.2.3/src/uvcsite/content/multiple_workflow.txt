@@ -1,0 +1,85 @@
+Content
+=======
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Setup
+-----
+
+We have to grok some components first...
+
+  >>> import grok
+  >>> from uvcsite import content
+  >>> from grok.testing import grok_component
+  >>> from hurry.workflow.interfaces import *
+  >>> from hurry.workflow import workflow
+  >>> from zope.schema import TextLine, Int
+
+  >>> class ISpecialContent(content.IContent):
+  ...     name = TextLine(title=u"Name")
+  ...     age = Int(title=u"Int")
+
+  >>> class SpecialContent(content.Content):
+  ...     grok.implements(ISpecialContent)
+  ...     content.schema(ISpecialContent)
+  ...     content.name('MyContent')
+
+  >>> def create_workflow():
+  ...     create_transition = workflow.Transition(
+  ...           transition_id='create',
+  ...           title='create',
+  ...           source=None,
+  ...           destination=666)
+  ...     return workflow.Workflow([create_transition])
+
+  >>> from zope.component import provideUtility
+  >>> provideUtility(create_workflow(), IWorkflow, name="special")
+
+  >>> class WorkflowState(workflow.WorkflowState, grok.Adapter):
+  ...     grok.context(ISpecialContent)
+  ...     grok.provides(IWorkflowState)
+  ...     grok.name("special")
+  ...     name = 'special'
+
+  >>> class WorkflowInfo(workflow.WorkflowInfo, grok.Adapter):
+  ...     grok.context(ISpecialContent)
+  ...     grok.provides(IWorkflowInfo)
+  ...     name = 'special'
+
+  >>> grok_component('WorkflowState', WorkflowState)
+  True
+
+  >>> grok_component('WorkflowInfo', WorkflowInfo)
+  True
+
+  >>> grok_component('SpecialContent', SpecialContent)
+  True
+
+First start with makeing an instance of the Content
+
+  >>> from uvcsite.app import Uvcsite
+  >>> from zope.app.testing.functional import getRootFolder
+  >>> r = getRootFolder()
+  >>> r['folder'] = folder = Uvcsite()
+  >>> folder
+  <uvcsite.app.Uvcsite object at ...>
+
+  >>> from zope.site.hooks import setSite
+  >>> setSite(folder)
+
+  >>> from zope.component import getUtility
+  >>> wf = getUtility(IWorkflow, name="special")
+  >>> wf
+  <hurry.workflow.workflow.Workflow object at ...>
+
+  >>> content = SpecialContent()
+  >>> content
+  <SpecialContent object at ...>
+
+  >>> r['folder']['hans'] = content
+
+  >>> from hurry.workflow.interfaces import IWorkflowState
+  >>> wf = IWorkflowState(content)
+  >>> wf.getState()
+  666

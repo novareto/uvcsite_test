@@ -1,0 +1,129 @@
+/* Table */
+
+table.tablesorter {
+  width: 100%;
+  border-width: 1px 0 0 1px;
+  border-style: solid;
+  border-color: #aaa;
+  border-collapse: collapse;
+  font-size: 90%;
+  margin: 0.5em 0;
+}
+
+table.tablesorter td, table.tablesorter th {
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  border-color: #aaa;
+  padding: 0.2em 0.5em;
+  line-height: 1.5em;
+  font-size: 0.8em;
+}
+
+table.tablesorter th {
+  padding-left: 16px;
+  font-weight: bold;
+}
+
+table.tablesorter thead tr .header {
+  background-image: url(bg.gif);
+  background-repeat: no-repeat;
+  background-position: center right;
+  cursor: pointer;
+}
+table.tablesorter thead tr .headerSortUp {
+  background-image: url(asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+  background-image: url(desc.gif);
+}
+
+table.tablesorter thead tr .checkBox {
+  width: 1px;
+}
+
+
+/* Tooltip */
+/* simple css-based tooltip */ 
+div.tooltip { 
+  background-color:#000; 
+  border:1px solid #fff; 
+  padding:10px 15px; 
+  width:200px; 
+  display:none; 
+  color:#fff; 
+  text-align:left; 
+  font-size:12px; 
+
+  /* outline radius for mozilla/firefox only */ 
+  -moz-box-shadow:0 0 10px #000; 
+  -webkit-box-shadow:0 0 10px #000; 
+}
+
+#contextual-actions {
+  display: none;
+}
+
+div#uvc_help {
+  float: right;
+  clear: both;
+}
+
+div#toggler {
+ text-align:left;
+ text-indent:20px;
+ border: 2px solid #B30B16;
+ padding: 2em;
+ height:41px;
+}
+
+div#form-form-field-camefrom {
+ display: none;
+}
+
+
+div.extraviews {
+ background-color:transparent;
+ padding-left: 2em;
+ margin-top: -10px;
+ height: 16px;
+ width: 925px;
+ margin-bottom: 1em;
+ text-align: right;
+ position: absolute;
+}
+
+div.extraviews ul a {
+ border-right: 2px solid #B30B16;
+ border-bottom: 2px solid #B30B16;
+ height:auto;
+ margin-left:3px;
+ margin-right:0.5em;
+ padding:0 7px;
+ text-decoration:none;
+}
+
+#content #page-body #personal-menu a {
+ text-decoration: none;
+ font-size: 100%;
+}
+
+h2#step-title {
+  font-size:120%;
+  margin-top:12px;
+  padding-left:2em; 
+}
+
+#page-body fieldset.wizard-steps span.current {
+   color: #B30B16;
+}
+
+#content #page-body fieldset.wizard-steps a.previous {
+   color: #B30B16;
+   font-size: 0.9em;
+   text-decoration: none;
+}
+
+dl#anonymous-actions,
+dl#user-actions {
+   display:none;
+}
