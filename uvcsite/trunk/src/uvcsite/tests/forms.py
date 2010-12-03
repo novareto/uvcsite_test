@@ -228,3 +228,62 @@ class Step3(uvcsite.Step):
 
     label = "Step 3"
 
+
+class ISimplePerson(interface.Interface):
+
+    name = schema.TextLine(
+       title = u"Name",
+       description = u"Bitte geben Sie hier den Namen ein",
+       )
+
+    vorname = schema.TextLine(
+        title = u"Vorname",
+        description = u"Bitte geben Sie den Vornamen ein",
+        )
+
+    geschlecht = schema.Choice(
+        title = u"Gender",
+        description = u"Bitte geben Sie das Geschlecht ein",
+        values = ('men', 'woman', 'kid', 'grandpa', 'sister', 'brother'),
+        )
+
+from zope.component.interfaces import IFactory
+
+class SimplePerson(uvcsite.Content):
+    uvcsite.schema(ISimplePerson)
+
+
+grok.global_utility(SimplePerson, 
+    name='uvcsite.tests.forms.ISimplePerson',
+    direct=True,
+    provides=IFactory)
+
+
+class IAdressen(interface.Interface):
+
+    personen = schema.List(
+        title=u"Personen",
+        description=u"Bitte tragen Sie alle Personen ein...",
+        value_type=schema.Object(
+            title=u"Person", 
+            schema=ISimplePerson),
+        )
+        
+
+class ComplexForm(uvcsite.Form):
+    """ """
+    grok.title(u'KomplexForm')
+    grok.description(u"Komplexe Form")
+    grok.context(uvcsite.IUVCSite)
+    uvcsite.menu(FormBeispiele)
+
+    ignoreContent = False 
+    ignoreRequest = False
+    fields = uvcsite.Fields(IAdressen)
+
+    label = u"Adressen"
+    description = u"Adressen"
+
+    @uvcsite.action(u'Abschicken')
+    def handleButton(self):
+        data, errors = self.extractData()
