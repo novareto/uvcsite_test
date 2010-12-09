@@ -72,7 +72,7 @@ div#toggler {
  text-indent:20px;
  border: 2px solid #B30B16;
  padding: 2em;
- height:41px;
+ height:auto;
 }
 
 div#form-form-field-camefrom {
