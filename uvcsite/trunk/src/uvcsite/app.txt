@@ -96,6 +96,11 @@ We should get the Error Page:
    ...
    </html>
 
+And we should get a Status 404
+
+   >>> print browser.headers['Status'].upper()
+   404 NOT FOUND
+
 
 SystemError
 -----------
@@ -109,15 +114,10 @@ SystemError
    >>> system_error
    <uvcsite.app.SystemError object at ...>
 
+
    >>> print system_error.content()
    <h1> Fehler </h1>
    <p> Es ist ein SystemFehler aufgetreten: </p>
    <p> Bitte wenden Sie sich and:
        <a href="mailto:cklinger@novareto.de"> Admin </a>
    </p>
-
-
-And we should get a Status 404
-
-   >>> print browser.headers['Status'].upper()
-   404 NOT FOUND

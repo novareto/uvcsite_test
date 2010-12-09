@@ -10,7 +10,7 @@ from megrok import layout
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
 
-grok.templatedir('app_templates')
+grok.templatedir('templates')
 
 
 class IMobileLayer(IDefaultBrowserLayer):
