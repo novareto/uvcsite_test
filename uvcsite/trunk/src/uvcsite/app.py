@@ -14,6 +14,7 @@ from uvcsite.homefolder.homefolder import PortalMembership
 
 from zope.i18n.format import DateTimeParseError
 from zope.pluggableauth import PluggableAuthentication
+from zope.interface.common.interfaces import IException
 from zope.authentication.interfaces import IAuthentication
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
@@ -67,6 +68,11 @@ class NotFound(errors.NotFound):
     """Not Found Error View
     """
     pass
+
+
+class SystemError(uvcsite.Page):
+    grok.context(IException)
+    grok.name('index.html')
 
 
 class CustomDateWidgetExtractor(DateWidgetExtractor):

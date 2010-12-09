@@ -2,6 +2,7 @@
 # Copyright (c) 2007-2010 NovaReto GmbH
 # cklinger@novareto.de 
 
+
 import grok
 import uvcsite
 
@@ -39,14 +40,23 @@ class Unfallbelastung(uvcsite.Page):
 
 
 
-class DownloadAsPdf(grok.Viewlet):
-    grok.title(" ")
+
+import tempfile 
+class DownloadAsPdf(grok.View):
+    grok.title("PDF")
+    grok.name('pdf')
     grok.context(uvcsite.IUVCSite)
-    grok.view(Kontakt)
     uvcsite.menu(uvcsite.IDocumentActions, order=0, icon="/@@/uvc-icons/icon_pdf.gif")
+    grok.require('zope.Public')
     group = ""
 
-    
 
     def render(self):
-        return "I could be a PDF"
+        RESPONSE = self.request.response
+        RESPONSE.setHeader('content-type', 'application/pdf')
+        RESPONSE.setHeader('content-disposition', 'attachment; filename=klaus.txt')
+        tmp = tempfile.TemporaryFile()
+        tmp.write('klaus')
+        tmp.seek(0)
+        return tmp.read()
+
