@@ -96,6 +96,27 @@ We should get the Error Page:
    ...
    </html>
 
+
+SystemError
+-----------
+
+   >>> from zope.component import getMultiAdapter
+   >>> from zope.publisher.browser import TestRequest
+   >>> request = TestRequest()
+   >>> exception = Exception()
+
+   >>> system_error = getMultiAdapter((exception, request), name=u"index.html")
+   >>> system_error
+   <uvcsite.app.SystemError object at ...>
+
+   >>> print system_error.content()
+   <h1> Fehler </h1>
+   <p> Es ist ein SystemFehler aufgetreten: </p>
+   <p> Bitte wenden Sie sich and:
+       <a href="mailto:cklinger@novareto.de"> Admin </a>
+   </p>
+
+
 And we should get a Status 404
 
    >>> print browser.headers['Status'].upper()
