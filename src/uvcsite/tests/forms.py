@@ -204,7 +204,7 @@ class Step1(uvcsite.Step):
     grok.context(uvcsite.IUVCSite)
     grok.view(MyWizard)
     fields = uvcsite.Fields(IPerson).select('datum')
-    ignoreContent = False
+    ignoreContent = False 
 
     label = "Step 1"
 

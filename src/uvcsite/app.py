@@ -5,13 +5,14 @@ import uvcsite
 
 from dolmen.app.site import IDolmen
 from dolmen.app.layout import errors
-from zeam.form.ztk.widgets.date import DateWidgetExtractor
+from zeam.form.ztk.widgets.date import DateWidgetExtractor, DateFieldWidget
 
 from uvcsite import menu
 from uvcsite import uvcsiteMF as _
 from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
 
+from zope.interface import Interface
 from zope.i18n.format import DateTimeParseError
 from zope.pluggableauth import PluggableAuthentication
 from zope.interface.common.interfaces import IException
@@ -19,6 +20,7 @@ from zope.authentication.interfaces import IAuthentication
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 
+grok.templatedir('templates')
 
 def setup_pau_dolmen(PAU):
     PAU.authenticatorPlugins = ('principals', )
@@ -71,8 +73,21 @@ class NotFound(errors.NotFound):
 
 
 class SystemError(uvcsite.Page):
+    """Custom System Error for UVCSITE
+    """
     grok.context(IException)
     grok.name('index.html')
+    grok.require('zope.Public')
+
+
+class CustomDateFieldWidget(DateFieldWidget):
+    """ Extractor for German Date Notation
+    """
+
+    def valueToUnicode(self, value):
+        locale = self.request.locale
+        formatter = locale.dates.getFormatter(self.valueType, 'medium')
+        return formatter.format(value)
 
 
 class CustomDateWidgetExtractor(DateWidgetExtractor):
@@ -89,3 +104,13 @@ class CustomDateWidgetExtractor(DateWidgetExtractor):
             except (ValueError, DateTimeParseError), error:
                 return None, str(error)
         return value, error
+
+
+class Favicon(grok.View):
+    """ Helper for Favicon.ico Errors Request
+    """
+    grok.context(Interface)
+    grok.name('favicon.ico')
+
+    def render(self):
+        return "BLA"
