@@ -1,0 +1,84 @@
+<html>
+  <head>
+  </head>
+  <body>
+      <div tal:replace="structure provider:uvc.hilfen" />
+
+      <h1 tal:condition="view/label"
+          tal:content="view/label">Label</h1>
+
+      <p tal:condition="view/description"
+         tal:content="view/description">Description</p>
+
+      <p class="form-error"
+         tal:condition="view/errors">
+        Es gab Fehler:
+        <tal:error tal:define="formError view/formError"
+                   tal:condition="formError">
+          <br />
+          <span tal:replace="formError/title" />
+        </tal:error>
+      </p>
+
+    <div id="extrainfo" tal:replace="structure provider:uvc.layout.extrainfo"/>
+   
+
+<form action="." tal:attributes="action request/URL" method="post"
+      enctype="multipart/form-data">
+
+    <div class="input-form">
+    <div class="fields"
+         tal:condition="view/fieldWidgets">
+      <div class="row" 
+           tal:attributes="class python: widget.error is not None and 'row row_error' or 'row';
+                           id string:form-${widget/htmlId}"
+           tal:repeat="widget view/fieldWidgets">
+        <label>
+          <span class="label" for="#" i18n:domain="uvcsite"
+                tal:attributes="for widget/htmlId"
+                tal:content="widget/title">
+                Label </span>
+           <span class="field-required"
+                 tal:condition="widget/required"></span>
+          <tal:description tal:condition="widget/description">
+            <span class="small"
+                  tal:content="widget/description">
+            </span>
+          </tal:description>
+        </label>
+        <div class="widget">
+           <tal:widget tal:content="structure widget/render" />
+        </div>   
+        <div class="error"
+             tal:define="error widget/error"
+             tal:condition="error">
+          <span i18n:translate tal:content="error/title"> Error </span>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    <div class="relax"/>
+
+
+      <div class="subforms">
+        <div class="subform"
+             tal:repeat="subform view/subforms"
+             tal:content="structure subform/render"
+             tal:attributes="id subform/id">
+          Subform
+        </div>
+      </div>
+
+      <div class="actions"
+           tal:condition="view/actionWidgets">
+        <div class="action" tal:repeat="widget view/actionWidgets">
+          <tal:widget tal:content="structure widget/render" />
+        </div>
+      </div>
+  </form>
+
+  </body>
+</html>
+
+
