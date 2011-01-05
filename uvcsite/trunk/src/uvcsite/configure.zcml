@@ -47,7 +47,8 @@
 
   <include package="uvcsite" file="principals.zcml"/>
   <grok:grok package="." />
-
+<!--
   <includePlugins package="." />
   <includePluginsOverrides package="." />
+-->
 </configure>
