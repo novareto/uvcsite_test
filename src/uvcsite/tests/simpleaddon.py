@@ -43,6 +43,7 @@ class Contact(uvcsite.Content):
 
 
 class AdressBook(uvcsite.ProductFolder):
+    grok.implements(IAdressBook)
     grok.name('adressbook')
     grok.title('Adressbuch')
     grok.description('Adressbuch ...')
