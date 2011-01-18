@@ -111,6 +111,7 @@ class Favicon(grok.View):
     """
     grok.context(Interface)
     grok.name('favicon.ico')
+    grok.require('zope.Public')
 
     def render(self):
         return "BLA"
