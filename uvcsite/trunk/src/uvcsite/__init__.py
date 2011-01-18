@@ -44,3 +44,10 @@ from dolmen.forms.base.models import ApplicationForm
 from dolmen.forms.base.interfaces import IFieldUpdate
 from dolmen.forms.base.utils import (
     set_fields_data, notify_changes, apply_data_event)
+
+### LOGGING
+import logging
+logger = logging.getLogger('uvcsite')
+
+def log(message, summary='', severity=logging.INFO):
+    logger.log(severity, '%s %s', summary, message)

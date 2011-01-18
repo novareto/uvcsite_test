@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import grok
+import uvcsite
 from uvcsite.extranetmembership.interfaces import IUserManagement
 
 users = [
@@ -38,8 +39,11 @@ class UserManagement(grok.GlobalUtility):
     def updatePasswort(self, **kwargs):
         """Change a passwort from a user"""
 
+    def checkRule(self, login):
+        uvcsite.log(login)
+        return True 
 
-import uvcsite
+
 
 from uvcsite.interfaces import IMyHomeFolder
 from zope import interface

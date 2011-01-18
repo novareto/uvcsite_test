@@ -20,6 +20,7 @@ class UserName(grok.Viewlet):
     grok.context(Interface)
     grok.viewletmanager(uvcsite.IPersonalPreferences)
     grok.order(10)
+    grok.require('zope.View')
     group = ''
 
     def render(self):
@@ -32,6 +33,7 @@ class MeinOrdner(grok.Viewlet):
     grok.title('Mein Ordner')
     grok.viewletmanager(uvcsite.IPersonalPreferences)
     grok.order(20)
+    grok.require('zope.View')
     group = ''
 
     @property
@@ -52,6 +54,7 @@ class Mitbenutzerverwaltung(grok.View):
     grok.title('Mitbenutzerverwaltung')
     navigation.sitemenuitem(uvcsite.IPersonalMenu)
     grok.order(30)
+    grok.require('zope.View')
 
     @property
     def url(self):

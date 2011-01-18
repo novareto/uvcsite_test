@@ -18,7 +18,6 @@ class UVCResources(resource.ResourceLibrary):
     resource.resource('jquery.tablesorter.min.js')
     resource.resource('uvc_base.js')
     resource.resource('uvc_base.css')
-    resource.resource('uvc_hilfen.css')
 
 
 Overlay = resource.ResourceInclusion(
@@ -27,13 +26,6 @@ Overlay = resource.ResourceInclusion(
 Tooltip = resource.ResourceInclusion(
     UVCResources, 'tooltip.js', depends=[jquerytools])
 
-JQMobileJS = resource.ResourceInclusion(
-    UVCResources, 'jquery.mobile-1.0a1.js', depends=[jquery])
-
-JQMobileCSS = resource.ResourceInclusion(
-    UVCResources, 'jquery.mobile-1.0a1.css', depends=[jquery])
-
-JQMobile = resource.GroupInclusion([JQMobileJS, JQMobileCSS])
 
 class UVCResourceViewlet(grok.Viewlet):
     grok.viewletmanager(IHeaders)
