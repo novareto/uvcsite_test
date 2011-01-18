@@ -26,6 +26,7 @@ class Impressum(uvcsite.Page):
 
 
 class Auskunftsdienste(uvcsite.Category):
+    grok.require('zope.View')
     grok.title('Auskunftsdienste')
     uvcsite.topmenu(uvcsite.IGlobalMenu, order=1)
 

@@ -57,6 +57,7 @@ class PersonalPanelView(uvcsite.Page):
     """Page for Personal Properties
     """
     grok.order(35)
+    grok.require('zope.View')
 
     grok.title(u"Meine Einstellungen")
     title = _(u"Meine Einstellungen")

@@ -35,7 +35,6 @@ def masteruser(self):
     return Principal(master_id)
 
 
-
 class UVCAuthenticator(grok.Model):
     """ Custom Authenticator for UVC-Site"""
     grok.implements(IAuthenticatorPlugin)
@@ -55,6 +54,9 @@ class UVCAuthenticator(grok.Model):
                 return
             login, password = credentials['login'], credentials['password']
             utility = getUtility(IUserManagement)
+            if not utility.checkRule(login):
+                return 
+
             user = utility.getUser(login)
             if not user:
                 return
