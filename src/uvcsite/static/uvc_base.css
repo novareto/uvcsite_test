@@ -147,6 +147,13 @@ h2#step-title
     width:35px;
 }
 
+#contextual-actions,div#form-form-field-camefrom,dl#anonymous-actions,dl#user-actions,.panes .pane
+{
+    display:none;
+}
+
+/*
+ 
 #page-body ul.tabs
 {
     list-style:none;
@@ -265,7 +272,4 @@ h2#step-title
     background-position:0 -62px;
 }
 
-#contextual-actions,div#form-form-field-camefrom,dl#anonymous-actions,dl#user-actions,.panes .pane
-{
-    display:none;
-}
+*/
