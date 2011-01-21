@@ -59,7 +59,7 @@ class ISerializer(Interface):
     """ Base Serialzer for IContent Objects
     """
 
-    def work(payload, interface, errors)
+    def work(payload, interface, errors):
         """ Worker which populates self.context
             with the contents of the payload and
             with the help of interface
