@@ -65,15 +65,15 @@ class ViewPermission(grok.View):
         print settingsForObject(context)
 
         
-from uvcsite.tests.simpleaddon import IAdressBook
-class QuickUserRoleManager(ExtraRoleMap):
-    grok.implements(IPrincipalRoleManager, IPrincipalRoleMap)
-
-    def _compute_extra_data(self):
-        extra_map = SecurityMap()
-        extra_map.addCell('uvc.Editor', self.context.__parent__.__name__ + '-q', Allow)
-        return extra_map
-
-from grokcore.component import global_adapter
-global_adapter(QuickUserRoleManager, (IAdressBook,), IPrincipalRoleMap)
-global_adapter(QuickUserRoleManager, (IAdressBook,), IPrincipalRoleManager)
+#from uvcsite.tests.simpleaddon import IAdressBook
+#class QuickUserRoleManager(ExtraRoleMap):
+#    grok.implements(IPrincipalRoleManager, IPrincipalRoleMap)
+#
+#    def _compute_extra_data(self):
+#        extra_map = SecurityMap()
+#        extra_map.addCell('uvc.Editor', self.context.__parent__.__name__ + '-q', Allow)
+#        return extra_map
+#
+#from grokcore.component import global_adapter
+#global_adapter(QuickUserRoleManager, (IAdressBook,), IPrincipalRoleMap)
+#global_adapter(QuickUserRoleManager, (IAdressBook,), IPrincipalRoleManager)

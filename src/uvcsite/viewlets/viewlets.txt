@@ -18,7 +18,7 @@ We have to setup view and context to get our ViewletManager!
    >>> class DummyPrincipal(object):
    ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
    ...
-   ...     id = "someuser"
+   ...     id = "uvc.someuser"
    ...     title = "Some User's Name"
    ...     description = "A User"
 
@@ -39,7 +39,7 @@ Context
    >>> context
    <uvcsite.app.Uvcsite object at ...>
    >>> prm = IPrincipalRoleManager(context)
-   >>> prm.assignRoleToPrincipal('zope.View', 'someuser')
+   >>> prm.assignRoleToPrincipal('uvc.User', 'uvc.someuser')
    >>> zope.security.management.newInteraction(request)
 
 View
@@ -111,7 +111,7 @@ Show the Viewlets:
 
    >>> manager.update()
    >>> len(manager.viewlets)
-   1 
+   2 
 
    >>> for x in manager.viewlets:
    ...     print x
