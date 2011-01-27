@@ -1,11 +1,19 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2010 NovaReto GmbH
+# cklinger@novareto.de 
+
+
 import doctest
+import unittest
 import uvcsite.tests
+
 from zope.app.testing.functional import FunctionalDocFileSuite
 
 
+
 def test_suite():
-    suite = FunctionalDocFileSuite(
-        'app.txt', 'mobile.txt', 'api/companyinfo.txt', 'auth/handler.txt',
+    functional = FunctionalDocFileSuite(
+        'app.txt', 'api/companyinfo.txt', 'auth/handler.txt',
         'auth/masteruser.txt', 'content/columnoverride.txt',
         'content/container.txt', 'content/folderinit.txt', 'content/content.txt',
         'content/crudviews.txt', 'content/multiple_workflow.txt',
@@ -22,5 +30,5 @@ def test_suite():
                     doctest.REPORT_NDIFF|
                     doctest.NORMALIZE_WHITESPACE,
         )
-    suite.layer = uvcsite.tests.FunctionalLayer
-    return suite
+    functional.layer = uvcsite.tests.FunctionalLayer
+    return functional

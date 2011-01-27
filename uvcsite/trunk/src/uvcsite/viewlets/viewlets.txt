@@ -79,7 +79,7 @@ Show the Viewlets:
    ...     print x
    <uvcsite.viewlets.staticmenuentries.UserName object at ...>
    <uvcsite.viewlets.staticmenuentries.MeinOrdner object at ...>
-   <megrok.navigation.util.AutoSiteMenuItem_0 object at ...>
+   <megrok.navigation.util.AutoSiteMenuItem_... object at ...>
 
 We render the individual viewlets:
 
