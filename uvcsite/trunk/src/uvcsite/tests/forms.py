@@ -72,6 +72,7 @@ class PopUpForm(uvcsite.Form):
     ignoreContent = False 
     ignoreRequest = False
     fields = uvcsite.Fields(IPerson)
+    fields['geschlecht'].mode = "radio"
 
     label = u"PopUp Form"
     description = u"Beispiel PopUp Form"
@@ -198,6 +199,8 @@ class MyWizard(uvcsite.Wizard):
         super(MyWizard, self).__init__(context, request)
         #self.setContentData(DictDataManager({}))
 
+    def finish(self):
+        pass
 
 class Step1(uvcsite.Step):
     grok.title('Step1')
@@ -280,6 +283,7 @@ class ComplexForm(uvcsite.Form):
     ignoreContent = False 
     ignoreRequest = False
     fields = uvcsite.Fields(IAdressen)
+    fields['personen'].mode = "bgdp"
 
     label = u"Adressen"
     description = u"Adressen"
@@ -287,3 +291,27 @@ class ComplexForm(uvcsite.Form):
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
         data, errors = self.extractData()
+
+
+from zeam.form.ztk.widgets.collection import MultiObjectFieldWidget, newCollectionWidgetFactory
+from zope.interface import Interface
+from zeam.form.ztk.interfaces import ICollectionSchemaField
+from zeam.form.ztk.widgets.object import ObjectSchemaField 
+
+
+class UOFW(MultiObjectFieldWidget):
+    grok.adapts(ICollectionSchemaField, ObjectSchemaField, Interface, Interface)
+    grok.name('bgdp')
+
+    def getDisplayWidgets(self, widget):
+        import pdb; pdb.set_trace()
+
+   
+
+import grokcore.component
+from zeam.form.base.interfaces import IField, IWidget
+grokcore.component.global_adapter(
+    newCollectionWidgetFactory(mode='bgdp'),
+    adapts=(ICollectionSchemaField, Interface, Interface),
+    provides=IWidget,
+    name='bgdp')
