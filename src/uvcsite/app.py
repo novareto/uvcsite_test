@@ -20,6 +20,9 @@ from zope.authentication.interfaces import IAuthentication
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 
+from zope.i18n.interfaces import IUserPreferredLanguages
+from zope.publisher.interfaces.http import IHTTPRequest
+
 grok.templatedir('templates')
 
 def setup_pau_dolmen(PAU):
@@ -116,3 +119,17 @@ class Favicon(grok.View):
 
     def render(self):
         return "BLA"
+
+
+class GermanBrowserLangugage(grok.Adapter):
+    grok.context(IHTTPRequest)
+    grok.implements(IUserPreferredLanguages)
+
+    def getPreferredLanguages(self):
+        return ['de', 'de-de',]
+
+
+from zeam.form.ztk.widgets.choice import RadioFieldWidget
+
+class UvcRadioFieldWidget(RadioFieldWidget):
+    pass

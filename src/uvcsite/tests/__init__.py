@@ -12,6 +12,7 @@ import zope.component.testlayer
 
 from StringIO import StringIO
 from uvcsite.app import Uvcsite
+from zope.site.hooks import setSite
 from zope.app.testing.functional import ZCMLLayer
 
 
@@ -47,6 +48,8 @@ FunctionalLayer = ZCMLLayer(
     )
 
 
+
+
 class BaseUVCBrowserLayer(zope.app.wsgi.testlayer.BrowserLayer):
 
     def __init__(self, *args, **kw):
@@ -63,6 +66,7 @@ class BaseUVCBrowserLayer(zope.app.wsgi.testlayer.BrowserLayer):
         zope.app.wsgi.testlayer.BrowserLayer.setUp(self)
         root = self.getRootFolder()
         root['app'] = Uvcsite()
+        setSite(root['app'])
         transaction.commit()
 
 
