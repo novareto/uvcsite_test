@@ -315,3 +315,5 @@ grokcore.component.global_adapter(
     adapts=(ICollectionSchemaField, Interface, Interface),
     provides=IWidget,
     name='bgdp')
+
+

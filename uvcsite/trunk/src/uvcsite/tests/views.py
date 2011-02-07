@@ -60,16 +60,6 @@ class Table(TablePage):
         return range(100)
 
 
-from megrok.rendersource.rest import RSTTemplateBase
-class TableHelp(HelpPage):
-    grok.context(IMyHomeFolder)
-    grok.view(Table)
-    t1 = RSTTemplateBase(filename='views_templates/tabhelp.rst')
-
-    def render(self):
-        return self.t1.render(self)
-
-
 class Number(Column):
     table(Table)
     grok.context(IMyHomeFolder)
