@@ -1,8 +1,6 @@
 Functional Doctest
 ==================
 
-:Test-Layer: functional
-
 First we have to setup a Site...
 
   >>> import grok

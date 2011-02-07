@@ -9,26 +9,6 @@ import uvcsite.tests
 
 from zope.app.testing.functional import FunctionalDocFileSuite
 
-def layered(suite, layer, addLayerToDoctestGlobs=True):
-    """Add the given layer to the given suite and return the suite.
-    
-    If ``addLayerToDoctestGlobs`` is ``True``, the layer will be added to the
-    globs (global namespace) of any doctests in the suite, under the name
-    ``layer``, provided no such glob exists already.
-    """
-    suite.layer = layer
-
-    if addLayerToDoctestGlobs:
-        for test in suite:
-            if hasattr(test, '_dt_test'):
-                globs = test._dt_test.globs
-                if not 'layer' in globs:
-                    globs['layer'] = layer
-
-    return suite
-
-
-
 def test_suite():
     layer = uvcsite.tests.FunctionalLayer
     functional = FunctionalDocFileSuite(
@@ -44,6 +24,7 @@ def test_suite():
         'workflow/workflow.txt', 'workflow/basic_workflow.txt',
         'content/ftests/api.py', 'content/ftests/homefoldertest.py', 
         package="uvcsite", 
+        globs={'__name__': 'uvcsite'},
         optionflags=doctest.ELLIPSIS|
                     doctest.IGNORE_EXCEPTION_DETAIL|
                     doctest.REPORT_NDIFF|

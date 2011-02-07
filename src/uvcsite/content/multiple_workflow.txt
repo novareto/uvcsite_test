@@ -75,7 +75,7 @@ First start with makeing an instance of the Content
 
   >>> content = SpecialContent()
   >>> content
-  <SpecialContent object at ...>
+  <uvcsite.SpecialContent object at ...>
 
   >>> r['folder']['hans'] = content
 
