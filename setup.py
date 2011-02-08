@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.2.4dev'
+version = '0.5'
 
 setup(name='uvcsite',
       version=version,
