@@ -45,6 +45,8 @@ from dolmen.forms.base.interfaces import IFieldUpdate
 from dolmen.forms.base.utils import (
     set_fields_data, notify_changes, apply_data_event)
 
+from uvcsite.utils.mail import send_mail
+
 ### LOGGING
 import logging
 logger = logging.getLogger('uvcsite')
