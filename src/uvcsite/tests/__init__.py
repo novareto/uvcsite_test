@@ -32,6 +32,15 @@ product_config = """
 #    username
 #    password
  </product-config>
+ <product-config beaker>
+   session.type            cookie
+   session.data_dir
+   session.lock_dir        /tmp/sessions/lock
+   session.key             beaker.session.id
+   session.secret          secret
+   session.validatekey     fdjaksfj
+ </product-config>
+
 """
 
 
