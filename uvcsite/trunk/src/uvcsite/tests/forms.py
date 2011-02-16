@@ -63,6 +63,30 @@ from zope import component
 from megrok.layout.interfaces import ILayout
 from zope.publisher.publish import mapply
 
+
+class PDFForm(uvcsite.Form):
+    grok.title(u'Pdf Form')
+    grok.description('PDF Form')
+    grok.context(uvcsite.IUVCSite)
+    uvcsite.menu(FormBeispiele)
+
+    ignoreRequest = False
+    fields = uvcsite.Fields(IPerson)
+    label = u"PopUp Form"
+    description = u"Beispiel PopUp Form"
+    data = None 
+
+    @uvcsite.action(u'Speichern')
+    def handle_action(self):
+        data, errors = self.extractData()
+        if errors:
+            self.flash('Fehler', type="error")
+            return
+        self.data = data
+        self.flash('Eingabe gespeichert')
+
+
+
 class PopUpForm(uvcsite.Form):
     grok.title(u'PopUp Beispielform')
     grok.description('Beschreibung')

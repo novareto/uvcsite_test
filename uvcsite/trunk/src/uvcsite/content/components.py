@@ -2,7 +2,7 @@ import grok
 import dolmen.content
 
 from zope.schema import TextLine
-from uvcsite.content.interfaces import IProductFolder, IFolderColumnTable
+from uvcsite.content.interfaces import IContent, IProductFolder, IFolderColumnTable
 from uvcsite.content.directive import contenttype
 from grokcore.component import directive
 from zope.container.interfaces import INameChooser
@@ -35,6 +35,7 @@ class ProductFolder(grok.Container):
 
 
 class Content(dolmen.content.Content):
+    grok.implements(IContent)
     grok.baseclass()
     dolmen.content.nofactory()
 

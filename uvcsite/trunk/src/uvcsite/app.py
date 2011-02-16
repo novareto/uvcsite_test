@@ -22,8 +22,10 @@ from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 
 from zope.i18n.interfaces import IUserPreferredLanguages
 from zope.publisher.interfaces.http import IHTTPRequest
+from zeam.form.ztk.widgets.choice import RadioFieldWidget
 
 grok.templatedir('templates')
+
 
 def setup_pau_dolmen(PAU):
     PAU.authenticatorPlugins = ('principals', )
@@ -106,7 +108,7 @@ class CustomDateWidgetExtractor(DateWidgetExtractor):
             try:
                 value = formatter.parse(value)
             except (ValueError, DateTimeParseError), error:
-                return None, str(error)
+                return None, u"Bitte überprüfen Sie das Datumsformat. (tt.mm.jjjj)" 
         return value, error
 
 
@@ -129,7 +131,7 @@ class GermanBrowserLangugage(grok.Adapter):
         return ['de', 'de-de',]
 
 
-from zeam.form.ztk.widgets.choice import RadioFieldWidget
-
 class UvcRadioFieldWidget(RadioFieldWidget):
+    """ Simple Override for removing <br> between choices
+    """
     pass

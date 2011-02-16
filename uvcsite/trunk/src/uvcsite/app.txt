@@ -86,12 +86,12 @@ We should get the Error Page:
    >>> print browser.contents
    <!DOCTYPE ... 
          <h3>
-          The page that you are trying to access is not available
+           Die Seite die Sie anzeigen wollen existiert nicht.
          </h3>
-         <p><b>Please note the following:</b></p>
+         <p><b>Bitte beachten Sie folgendes:</b></p>
          <ol>
-           <li>You might have misspelled the url</li>
-           <li>You might be trying to access a non-existing page</li>
+           <li>Möglicherweise haben Sie die URL falsch eingegeben.</li>
+           <li>Eventuell versuchen Sie eine Seite anzuzeigen die nicht existiert.</li>
          </ol>
    ...
    </html>
