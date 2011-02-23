@@ -39,7 +39,6 @@ class Icons(grok.DirectoryResource):
     grok.path('icons')
 
 
-
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
     """
@@ -128,7 +127,7 @@ class GermanBrowserLangugage(grok.Adapter):
     grok.implements(IUserPreferredLanguages)
 
     def getPreferredLanguages(self):
-        return ['de', 'de-de',]
+        return ['de', 'de-de']
 
 
 class UvcRadioFieldWidget(RadioFieldWidget):
