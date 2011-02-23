@@ -36,7 +36,8 @@ POST
 
 Ok there is no meaningful post method implemented yet!
 
-  >>> response = http_call('POST', 'http://localhost/++rest++api/uaz')
+  >>> auth_header="Basic user:user"
+  >>> response = http_call('POST', 'http://localhost/++rest++api/uaz', AUTHORIZATION=auth_header)
   >>> print response.getBody()
   POST
 
