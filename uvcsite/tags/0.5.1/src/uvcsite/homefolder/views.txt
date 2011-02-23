@@ -1,0 +1,179 @@
+Functional Doctests on homefolder views 
+=======================================
+
+:Test-Layer: functional
+
+
+Setup
+-----
+
+  >>> from uvcsite.app import Uvcsite
+  >>> root = getRootFolder()
+
+  >>> from uvcsite.homefolder.homefolder import HomeFolder
+  >>> homefolder = HomeFolder()
+  >>> homefolder
+  <uvcsite.homefolder.homefolder.HomeFolder object at ...> 
+
+  >>> root['hf'] = homefolder
+
+  >>> import zope.interface
+  >>> import zope.security.interfaces
+  >>> class DummyPrincipal(object):
+  ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
+  ...
+  ...     id = "someuser"
+  ...     title = "Some User's Name"
+  ...     description = "A User"
+
+
+TableView
+---------
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> import zope.security.management
+
+  >>> request = TestRequest()
+  >>> request.setPrincipal(DummyPrincipal())
+  >>> zope.security.management.newInteraction(request)
+
+  >>> index = getMultiAdapter((homefolder, request), name="index")
+  >>> index
+  <Index 'index'>
+
+
+We have one folder inside our homefolder.
+
+  >>> list(index.getContentTypes())
+  [{'href': 'http://127.0.0.1/hf/adressbook', 'name': u'adressbook'}]
+
+Now we can render the Index Page of the Homefolder: 
+
+  >>> index.update()
+  >>> print index.render()
+  <div id="homefolder">
+    <h1>Some User's Name</h1>
+    <p class="description">Hier werden Ihre Dokumente abgelegt</p>
+    <div class="page-content">
+      <div class="batch"></div>
+      <form action="http://127.0.0.1/hf" method="post">
+        <table class="tablesorter myTable">
+    <thead>
+      <tr>
+        <th class="checkBox"></th>
+        <th>Titel</th>
+        <th>Objekt</th>
+        <th>Status</th>
+        <th>Autor</th>
+        <th>Datum</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+        <input type="submit" value="Entfernen" name="form.button.delete" />
+      </form>
+    </div>
+  </div> 
+
+
+There is no table in the view? This is because there
+is no content in the Folder. So we have to add some
+content to the container to see a table.
+
+Setting up a Container for Person Objects
+
+  >>> import grok
+  >>> from grok.interfaces import IContainer
+  >>> class PersonContainer(grok.Container):
+  ...     grok.implements(IContainer)   
+
+  >>> IContainer.implementedBy(PersonContainer)
+  True
+
+Creating a Person Object
+
+  >>> from uvcsite import Content
+  >>> class Person(Content):
+  ...     """ """
+  ...     name = ""
+  ...     age = ""
+
+  >>> hans = Person()
+  >>> hans.name = "Hans"
+  >>> hans.age = "44"
+  >>> hans.__name__ = "hans"
+
+  >>> from uvcsite import IContent
+  >>> IContent.providedBy(hans)
+  True
+
+Let's proof if the Homefolder Settings are correct!
+
+  >>> len(homefolder)
+  1
+
+  >>> homefolder['personcontainer'] = PersonContainer() 
+  >>> 'personcontainer' in homefolder
+  True
+
+  >>> homefolder['personcontainer']['hans'] = hans 
+  >>> 'hans' in homefolder['personcontainer']
+  True
+
+Now call the view with some contents...
+
+  >>> index = getMultiAdapter((homefolder, request), name="index")
+
+Let's check again if we now get **contenttypes** in our homefolder:
+
+  >>> [x for x in index.getContentTypes()]
+  [{'href': 'http://127.0.0.1/hf/adressbook', 'name': u'adressbook'}, {'href': 'http://127.0.0.1/hf/personcontainer', 'name': u'personcontainer'}]
+
+  [u'personcontainer']
+
+  >>> index.update()
+  >>> print index.render()
+  <div id="homefolder">
+    <h1>Some User's Name</h1>
+    <p class="description">Hier werden Ihre Dokumente abgelegt</p>
+    <div class="page-content">
+      <div class="batch"></div>
+      <form action="http://127.0.0.1/hf" method="post">
+        <table class="tablesorter myTable">
+    <thead>
+      <tr>
+        <th class="checkBox"></th>
+        <th>Titel</th>
+        <th>Objekt</th>
+        <th>Status</th>
+        <th>Autor</th>
+        <th>Datum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="even">
+        <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="hans"  /></td>
+        <td><a href="http://127.0.0.1/hf/personcontainer/hans/edit"></a></td>
+        <td>Person</td>
+        <td>Entwurf</td>
+        <td>someuser</td>
+        <td>...</td>
+      </tr>
+    </tbody>
+  </table>
+        <input type="submit" value="Entfernen" name="form.button.delete" />
+      </form>
+    </div>
+  </div>
+
+
+Delete Item Form
+----------------
+
+  >>> 'hans' in homefolder['personcontainer']
+  True
+
+  >>> zope.security.management.endInteraction()
+
