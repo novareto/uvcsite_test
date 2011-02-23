@@ -23,7 +23,7 @@ class CheckBox(CheckBoxColumn):
     weight = 0
     cssClasses = {'th': 'checkBox'}
     header = u""
-    
+
     def renderCell(self, item):
         state = IWorkflowState(item).getState()
         if state != None:

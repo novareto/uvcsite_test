@@ -54,11 +54,11 @@ to the login page.
 
    >>> browser.open('http://localhost/app/index')
    >>> browser.url
-   'http://localhost/app/@@login?camefrom=%2Fapp%2Findex'
+   'http://localhost/app/@@login?camefrom=http%3A%2F%2Flocalhost%2Fapp%2Findex'
 
    >>> browser.open('http://localhost/app/defaultsecurity')
    >>> browser.url
-   'http://localhost/app/@@login?camefrom=%2Fapp%2Fdefaultsecurity'
+   'http://localhost/app/@@login?camefrom=http%3A%2F%2Flocalhost%2Fapp%2Fdefaultsecurity'
 
 Now log on as a user and look if we get the index page
 
