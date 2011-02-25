@@ -7,6 +7,30 @@
  <fieldset>
  <legend > Benutzer </legend>
   <div>
+
+
+  <table id="cousers">
+      <tr>
+          <th> Mitbenutzer </th>
+          <th> Berechtigung </th>
+      </tr>
+      <tr tal:repeat="user view/getUserGroup">
+          <td>
+              <img src="/@@//uvc.skin/user.png">
+              <a href="" 
+                 i18n:translate=""
+                 tal:attributes="href string:${url}/enmsupdateuser?cn=${user/mnr}">
+                 <span i18n:name="updateUser" tal:content="string: ${user/mnr}"> user updaten </span>
+              </a>
+          </td>    
+          <td>
+              Unfallanzeige, Entgeltnachweis 
+          </td>
+      </tr>
+  </table>  
+
+
+<!--
   <dl class="portlet portletHalfWidth">
   <dt class="portletHeader">
     <span> Mitbenutzer </span>
@@ -32,6 +56,8 @@
   </dd>
 
  </dl>
+ -->
+
 </div>
 </fieldset>
 </div>

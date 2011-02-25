@@ -273,3 +273,13 @@ h2#step-title
 }
 
 */
+
+table#cousers {
+  margin: 0 auto;
+  width: auto;
+}
+
+table#cousers th,
+table#cousers td {
+  padding: 3px 3px 3px 3px;
+}
