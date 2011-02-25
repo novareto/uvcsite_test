@@ -22,6 +22,7 @@ class ProductFolderGrokker(martian.ClassGrokker):
                             "direcitve 'contenttype' for it."
                             % factory, factory)
 
+        name = name.capitalize()
         config.action(
             discriminator=('utility', IProductFolder, name),
             callable=zope.component.zcml.handler,
