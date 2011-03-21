@@ -28,6 +28,14 @@
       password="user"
       />
 
+  <principal
+      id="uvc.uaz"
+      title="uaz"
+      login="uaz"
+      password="uaz"
+      />
+
   <grant role="zope.Manager" principal="zope.mgr" />
+  <grant role="uvc.Editor" principal="uvc.uaz" />
 
 </configure>

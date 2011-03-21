@@ -30,7 +30,7 @@ password = config.get('password', None) or None
 
 
 mailer_object = zope.sendmail.mailer.SMTPMailer(
-        hostname, port, username, password)
+        hostname, port, username, password, force_tls=False)
 
 
 def mailer():

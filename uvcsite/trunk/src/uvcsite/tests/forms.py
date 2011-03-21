@@ -321,6 +321,10 @@ from zeam.form.ztk.widgets.collection import MultiObjectFieldWidget, newCollecti
 from zope.interface import Interface
 from zeam.form.ztk.interfaces import ICollectionSchemaField
 from zeam.form.ztk.widgets.object import ObjectSchemaField 
+from zeam.form.base.interfaces import IWidget 
+from zeam.form.base import HIDDEN
+from zope import component
+
 
 
 class UOFW(MultiObjectFieldWidget):
@@ -328,7 +332,12 @@ class UOFW(MultiObjectFieldWidget):
     grok.name('bgdp')
 
     def getDisplayWidgets(self, widget):
-        import pdb; pdb.set_trace()
+        ww = component.getMultiAdapter(
+            (widget.component, widget.form, self.request), 
+            IWidget, 
+            name='hidden')
+        ww.update()
+        return "%s %s" %(ww.render(), ww.inputValue())
 
    
 
