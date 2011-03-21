@@ -1,0 +1,19 @@
+<script>
+$(document).ready(function() {
+    $('a#help_button[rel]').overlay()
+})  
+</script>
+
+<div id="uvc_help"
+     tal:define="viewlets viewletmanager/viewlets"
+     tal:condition="viewlets">
+       <a href id="help_button" rel="#toggler"> Hilfe </a>
+       <div id="toggler"
+            class="simple_overlay"
+            title="Hilfe"
+            tal:repeat="viewlet viewlets">
+         <div id="effect">
+            <span tal:content="structure viewlet/render"/>
+         </div> 
+       </div>
+</div>
