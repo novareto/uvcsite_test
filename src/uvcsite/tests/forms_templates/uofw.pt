@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr tal:repeat="valueWidget widget/valueWidgets">
+      <tr tal:repeat="valueWidget python: widget.valueWidgets[:-1]">
         <td>
           <input type="checkbox" name="#"
                  tal:attributes="name string:${widget/identifier}.checked.${valueWidget/component/identifier}" />
@@ -26,6 +26,15 @@
       </tr>
     </tbody>
   </table>
+
+
+
+  <table>
+      <tr tal:repeat="valueWidget widget/valueWidgets">
+        <td tal:content="structure valueWidget/render"/>
+      </tr>
+  </table>
+
   <p tal:condition="not:widget/valueWidgets">
     -
   </p>

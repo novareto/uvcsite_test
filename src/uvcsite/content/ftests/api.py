@@ -23,20 +23,17 @@ Add the folder to the RootFolder!
   >>> root['uaz']
   <uvcsite.content.ftests.api.UAZFolder object at ...> 
 
-
-
 Rest Operations
 ---------------
 
   >>> from uvcsite.content.ftests import http_call
-
 
 POST
 ----
 
 Ok there is no meaningful post method implemented yet!
 
-  >>> auth_header="Basic user:user"
+  >>> auth_header="Basic uaz:uaz"
   >>> response = http_call('POST', 'http://localhost/++rest++api/uaz', AUTHORIZATION=auth_header)
   >>> print response.getBody()
   POST
@@ -47,7 +44,7 @@ GET
 So start with a GET Request of the Container! Ok are no 
 content objects in it so we only get an empty container listing. 
 
-  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz')
+  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz', AUTHORIZATION=auth_header)
   >>> print response.getBody()
   <container id="uaz"/>
 
@@ -67,7 +64,8 @@ Now let's add objects to the container and see the GET Request again
 One item in the container!
 
   >>> root['uaz']['christian'] = uaz
-  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz')
+  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz', 
+  ... AUTHORIZATION=auth_header)
   >>> print response.getBody()
   <container id="uaz">
     <Unfallanzeige id="christian">
@@ -80,7 +78,8 @@ One item in the container!
 More items in the container!
 
   >>> root['uaz']['lars'] = uaz1
-  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz')
+  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz',
+  ... AUTHORIZATION=auth_header)
   >>> print response.getBody()
   <container id="uaz">
     <Unfallanzeige id="christian">
@@ -107,13 +106,14 @@ A Valid uaz_xml file!
   ...      <name>Christian Moser</name>
   ...      <age>30</age>
   ...    </Unfallanzeige>'''
-  >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz', uaz_xml)
+  >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz', uaz_xml,
+  ... AUTHORIZATION=auth_header)
   >>> print response.getBody()
-  <success id="Unfallanzeige-2" name="Unfallanzeige"/>
+  <success id="Unfallanzeige" name="Unfallanzeige"/>
 
 We should get this document in our container
 
-  >>> uaz = root['uaz']['Unfallanzeige-2']
+  >>> uaz = root['uaz']['Unfallanzeige']
   >>> uaz
   <uvcsite.content.ftests.api.Unfallanzeige object at ...>
 
@@ -136,7 +136,8 @@ An Invalid uaz_xml file!
   ...      <name>Christian Klinger Junior</name>
   ...      <age>twenty nine</age>
   ...    </Unfallanzeige>'''
-  >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz', uaz_xml_with_error)
+  >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz',
+  ... uaz_xml_with_error, AUTHORIZATION=auth_header)
   >>> print response.getBody()
   <failure>
     <error field="name" message="Value is too long"><name>Christian Klinger Junior</name>
@@ -153,7 +154,8 @@ An invariant uaz_xml file
   ...      <name>hans</name>
   ...      <age>10</age>
   ...    </Unfallanzeige>'''
-  >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz', uaz_xml_with_invariant)
+  >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz',
+  ...  uaz_xml_with_invariant, AUTHORIZATION=auth_header)
   >>> print response.getBody()
   <failure>
     <error text="Invariant: This combination of name and age is not valid"/>

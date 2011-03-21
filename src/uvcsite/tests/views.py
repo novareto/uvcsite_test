@@ -15,6 +15,7 @@ from uvcsite import HelpPage
 from megrok import navigation
 import uvcsite
 from uvc.layout.menus import SubMenu
+from zope.authentication.interfaces import IUnauthenticatedPrincipal
 
 
 class BausAuskunft(SubMenu):
@@ -23,6 +24,25 @@ class BausAuskunft(SubMenu):
     navigation.parentmenu(uvcsite.IGlobalMenu)
     grok.order(2500)
 
+
+class Logout(uvcsite.Page):
+    """ Logout View
+    """
+    grok.name('Logout')
+    grok.title('Logout')
+    grok.require('zope.View')
+    grok.context(uvcsite.IUVCSite)
+    uvcsite.menu(uvcsite.IPersonalPreferences, order=100)
+
+    KEYS = ("beaker.session", "dolmen.authcookie")
+
+    def update(self):
+        if not IUnauthenticatedPrincipal.providedBy(self.request.principal):
+            for key in self.KEYS:
+                self.request.response.expireCookie(key, path='/')
+
+    def render(self):
+        return self.redirect(self.application_url()) 
 
 
 class Index(uvcsite.Page):

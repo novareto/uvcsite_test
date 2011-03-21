@@ -87,7 +87,7 @@ We render the individual viewlets:
   [<uvcsite.viewlets.staticmenuentries.UserName object at 0...>, 
    <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>,
    <megrok.navigation.util.AutoSiteMenuItem_... object at 0...>] 
-  >>> username, meinordner, prefs = manager.viewlets
+  >>> username, meinordner, prefs, logout = manager.viewlets
 
 Username:
 
