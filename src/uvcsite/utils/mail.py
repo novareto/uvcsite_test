@@ -54,8 +54,6 @@ def send_mail(sender, recipient, subject, body, file=None):
     recipient muss als Liste übergeben werden
     body sollte einen formatierter String sein
     '''
-    filename = file.split("/")
-    filename = filename[-1]
    
     msg = MIMEMultipart()
     msg["From"] = sender
@@ -65,6 +63,8 @@ def send_mail(sender, recipient, subject, body, file=None):
    
     # Attachment von Dateien
     if file!=None:
+        filename = file.split("/")
+        filename = filename[-1]
         part = MIMEBase('application', 'octet-stream')
         part.set_payload(open(file, 'rb').read())
         Encoders.encode_base64(part)
