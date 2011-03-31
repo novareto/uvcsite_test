@@ -273,6 +273,31 @@ h2#step-title
 }
 
 */
+div.WizardStepMenu {
+    border-top: 1px solid #DDDDDD;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    background-color: #EFEFEF;
+    padding-right: 1em;
+    text-align: right;
+}
+
+div.WizardStepMenu li {
+   list-style: none; 
+}
+
+div.WizardStepMenu li.past span {
+    color: #B30B16; 
+}
+
+div.WizardStepMenu li.current span {
+    color: #B30B16; 
+    font-weight: bolder;
+}
+
+div.WizardStepMenu li.future span {
+    color: blue;
+}
 
 table#cousers {
   margin: 0 auto;
