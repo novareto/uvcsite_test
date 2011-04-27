@@ -26,6 +26,9 @@ Overlay = resource.ResourceInclusion(
 Tooltip = resource.ResourceInclusion(
     UVCResources, 'tooltip.js', depends=[jquerytools])
 
+Mask = resource.ResourceInclusion(
+    UVCResources, 'jquery.maskedinput-1.3.js', depends=[jquerytools])
+
 
 class UVCResourceViewlet(grok.Viewlet):
     grok.viewletmanager(IHeaders)

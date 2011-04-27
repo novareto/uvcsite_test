@@ -160,6 +160,7 @@ class MyForm(uvcsite.Form):
         validation.need()
         DatePicker.need()
         uvcsite.Tooltip.need()
+        uvcsite.Mask.need()
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
@@ -260,6 +261,7 @@ class ISimplePerson(interface.Interface):
 
     name = schema.TextLine(
        title = u"Name",
+       required=True,
        description = u"Bitte geben Sie hier den Namen ein",
        )
 
@@ -268,11 +270,11 @@ class ISimplePerson(interface.Interface):
         description = u"Bitte geben Sie den Vornamen ein",
         )
 
-    geschlecht = schema.Choice(
-        title = u"Gender",
-        description = u"Bitte geben Sie das Geschlecht ein",
-        values = ('men', 'woman', 'kid', 'grandpa', 'sister', 'brother'),
-        )
+    #geschlecht = schema.Choice(
+    #    title = u"Gender",
+    #    description = u"Bitte geben Sie das Geschlecht ein",
+    #    values = ('men', 'woman', 'kid', 'grandpa', 'sister', 'brother'),
+    #    )
 
 from zope.component.interfaces import IFactory
 
@@ -290,7 +292,7 @@ class IAdressen(interface.Interface):
 
     personen = schema.List(
         title=u"Personen",
-        description=u"Bitte tragen Sie alle Personen ein...",
+        description=u"Bitte tragen Sie alle Personen ein... <br> kk <br>fdas faskjfakf a f fkasfj dkaf aksf akf kasfj sakf kasf aksf kasf ksf sak fdskaf askf aksdf daskf dkf aksdf kfdj dkfj dskfj askfj jaksf askf askf jasdkf ",
         value_type=schema.Object(
             title=u"Person", 
             schema=ISimplePerson),
@@ -315,7 +317,26 @@ class ComplexForm(uvcsite.Form):
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
         data, errors = self.extractData()
+        print errors.title
 
+class oComplexForm(uvcsite.Form):
+    """ """
+    grok.title(u'oKomplexForm')
+    grok.description(u"oKomplexe Form")
+    grok.context(uvcsite.IUVCSite)
+    uvcsite.menu(FormBeispiele)
+
+    ignoreContent = False 
+    ignoreRequest = False
+    fields = uvcsite.Fields(IAdressen)
+
+    label = u"Adressen"
+    description = u"Adressen"
+
+    @uvcsite.action(u'Abschicken')
+    def handleButton(self):
+        data, errors = self.extractData()
+        print errors.title
 
 from zeam.form.ztk.widgets.collection import MultiObjectFieldWidget, newCollectionWidgetFactory
 from zope.interface import Interface
@@ -339,7 +360,37 @@ class UOFW(MultiObjectFieldWidget):
         ww.update()
         return "%s %s" %(ww.render(), ww.inputValue())
 
+    @property
+    def getValueWidgets(self):
+        widgets = [x for x in self.valueWidgets]
+        if self.request.has_key(self.identifier + '.add'):
+            widgets.pop()
+        return widgets 
    
+    @property
+    def getInputWidget(self):
+        if self.request.has_key(self.identifier + '.add'):
+            vv= [x for x in self.valueWidgets].pop()
+            return [x for x in self.valueWidgets].pop()
+        return None 
+
+    @property
+    def allowAddingCustom(self):
+        return self.request.has_key(self.identifier + '.add')
+
+
+    def update(self):
+        from zeam.form.base.widgets import getWidgetExtractor
+        super(UOFW, self).update()
+        if self.request.has_key(self.identifier + '.dadd'):
+            for field in self.getFields():
+                extractor = getWidgetExtractor(self.component, self.form, self.request)
+                value, error = extractor.extract()
+                print value, error
+                if error is None:
+                    error = field.validate(value, self.form)
+
+
 
 import grokcore.component
 from zeam.form.base.interfaces import IField, IWidget

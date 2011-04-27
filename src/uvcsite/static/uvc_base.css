@@ -308,3 +308,18 @@ table#cousers th,
 table#cousers td {
   padding: 3px 3px 3px 3px;
 }
+
+table#uofw {
+  width: 584px;
+  margin-bottom: 2em;
+}
+
+div#uofwfields {
+  margin-bottom: 2em;
+}
+
+div#uofwfields label {
+  margin-left: 0;
+  margin-top: 0;
+  float: left;
+}

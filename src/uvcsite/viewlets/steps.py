@@ -32,4 +32,3 @@ class StepsProgressBar(grok.Viewlet):
             self.steps.append(
                 dict(description = step.label, css=css,)
                 )
-        print self.steps
