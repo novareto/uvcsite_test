@@ -51,6 +51,10 @@ class Index(uvcsite.Page):
     navigation.sitemenuitem(BausAuskunft)
     grok.require('zope.View')
 
+    def update(self):
+        self.flash('kk', 'error')
+        self.flash('tt', 'warning')
+
 
 class DefaultSecurity(uvcsite.Page):
     grok.title("DefaultSecurity")
