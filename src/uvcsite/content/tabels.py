@@ -14,6 +14,7 @@ from uvcsite.workflow.basic_workflow import titleForState
 from uvcsite.interfaces import IFolderColumnTable, IFolderListingTable
 from zope.traversing.browser import absoluteURL
 from uvcsite.homefolder.views import Index
+from datetime import timedelta
 
 
 class CheckBox(CheckBoxColumn):
@@ -74,12 +75,16 @@ class CreatorColumn(Column):
         return ', '.join(IZopeDublinCore(item).creators)
 
 
-class ModifiedColumn(ModifiedColumn):
+class ModifiedColumn(Column):
     grok.name('modified')
     grok.context(IFolderColumnTable)
     header = _(u"Datum")
     weight = 100
     table(IFolderListingTable)
+
+    def renderCell(self, item):
+        modified = IZopeDublinCore(item).modified + timedelta(hours=2)
+        return modified.strftime('%d.%m.%Y %H:%M')
 
 
 class StateColumn(GetAttrColumn):
