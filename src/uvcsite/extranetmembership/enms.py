@@ -29,6 +29,8 @@ class ENMS(megrok.layout.Page):
         um = getUtility(IUserManagement)
         return um.getUserGroups(principal)
 
+    def displayRoles(self, roles):
+        return ', '.join(roles)
 
 class ENMSCreateUser(uvcsite.Form):
     """ Simple Form which displays values from a Dict"""
