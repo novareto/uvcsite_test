@@ -20,7 +20,7 @@ class StepsProgressBar(grok.Viewlet):
     def update(self):
         self.steps = []
         current = self.view.step
-        self.title = "Schritt: %s von %s" %(current+1, len(self.view.subforms))
+        self.title = "Fortschrittsanzeige: %s von %s" %(current+1, len(self.view.subforms))
         for i, step in enumerate(self.view.subforms):
             if i == current:
                 css = "current"
