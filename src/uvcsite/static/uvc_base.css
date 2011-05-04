@@ -67,12 +67,17 @@ div#uvc_help
     float:right;
 }
 
+div#effect {
+ overflow-y: scroll;
+ height: 390px;
+}
+
 div#toggler
 {
     text-align:left;
     text-indent:20px;
     border:2px solid #B30B16;
-    height:auto;
+    height:400px;
     padding:2em;
 }
 
@@ -130,6 +135,7 @@ h2#step-title
     background-color:#EFEFEF;
     width:675px;
     min-height:200px;
+    height:400px;
     border:1px solid #666;
     -moz-box-shadow:0 0 90px 5px #000;
     -webkit-box-shadow:0 0 90px #000;
@@ -281,12 +287,17 @@ div.WizardStepMenu {
     text-align: right;
 }
 
+div.WizardStepMenu div {
+    padding-left: 45em;
+}
+
 div.WizardStepMenu li {
    list-style: none; 
+   text-align: left;
 }
 
 div.WizardStepMenu li.past span {
-    color: #B30B16; 
+    color: #8cb67b; 
 }
 
 div.WizardStepMenu li.current span {
@@ -295,7 +306,7 @@ div.WizardStepMenu li.current span {
 }
 
 div.WizardStepMenu li.future span {
-    color: blue;
+    color: #666666;
 }
 
 table#cousers {
