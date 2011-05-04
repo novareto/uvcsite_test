@@ -333,3 +333,46 @@ div#uofwfields label {
   margin-top: 0;
   float: left;
 }
+
+/* Accordion */
+
+#accordion {
+background:#333 url(h300.png) 0 0;
+width: 80%;
+border:1px solid #333;	
+-background:#666;
+margin: 0 auto;
+}
+
+#accordion h2 {
+background:#ccc url(h30.png);
+margin:0;
+padding:5px 15px;
+font-size:14px;
+font-weight:normal;
+border:1px solid #fff;
+border-bottom:1px solid #ddd;
+cursor:pointer;		
+}
+
+#accordion h2.current {
+cursor:default;
+background-color:#fff;
+}
+
+#accordion .pane {
+border:1px solid #fff;
+border-width:0 2px;
+display:none;
+height:180px;
+padding:15px;
+color:#fff;
+font-size:12px;
+}
+
+#accordion .pane h3 {
+font-weight:normal;
+margin:0 0 -5px 0;
+font-size:16px;
+color:#999;
+}
