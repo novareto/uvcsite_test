@@ -12,3 +12,9 @@ grok.templatedir('templates')
 class IEFixes(grok.Viewlet):
     grok.context(uvcsite.IMyHomeFolder)
     grok.viewletmanager(IHeaders)
+
+
+class IEFixesPf(grok.Viewlet):
+    grok.context(uvcsite.IProductFolder)
+    grok.viewletmanager(IHeaders)
+    template = grok.PageTemplateFile('templates/iefixes.pt')
