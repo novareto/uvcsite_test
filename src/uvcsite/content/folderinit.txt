@@ -60,7 +60,7 @@ folder in the process:
 
   >>> lars = utility.homeFolderBase['lars']
   >>> list(lars)
-  [u'adressbook']
+  [u'Adressbook']
 
 Creating product folders when opening the DB
 --------------------------------------------
@@ -78,4 +78,4 @@ After firing the event, all the product folders should be there again in the
 home folder:
 
   >>> list(lars)
-  [u'adressbook']
+  [u'Adressbook']
