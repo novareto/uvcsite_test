@@ -46,7 +46,7 @@ TableView
 We have one folder inside our homefolder.
 
   >>> list(index.getContentTypes())
-  [{'href': 'http://127.0.0.1/hf/adressbook', 'name': u'adressbook'}]
+  [{'href': 'http://127.0.0.1/hf/Adressbook', 'name': u'Adressbook'}]
 
 Now we can render the Index Page of the Homefolder: 
 
@@ -129,7 +129,7 @@ Now call the view with some contents...
 Let's check again if we now get **contenttypes** in our homefolder:
 
   >>> [x for x in index.getContentTypes()]
-  [{'href': 'http://127.0.0.1/hf/adressbook', 'name': u'adressbook'}, {'href': 'http://127.0.0.1/hf/personcontainer', 'name': u'personcontainer'}]
+  [{'href': 'http://127.0.0.1/hf/Adressbook', 'name': u'Adressbook'}, {'href': 'http://127.0.0.1/hf/personcontainer', 'name': u'personcontainer'}]
 
   [u'personcontainer']
 
