@@ -1,0 +1,10 @@
+<div id="notfound-page" i18n:domain="zope">
+      <h3  i18n:translate="">
+        Die Seite die Sie anzeigen wollen existiert nicht.
+      </h3>
+      <p><b i18n:translate="">Bitte beachten Sie folgendes:</b></p>
+      <ol>
+        <li i18n:translate="">Möglicherweise haben Sie die URL falsch eingegeben.</li>
+        <li i18n:translate="">Eventuell versuchen Sie eine Seite anzuzeigen die nicht existiert.</li>
+      </ol>
+</div>

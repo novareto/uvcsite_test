@@ -1,0 +1,25 @@
+<h1>Congratulations!</h1>
+
+  <p class="big">Your Grok application is up and running.
+  Edit <code>restest/app_templates/index.pt</code> to change
+  this page.</p>
+
+
+<h3>Aktuelle Nachrichten in berschrift (H3)</h3>
+<ul class="content">
+    <li>Nachweis fr den Beitragsbescheid
+    <span class="">vom 2008-12-15  08:15:40</span>
+    </li>
+
+</ul>
+
+<ul>
+  <li>
+    <a href="google.de"> LINK
+    </a>
+  </li>
+</ul>
+
+<ul>
+   <li><span>Text</span></li>
+</ul>
