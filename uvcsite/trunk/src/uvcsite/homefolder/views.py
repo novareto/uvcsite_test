@@ -34,9 +34,11 @@ class Index(TablePage):
     description = _(u"Hier werden Ihre Dokumente abgelegt")
 
     def getContentTypes(self):
+        interaction = self.request.interaction
         for key, value in self.context.items():
-            yield dict(href = absoluteURL(value, self.request),
-                       name = key) 
+            if interaction.checkPermission('uvc.ViewContent', value):
+                yield dict(href = absoluteURL(value, self.request),
+                           name = key) 
 
     def executeDelete(self, item):
         self.flash(_(u'Ihre Dokumente wurden entfernt'))
@@ -70,6 +72,8 @@ class HomeFolderValues(Values):
     @property
     def values(self):
         results = []
-        for object in self.context.values():
-            results.extend(object.values())
+        interaction = self.request.interaction
+        for productfolder in self.context.values():
+            if interaction.checkPermission('uvc.ViewContent', productfolder):
+                results.extend(productfolder.values())
         return results

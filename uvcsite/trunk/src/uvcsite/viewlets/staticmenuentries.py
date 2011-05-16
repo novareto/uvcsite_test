@@ -54,7 +54,7 @@ class Mitbenutzerverwaltung(grok.View):
     grok.title('Mitbenutzerverwaltung')
     navigation.sitemenuitem(uvcsite.IPersonalMenu)
     grok.order(30)
-    grok.require('zope.View')
+    grok.require('uvc.ManageCoUsers')
 
     @property
     def url(self):
