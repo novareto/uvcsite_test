@@ -29,6 +29,12 @@ class Index(TablePage):
     grok.context(IProductFolder)
     uvcsite.sectionmenu(uvcsite.IExtraViews)
 
+    @property
+    def title(self):
+        return self.context.getContentName()
+
+    description = u"Hier finden Sie alle Dokumente dazu."
+
     cssClasses = {'table': 'myTable tablesorter'}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
