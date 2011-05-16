@@ -62,13 +62,26 @@ class PersonalPanelView(uvcsite.Page):
     """
     grok.order(35)
     grok.require('zope.View')
+    grok.context(uvcsite.IMyHomeFolder)
 
     grok.title(u"Meine Einstellungen")
     title = _(u"Meine Einstellungen")
     description = _(u"Hier werden Einstellungen zu"
                      " Ihrem Benutzerprofil vorgenommen.")
 
+
+class PersonalPanelEntry(grok.View):
+    grok.require('zope.View')
+    grok.order(35)
+
+    grok.title(u"Meine Einstellungen")
+    title = _(u"Meine Einstellungen")
+    
     menu(uvcsite.IPersonalPreferences, order=40)
+
+    def render(self):
+        return self.redirect(
+            uvcsite.IGetHomeFolderUrl(self.request).getURL() + '/personalpanelview')
 
 
 class NotFound(errors.NotFound):
