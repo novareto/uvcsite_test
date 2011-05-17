@@ -14,7 +14,7 @@ class StepsProgressBar(grok.Viewlet):
     grok.context(Interface)
     grok.view(uvcsite.Wizard)
     grok.viewletmanager(uvcsite.IAboveContent)
-    grok.order(2000)
+    grok.order(10000)
 
 
     def update(self):

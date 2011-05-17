@@ -285,6 +285,7 @@ div.WizardStepMenu {
     background-color: #EFEFEF;
     padding-right: 1em;
     text-align: right;
+    clear: both;
 }
 
 div.WizardStepMenu div {
