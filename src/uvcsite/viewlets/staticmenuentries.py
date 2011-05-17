@@ -49,10 +49,10 @@ class MeinOrdner(grok.Viewlet):
 
 
 class Mitbenutzerverwaltung(grok.View):
-    grok.context(Interface)
+    grok.context(uvcsite.IMyHomeFolder)
     grok.name('Mitbenutzerverwaltung')
     grok.title('Mitbenutzerverwaltung')
-    navigation.sitemenuitem(uvcsite.IPersonalMenu)
+    uvcsite.menu(uvcsite.IPersonalMenu)
     grok.order(30)
     grok.require('uvc.ManageCoUsers')
 
