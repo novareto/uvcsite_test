@@ -40,6 +40,7 @@ Context
    <uvcsite.app.Uvcsite object at ...>
    >>> prm = IPrincipalRoleManager(context)
    >>> prm.assignRoleToPrincipal('uvc.User', 'uvc.someuser')
+   >>> prm.assignRoleToPrincipal('uvc.ManageUsers', 'uvc.someuser')
    >>> zope.security.management.newInteraction(request)
 
 View
@@ -130,9 +131,7 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <megrok.navigation.util.AutoSiteMenuItem_... object at ...>
-   <megrok.navigation.util.AutoSiteMenuItem_... object at ...>
-
+   <megrok.navigation.util.AutoSiteMenuItem_...>
 
 GlobalMenu
 ----------

@@ -26,6 +26,9 @@ Setup
   ...     title = "Some User's Name"
   ...     description = "A User"
 
+  >>> from zope.securitypolicy.interfaces import IPrincipalRoleManager
+  >>> prm = IPrincipalRoleManager(root['hf'])
+  >>> prm.assignRoleToPrincipal('uvc.Editor', 'someuser')
 
 TableView
 ---------

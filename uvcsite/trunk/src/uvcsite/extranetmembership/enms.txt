@@ -42,7 +42,6 @@ Now log on as a user and look if we get the index page
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
 
-   >>> browser.handleErrors = False 
    >>> browser.addHeader('Authorization', 'Basic user:user')
    >>> browser.open('http://localhost/app/')
    >>> 'Meine Einstellungen' in browser.contents
@@ -51,15 +50,16 @@ Now log on as a user and look if we get the index page
 Now we go to 'Meine Einstellungen'
 
    >>> link = browser.getLink('Meine Einstellungen')
+   >>> browser.handleErrors = True
    >>> link
-   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
+   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelentry'>
    >>> link.click()
 
 At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/Mitbenutzerverwaltung'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/Mitbenutzerverwaltung'>
 
    >>> benutzerverwaltung.click()
    >>> neuerUser = browser.getLink('neuen User anlegen')
@@ -93,12 +93,12 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
-   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
+   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelentry'>
    >>> link.click()
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/Mitbenutzerverwaltung'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/Mitbenutzerverwaltung'>
 
 Here we click on the user we want to modify!
 
@@ -152,12 +152,12 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
-   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelview'>
+   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelentry'>
    >>> link.click()
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/Mitbenutzerverwaltung'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/Mitbenutzerverwaltung'>
 
 Here we click on the user we want to modify!
 
