@@ -81,7 +81,7 @@ class PersonalPanelEntry(grok.View):
 
     def render(self):
         return self.redirect(
-            uvcsite.IGetHomeFolderUrl(self.request).getURL() + '/personalpanelview')
+            uvcsite.IGetHomeFolderUrl(self.request).getURL() + 'personalpanelview')
 
 
 class NotFound(errors.NotFound):

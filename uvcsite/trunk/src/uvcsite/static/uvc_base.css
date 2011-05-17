@@ -376,3 +376,7 @@ margin:0 0 -5px 0;
 font-size:16px;
 color:#999;
 }
+
+div#effect p {
+ padding-top: 1em;
+}
