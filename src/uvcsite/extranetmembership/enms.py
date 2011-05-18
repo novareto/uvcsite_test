@@ -32,6 +32,7 @@ class ENMS(megrok.layout.Page):
     def displayRoles(self, roles):
         return ', '.join(roles)
 
+
 class ENMSCreateUser(uvcsite.Form):
     """ Simple Form which displays values from a Dict"""
     grok.context(IMyHomeFolder)
@@ -86,13 +87,13 @@ class ENMSUpdateUser(uvcsite.Form):
     ignoreContent = False
 
     def getDefaultData(self):
-        principal = self.request.principal.id
-        id = self.request.get('cn')
+        principal = self.request.principal.title
+        id = "%s-%s" % (self.request.principal.title, self.request.get('cn'))
         user = {} 
-        if id: 
+        if self.request.get('cn'): 
             um = getUtility(IUserManagement)
             user = um.getUser(id)
-            user['mnr'] = id
+            user['mnr'] = principal 
             user['confirm'] = user['passwort']
         return user 
 

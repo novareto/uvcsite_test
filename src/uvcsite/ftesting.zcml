@@ -29,6 +29,13 @@
       />
 
   <principal
+      id="uvc.user1"
+      title="0101010001"
+      login="0101010001"
+      password="user"
+      />
+
+  <principal
       id="uvc.uaz"
       title="uaz"
       login="uaz"
