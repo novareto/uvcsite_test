@@ -20,7 +20,7 @@
               <a href="" 
                  i18n:translate=""
                  tal:attributes="href string:${url}/enmsupdateuser?cn=${user/az}">
-                 <span i18n:name="updateUser" tal:content="string: ${user/mnr}-${user/az}"> user updaten </span>
+                 <span i18n:name="updateUser" tal:content="string: ${user/mnr}"> user updaten </span>
               </a>
           </td>    
           <td>
