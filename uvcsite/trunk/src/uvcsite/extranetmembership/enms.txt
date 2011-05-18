@@ -42,7 +42,7 @@ Now log on as a user and look if we get the index page
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
 
-   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.addHeader('Authorization', 'Basic 0101010001:user')
    >>> browser.open('http://localhost/app/')
    >>> 'Meine Einstellungen' in browser.contents
    True
@@ -50,7 +50,7 @@ Now log on as a user and look if we get the index page
 Now we go to 'Meine Einstellungen'
 
    >>> link = browser.getLink('Meine Einstellungen')
-   >>> browser.handleErrors = True
+   >>> browser.handleErrors = False 
    >>> link
    <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelentry'>
    >>> link.click()
@@ -59,12 +59,12 @@ At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/Mitbenutzerverwaltung'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/Mitbenutzerverwaltung'>
 
    >>> benutzerverwaltung.click()
    >>> neuerUser = browser.getLink('neuen User anlegen')
    >>> neuerUser
-   <Link text='neuen User anlegen' url='http://localhost/app/members/uvc.user/enmscreateuser'>
+   <Link text='neuen User anlegen' url='http://localhost/app/members/uvc.user1/enmscreateuser'>
 
 After clicking on Benutzerverwaltung we can go to the "add a new User"
 
@@ -98,17 +98,17 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/Mitbenutzerverwaltung'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/Mitbenutzerverwaltung'>
 
 Here we click on the user we want to modify!
 
    >>> benutzerverwaltung.click()
-   >>> "<span> 0101010001</span>" in browser.contents
+   >>> "<span> 0101010001-01</span>" in browser.contents
    True
 
-   >>> update = browser.getLink('0101010001')
+   >>> update = browser.getLink('0101010001-01')
    >>> update
-   <Link text='0101010001' url='http://localhost/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
+   <Link text='0101010001-01' url='http://localhost/app/members/uvc.user1/enmsupdateuser?cn=01'>
    >>> update.click()
 
 Here we have the input form we check if we have the right value for passwort!
@@ -128,7 +128,7 @@ So let's check here if we check correctly the password and confirm:
 
 Now try a good combination of passwort and confirm!
 
-   >>> browser.open(url)
+
    >>> form = browser.getForm()
    >>> form.getControl(name='form.field.confirm').value = "passwort" 
    >>> form.getControl(name='form.field.passwort').value = "passwort" 
@@ -148,7 +148,7 @@ Delete
 Again we have to navigate to 'Benutzerverwaltung'
 
    >>> browser.open('http://localhost/app')
-   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.addHeader('Authorization', 'Basic 0101010001:user')
 
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
@@ -157,17 +157,19 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user/Mitbenutzerverwaltung'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/Mitbenutzerverwaltung'>
 
 Here we click on the user we want to modify!
 
+
    >>> benutzerverwaltung.click()
-   >>> "<span> 0101010001</span>" in browser.contents
+
+   >>> "<span> 0101010001-01</span>" in browser.contents
    True
 
-   >>> delete = browser.getLink('0101010001')
+   >>> delete = browser.getLink('0101010001-01')
    >>> delete 
-   <Link text='0101010001' url='http://localhost/app/members/uvc.user/enmsupdateuser?cn=0101010001'>
+   <Link text='0101010001-01' url='http://localhost/app/members/uvc.user1/enmsupdateuser?cn=01'>
    >>> delete.click()
 
 Here we have the input form!
