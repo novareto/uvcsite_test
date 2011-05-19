@@ -378,6 +378,11 @@ font-size:16px;
 color:#999;
 }
 
+div#effect h1 {
+ font-size: 2em;
+ padding-bottom: 0.6em;
+}
+
 div#effect p {
- padding-top: 1em;
+ padding-bottom: 1em;
 }
