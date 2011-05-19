@@ -1,6 +1,10 @@
-<h1> Fehler </h1>
+<div id="error-page" i18n:domain="zope">
+<div>
+   <h1>Entschuldigen Sie bitte...</h1>
+    <br>
+   <p> Es ist ein Systemfehler aufgetreten. </p>
+   <p> Falls dieser Fehler weiterhin auftritt, schreiben Sie eine E-Mail an den <a href="" tal:attributes="href string: ${view/application_url}/kontakt">Website-Verantwortlichen</a>.</p>
+   <p>Vielen Dank</p>
 
-<p> Es ist ein SystemFehler aufgetreten: </p>
-<p> Bitte wenden Sie sich and:
-    <a href="mailto:cklinger@novareto.de"> Admin </a>
-</p>
+</div>
+</div>
