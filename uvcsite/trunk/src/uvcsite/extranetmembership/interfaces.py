@@ -27,8 +27,8 @@ class IExtranetMember(Interface):
               required = True)
 
     confirm = Password(
-              title = _(u"Bestaetigung"),
-              description = _(u"Bestaetigung"),
+              title = _(u"Bestätigung"),
+              description = _(u"Bestätigung"),
               min_length = 5,
               max_length = 8,
               required = True)
