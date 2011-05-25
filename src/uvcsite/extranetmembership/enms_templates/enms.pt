@@ -32,7 +32,7 @@
          <a href="" 
             i18n:translate=""
             tal:attributes="href string:${url}/enmscreateuser">
-            <span i18n:name="neuenUseranlegen" tal:replace="string: neuen User anlegen"> Mitbenutzer erstellen </span>
+            <span> Mitbenutzer erstellen </span>
          </a>
         </td>
       </tr>
