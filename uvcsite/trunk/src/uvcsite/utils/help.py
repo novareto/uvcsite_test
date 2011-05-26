@@ -16,6 +16,20 @@ class HelpManager(grok.ViewletManager):
     grok.context(interface.Interface)
     grok.name('uvc.hilfen')
 
+    def getHelpPages(self):
+        rc = []
+        for viewlet in self.viewlets:
+            if IHelpPage.providedBy(viewlet):
+                rc.append(viewlet)
+        return rc 
+
+    def getViewlets(self):
+        rc = []
+        for viewlet in self.viewlets:
+            if not IHelpPage.providedBy(viewlet):
+                rc.append(viewlet)
+        return rc 
+
 
 class Help(grok.Viewlet):
     grok.viewletmanager(uvcsite.IAboveContent)
@@ -32,8 +46,12 @@ class Help(grok.Viewlet):
 
 
 
+class IHelpPage(interface.Interface):
+    """ """
+
 class HelpPage(grok.Viewlet):
     grok.viewletmanager(HelpManager)
+    grok.implements(IHelpPage)
     grok.baseclass()
 
     def update(self):
