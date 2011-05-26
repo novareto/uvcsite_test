@@ -5,9 +5,12 @@ $(document).ready(function() {
 </script>
 
 <div id="uvc_help"
-     tal:define="viewlets viewletmanager/viewlets"
+     tal:define="viewlets viewletmanager/getHelpPages"
      tal:condition="viewlets">
-       <a href id="help_button" rel="#toggler"> Hilfe </a>
+        <span:repeat tal:repeat="viewlet viewletmanager/getViewlets">
+            <span tal:replace="structure viewlet/render"/>
+        </span:repeat>
+       <a style="float:right;" href id="help_button" rel="#toggler"> Hilfe </a>
        <div id="toggler"
             class="simple_overlay"
             title="Hilfe"
