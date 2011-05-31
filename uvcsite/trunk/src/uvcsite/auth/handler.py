@@ -3,6 +3,7 @@
 # cklinger@novareto.de
 
 import grok
+import uvcsite
 import zope.security
 
 from grokcore import message
