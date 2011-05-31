@@ -72,3 +72,16 @@ class UVCAuthenticator(grok.Model):
     def principalInfo(self, id):
         """we don´t need this method"""
         return None
+
+
+class CheckRemote(grok.XMLRPC):
+    grok.context(uvcsite.IUVCSite)
+
+    def checkAuth(self, user, password):
+        plugin = getUtility(IAuthenticatorPlugin, 'principals')
+        principal = plugin.authenticateCredentials(dict(
+            login=user,
+            password=password))
+        if principal:
+            return 1
+        return 0
