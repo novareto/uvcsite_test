@@ -147,3 +147,11 @@ class UvcRadioFieldWidget(RadioFieldWidget):
     """ Simple Override for removing <br> between choices
     """
     pass
+
+
+class HAProxyCheck(grok.View):
+    grok.context(uvcsite.IUVCSite)
+    grok.require('zope.Public')
+
+    def render(self):
+        return "OK"
