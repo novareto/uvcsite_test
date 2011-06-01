@@ -61,8 +61,12 @@ class UVCAuthenticator(grok.Model):
             user = utility.getUser(login)
             if not user:
                 return
-            if password != user.get('passwort'):
-                return
+            if hasattr(utility, 'checkPW'):
+                if not utility.checkPW(password, user.get('passwort')):
+                    return
+            else:
+                if password != user.get('passwort'):
+                    return
             authenticated = session[USER_SESSION_KEY] = dict(
                 id = login,
                 title = login,
