@@ -45,6 +45,11 @@ class ENMSCreateUser(uvcsite.Form):
 
     fields = Fields(IExtranetMember)
 
+    def updateForm(self):
+        super(ENMSCreateUser, self).updateForm()
+        self.fieldWidgets.get('form.field.mnr').template = grok.PageTemplateFile('templates/mnr.pt')
+
+
     def getDefaultData(self):
         principal = self.request.principal.id
         um = getUtility(IUserManagement)
@@ -93,7 +98,7 @@ class ENMSUpdateUser(uvcsite.Form):
         if self.request.get('cn'): 
             um = getUtility(IUserManagement)
             user = um.getUser(id)
-            user['mnr'] = principal 
+            user['mnr'] = id 
             user['confirm'] = user['passwort']
         return user 
 
