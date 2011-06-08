@@ -23,6 +23,9 @@ from zope.pluggableauth.plugins.session import SessionCredentialsPlugin
 from interfaces import IUVCAuth, IMasterUser
 from uvcsite.extranetmembership.interfaces import IUserManagement
 
+from dolmen.authentication import UserLoginEvent
+from zope.event import notify
+
 USER_SESSION_KEY = "uvcsite.authentication"
 
 
@@ -88,5 +91,6 @@ class CheckRemote(grok.XMLRPC):
             login=user,
             password=password))
         if principal:
+            notify(UserLoginEvent(Principal(user)))
             return 1
         return 0

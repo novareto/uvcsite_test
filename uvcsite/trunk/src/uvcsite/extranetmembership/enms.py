@@ -159,6 +159,7 @@ class ChangePassword(uvcsite.Form):
     label = _(u'Passwort ändern')
     description = _(u'Hier können Sie Ihr Passwort ändern')
     navigation.sitemenuitem(uvcsite.IPersonalMenu)
+    grok.require('zope.View')
 
     fields = Fields(IExtranetMember).select('passwort', 'confirm')
     ignoreContext = True
