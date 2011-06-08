@@ -155,7 +155,7 @@ class ENMSUpdateUser(uvcsite.Form):
 class ChangePassword(uvcsite.Form):
     """ A Form for updating a User in ENMS"""
     grok.title(u'Passwort ändern')
-    grok.context(IUVCSite)
+    grok.context(IMyHomeFolder)
     label = _(u'Passwort ändern')
     description = _(u'Hier können Sie Ihr Passwort ändern')
     navigation.sitemenuitem(uvcsite.IPersonalMenu)
