@@ -11,6 +11,7 @@ from zope.pluggableauth.interfaces import IAuthenticatedPrincipalCreated
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.component import getUtility
 from dolmen.authentication.events import IUserLoggedInEvent
+from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
 
 @grok.subscribe(IUserLoggedInEvent)
@@ -18,6 +19,11 @@ def applyPermissionsForExistentCoUsers(factory):
     principal = factory.object
     homefolder = IHomeFolder(principal).homeFolder
     um = getUtility(IUserManagement)
-    import pdb; pdb.set_trace() 
-    for user in um.getUser(principal.id)['rollen']:
-        pass
+    rollen = um.getUser(principal.id)['rollen']
+    if homefolder.__name__ != principal.id:
+        for pf in homefolder.keys():
+            if pf in rollen:
+                prm = IPrincipalRoleManager(homefolder.get(pf))
+                if prm.getSetting('uvc.Editor', principal.id).getName() == 'Unset':
+                    prm.assignRoleToPrincipal('uvc.Editor', principal.id)
+                    uvcsite.log('Give uvc.Editor to %s in folder %s' % (principal.id, pf))
