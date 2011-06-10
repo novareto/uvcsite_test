@@ -15,6 +15,7 @@
   <include package="zope.session" />
   <include package="zope.dublincore" />
   <include package="zope.authentication" />
+  <include package="zope.app.locales" />
   <include package="zope.pluggableauth.plugins" file="generic.zcml"/>
   <include package="z3c.schema2xml" />
 
