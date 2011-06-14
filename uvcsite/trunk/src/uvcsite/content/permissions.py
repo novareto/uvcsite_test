@@ -1,4 +1,9 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2011 NovaReto GmbH
+# cklinger@novareto.de 
+
 import grok
+
 from zope.securitypolicy.interfaces import IRolePermissionManager
 from uvcsite.workflow.basic_workflow import PUBLISHED
 from hurry.workflow.interfaces import IWorkflowTransitionEvent
