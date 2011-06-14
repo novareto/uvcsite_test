@@ -62,9 +62,10 @@ At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
    <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/Mitbenutzerverwaltung'>
 
    >>> benutzerverwaltung.click()
-   >>> neuerUser = browser.getLink('neuen User anlegen')
+
+   >>> neuerUser = browser.getLink('Mitbenutzer erstellen')
    >>> neuerUser
-   <Link text='neuen User anlegen' url='http://localhost/app/members/uvc.user1/enmscreateuser'>
+   <Link text='Mitbenutzer erstellen' url='http://localhost/app/members/uvc.user1/enmscreateuser'>
 
 After clicking on Benutzerverwaltung we can go to the "add a new User"
 
@@ -190,7 +191,7 @@ Changing the Password
 
 We still have form for changing the users password!
 
-   >>> browser.open('http://localhost/app/changepassword')
+   >>> browser.open('http://localhost/app/members/uvc.user/changepassword')
    >>> print browser.headers['Status'].upper()
    200 OK
 

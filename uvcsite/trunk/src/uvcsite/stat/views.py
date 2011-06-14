@@ -37,4 +37,3 @@ class StatistikView(uvcsite.Page):
                         self.counter[name]['entwurf'] += 1 
                     elif IWorkflowState(obj).getState() == 1:
                         self.counter[name]['gesendet'] += 1 
-        print self.counter

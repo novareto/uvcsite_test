@@ -24,3 +24,7 @@ class IFolderListingTable(Interface):
     """Marker Interface for tables with a listing interface
        for contenttypes
     """
+
+class IMyRoles(Interface):
+    """Return all allowed Roles in various forms
+    """
