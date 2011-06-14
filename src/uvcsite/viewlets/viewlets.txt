@@ -112,7 +112,7 @@ Show the Viewlets:
 
    >>> manager.update()
    >>> len(manager.viewlets)
-   2 
+   3 
 
    >>> for x in manager.viewlets:
    ...     print x

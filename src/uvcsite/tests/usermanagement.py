@@ -35,14 +35,20 @@ class UserManagement(grok.GlobalUtility):
     def getUser(self, mnr):
         """Return a User"""
         mnr, az = self.zerlegUser(mnr)
-        for user in self.users:
+        from copy import deepcopy
+        for user in deepcopy(self.users):
             if user.get('mnr') == mnr and user.get('az') == az:
                 return user
         return None
 
     def getUserGroups(self, mnr):
         """Return a group of Users"""
-        return self.users
+        ret = []
+        from copy import deepcopy
+        for x in deepcopy(self.users):
+            usr = "%s-%s" % (x['mnr'], x['az'])
+            ret.append(dict(cn=usr, mnr=usr, rollen=x.get('rollen', []), az=x.get('az')))
+        return ret 
 
     def updatePasswort(self, **kwargs):
         """Change a passwort from a user"""

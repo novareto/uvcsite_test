@@ -83,18 +83,6 @@ We should get the Error Page:
    ...
    HTTPError: HTTP Error 404: Not Found 
 
-   >>> print browser.contents
-   <!DOCTYPE ... 
-         <h3>
-           Die Seite die Sie anzeigen wollen existiert nicht.
-         </h3>
-         <p><b>Bitte beachten Sie folgendes:</b></p>
-         <ol>
-           <li>Möglicherweise haben Sie die URL falsch eingegeben.</li>
-           <li>Eventuell versuchen Sie eine Seite anzuzeigen die nicht existiert.</li>
-         </ol>
-   ...
-   </html>
 
 And we should get a Status 404
 
@@ -116,8 +104,14 @@ SystemError
 
 
    >>> print system_error.content()
-   <h1> Fehler </h1>
-   <p> Es ist ein SystemFehler aufgetreten: </p>
-   <p> Bitte wenden Sie sich and:
-       <a href="mailto:cklinger@novareto.de"> Admin </a>
-   </p>
+   <div id="error-page">
+   <div>
+      <h1>Entschuldigen Sie bitte...</h1>
+       <br>
+      <p> Es ist ein Systemfehler aufgetreten. </p>
+      <p> Falls dieser Fehler weiterhin auftritt, schreiben Sie eine E-Mail an den <a
+       href=" http://127.0.0.1/app/kontakt">Website-Verantwortlichen</a>.</p>
+      <p>Vielen Dank</p>
+   </div>
+   </div>
+

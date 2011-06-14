@@ -4,7 +4,6 @@
   Edit <code>restest/app_templates/index.pt</code> to change
   this page.</p>
 
-
 <h3>Aktuelle Nachrichten in berschrift (H3)</h3>
 <ul class="content">
     <li>Nachweis fr den Beitragsbescheid
