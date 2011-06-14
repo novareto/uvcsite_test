@@ -14,11 +14,12 @@ from hurry.workflow.interfaces import (
 
 CREATED = 0
 PUBLISHED = 1
+PROGRESS = 2
 
 
 def titleForState(state):
     """ Reverse Mapping of workflow States """
-    mapping = {0: 'Entwurf', 1: 'gesendet'}
+    mapping = {0: 'Entwurf', 1: 'gesendet', 2: 'in Verarbeitung'}
     return mapping.get(state, 'unbekannt')
 
 
@@ -36,7 +37,21 @@ def create_workflow():
         source=CREATED,
         destination=PUBLISHED)
 
+    progress_transition = workflow.Transition(
+        transition_id='progress',
+        title='progress',
+        source=CREATED,
+        destination=PROGRESS)
+
+    fix_transition = workflow.Transition( 
+        transition_id='fix',
+        title='fix',
+        source=PROGRESS,
+        destination=PUBLISHED)
+
     return workflow.Workflow([create_transition,
+                              progress_transition,
+                              fix_transition,
                               publish_transition])
 
 grok.global_utility(create_workflow, provides=IWorkflow)

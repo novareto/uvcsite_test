@@ -6,7 +6,7 @@ Do some unit tests for workflow.
 Start with the reverse mapping of CREATING AND PUBLISHED
 -------------------------------------------------------
    
-   >>> from uvcsite.workflow.basic_workflow import CREATED, PUBLISHED, titleForState
+   >>> from uvcsite.workflow.basic_workflow import CREATED, PUBLISHED, PROGRESS, titleForState
    
 Is the constant CREATED really 0 and PUBLISHED 1 ?
    
@@ -15,6 +15,9 @@ Is the constant CREATED really 0 and PUBLISHED 1 ?
 
    >>> PUBLISHED
    1
+
+   >>> PROGRESS
+   2
 
 Do we get the right title for CREATED in this case 0
 
@@ -25,6 +28,11 @@ Is the title for  PUBLISHED "gesendet"?
 
    >>> print titleForState(PUBLISHED)
    gesendet
+
+State Progress
+
+   >>> print titleForState(PROGRESS)
+   in Verarbeitung
 
 What happens if we put an unknown State in the Method.
 
