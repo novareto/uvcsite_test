@@ -21,13 +21,16 @@ Is the Workflow Utility registerd?
    >>> wu
    <hurry.workflow.workflow.Workflow object at ...>
 
-We have registerd two transitions (publish and create) on
+We have registerd 3 transitions (publish, progress and create) on
 workflow setup. Let´s check if we get the both... 
 
    >>> wu.getTransitionById('publish')
    <hurry.workflow.workflow.Transition object at ...>
 
    >>> wu.getTransitionById('create')
+   <hurry.workflow.workflow.Transition object at ...>
+
+   >>> wu.getTransitionById('progress')
    <hurry.workflow.workflow.Transition object at ...>
 
 What happens if we ask for an non existing transition
@@ -67,3 +70,20 @@ and b) the published property should be a datetime object
 
    >>> klaus.published
    datetime.datetime(...)
+
+Can we set the Object in State Progress and move it then forwart to progress Publish
+------------------------------------------------------------------------------------
+
+
+   >>> root['app']['lars'] = lars = Person()
+   >>> wf = IWorkflowState(lars)
+   >>> wf.getState()
+   0
+
+   >>> IWorkflowInfo(lars).fireTransition('progress')
+   >>> wf.getState()
+   2
+
+   >>> IWorkflowInfo(lars).fireTransition('fix')
+   >>> wf.getState()
+   1
