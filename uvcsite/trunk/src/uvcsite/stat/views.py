@@ -17,6 +17,7 @@ grok.templatedir('templates')
 class StatistikView(uvcsite.Page):
     grok.name('statistik')
     grok.title('Statistik')
+    grok.require('zope.ManageSite')
 
     grok.context(uvcsite.IUVCSite)
     uvcsite.menu(uvcsite.IFooter, order=200)
