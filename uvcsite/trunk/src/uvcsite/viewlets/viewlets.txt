@@ -78,16 +78,19 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <uvcsite.viewlets.staticmenuentries.UserName object at ...>
-   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at ...>
-   <megrok.navigation.util.AutoSiteMenuItem_... object at ...>
+   <uvcsite.viewlets.staticmenuentries.UserName object at 0...>
+   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>
+   <megrok.navigation.util.personalpanelentry object at 0...>
+   <megrok.navigation.util.Logout object at 0...>
+
 
 We render the individual viewlets:
 
   >>> [x for x in manager.viewlets]
-  [<uvcsite.viewlets.staticmenuentries.UserName object at 0...>, 
-   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>,
-   <megrok.navigation.util.AutoSiteMenuItem_... object at 0...>] 
+  [<uvcsite.viewlets.staticmenuentries.UserName object at 0...>,
+   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>, 
+   <megrok.navigation.util.personalpanelentry object at 0...>, 
+   <megrok.navigation.util.Logout object at 0...>]
   >>> username, meinordner, prefs, logout = manager.viewlets
 
 Username:
@@ -116,7 +119,9 @@ Show the Viewlets:
 
    >>> for x in manager.viewlets:
    ...     print x
-   <megrok.navigation.util.AutoSiteMenuItem_... object at ...>
+   <megrok.navigation.util.impressum object at 0...>
+   <megrok.navigation.util.kontakt object at 0...>
+   <megrok.navigation.util.statistik object at 0...>
 
 
 PersonalMenu
@@ -131,7 +136,7 @@ Show the Viewlets:
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <megrok.navigation.util.AutoSiteMenuItem_...>
+   <megrok.navigation.util.changepassword object at ...> 
 
 GlobalMenu
 ----------
