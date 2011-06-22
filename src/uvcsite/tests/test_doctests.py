@@ -24,7 +24,7 @@ def test_suite():
         'workflow/workflow.txt', 'workflow/basic_workflow.txt',
         'content/ftests/api.py', 'content/ftests/homefoldertest.py', 
         'utils/beaker.txt', 'utils/roles.txt', 'utils/tales.txt',
-        'stat/stat.txt',
+        'stat/stat.txt', 'adhoc/adhoc.txt',
         package="uvcsite", 
         globs={'__name__': 'uvcsite'},
         optionflags=doctest.ELLIPSIS|

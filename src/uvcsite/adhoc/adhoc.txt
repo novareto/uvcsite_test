@@ -1,0 +1,72 @@
+Ad Hoc
+======
+
+Das AdHoc System der UV-Webcommunity stellt eine Web-Schnittstelle
+für den Kunden/Versicherten bereit, die es Ihm ermöglicht Dokumente die er auf 
+postalischen Weg erhält, online an die BG zu versenden.
+
+Dieses System läuft technisch gesehen unter der UVCSite, allerdings wird
+ein neuer BrowserLayer dafür definiert. (localhost:8080/++skin++adhoc/app)
+
+Die AdHoc Benutzer arbeiten in der gleichen Site wie normale Benutzer,
+Ziel ist es im HomeFolder der Unternehmen einen ProductFolder ADHoc
+zu erstellen. In diesem Ordner werden dann die ADHocDokumente abgelegt.
+
+Über den BrowserLayer IAdHocLayer steuern wir die Unterschiedlichen
+IndexSeiten etc...
+
+:Test-Layer: functional
+
+Setup
+-----
+
+  >>> from uvcsite.app import Uvcsite 
+  >>> root = getRootFolder()
+
+  >>> root['adhoc'] = app = Uvcsite()
+  >>> app
+  <uvcsite.app.Uvcsite object at ...>
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.interface import alsoProvides
+  >>> from zope.publisher.browser import TestRequest
+  >>> from uvcsite.adhoc import IAdHocLayer
+
+Unterschiedliche Indexseiten pro Layer
+--------------------------------------
+
+  >>> request = TestRequest()
+  >>> uvcsite_view = getMultiAdapter((app, request), name="index")
+  >>> uvcsite_view
+  <uvcsite.tests.views.Index object at ...>
+ 
+Wir markieren den Request mit unserem Layer...
+
+  >>> adhoc_request = TestRequest()
+  >>> alsoProvides(adhoc_request, IAdHocLayer)
+
+  >>> adhoc_view = getMultiAdapter((app, adhoc_request), name="index")
+  >>> adhoc_view
+  <uvcsite.tests.adhoc.Index object at ...>
+
+  >>> adhoc_view is uvcsite_view
+  False
+
+
+Unterschiedliche Menus pro Layer
+--------------------------------
+
+  >>> from zope.viewlet.interfaces import IContentProvider
+
+  >>> uvc_gm = getMultiAdapter((app, request, uvcsite_view), IContentProvider, name="uvc.global.menu")
+  >>> uvc_gm
+  <uvc.layout.menus.GlobalMenu object at ...>
+
+  >>> adhoc_gm = getMultiAdapter((app, adhoc_request, adhoc_view), IContentProvider, name="uvc.global.menu")
+  >>> adhoc_gm
+  <uvcsite.adhoc.menus.ADHocGlobalMenu object at ...>
+
+  >>> adhoc_gm is uvc_gm
+  False
+
+
