@@ -3,15 +3,7 @@
 # cklinger@novareto.de 
 
 import grok
-
-from uvc.layout.layout import IUVCLayer
-
-
-class IAdHocLayer(IUVCLayer):
-    """ Layer for AdHoc
-    """
-    pass
-
+from interfaces import IAdHocLayer
 
 class AdHocLayer(IAdHocLayer):
     """ Skin For ADHoc

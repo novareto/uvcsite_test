@@ -2,4 +2,7 @@
 # Copyright (c) 2007-2011 NovaReto GmbH
 # cklinger@novareto.de 
 
-from interfaces import IAdHocLayer, IAdHocPrincipal
+import grok
+
+class UVCAllow(grok.Permission):
+    grok.name('uvc.Allow')

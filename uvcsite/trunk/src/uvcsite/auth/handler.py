@@ -21,7 +21,7 @@ from zope.pluggableauth.interfaces import ICredentialsPlugin
 from zope.pluggableauth.plugins.session import SessionCredentialsPlugin
 
 from interfaces import IUVCAuth, IMasterUser
-from uvcsite.extranetmembership.interfaces import IUserManagement
+from uvcsite.extranetmembership.interfaces import IUserManagement, IAdHocUserManagement
 
 from dolmen.authentication import UserLoginEvent
 from zope.event import notify
@@ -44,6 +44,14 @@ class UVCAuthenticator(grok.Model):
     grok.implements(IAuthenticatorPlugin)
     prefix = 'contact.principals.'
 
+    def isAdHocUser(self, login):
+        """ 
+        Returns True if the User is a AdHoc-User
+        """
+        if login.startswith('A'):
+            return True
+        return False
+
     def authenticateCredentials(self, credentials):
         """
         Check if username and password match
@@ -57,21 +65,30 @@ class UVCAuthenticator(grok.Model):
                     and 'password' in credentials):
                 return
             login, password = credentials['login'], credentials['password']
-            utility = getUtility(IUserManagement)
+
+            if self.isAdHocUser(login):
+                utility = getUtility(IAdHocUserManagement)
+            else:
+                utility = getUtility(IUserManagement)
+
             if not utility.checkRule(login):
                 return 
 
             user = utility.getUser(login)
             if not user:
                 return
+
             if hasattr(utility, 'checkPW'):
                 if not utility.checkPW(password, user.get('passwort')):
                     return
             else:
                 if password != user.get('passwort'):
                     return
+            user_id = login
+            if self.isAdHocUser(login):
+                user_id = user.get('mnr')
             authenticated = session[USER_SESSION_KEY] = dict(
-                id = login,
+                id = user_id,
                 title = login,
                 description = login,
                 login = login)
@@ -79,7 +96,8 @@ class UVCAuthenticator(grok.Model):
 
     def principalInfo(self, id):
         """we don´t need this method"""
-        return None
+        if id.startswith('uvc.'):
+            return PrincipalInfo(id, id, id, id)
 
 
 class CheckRemote(grok.XMLRPC):
