@@ -70,3 +70,57 @@ Unterschiedliche Menus pro Layer
   False
 
 
+Event für AdHocUsers
+--------------------
+
+  >>> from zope.pluggableauth.factories import PrincipalInfo, AuthenticatedPrincipalFactory
+  >>> request = TestRequest()
+
+  >>> class Authenticator(object):
+  ...     prefix = ""
+  ...     def getAuthenticatorPlugins(self):
+  ...         return []
+
+  >>> adp = PrincipalInfo('0101010001', 'A88889999', 'A88889999', 'A88889999')
+  >>> adp
+  PrincipalInfo('0101010001')
+
+  >>> adp = AuthenticatedPrincipalFactory(adp, request)(Authenticator())
+
+  >>> adp.id
+  '0101010001'
+
+  >>> adp.title
+  'A88889999'
+
+  >>> from uvcsite.adhoc.interfaces import IAdHocPrincipal
+  >>> IAdHocPrincipal.providedBy(adp)
+  True
+
+  >>> p = PrincipalInfo('0101010001', '0101010001', '0101010001', '0101010001')
+  >>> p = AuthenticatedPrincipalFactory(p, request)(Authenticator())
+  >>> IAdHocPrincipal.providedBy(p)
+  False 
+
+  >>> p.groups
+  ['zope.Everybody', 'zope.Authenticated', 'uvc.Member']
+
+
+Adapter für AddHocUser
+----------------------
+
+  >>> from uvcsite.adhoc.interfaces import IAdHocUserInfo
+  >>> ahui = IAdHocUserInfo(adp)
+  >>> ahui
+  <uvcsite.adhoc.adapter.AdHocUserInfo object at ...>
+
+  >>> ahui.isAdHocUser
+  True
+
+
+  >>> ahui = IAdHocUserInfo(p)
+  >>> ahui
+  <uvcsite.adhoc.adapter.AdHocUserInfo object at ...>
+
+  >>> ahui.isAdHocUser
+  False 

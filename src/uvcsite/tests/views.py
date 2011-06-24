@@ -52,8 +52,8 @@ class Index(uvcsite.Page):
     grok.require('zope.View')
 
     def update(self):
-        self.flash('kk', 'error')
-        self.flash('tt', 'warning')
+        self.flash('Fehlermeldung...', 'error')
+        self.flash('Warnung...', 'warning')
 
 
 class DefaultSecurity(uvcsite.Page):
@@ -63,12 +63,11 @@ class DefaultSecurity(uvcsite.Page):
     def render(self):
         return "hi"
 
-
 class Table(TablePage):
     """
     """
     grok.context(IMyHomeFolder)
-    grok.require('zope.View')
+    grok.require('uvc.Allow')
     cssClasses = {'table': 'tablesorter'}
     grok.title('Tabelle')
     title = "Tabelle"

@@ -27,3 +27,9 @@ def applyPermissionsForExistentCoUsers(factory):
                 if prm.getSetting('uvc.Editor', principal.id).getName() == 'Unset':
                     prm.assignRoleToPrincipal('uvc.Editor', principal.id)
                     uvcsite.log('Give uvc.Editor to %s in folder %s' % (principal.id, pf))
+
+
+@grok.subscribe(IAuthenticatedPrincipalCreated)
+def applyGroups(factory):
+    principal = factory.principal
+    principal.groups.append('uvc.Member')
