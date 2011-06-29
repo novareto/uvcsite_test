@@ -20,12 +20,16 @@ IndexSeiten etc...
 Setup
 -----
 
+  >>> import grok
   >>> from uvcsite.app import Uvcsite 
+  >>> from zope.component.hooks import setSite
   >>> root = getRootFolder()
 
   >>> root['adhoc'] = app = Uvcsite()
   >>> app
   <uvcsite.app.Uvcsite object at ...>
+
+  >>> setSite(app)
 
   >>> from zope.component import getMultiAdapter
   >>> from zope.interface import alsoProvides
@@ -106,21 +110,86 @@ Event für AdHocUsers
   ['zope.Everybody', 'zope.Authenticated', 'uvc.Member']
 
 
+Homefolder
+
+  >>> from zope.app.homefolder.interfaces import IHomeFolder
+  >>> homefolder_adp = IHomeFolder(adp).homeFolder
+  >>> 'adhoc' in homefolder_adp
+  False
+
+  >>> from dolmen.authentication import UserLoginEvent
+  >>> grok.notify(UserLoginEvent(adp))
+
+  >>> 'adhoc' in homefolder_adp
+  True 
+
+  >>> homefolder_adp['adhoc']
+  <uvcsite.adhoc.components.AdHocFolder object at ...>
+ 
+
 Adapter für AddHocUser
 ----------------------
 
+isAdHocUser
+
   >>> from uvcsite.adhoc.interfaces import IAdHocUserInfo
   >>> ahui = IAdHocUserInfo(adp)
+
   >>> ahui
   <uvcsite.adhoc.adapter.AdHocUserInfo object at ...>
 
+Zunächst müssen wir diesen Adapter Implementieren...
+
   >>> ahui.isAdHocUser
   True
-
 
   >>> ahui = IAdHocUserInfo(p)
   >>> ahui
   <uvcsite.adhoc.adapter.AdHocUserInfo object at ...>
 
   >>> ahui.isAdHocUser
-  False 
+  False
+
+Normalerweise müssen wir diesen Adapter für uns
+überschreiben und zusätzlich Methoden befüllen.
+
+  >>> from uvcsite.adhoc.adapter import AdHocUserInfo
+
+  >>> class MyAdHocUserInfo(AdHocUserInfo):
+  ...     @property
+  ...     def isAdHocUser(self):
+  ...         if self.context.title.startswith('A'):
+  ...             return 1 
+  ...         return 0 
+  ...
+  ...     @property
+  ...     def addurl(self):
+  ...         return "wiederaufnahme"
+  ...
+  ...     @property
+  ...     def info(self):
+  ...         return "Wiederaufnahme der Arbeit"
+  ...
+  ...     @property
+  ...     def defaults(self):
+  ...         return {'title': 'Wiederaufnahme'} 
+
+  >>> from grokcore.component.testing import grok_component
+  >>> grok_component('MyAdHocUserInfo', MyAdHocUserInfo)
+  True
+
+  >>> ahui = IAdHocUserInfo(adp)
+  >>> ahui
+  <uvcsite.MyAdHocUserInfo object at ...>
+
+
+getAddableObject
+
+  >>> ahui.addurl
+  'wiederaufnahme'
+
+  >>> ahui.info
+  'Wiederaufnahme der Arbeit'
+
+  >>> ahui.defaults
+  {'title': 'Wiederaufnahme'}

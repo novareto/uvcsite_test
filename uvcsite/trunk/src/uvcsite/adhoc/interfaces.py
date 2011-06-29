@@ -23,3 +23,7 @@ class IAdHocUserInfo(Interface):
     def isAdHocUser():
         """ Return True if the is is a AdHocUser
         """
+
+class IAdHocFolder(Interface):
+    """ Marker Interface for AdHocFolder's
+    """
