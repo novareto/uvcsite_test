@@ -17,3 +17,19 @@ class AdHocUserInfo(grok.Adapter):
         if self.context.title.startswith('A'):
             return True
         return False
+
+    @property
+    def addurl(self):
+        raise NotImplementedError(
+            "concrete classes must implement property info")
+
+    @property
+    def info(self):
+        raise NotImplementedError(
+            "concrete classes must implement property info")
+
+    @property
+    def defaults(self):
+        raise NotImplementedError(
+            "concrete classes must implement property defaults")
+
