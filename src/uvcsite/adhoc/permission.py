@@ -19,7 +19,7 @@ class AdHoc(grok.Permission):
 
 
 from zope.securitypolicy.principalpermission import principalPermissionManager as prinperG
-#prinperG.grantPermissionToPrincipal('uvc.AdHoc', 'uvc.AdHocGroup', False)
+prinperG.grantPermissionToPrincipal('uvc.AdHoc', 'uvc.AdHocGroup', False)
 
 
 

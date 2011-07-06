@@ -11,6 +11,7 @@ from interfaces import IAdHocUserInfo
 class AdHocUserInfo(grok.Adapter):
     grok.implements(IAdHocUserInfo)
     grok.context(IPrincipal)
+    grok.baseclass()
 
     @property
     def isAdHocUser(self):

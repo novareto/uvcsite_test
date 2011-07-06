@@ -4,7 +4,9 @@
 
 
 from zope.interface import Interface
+from grok.interfaces import IContainer
 from uvc.layout.layout import IUVCLayer
+from uvcsite.content import IUVCApplication, IFolderColumnTable
 
 
 class IAdHocPrincipal(Interface):
@@ -24,6 +26,6 @@ class IAdHocUserInfo(Interface):
         """ Return True if the is is a AdHocUser
         """
 
-class IAdHocFolder(Interface):
+class IAdHocFolder(IContainer, IFolderColumnTable):
     """ Marker Interface for AdHocFolder's
     """
