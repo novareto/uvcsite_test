@@ -11,10 +11,9 @@ class ADHocUserManagement(grok.GlobalUtility):
     """
     grok.implements(IAdHocUserManagement)
 
-    users = (dict(
-        mnr="0101010001",
-        login="A99998888",
-        passwort="passwort"),
+    users = (
+       dict(mnr="0101010001", login="A99998888", passwort="passwort"),
+       dict(mnr="0101010001", login="A11112222", passwort="passwort"),
         )
 
     def getUser(self, login):
