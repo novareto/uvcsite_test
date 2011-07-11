@@ -46,4 +46,4 @@ def set_permissions(event):
         ppm = IPrincipalPermissionManager(object)
         #ppm.grantPermissionToPrincipal('uvc.AdHoc', folder.__name__)
         ppm.denyPermissionToPrincipal('uvc.AdHoc', 'uvc.AdHocGroup')
-        uvcsite.log('Setting Permission for %s --> %s' % (object, 'uvc.AdHocGroup')
+        uvcsite.log('Setting Permission for %s --> %s' % (object, 'uvc.AdHocGroup'))
