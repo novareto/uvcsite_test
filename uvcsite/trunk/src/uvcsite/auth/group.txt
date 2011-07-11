@@ -38,7 +38,7 @@ Setting up A View
 
   >>> from zope.pluggableauth.factories import PrincipalInfo, AuthenticatedPrincipalFactory
 
-  >>> adp = PrincipalInfo('0101010001', 'A88889999', 'A88889999', 'A88889999')
+  >>> adp = PrincipalInfo('A88889999', 'A88889999', '0101010001', 'A88889999')
 
   >>> class Authenticator(object):
   ...     prefix = ""

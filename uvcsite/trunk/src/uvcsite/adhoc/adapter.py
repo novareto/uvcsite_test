@@ -6,6 +6,9 @@ import grok
 from zope.security.interfaces import IPrincipal
 from interfaces import IAdHocUserInfo
 
+from uvcsite.auth.interfaces import IMasterUser
+from uvcsite.adhoc.interfaces import IAdHocPrincipal
+from zope.pluggableauth.factories import Principal
 
 
 class AdHocUserInfo(grok.Adapter):
@@ -34,3 +37,11 @@ class AdHocUserInfo(grok.Adapter):
         raise NotImplementedError(
             "concrete classes must implement property defaults")
 
+
+
+@grok.adapter(IAdHocPrincipal)
+@grok.implementer(IMasterUser)
+def masteruser(self):
+    """Return always the Master User"""
+    master_id = self.title
+    return Principal(master_id)
