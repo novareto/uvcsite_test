@@ -15,7 +15,7 @@ class IExtranetMember(Interface):
 
     rollen = List(
              title=_(u"Berechtigung"),
-             description=_(u"Berechtiung"),
+             description=_(u"Berechtigung"),
              value_type=Choice(source=vocab_berechtigungen),
              required = False)
 
