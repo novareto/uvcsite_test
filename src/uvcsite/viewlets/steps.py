@@ -16,12 +16,12 @@ class StepsProgressBar(grok.Viewlet):
     grok.viewletmanager(uvcsite.IAboveContent)
     grok.order(10000)
 
-
     def update(self):
         self.steps = []
         current = self.view.step
         self.title = "Fortschrittsanzeige: %s von %s" %(current+1, len(self.view.subforms))
         for i, step in enumerate(self.view.subforms):
+            link = ''
             if i == current:
                 css = "current"
                 self.title = "%s - %s  +" %(self.title, step.label)
@@ -29,6 +29,8 @@ class StepsProgressBar(grok.Viewlet):
                 css = "future"
             elif i < current:
                 css = "past"
+                link= "%s/edit?form.field.step=%s" % (self.view.url(), i)
             self.steps.append(
-                dict(description = step.label, css=css,)
+                dict(description = step.label, css=css, link = link)
                 )
+
