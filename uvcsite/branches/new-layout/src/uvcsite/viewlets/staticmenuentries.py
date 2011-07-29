@@ -14,26 +14,21 @@ from zope.traversing.browser import absoluteURL
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
 
 
-class UserName(grok.Viewlet):
+class UserName(uvcsite.MenuItem):
     grok.title("USERSNAME")
     grok.context(Interface)
     grok.viewletmanager(uvcsite.IPersonalPreferences)
     grok.order(10)
     grok.require('zope.View')
-    group = ''
-
-    def render(self):
-        return '<a href="#">  %s </a>' % self.request.principal.description or self.request.principal.id
 
 
-class MeinOrdner(grok.Viewlet):
+class MeinOrdner(uvcsite.MenuItem):
     grok.context(Interface)
     grok.name('Mein Ordner')
     grok.title('Mein Ordner')
     grok.viewletmanager(uvcsite.IPersonalPreferences)
     grok.order(20)
     grok.require('zope.View')
-    group = ''
 
     @property
     def hfurl(self):
@@ -43,15 +38,16 @@ class MeinOrdner(grok.Viewlet):
         homeFolder = IHomeFolder(principal).homeFolder
         return absoluteURL(homeFolder, self.request)
 
-    def render(self):
-        return "<a href='%s'> Mein Ordner </a>" %self.hfurl
+    @property
+    def action(self):
+        return self.hfurl
 
 
-class Mitbenutzerverwaltung(grok.View):
+class Mitbenutzerverwaltung(uvcsite.MenuItem):
     grok.context(uvcsite.IMyHomeFolder)
     grok.name('Mitbenutzerverwaltung')
     grok.title('Mitbenutzerverwaltung')
-    #uvcsite.menu(uvcsite.PersonalMenu)
+    grok.viewletmanager(uvcsite.IPersonalMenu)
     grok.order(30)
     grok.require('uvc.ManageCoUsers')
 
@@ -63,5 +59,6 @@ class Mitbenutzerverwaltung(grok.View):
         homeFolder = IHomeFolder(principal).homeFolder
         return absoluteURL(homeFolder, self.request) + '/enms'
 
-    def render(self):
-        return self.response.redirect(self.url)
+    @property
+    def action(self):
+        return self.url

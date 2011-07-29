@@ -23,7 +23,16 @@ class Auskunftsdienste(uvcsite.SubMenu):
     grok.order(2500)
 
 
-class Logout(uvcsite.MenuItem):
+class LogoutMenu(uvcsite.MenuItem):
+    grok.name('Logout')
+    grok.title('Logout')
+    grok.require('zope.View')
+    grok.viewletmanager(uvcsite.IPersonalPreferences)
+
+    action = "logout"
+
+
+class Logout(grok.View):
     """ Logout View
     """
     grok.name('Logout')
@@ -39,8 +48,7 @@ class Logout(uvcsite.MenuItem):
             for key in self.KEYS:
                 self.request.response.expireCookie(key, path='/')
 
-    @property
-    def action(self):
+    def render(self):
         return self.redirect(self.application_url()) 
 
 
