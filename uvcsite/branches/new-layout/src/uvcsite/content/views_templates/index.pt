@@ -1,0 +1,14 @@
+<div>
+  <h1 tal:content="context/title"/>
+  <p class="description" tal:content="context/description" /> 
+
+  <div class="page-content">
+    <form action="." 
+	  method="post"
+	  tal:attributes="action view/url">
+      <span tal:replace="structure view/renderTable"/>
+      <input type="submit" value="Entfernen" name="form.button.delete" />
+    </form>
+  </div>
+
+</div>

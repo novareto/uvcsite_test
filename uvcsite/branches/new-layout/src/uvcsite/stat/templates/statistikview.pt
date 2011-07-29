@@ -1,0 +1,41 @@
+<html>
+  <head>
+  </head>
+
+  <body>
+    <h1> 
+      Statistik
+    </h1>
+    <table>
+      <tr>
+        <th>
+          Applikation
+        </th>
+        <th>
+          Entwurf
+        </th>
+        <th>
+          Versendet
+        </th>
+        <th>
+          Anzahl
+        </th>
+      </tr>
+      <tr tal:define="counter view/counter" 
+          tal:repeat="key counter">
+        <td>
+          <span tal:content="key"/>
+        </td>
+        <td>
+          <span tal:content="python: counter.get(key).get('entwurf')"/>
+        </td>
+        <td>
+          <span tal:content="python: counter.get(key).get('gesendet')"/>
+        </td>
+        <td>
+          <span tal:content="python: counter.get(key).get('anzahl')"/>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
