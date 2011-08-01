@@ -21,6 +21,10 @@ class UserName(uvcsite.MenuItem):
     grok.order(10)
     grok.require('zope.View')
 
+    @property
+    def title(self):
+        return self.request.principal.title
+
 
 class MeinOrdner(uvcsite.MenuItem):
     grok.context(Interface)
