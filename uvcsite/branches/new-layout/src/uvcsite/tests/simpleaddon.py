@@ -53,20 +53,26 @@ class AdressBook(uvcsite.ProductFolder):
     uvcsite.contenttype(Contact)
 
 
-#@menu.menuentry(uvcsite.IExtraViews)
+class StatMenu(uvcsite.MenuItem):
+    grok.context(AdressBook)
+    grok.viewletmanager(uvcsite.IExtraViews)
+    grok.title('Statistik')
+
+    action = "stat"
+
+
 class Stat(uvcsite.Page):
     grok.name('stat')
     grok.title('Statistik')
     grok.context(AdressBook)
-    #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     def render(self):
         return "<div> <h1>Statistiks</h1> </div>"
 
 
-#@grok.subscribe(Contact, uvcsite.IAfterSaveEvent)
-#def handle_save(obj, event):
-#    print "AfterSaveEvent"
+@grok.subscribe(Contact, uvcsite.IAfterSaveEvent)
+def handle_save(obj, event):
+    print "AfterSaveEvent"
 
 
 class AddMenuEntry(uvcsite.MenuItem):

@@ -1,10 +1,12 @@
-<dl class="dropdown" id="addContent">
-  <dt>Hinzufügen</dt>
-  <dd>
-    <ul>
-      <li>
-	<a href="add" tal:attributes="href view/getAddLinkUrl"> <span tal:content="view/getAddTitle"/></a>
-      </li>
-    </ul>
-  </dd>  
-</dl>
+<ul class="sf-menu">
+  <li>
+   <a> Hinzufügeen </a>
+  <ul>
+    <li>
+    <a href="add" tal:attributes="href view/getAddLinkUrl"> 
+      <span tal:content="view/getAddTitle"></span>
+    </a>
+    </li>
+  </ul>
+  </li>
+</ul>
