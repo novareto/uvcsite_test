@@ -30,7 +30,7 @@ from uvc.layout.forms import (Form, AddForm,
     SubForm, GroupForm, Wizard, Step)
 from uvc.layout import *
 #from uvc.layout.event import IAfterSaveEvent
-#from uvcsite.resources import Overlay, Tooltip, Mask
+from uvcsite.resources import Overlay, Tooltip, Mask
 
 # Mobile
 from uvcsite.mobile import MobilePage, MobileLayer, IMobileLayer

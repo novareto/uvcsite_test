@@ -9,14 +9,11 @@ from zope import interface
 from zope import schema
 
 from zeam.form.base.widgets import getWidgetExtractor
-from uvc.widgets import DatePicker, DatePickerCSS, double, jqt_helper
+from uvc.widgets import DatePicker, DatePickerCSS, double
 from uvc.widgets.resources import validation
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
 
-from uvc.skin.skin import IUVCSkin
-
-grok.layer(IUVCSkin)
 
 class IPerson(interface.Interface):
 
@@ -53,10 +50,10 @@ class IPerson(interface.Interface):
         )
 
 
-class FormBeispiele(uvcsite.Category):
-    grok.title('FormBeispiele')
+class FormBeispiele(uvcsite.SubMenu):
+    grok.title('Formulare')
     grok.context(interface.Interface)
-    uvcsite.topmenu(uvcsite.IGlobalMenu)
+    grok.viewletmanager(uvcsite.IGlobalMenu)
 
 from zeam.form.base import Form
 from zope import component
@@ -64,79 +61,17 @@ from megrok.layout.interfaces import ILayout
 from zope.publisher.publish import mapply
 
 
-class PDFForm(uvcsite.Form):
-    grok.title(u'Pdf Form')
-    grok.description('PDF Form')
-    grok.context(uvcsite.IUVCSite)
-    uvcsite.menu(FormBeispiele)
+class StandardFormMenu(uvcsite.MenuItem):
+    grok.title('Beispielform')
+    grok.viewletmanager(FormBeispiele)
 
-    ignoreRequest = False
-    fields = uvcsite.Fields(IPerson)
-    label = u"PopUp Form"
-    description = u"Beispiel PopUp Form"
-    data = None 
-
-    @uvcsite.action(u'Speichern')
-    def handle_action(self):
-        data, errors = self.extractData()
-        if errors:
-            self.flash('Fehler', type="error")
-            return
-        self.data = data
-        self.flash('Eingabe gespeichert')
-
-
-
-class PopUpForm(uvcsite.Form):
-    grok.title(u'PopUp Beispielform')
-    grok.description('Beschreibung')
-    grok.context(uvcsite.IUVCSite)
-    uvcsite.menu(FormBeispiele)
-
-    ignoreContent = False 
-    ignoreRequest = False
-    fields = uvcsite.Fields(IPerson)
-    fields['geschlecht'].mode = "radio"
-
-    label = u"PopUp Form"
-    description = u"Beispiel PopUp Form"
-
-    def update(self):
-        jqt_helper.need()
-        DatePicker.need()
-        DatePickerCSS.need()
-
-    @uvcsite.action(u'Abschicken')
-    def handleButton(self):
-        data, errors = self.extractData()
-        print data, errors
-        return "HALLO"
-
-
-    def __call__(self):
-        mapply(self.update, (), self.request)
-        if self.request.response.getStatus() in (302, 303):
-            # A redirect was triggered somewhere in update().  Don't
-            # continue processing the form
-            return
-
-        self.updateForm()
-        if self.request.response.getStatus() in (302, 303):
-            return
-        
-        if self.request.get('ajax'):
-            return "<html> %s </html>" %self.content()
-
-        self.layout = component.getMultiAdapter(
-            (self.request, self.context), ILayout)
-        return self.layout(self)
+    action = u"myform"
 
 
 class MyForm(uvcsite.Form):
     grok.title(u'Beispielform')
     grok.description(u"Beschreibugn Beschreibugn")
     grok.context(uvcsite.IUVCSite)
-    uvcsite.menu(FormBeispiele)
 
     ignoreContent = False 
     ignoreRequest = False
@@ -180,10 +115,18 @@ class MyFormHilfe(uvcsite.HelpPage):
 ## GroupForm
 #
 
+
+class GroupFormMenu(uvcsite.MenuItem):
+    grok.title('Gruppen')
+    grok.viewletmanager(FormBeispiele)
+
+    action = u"splitcontact"
+
+
+
 class SplitContact(uvcsite.GroupForm):
     grok.title(u'FieldsetBasedForm')
     grok.context(uvcsite.IUVCSite)
-    uvcsite.menu(FormBeispiele)
 
 
 class Father(uvcsite.SubForm):
@@ -216,7 +159,6 @@ class Mother(uvcsite.SubForm):
 class MyWizard(uvcsite.Wizard):
     grok.title('Wizard')
     grok.context(uvcsite.IUVCSite)
-    uvcsite.menu(FormBeispiele)
     label = u"Wizard"
     description = u"Ein Beispiel WIZARD"
 
@@ -304,7 +246,7 @@ class ComplexForm(uvcsite.Form):
     grok.title(u'KomplexForm')
     grok.description(u"Komplexe Form")
     grok.context(uvcsite.IUVCSite)
-    uvcsite.menu(FormBeispiele)
+    #uvcsite.menu(FormBeispiele)
 
     ignoreContent = False 
     ignoreRequest = False
@@ -324,7 +266,7 @@ class oComplexForm(uvcsite.Form):
     grok.title(u'oKomplexForm')
     grok.description(u"oKomplexe Form")
     grok.context(uvcsite.IUVCSite)
-    uvcsite.menu(FormBeispiele)
+    #uvcsite.menu(FormBeispiele)
 
     ignoreContent = False 
     ignoreRequest = False

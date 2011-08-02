@@ -1,9 +1,3 @@
-<script>
-$(document).ready(function() {
-    $('a#help_button[rel]').overlay()
-})  
-</script>
-
 <div id="uvc_help"
      tal:define="viewlets viewletmanager/getHelpPages"
      tal:condition="viewlets">
