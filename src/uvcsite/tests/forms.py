@@ -265,7 +265,7 @@ class ISimplePerson(interface.Interface):
        description = u"Bitte geben Sie hier den Namen ein",
        )
 
-    vorname = schema.TextLine(
+    vorname = schema.Int(
         title = u"Vorname",
         description = u"Bitte geben Sie den Vornamen ein",
         )
@@ -298,6 +298,14 @@ class IAdressen(interface.Interface):
             schema=ISimplePerson),
         )
         
+class IAdressen1(interface.Interface):
+
+    personen = schema.Object(
+            title=u"Person", 
+            schema=ISimplePerson)
+        
+
+from uvcsite.resources import COL
 
 class ComplexForm(uvcsite.Form):
     """ """
@@ -309,15 +317,22 @@ class ComplexForm(uvcsite.Form):
     ignoreContent = False 
     ignoreRequest = False
     fields = uvcsite.Fields(IAdressen)
-    fields['personen'].mode = "bgdp"
+    #fields['personen'].mode = "bgdp"
+    fields['personen'].allowOrdering = False
+    fields['personen'].inlineValidation = True
 
     label = u"Adressen"
     description = u"Adressen"
 
+    def update(self):
+        super(ComplexForm, self).update()
+
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
         data, errors = self.extractData()
-        print errors.title
+        print errors
+        import pdb; pdb.set_trace() 
+        
 
 class oComplexForm(uvcsite.Form):
     """ """
@@ -379,7 +394,7 @@ class UOFW(MultiObjectFieldWidget):
         return self.request.has_key(self.identifier + '.add')
 
 
-    def update(self):
+    def iupdate(self):
         from zeam.form.base.widgets import getWidgetExtractor
         super(UOFW, self).update()
         if self.request.has_key(self.identifier + '.dadd'):
