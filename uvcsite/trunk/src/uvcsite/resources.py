@@ -29,6 +29,11 @@ Tooltip = resource.ResourceInclusion(
 Mask = resource.ResourceInclusion(
     UVCResources, 'jquery.maskedinput-1.3.js', depends=[jquerytools])
 
+JST = resource.ResourceInclusion(
+    UVCResources, 'json-template.js', depends=[jquery])
+
+COL = resource.ResourceInclusion(
+    UVCResources, 'collection.js', depends=[JST])
 
 class UVCResourceViewlet(grok.Viewlet):
     grok.viewletmanager(IHeaders)
