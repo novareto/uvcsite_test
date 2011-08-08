@@ -12,7 +12,6 @@ class ADHocGlobalMenu(GlobalMenu):
     """ Globales Menu für Layer AdHoc
     """
     grok.layer(IAdHocLayer)
-    grok.name('uvc.global.menu')
 
     def filter(self, viewlets):
         for key, value in viewlets:

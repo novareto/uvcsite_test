@@ -156,6 +156,13 @@ class Mother(uvcsite.SubForm):
 ## Wizard
 #
 
+class WizardMenu(uvcsite.MenuItem):
+    grok.viewletmanager(FormBeispiele)
+    grok.title('Wizard')
+
+    action = "mywizard"
+
+
 class MyWizard(uvcsite.Wizard):
     grok.title('Wizard')
     grok.context(uvcsite.IUVCSite)

@@ -8,6 +8,7 @@ import uvcsite
 from zope import interface
 from megrok import layout
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+from zope.component import getMultiAdapter
 
 
 grok.templatedir('templates')
@@ -28,10 +29,19 @@ class MobileLayout(layout.Layout):
     grok.layer(MobileLayer)
 
 
-class LandingPage(layout.Page):
-    grok.name('index')
+class BaseMobilePage(layout.Page):
     grok.layer(MobileLayer)
+    grok.require('zope.Public')
     grok.context(uvcsite.IUVCSite)
+    macro = "mobilemacros"
+
+    def getMacro(self, name):
+        mm = getMultiAdapter((self.context, self.request), name=self.macro)
+        return mm.macros[name]
+
+
+class LandingPage(BaseMobilePage):
+    grok.name('index')
 
 
 class IMobilePagesManager(interface.Interface):
@@ -46,14 +56,26 @@ class MobilePagesManager(grok.ViewletManager):
     grok.context(uvcsite.IUVCSite)
     grok.name('uvc.mobilepagesmanager')
     grok.implements(IMobilePagesManager)
+    grok.require('zope.Public')
 
 
 class MobilePage(grok.Viewlet):
     grok.baseclass()
     grok.layer(MobileLayer)
     grok.viewletmanager(IMobilePagesManager)
+    grok.require('zope.Public')
+    grok.view(LandingPage)
+
+    @property
+    def id(self):
+        return grok.name.bind().get(self)
+
+    @property
+    def title(self):
+        return grok.title.bind().get(self)
 
 
 class MobileMacros(grok.View):
     grok.layer(MobileLayer)
     grok.context(uvcsite.IUVCSite)
+    grok.require('zope.Public')

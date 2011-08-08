@@ -53,13 +53,21 @@ class MyAdHocUserInfo(AdHocUserInfo):
         return {'title': 'Wiederaufnahme'}
 
 
+class StartseiteMenu(uvcsite.MenuItem):
+    grok.layer(uvcsite.adhoc.IAdHocLayer)
+    grok.title('Startseite')
+    grok.require('uvc.AdHoc')
+    grok.viewletmanager(uvcsite.IGlobalMenu)
+
+    action = "index"
+
+
 class Index(uvcsite.Page):
     grok.context(uvcsite.IUVCSite)
     grok.layer(uvcsite.adhoc.IAdHocLayer)
     grok.title('Startseite')
     grok.require('uvc.AdHoc')
 
-    uvcsite.menu(uvcsite.IGlobalMenu)
 
     title = u"Herzlich Willkommen im Extranet der Novareto"
     description = u"In diesem spezielen Bereich des Extranets können\

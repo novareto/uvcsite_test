@@ -1,10 +1,11 @@
 <div data-role="page"
      tal:repeat="viewlet viewletmanager/viewlets" 
+     tal:define="header string:view/@@mobilemacros/macros/header"
      tal:attributes="id viewlet/id;
                      data-title viewlet/title">
-  <span metal:use-macro="context/@@mobilemacros/macros/header"> HEADER </span>
+  <span metal:use-macro="python: view.getMacro('header')"> HEADER </span>
 
   <div tal:replace="structure viewlet/render"> CONTENT </div>
 
-  <span metal:use-macro="context/@@mobilemacros/macros/footer"> FOOTER </span>
+  <span metal:use-macro="python: view.getMacro('footer')"> FOOTER </span>
 </div>
