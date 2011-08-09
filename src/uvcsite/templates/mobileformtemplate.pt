@@ -1,4 +1,4 @@
-<form action="." method="POST" tal:attributes="action request/URL; id view/id|view/__name__">
+<form action="." method="POST" tal:attributes="action view/form_url; id view/id|view/__name__">
   <div data-role="fieldcontain" tal:repeat="widget view/fieldWidgets">
     <label tal:attributes="for widget/htmlId"> 
       <span tal:replace="widget/title"> </span>

@@ -2,6 +2,7 @@
      tal:repeat="viewlet viewletmanager/viewlets" 
      tal:define="header string:view/@@mobilemacros/macros/header"
      tal:attributes="id viewlet/id;
+                     data-theme view/theme;
                      data-title viewlet/title">
   <span metal:use-macro="python: view.getMacro('header')"> HEADER </span>
 

@@ -7,6 +7,7 @@ import uvcsite
 
 from zope import interface
 from megrok import layout
+from megrok import resourceviewlet
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.component import getMultiAdapter
 
@@ -29,18 +30,23 @@ class MobileLayout(layout.Layout):
     grok.layer(MobileLayer)
 
 
+class MobileResources(resourceviewlet.ResourcesManager):
+    grok.context(interface.Interface)
+
+
 class BaseMobilePage(layout.Page):
     grok.layer(MobileLayer)
     grok.context(uvcsite.IUVCSite)
     macro = "mobilemacros"
+    theme = "c"
 
     def getMacro(self, name):
         mm = getMultiAdapter((self.context, self.request), name=self.macro)
         return mm.macros[name]
 
 
-class LandingPage(BaseMobilePage):
-    grok.name('index')
+#class LandingPage(BaseMobilePage):
+#    grok.name('index')
 
 
 class IMobilePagesManager(interface.Interface):
@@ -62,7 +68,7 @@ class MobilePage(grok.Viewlet):
     grok.baseclass()
     grok.layer(MobileLayer)
     grok.viewletmanager(IMobilePagesManager)
-    grok.view(LandingPage)
+#    grok.view(LandingPage)
     grok.require('zope.Public')
 
     @property
@@ -78,7 +84,6 @@ class MobileMacros(grok.View):
     grok.layer(MobileLayer)
     grok.context(uvcsite.IUVCSite)
     grok.require('zope.Public')
-
 
 class Login(BaseMobilePage):
     grok.layer(MobileLayer)
@@ -108,4 +113,5 @@ class LoginForm(MobilePage):
         loginform = getMultiAdapter((self.context, self.request), name="mobileloginform")
         loginform.update()
         loginform.updateWidgets()
+        loginform.form_url = self.view.url(self.context, 'mobileloginform')
         return loginform.render()
