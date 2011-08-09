@@ -6,11 +6,16 @@ import grok
 import uvcsite
 
 
+class Index(uvcsite.mobile.BaseMobilePage):
+    grok.context(uvcsite.IUVCSite)
+
+
 class OverView(uvcsite.MobilePage):
     grok.name('index')
     grok.context(uvcsite.IUVCSite)
     grok.order(10)
     grok.require('zope.View')
+    grok.view(Index)
 
     def update(self):
         print self.request.principal
