@@ -22,9 +22,19 @@ class OverView(uvcsite.MobilePage):
 
     def render(self):
         return '''<div data-role="content">
-                  <p> HALLO NASE </p> 
-                  <p>Seite2 <a href="#page2"> Seite2 </a> 
-                  <p>URL-Schemas <a href="#urlschemas"> URL-Schemas </a> 
-                  <a href="#confirmation" data-rel="dialog" data-transition="pop"> Lschen </a>
+                  <p> I am Page 1  </p> 
+                  <p> Link to Page2 <a href="#page2"> Page2 </a> 
                   </div> '''
 
+
+class Page2(uvcsite.MobilePage):
+    grok.name('page2')
+    grok.context(uvcsite.IUVCSite)
+    grok.order(20)
+    grok.require('zope.View')
+    grok.view(Index)
+
+    def render(self):
+        return '''<div data-role="content">
+                  <p> Page  </p>
+                  </div>'''
