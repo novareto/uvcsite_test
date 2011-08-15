@@ -37,7 +37,7 @@ BaseClasses
 
   >>> content = Content()
   >>> content.schema
-  [<InterfaceClass dolmen.content.interfaces.IBaseContent>] 
+  <object object at ...>
 
   >>> print content.meta_type
   Content

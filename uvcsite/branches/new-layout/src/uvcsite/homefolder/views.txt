@@ -97,18 +97,19 @@ Setting up a Container for Person Objects
 
 Creating a Person Object
 
+  >>> from uvcsite.content.interfaces import IContent
   >>> from uvcsite import Content
   >>> class Person(Content):
   ...     """ """
   ...     name = ""
   ...     age = ""
+  ...     title = ""
 
   >>> hans = Person()
   >>> hans.name = "Hans"
   >>> hans.age = "44"
   >>> hans.__name__ = "hans"
 
-  >>> from uvcsite import IContent
   >>> IContent.providedBy(hans)
   True
 
