@@ -64,7 +64,7 @@ We have a subscriber for the AfterSaveEvent for uvcsite which prints "AfterSaveE
   >>> save.click()
   AfterSaveEvent
 
-  >>> "<dd>Added Content</dd>" in browser.contents
+  >>> "<span>Added Content</span>" in browser.contents
   True
 
 Of course the len of the folder should now be one:

@@ -62,11 +62,11 @@ Unterschiedliche Menus pro Layer
 
   >>> from zope.viewlet.interfaces import IContentProvider
 
-  >>> uvc_gm = getMultiAdapter((app, request, uvcsite_view), IContentProvider, name="uvc.global.menu")
+  >>> uvc_gm = getMultiAdapter((app, request, uvcsite_view), IContentProvider, name="globalmenu")
   >>> uvc_gm
-  <uvc.layout.menus.GlobalMenu object at ...>
+  <uvc.layout.slots.menus.GlobalMenu object at ...>
 
-  >>> adhoc_gm = getMultiAdapter((app, adhoc_request, adhoc_view), IContentProvider, name="uvc.global.menu")
+  >>> adhoc_gm = getMultiAdapter((app, adhoc_request, adhoc_view), IContentProvider, name="globalmenu")
   >>> adhoc_gm
   <uvcsite.adhoc.menus.ADHocGlobalMenu object at ...>
 

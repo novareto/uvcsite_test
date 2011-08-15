@@ -52,14 +52,14 @@ Now we go to 'Meine Einstellungen'
    >>> link = browser.getLink('Meine Einstellungen')
    >>> browser.handleErrors = False 
    >>> link
-   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelentry'>
+   <Link text='Meine Einstellungen' url='http://localhost/app/members/uvc.user1/personalpanelview'>
    >>> link.click()
 
 At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/Mitbenutzerverwaltung'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/enms'>
 
    >>> benutzerverwaltung.click()
 
@@ -81,7 +81,7 @@ Fill out the Form
 
 And get the right status if no error occur!
 
-   >>> '<dd>Der Mitbenutzer wurde gespeichert</dd>' in browser.contents
+   >>> '<span>Der Mitbenutzer wurde gespeichert</span>' in browser.contents
    True
 
 Modify
@@ -94,12 +94,12 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
-   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelentry'>
+   <Link text='Meine Einstellungen' url='http://localhost/app/members/uvc.user1/personalpanelview'>
    >>> link.click()
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/Mitbenutzerverwaltung'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/enms'>
 
 Here we click on the user we want to modify!
 
@@ -124,7 +124,7 @@ So let's check here if we check correctly the password and confirm:
    >>> form.getControl(name='form.field.confirm').value = "passwort" 
    >>> form.getControl(name='form.field.passwort').value = "notequal" 
    >>> form.submit('Bearbeiten')
-   >>> '<dd>Es sind Fehler aufgetreten</dd>' in browser.contents
+   >>> '<span>Es sind Fehler aufgetreten</span>' in browser.contents
    True
 
 Now try a good combination of passwort and confirm!
@@ -153,12 +153,12 @@ Again we have to navigate to 'Benutzerverwaltung'
 
    >>> link = browser.getLink('Meine Einstellungen')
    >>> link
-   <Link text='Meine Einstellungen' url='http://localhost/app/personalpanelentry'>
+   <Link text='Meine Einstellungen' url='http://localhost/app/members/uvc.user1/personalpanelview'>
    >>> link.click()
 
    >>> benutzerverwaltung = browser.getLink('Mitbenutzerverwaltung')
    >>> benutzerverwaltung
-   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/Mitbenutzerverwaltung'>
+   <Link text='Mitbenutzerverwaltung' url='http://localhost/app/members/uvc.user1/enms'>
 
 Here we click on the user we want to modify!
 
@@ -182,7 +182,7 @@ Here we have the input form!
 Click on the button
 
    >>> form.submit('Entfernen')
-   >>> "<dd>Der Mitbenutzer wurde entfernt.</dd>" in browser.contents
+   >>> "<span>Der Mitbenutzer wurde entfernt.</span>" in browser.contents
    True
 
 
@@ -204,6 +204,6 @@ Let's get the form. We should get our two input forms for passwort and confirm
 
 We should get the right portal status, for changing the passwort!
 
-   >>> "<dd>Ihr Passwort wurde gespeichert!</dd>" in browser.contents
+   >>> "<span>Ihr Passwort wurde gespeichert!</span>" in browser.contents
    True
 

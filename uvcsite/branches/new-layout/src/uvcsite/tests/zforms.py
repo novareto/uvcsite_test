@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2011 NovaReto GmbH
+# cklinger@novareto.de 
+
 
 import grok
 import uvcsite
@@ -11,18 +15,19 @@ from uvc import validation
 from zope.component.interfaces import IFactory
 
 
-class ITelefonnummern(interface.Interface):
+class IGewerbszweig(interface.Interface):
 
-    typ = schema.Choice(
-        title=u"Art",
-        values=['mobil','fax','arbeit']
-        )
+    text = schema.TextLine(title=u"Text")
+    datum = schema.TextLine(title=u"Datum")
+    personen = schema.Int(title=u"Personen")
+    entgelt = schema.Int(title=u"Entgelt")
 
-    nummer = schema.TextLine(
-        title=u"Telefonnummer",
-        description=u"Telefonnummer",
-        required=True
-        )
+
+class IBGewerbszweig(interface.Interface):
+
+    gwz = schema.Choice(title=u"Gewerbszweig", values=['a', 'b', 'c'])
+    datum = schema.TextLine(title=u"EndeDatum")
+
 
 class IMyFields(interface.Interface):
 
@@ -33,13 +38,22 @@ class IMyFields(interface.Interface):
         constraint = validation.validation.validateZahl
         )
 
-    telefonnummern = schema.List(
-        title = u"Telefonnummern",
-        description = u"Telefonnummern",
+    ngwzs = schema.List(
+        title = u"Neue Gewerbszweige",
+        description = u"Bitte klicken Sie auf Hinzufügen falls neue Gewerbszweige hinzugekommen sind.",
         required = False,
         value_type = schema.Object(
-            title=u"Telefonummern",
-            schema=ITelefonnummern),
+            title=u"Gewerbszweige",
+            schema=IGewerbszweig),
+        )
+
+    bgwzs = schema.List(
+        title = u"Beendete Gewerbszweige",
+        description = u"Bitte klicken Sie auf Hinzufügen falls Sie Gewerbszweige löschen wollen.",
+        required = False,
+        value_type = schema.Object(
+            title=u"Gewerbszweige",
+            schema=IBGewerbszweig),
         )
 
 class MailForm(uvcsite.Form):
@@ -55,17 +69,19 @@ class MailForm(uvcsite.Form):
         print errors
 
 
-class Nummern(grok.Model):
-    grok.implements(ITelefonnummern)
+class Gewerbszweig(grok.Model):
+    grok.implements(IGewerbszweig)
 
-    def __init__(self, typ=None, nummer=None):
-        self.typ = typ
-        self.nummer = nummer
+    def __init__(self, text=None, datum=None, personen=None, entgelt=None):
+        self.text = text
+        self.datum = datum
+        self.personen = personen
+        self.entgelt = entgelt
 
-class TelefonnummernFactory(grok.GlobalUtility):
+class GewerbszweigFactory(grok.GlobalUtility):
     grok.implements(IFactory)
-    grok.name('uvcsite.tests.zforms.ITelefonnummern')
+    grok.name('uvcsite.tests.zforms.IGewerbszweig')
 
-    def __call__(self, typ=None, nummer=None):
-        return  Nummern(typ, nummer)
+    def __call__(self, **kw):
+        return  Gewerbszweig(**kw)
 

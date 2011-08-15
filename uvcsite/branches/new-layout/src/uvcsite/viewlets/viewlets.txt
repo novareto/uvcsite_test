@@ -55,95 +55,93 @@ ViewletManagers and their Viewlets
 GlobalMenu
 ----------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.headers")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc-headers")
    >>> manager 
-   <uvc.layout.managers.Headers object ...>
+   <uvc.layout.slots.managers.Headers object ...>
 
 Show the viewlets:
 
    >>> manager.update()
-   >>> [x for x in manager.viewlets]
-   [<uvc.skin.viewlets.Favicon object at ...>]
+   >>> len(manager.viewlets)
+   0
  
 
 PersonalPreferences
 -------------------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.user.preferences")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"personalpreferences")
    >>> manager 
-   <uvc.layout.menus.PersonalPreferences object ...>
+   <uvc.layout.slots.menus.PersonalPreferences object ...>
 
 Show the Viewlets:
 
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
+   <uvcsite.tests.views.LogoutMenu object at 0...>
    <uvcsite.viewlets.staticmenuentries.UserName object at 0...>
    <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>
-   <megrok.navigation.util.personalpanelentry object at 0...>
-   <megrok.navigation.util.Logout object at 0...>
-
+   <uvcsite.app.PersonalPanelEntry object at 0...>
 
 We render the individual viewlets:
 
   >>> [x for x in manager.viewlets]
-  [<uvcsite.viewlets.staticmenuentries.UserName object at 0...>,
+  [<uvcsite.tests.views.LogoutMenu object at 0...>, 
+   <uvcsite.viewlets.staticmenuentries.UserName object at 0...>, 
    <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>, 
-   <megrok.navigation.util.personalpanelentry object at 0...>, 
-   <megrok.navigation.util.Logout object at 0...>]
-  >>> username, meinordner, prefs, logout = manager.viewlets
+   <uvcsite.app.PersonalPanelEntry object at 0...>]
+  >>> logout, username, meinordner, prefs  = manager.viewlets
 
 Username:
 
-  >>> print username.render()
-  <a href="#">  A User </a>
+  >>> username.title
+  "Some User's Name"
+
 
 MeinOrdner:
 
-  >>> print meinordner.render()
-  <a href='http://127.0.0.1'> Mein Ordner </a>
+  >>> meinordner.title
+  ''
 
 
 Footer
 ------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvcsite.footer")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"footermenu")
    >>> manager 
-   <uvc.layout.menus.Footer object ...>
+   <uvc.layout.slots.menus.Footer object ...>
 
 Show the Viewlets:
 
    >>> manager.update()
    >>> len(manager.viewlets)
-   3 
+   2 
 
    >>> for x in manager.viewlets:
    ...     print x
-   <megrok.navigation.util.impressum object at 0...>
-   <megrok.navigation.util.kontakt object at 0...>
-   <megrok.navigation.util.statistik object at 0...>
-
+   <uvcsite.tests.menustuff.KontaktMenu object at 0...>
+   <uvcsite.tests.menustuff.MenuImpressum object at 0...>
 
 PersonalMenu
 ------------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.user.menu")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"personalmenu")
    >>> manager 
-   <uvc.layout.menus.PersonalMenu object ...>
+   <uvc.layout.slots.menus.PersonalMenu object ...>
 
 Show the Viewlets:
 
    >>> manager.update()
    >>> for x in manager.viewlets:
    ...     print x
-   <megrok.navigation.util.changepassword object at ...> 
+   <uvcsite.extranetmembership.enms.ChangePasswordMenu object at ...>
 
 GlobalMenu
 ----------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc.global.menu")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"globalmenu")
    >>> manager 
-   <uvc.layout.menus.GlobalMenu object ...>
+   <uvc.layout.slots.menus.GlobalMenu object ...>
 
 Show the Viewlets:
 
