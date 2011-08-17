@@ -1,4 +1,4 @@
-<ul class="sf-menu">
+<ul id="add-content" class="sf-menu">
   <li>
    <a> Hinzufügeen </a>
   <ul>

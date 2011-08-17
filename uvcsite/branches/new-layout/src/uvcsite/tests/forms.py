@@ -160,7 +160,9 @@ class WizardMenu(uvcsite.MenuItem):
     grok.viewletmanager(FormBeispiele)
     grok.title('Wizard')
 
-    action = "mywizard"
+    @property
+    def action(self):
+        return "%s/mywizard" %self.view.application_url()
 
 
 class MyWizard(uvcsite.Wizard):

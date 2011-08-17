@@ -13,10 +13,6 @@ from dolmen import menu
 from uvc.validation import validation
 
 
-class ErrorDateFields(zope.interface.Invalid):
-    """Fehlerklasse """
-
-
 class IContact(uvcsite.IContent):
 
     name = zope.schema.TextLine(
@@ -29,12 +25,6 @@ class IContact(uvcsite.IContent):
         description = u"Wie ist ihr Alter",
         constraint = validation.validateZahl
         )
-
-    @zope.interface.invariant
-    def validate(obj):
-        if obj.name != "christian":
-            raise ErrorDateFields("klaus")
-
 
 class IAdressBook(uvcsite.IProductFolder):
     """ Marker Interface """
