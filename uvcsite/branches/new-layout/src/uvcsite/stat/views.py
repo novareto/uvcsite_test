@@ -7,11 +7,23 @@ import uvcsite
 
 from hurry.workflow.interfaces import IWorkflowState
 
+from zope.interface import Interface
 from zope.component import getUtility
 from zope.app.homefolder.interfaces import IHomeFolderManager
 
 
 grok.templatedir('templates')
+
+
+class StatistikMenu(uvcsite.MenuItem):
+    grok.context(Interface)
+    grok.title('Statistik')
+    grok.require('zope.ManageSite')
+    grok.viewletmanager(uvcsite.IFooter)
+
+    @property
+    def action(self):
+        return "%s/statistik" % self.view.application_url()
 
 
 class StatistikView(uvcsite.Page):
@@ -20,7 +32,6 @@ class StatistikView(uvcsite.Page):
     grok.require('zope.ManageSite')
 
     grok.context(uvcsite.IUVCSite)
-    #uvcsite.menu(uvcsite.Footer, order=200)
 
     def update(self):
         self.counter = dict()
