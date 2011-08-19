@@ -48,8 +48,8 @@
 
   <!--
   <includeOverrides package="uvc.skin" file="overrides.zcml" />
-  -->
   <include package="nva.skin"/>
+  -->
     <browser:defaultSkin name="uvcskin" />
 
   <browser:defaultView name="index.html" />
