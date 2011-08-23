@@ -1,12 +1,12 @@
-<ul class="sf-menu" id="homefolder-contenttypes">
+<ul class="dropdown" id="homefolder-contenttypes">
   <li>
-  <a>Quick Navigation</a>
+    <a>Quick Navigation</a>
+    <ul>
+      <li tal:repeat="type view/getContentTypes" class="entry"> 
+	<a href="" tal:attributes="href type/href"> 
+	  <span tal:content="type/name"> </span>
+	</a>
+      </li>
+    </ul>
   </li>
-  <ul>
-    <li tal:repeat="type view/getContentTypes" class="entry"> 
-    <a href="" tal:attributes="href type/href"> 
-      <span tal:content="type/name"> </span>
-    </a>
-    </li>
-  </ul>
 </ul>
