@@ -17,7 +17,7 @@ from zope.pluggableauth.interfaces import IAuthenticatedPrincipalCreated
 from zope.securitypolicy.interfaces import IPrincipalPermissionManager
 
 
-@grok.subscribe(IAuthenticatedPrincipalCreated)
+#@grok.subscribe(IAuthenticatedPrincipalCreated)
 def mark_adhocuser(factory):
     principal = factory.principal
     ahui = IAdHocUserInfo(principal)
@@ -26,7 +26,7 @@ def mark_adhocuser(factory):
         principal.groups.append('uvc.AdHocGroup')
 
 
-@grok.subscribe(IUserLoggedInEvent)
+#@grok.subscribe(IUserLoggedInEvent)
 def create_adhoc_folder(factory):
     principal = factory.object
     if IAdHocUserInfo(principal).isAdHocUser:
@@ -36,7 +36,7 @@ def create_adhoc_folder(factory):
             uvcsite.log('Added the adhoc Folder to homefolder %s.' % homefolder.__name__)
 
 
-@grok.subscribe(IWorkflowTransitionEvent)
+#@grok.subscribe(IWorkflowTransitionEvent)
 def set_permissions(event):
     if event.destination != PUBLISHED:
         return
