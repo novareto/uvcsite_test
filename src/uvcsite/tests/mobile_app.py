@@ -8,6 +8,7 @@ import uvcsite
 
 class Index(uvcsite.mobile.BaseMobilePage):
     grok.context(uvcsite.IUVCSite)
+    theme = "a"
 
 
 class OverView(uvcsite.MobilePage):
