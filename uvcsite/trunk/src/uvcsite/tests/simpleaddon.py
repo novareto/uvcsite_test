@@ -92,8 +92,10 @@ class AddMenuEntry(grok.View):
         adapter = zope.component.getMultiAdapter((self.request.principal, self.request), uvcsite.IGetHomeFolderUrl)
         return self.response.redirect(adapter.getAddURL(Contact))
 
+
 def kopf(c):
     c.drawString(200,200, u"Ich bin der KOPF")
+
 
 class KontaktPdf(uvcsite.BasePDF):
     grok.context(IContact)
@@ -104,4 +106,5 @@ class KontaktPdf(uvcsite.BasePDF):
         kopf(c)
         c.drawString(100,100, "Hello World")
         c.drawString(300,300, self.request.principal.id)
+        c.drawString(400,400, self.context.name)
         c.showPage()
