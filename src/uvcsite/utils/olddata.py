@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2011 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import base64
 import grok
-import time, datetime
+import time
+import datetime
 import uvcsite
 import xmlrpclib
 
 from megrok.z3ctable import Column, table
-from uvc.unfallanzeige.interfaces import IUnfallanzeigenFolder
 
 grok.templatedir('templates')
 
@@ -33,28 +33,27 @@ class Altdaten(uvcsite.TablePage):
         raise NotImplementedError
 
 
-
 class Title(Column):
     """ """
     grok.name('title')
     table(Altdaten)
-    grok.context(IUnfallanzeigenFolder)
+    grok.context(uvcsite.IProductFolder)
     header = u"Titel"
-    weight = 10 
+    weight = 10
 
     def renderCell(self, item):
         url = "%s/@@pdf?id=%s" % (self.table.url(), item['id'])
-        link = '<a href="%s"> %s </a>' %(url, item['title'])
-        return link 
+        link = '<a href="%s"> %s </a>' % (url, item['title'])
+        return link
 
 
 class Autor(Column):
     """ """
     grok.name('autor')
     table(Altdaten)
-    grok.context(IUnfallanzeigenFolder)
+    grok.context(uvcsite.IProductFolder)
     header = u"Erstellt von"
-    weight = 20 
+    weight = 20
 
     def renderCell(self, item):
         return item['Creator']
@@ -64,7 +63,7 @@ class Status(Column):
     """ """
     grok.name('status')
     table(Altdaten)
-    grok.context(IUnfallanzeigenFolder)
+    grok.context(uvcsite.IProductFolder)
     header = u"Status"
     weight = 30
 
@@ -76,14 +75,14 @@ class Datum(Column):
     """ """
     grok.name('datum')
     table(Altdaten)
-    grok.context(IUnfallanzeigenFolder)
+    grok.context(uvcsite.IProductFolder)
     header = u"Datum"
-    weight = 40 
+    weight = 40
 
     def renderCell(self, item):
         datumString = item['ModificationDate']
-        datumFmt="%Y-%m-%d %H:%M:%S"
-        datum = datetime.datetime.fromtimestamp(time.mktime(time.strptime(datumString,datumFmt)))
+        datumFmt = "%Y-%m-%d %H:%M:%S"
+        datum = datetime.datetime.fromtimestamp(time.mktime(time.strptime(datumString, datumFmt)))
         datum = datum.strftime("%d.%m.%Y %H:%M:%S")
         return datum
 
@@ -99,7 +98,7 @@ class PDF(grok.View):
     def render(self):
         oid = self.request.get('id')
         principal = self.request.principal.id
-        URL = self.url() 
+        URL = self.url()
         server = xmlrpclib.ServerProxy(URL)
         content = server.asRemotePdf(oid, principal)
         RESPONSE = self.request.response
