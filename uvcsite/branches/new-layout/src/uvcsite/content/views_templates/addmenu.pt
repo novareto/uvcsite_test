@@ -1,6 +1,6 @@
 <ul id="add-content" class="dropdown">
   <li>
-   <a> Hinzufügeen </a>
+   <a> Hinzufügen </a>
   <ul>
     <li>
     <a href="add" tal:attributes="href view/getAddLinkUrl"> 
