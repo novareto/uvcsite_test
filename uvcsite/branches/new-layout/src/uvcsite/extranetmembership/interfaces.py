@@ -10,7 +10,7 @@ class IExtranetMember(Interface):
 
     mnr = TextLine(
              title = _(u"Mitgliedsnummer"),
-             description = _(u"Mitgliedsnummer"),
+             description = _(u"Benutzername für den Mitbenutzer (Mitgliedsnummer-lfd.Nr.)"),
              required = True)
 
     rollen = List(
@@ -21,14 +21,14 @@ class IExtranetMember(Interface):
 
     passwort = Password(
               title = _(u"Passwort"),
-              description = _(u"Bitte tragen Sie hier das Passwort für den Mitbenutzer ein."),
+              description = _(u"Bitte tragen Sie hier das Passwort ein."),
               min_length = 5,
               max_length = 8,
               required = True)
 
     confirm = Password(
               title = _(u"Bestätigung"),
-              description = _(u"Bitte bestätigen Sie das eingegebene Passwort für den Mitbenutzer."),
+              description = _(u"Bitte bestätigen Sie das eingegebene Passwort."),
               min_length = 5,
               max_length = 8,
               required = True)
