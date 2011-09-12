@@ -15,20 +15,20 @@ class IExtranetMember(Interface):
 
     rollen = List(
              title=_(u"Berechtigung"),
-             description=_(u"Berechtiung"),
+             description=_(u"Hier können Sie Mitbenutzer für Ihre Arbeit im Mitgliederportal berechtigen."),
              value_type=Choice(source=vocab_berechtigungen),
              required = False)
 
     passwort = Password(
               title = _(u"Passwort"),
-              description = _(u"Passwort"),
+              description = _(u"Bitte tragen Sie hier das Passwort für den Mitbenutzer ein."),
               min_length = 5,
               max_length = 8,
               required = True)
 
     confirm = Password(
               title = _(u"Bestätigung"),
-              description = _(u"Bestätigung"),
+              description = _(u"Bitte bestätigen Sie das eingegebene Passwort für den Mitbenutzer."),
               min_length = 5,
               max_length = 8,
               required = True)
