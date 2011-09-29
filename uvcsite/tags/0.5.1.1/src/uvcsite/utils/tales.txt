@@ -1,0 +1,36 @@
+Tales Convinience Adapter
+=========================
+
+:Test-Layer: functional
+
+   >>> import grok
+   >>> from uvcsite.app import Uvcsite
+   >>> from zope.traversing.interfaces import IPathAdapter
+   >>> from zope.component.hooks import setSite
+   >>> import zope.security.interfaces
+   >>> from zope.publisher.browser import TestRequest
+
+   >>> root = getRootFolder()
+   >>> root['app'] = app = Uvcsite()
+   >>> setSite(app)
+
+
+   >>> class Christian(object):
+   ...     grok.implements(zope.security.interfaces.IPrincipal)
+   ...
+   ...     id = "christian"
+   ...     title = "Christian Klinger"
+   ...     description = "The User Christian"
+
+
+   >>> christian = Christian()
+   >>> request = TestRequest()
+   >>> request.setPrincipal(christian)   
+
+   >>> from zope.component import getAdapter
+   >>> uvcsite_tales = getAdapter(request, IPathAdapter, u'uvcsite')
+   >>> uvcsite_tales
+   <uvcsite.utils.tales.UVCSiteTalesAdapter object at ...>
+
+   >>> uvcsite_tales.homefolder
+   'http://127.0.0.1/app/members/christian/'
