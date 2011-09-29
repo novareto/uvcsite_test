@@ -1,0 +1,12 @@
+<html>
+  <body>
+    <h1 tal:content="view/title"> </h1>
+    <p class="small" tal:content="view/description"> </p>
+
+    <a href="#"
+      tal:attributes="href view/addurl">
+      Weiter
+    </a>
+
+  </body>
+</html>
