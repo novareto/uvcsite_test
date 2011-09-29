@@ -53,6 +53,8 @@ class ENMSCreateUser(uvcsite.Form):
         all_azs = []
         for group in groups:
             all_azs.append(group['az'])
+        if not all_azs:
+            return 1
         return int(max(all_azs)) + 1
 
     def getDefaultData(self):
