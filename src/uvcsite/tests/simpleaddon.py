@@ -60,12 +60,13 @@ class ADMenu(grok.Viewlet):
 
 
 
-#@menu.menuentry(uvcsite.IExtraViews)
-class Stat(uvcsite.Page):
+class Stat(grok.Viewlet):
     grok.name('stat')
-    grok.title('Statistik')
+    grok.title('Statistik LONG LONG LONG')
     grok.context(AdressBook)
-    uvcsite.sectionmenu(uvcsite.IExtraViews)
+    viewName = "stat"
+    title = "title"
+    grok.viewletmanager(uvcsite.IExtraViews)
 
     def render(self):
         return "<div> <h1>Statistiks</h1> </div>"

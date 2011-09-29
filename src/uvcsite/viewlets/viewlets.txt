@@ -115,13 +115,12 @@ Show the Viewlets:
 
    >>> manager.update()
    >>> len(manager.viewlets)
-   3 
+   2 
 
    >>> for x in manager.viewlets:
    ...     print x
    <megrok.navigation.util.impressum object at 0...>
    <megrok.navigation.util.kontakt object at 0...>
-   <megrok.navigation.util.statistik object at 0...>
 
 
 PersonalMenu
