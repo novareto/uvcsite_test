@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.5.6dev'
+version = '0.5.6'
 
 setup(name='uvcsite',
       version=version,
@@ -43,6 +43,8 @@ setup(name='uvcsite',
           'megrok.rendersource',
           'megrok.z3ctable',
           'mock',
+          'plone.memoize',
+          'profilehooks',
           'reportlab',
           'repoze.profile',
           'setuptools',
