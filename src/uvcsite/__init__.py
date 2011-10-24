@@ -20,7 +20,7 @@ from megrok.layout import Page
 from megrok.z3ctable import TablePage
 from uvcsite.interfaces import *
 from uvcsite.utils.help import HelpPage
-from uvcsite.utils.pdf import BasePDF 
+from uvcsite.utils.dataviews import BasePDF, BaseXML 
 from uvc.layout.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
 from uvc.layout.zeamform import (Form, AddForm,

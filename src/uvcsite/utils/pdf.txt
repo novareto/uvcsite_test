@@ -1,0 +1,48 @@
+Functional Doctest
+==================
+
+Setup
+
+  >>> import grok
+  >>> import uvcsite
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> from grokcore.component.testing import grok_component
+  
+  >>> root = getRootFolder()
+  >>> root['context'] = app = uvcsite.app.Uvcsite()
+  >>> app.title = u"Novareto"
+
+Erstellen eines einfachen PDF's
+
+  >>> class SimplePDF(uvcsite.BasePDF):
+  ...     grok.name('simplepdf')
+  ...     grok.title('enw.pdf')
+  ...     grok.context(uvcsite.IUVCSite)
+  ...
+  ...     def genpdf(self):
+  ...         print "I am called"
+
+  >>> grok_component('SimplePDF', SimplePDF)
+  True
+
+  >>> request = TestRequest()
+
+  >>> view = getMultiAdapter((app, request), name="simplepdf")
+  >>> view
+  <uvcsite.SimplePDF object at ...>
+
+  >>> view.update()
+  I am called
+
+  >>> view.pdf_file
+  <open file '<fdopen>', mode 'w+b' at ...>
+
+  >>> view.filename
+  'enw.pdf'
+
+  >>> view.update(filename='/tmp/example.pdf')
+  I am called
+
+  >>> view.pdf_file
+  <open file '/tmp/example.pdf', mode 'w+b' at ...>
