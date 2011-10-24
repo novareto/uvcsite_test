@@ -1,0 +1,17 @@
+Default Beaker Config
+---------------------
+
+We use beaker in uvcsite as caching and session System.
+dolmen.beaker gives us a default setup. But we want
+to override these settings in the buildout.cfg file.
+
+  >>> from zope.component import getUtility
+  >>> from dolmen.beaker.interfaces import ISessionConfig
+  >>> from dolmen.beaker.utilities import ImmutableDict
+
+  >>> beaker_config = getUtility(ISessionConfig)
+  >>> isinstance(beaker_config, ImmutableDict) 
+  True
+
+  >>> beaker_config.get('key')
+  'beaker.session.id'
