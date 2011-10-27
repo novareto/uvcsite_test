@@ -2,7 +2,7 @@
 
 from uvcsite import uvcsiteMF as _
 from zope.interface import Interface, invariant, Invalid
-from zope.schema import Password, TextLine, Choice, List
+from zope.schema import Password, TextLine, Choice, List, Set
 from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
 
 
@@ -13,7 +13,7 @@ class IExtranetMember(Interface):
              description = _(u"Mitgliedsnummer"),
              required = True)
 
-    rollen = List(
+    rollen = Set(
              title=_(u"Berechtigung"),
              description=_(u"Berechtigung"),
              value_type=Choice(source=vocab_berechtigungen),
