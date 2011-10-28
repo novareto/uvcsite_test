@@ -15,7 +15,7 @@ $(document).ready(function() {
         <span tal:content="hp/name|string:Hilfe"/> 
         </a>
         <div class="toggler simple_overlay" tal:attributes="id hp/__class__/__name__" title="Hilfe">
-          <span id="effect" tal:content="structure hp/render"/>
+          <div id="effect" tal:content="structure hp/render"/>
           </div>
    </d>
 </div>
