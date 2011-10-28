@@ -5,18 +5,17 @@ $(document).ready(function() {
 </script>
 
 <div id="uvc_help"
-     tal:define="viewlets viewletmanager/getHelpPages"
-     tal:condition="viewlets">
-        <span:repeat tal:repeat="viewlet viewletmanager/getViewlets">
-            <span tal:replace="structure viewlet/render"/>
-        </span:repeat>
-       <a style="float:right;" href id="help_button" rel="#toggler"> Hilfe </a>
-       <div id="toggler"
-            class="simple_overlay"
-            title="Hilfe"
-            tal:repeat="viewlet viewlets">
-         <div id="effect">
-            <span tal:content="structure viewlet/render"/>
-         </div> 
-       </div>
+  tal:define="viewlets viewletmanager/getHelpPages"
+  tal:condition="viewlets">
+  <span:repeat tal:repeat="viewlet viewletmanager/getViewlets">
+    <span tal:replace="structure viewlet/render"/>
+   </span:repeat>
+   <d tal:repeat="hp viewlets">
+      <a style="float:right;" href id="help_button" rel="#toggler" tal:attributes="rel string:#${hp/__class__/__name__}"> 
+        <span tal:content="hp/name|string:Hilfe"/> 
+        </a>
+        <div class="toggler simple_overlay" tal:attributes="id hp/__class__/__name__" title="Hilfe">
+          <span id="effect" tal:content="structure hp/render"/>
+          </div>
+   </d>
 </div>
