@@ -30,6 +30,10 @@ class BasePDF(grok.View):
         self.genpdf()
         self.c.save()
 
+    def create(self, filename):
+        self.update(filename)
+        self.pdf_file.close()
+
     def genpdf(self):
         raise NotImplementedError
 
