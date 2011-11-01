@@ -15,9 +15,9 @@ class BasePDF(grok.View):
     grok.name('pdf')
     grok.title('uvcsite.pdf')
 
-    def file(self, filename):
-        if filename:
-            return open(filename, 'w+b')
+    def getFile(self, fn):
+        if fn:
+            return open(fn, 'w+b')
         return tempfile.TemporaryFile() 
 
     @property
@@ -25,13 +25,13 @@ class BasePDF(grok.View):
         return grok.title.bind().get(self)
 
     def update(self, filename=None):
-        self.pdf_file = self.file(filename)
+        self.pdf_file = self.getFile(filename)
         self.c = canvas.Canvas(self.pdf_file)
         self.genpdf()
         self.c.save()
 
-    def create(self, filename):
-        self.update(filename)
+    def create(self, fn):
+        self.update(fn)
         self.pdf_file.close()
 
     def genpdf(self):
