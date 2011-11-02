@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2011 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import grok
 import tempfile
@@ -18,7 +18,7 @@ class BasePDF(grok.View):
     def getFile(self, fn):
         if fn:
             return open(fn, 'w+b')
-        return tempfile.TemporaryFile() 
+        return tempfile.TemporaryFile()
 
     @property
     def filename(self):
@@ -44,7 +44,7 @@ class BasePDF(grok.View):
         RESPONSE.setHeader('content-type', 'application/pdf')
         RESPONSE.setHeader('content-length', pdf)
         RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %self.filename)
-        return pdf 
+        return pdf
 
 
 class BaseXML(BasePDF):
@@ -52,7 +52,7 @@ class BaseXML(BasePDF):
     grok.title('uvcsite.xml')
 
     def update(self, filename=None):
-        self.xml_file = self.file(filename)
+        self.xml_file = self.getFile(filename)
         self.genxml()
 
     def genxml(self):
@@ -65,4 +65,4 @@ class BaseXML(BasePDF):
         RESPONSE.setHeader('content-type', 'text/xml')
         RESPONSE.setHeader('content-length', xml)
         RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %self.filename)
-        return xml 
+        return xml
