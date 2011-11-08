@@ -1,11 +1,14 @@
 import grok
 import dolmen.content
+import zope.security
 
 from zope.schema import TextLine
 from uvcsite.content.interfaces import IContent, IProductFolder, IFolderColumnTable
 from uvcsite.content.directive import contenttype
 from grokcore.component import directive
 from zope.container.interfaces import INameChooser
+from zope.dublincore.interfaces import IZopeDublinCore
+from zope.pluggableauth.factories import Principal
 
 
 class ProductFolder(grok.Container):
@@ -33,6 +36,10 @@ class ProductFolder(grok.Container):
         name = INameChooser(self).chooseName(content.__name__ or '', content)
         self[name] = content
 
+    @property
+    def excludeFromNav(self):
+        return False
+
 
 class Content(dolmen.content.Content):
     grok.implements(IContent)
@@ -46,3 +53,11 @@ class Content(dolmen.content.Content):
     @property
     def schema(self):
         return dolmen.content.schema.bind().get(self)
+
+    @property
+    def principal(self):
+        dc = IZopeDublinCore(self)
+        if len(dc.creators) > 0:
+            pid = dc.creators[0]
+            return Principal(pid, pid)
+        return zope.security.management.getInteraction().participations[0].principal
