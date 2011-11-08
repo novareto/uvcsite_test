@@ -64,7 +64,7 @@ class Index(TablePage):
 
 class ExtraViewsViewlet(ContextualActions):
     grok.order(20)
-    grok.view(Interface)
+    grok.view(IFolderListingTable)
     grok.name('extra-views')
     grok.viewletmanager(interfaces.IAboveContent)
     grok.require("zope.Public")
@@ -81,7 +81,6 @@ class ExtraViewsViewlet(ContextualActions):
     def compute_actions(self, viewlets):
         for action in viewlets:
             selected = action.viewName == self.view.__name__
-
             context_url = self.menu.view.url(self.menu.context)
             url = not selected and "%s/%s" % (context_url, action.viewName) or None
             yield {
