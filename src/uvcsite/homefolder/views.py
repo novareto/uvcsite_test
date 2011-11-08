@@ -5,6 +5,7 @@
 import grok
 import uvcsite
 
+from zope.interface import Interface
 from uvcsite import uvcsiteMF as _
 from megrok.z3ctable import Values
 from megrok.z3ctable import TablePage
@@ -57,11 +58,17 @@ class Index(TablePage):
         
 
 class DirectAccess(grok.Viewlet):
-    grok.view(Index)
+    grok.view(IFolderListingTable)
     grok.order(25)
-    grok.context(IMyHomeFolder)
+    grok.context(Interface)
     grok.viewletmanager(interfaces.IAboveContent)
 
+    def getContentTypes(self):
+        interaction = self.request.interaction
+        for key, value in self.context.__parent__.items():
+            if interaction.checkPermission('uvc.ViewContent', value) and not value.excludeFromNav:
+                yield dict(href = absoluteURL(value, self.request),
+                           name = key) 
 
 class HomeFolderValues(Values):
     """This Adapter returns IContent Objects
