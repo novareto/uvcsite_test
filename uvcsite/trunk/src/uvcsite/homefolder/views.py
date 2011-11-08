@@ -36,7 +36,7 @@ class Index(TablePage):
     def getContentTypes(self):
         interaction = self.request.interaction
         for key, value in self.context.items():
-            if interaction.checkPermission('uvc.ViewContent', value):
+            if interaction.checkPermission('uvc.ViewContent', value) and not value.excludeFromNav:
                 yield dict(href = absoluteURL(value, self.request),
                            name = key) 
 
