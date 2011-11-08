@@ -66,7 +66,7 @@ class DirectAccess(grok.Viewlet):
     def getContentTypes(self):
         interaction = self.request.interaction
         for key, value in self.context.__parent__.items():
-            if interaction.checkPermission('uvc.ViewContent', value) and not value.excludeFromNav:
+            if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
                 yield dict(href = absoluteURL(value, self.request),
                            name = key) 
 
