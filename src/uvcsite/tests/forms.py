@@ -257,6 +257,17 @@ class Step3(uvcsite.Step):
     label = "Step 3"
 
 
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+import grokcore.component as grok
+from zope import schema
+
+@grok.provider(schema.interfaces.IContextSourceBinder)
+def kk(context):
+    terms = []
+    for gwz in range(5):
+        terms.append( SimpleTerm(gwz, gwz, gwz) )
+    return SimpleVocabulary(terms) 
+
 class ISimplePerson(interface.Interface):
 
     name = schema.TextLine(
@@ -270,11 +281,11 @@ class ISimplePerson(interface.Interface):
         description = u"Bitte geben Sie den Vornamen ein",
         )
 
-    #geschlecht = schema.Choice(
-    #    title = u"Gender",
-    #    description = u"Bitte geben Sie das Geschlecht ein",
-    #    values = ('men', 'woman', 'kid', 'grandpa', 'sister', 'brother'),
-    #    )
+    geschlecht = schema.Choice(
+        title = u"Gender",
+        description = u"Bitte geben Sie das Geschlecht ein",
+        source = kk,
+        )
 
 from zope.component.interfaces import IFactory
 
@@ -292,7 +303,7 @@ class IAdressen(interface.Interface):
 
     personen = schema.List(
         title=u"Personen",
-        description=u"Bitte tragen Sie alle Personen ein... <br> kk <br>fdas faskjfakf a f fkasfj dkaf aksf akf kasfj sakf kasf aksf kasf ksf sak fdskaf askf aksdf daskf dkf aksdf kfdj dkfj dskfj askfj jaksf askf askf jasdkf ",
+        description=u"Bitte tragen Sie alle Personen ein...",
         value_type=schema.Object(
             title=u"Person", 
             schema=ISimplePerson),
@@ -317,7 +328,6 @@ class ComplexForm(uvcsite.Form):
     ignoreContent = False 
     ignoreRequest = False
     fields = uvcsite.Fields(IAdressen)
-    #fields['personen'].mode = "bgdp"
     fields['personen'].allowOrdering = False
     fields['personen'].inlineValidation = True
 

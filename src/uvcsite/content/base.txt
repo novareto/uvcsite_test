@@ -1,12 +1,23 @@
-Do a unit doctest test on the base.py 
+Do a unit doctest test on the base.py
 =====================================
 
-:Test-Layer: functional 
+:Test-Layer: functional
 
 Let's first create an Object which inherits from Content:
 
+
+   >>> import zope.security
+   >>> import grok
    >>> from uvcsite import Content, name
    >>> from uvcsite import IContent
+   >>> from zope.publisher.browser import TestRequest
+   >>> from zope.pluggableauth.factories import Principal
+
+   >>> principal = Principal('ck')
+   >>> request = TestRequest()
+
+   >>> request.setPrincipal(principal)
+   >>> zope.security.management.newInteraction(request)
 
 
    >>> class Person(Content):
@@ -27,3 +38,20 @@ behaviour.
 
    >>> print klaus.meta_type
    Person
+
+
+Principal who created the object.
+
+   >>> klaus.principal
+   Principal('ck')
+
+   >>> from zope.lifecycleevent import ObjectCreatedEvent
+   >>> grok.notify(ObjectCreatedEvent(klaus))
+
+ModificationTime
+
+   >>> import datetime
+   >>> isinstance(klaus.modtime, datetime.datetime)
+   True
+
+   >>> zope.security.management.endInteraction()

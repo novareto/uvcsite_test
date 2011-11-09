@@ -61,3 +61,8 @@ class Content(dolmen.content.Content):
             pid = dc.creators[0]
             return Principal(pid, pid)
         return zope.security.management.getInteraction().participations[0].principal
+
+    @property
+    def modtime(self):
+        dc = IZopeDublinCore(self)
+        return dc.modified
