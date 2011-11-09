@@ -1,0 +1,12 @@
+<dl class="dropdown" id="homefolder-contenttypes">
+  <dt>Quick Navigation</dt>
+  <dd>
+  <ul>
+    <li tal:repeat="type viewlet/getContentTypes" class="entry"> 
+    <a href="" tal:attributes="href type/href"> 
+      <span tal:content="type/name"> </span>
+    </a>
+    </li>
+  </ul>
+  </dd>
+</dl>
