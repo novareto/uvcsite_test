@@ -47,12 +47,18 @@ class ENMSCreateUser(uvcsite.Form):
     def updateForm(self):
         super(ENMSCreateUser, self).updateForm()
         self.fieldWidgets.get('form.field.mnr').template = grok.PageTemplateFile('templates/mnr.pt')
-
+    def getNextNumber(self, groups):
+        all_azs = []
+        for group in groups:
+            all_azs.append(group['az'])
+        if not all_azs:
+            return 1
+        return int(max(all_azs)) + 1
 
     def getDefaultData(self):
         principal = self.request.principal.id
         um = getUtility(IUserManagement)
-        all_users = len(um.getUserGroups(principal)) + 1
+        all_users = self.getNextNumber(um.getUserGroups(principal))
         user = principal + '-' + str(all_users).zfill(2)
         rollen = self.context.keys()
         return {'mnr': user, 'rollen': rollen}
