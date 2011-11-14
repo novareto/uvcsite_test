@@ -29,16 +29,21 @@ class StatistikView(uvcsite.Page):
         hFB = getUtility(IHomeFolderManager).homeFolderBase
         self.counter['HomeFolder'] = inc
         self.counter['HomeFolder']['anzahl'] = len(hFB)
+        pf_c = 0
         for homefolder in hFB.values():
             for name, pf in homefolder.items():
                 if not IBroken.providedBy(pf):
+                    pf_c += 1
                     if name not in self.counter:
                         self.counter[name] = dict(anzahl=0, entwurf=0, gesendet=0, verarbeitung=0) 
                     self.counter[name]['anzahl'] += len(pf)
                     for obj in pf.values():
-                        if IWorkflowState(obj).getState() == 0:
+                        state = IWorkflowState(obj).getState()
+                        if state == 0:
                             self.counter[name]['entwurf'] += 1 
-                        elif IWorkflowState(obj).getState() == 1:
+                        elif state == 1:
                             self.counter[name]['gesendet'] += 1 
-                        elif IWorkflowState(obj).getState() == 2:
+                        elif state == 2:
                             self.counter[name]['verarbeitung'] += 1 
+        self.counter['ProductFolders'] = dict() 
+        self.counter['ProductFolders']['anzahl'] = pf_c

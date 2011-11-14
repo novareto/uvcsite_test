@@ -42,7 +42,6 @@ class BasePDF(grok.View):
         pdf.seek(0)
         RESPONSE = self.request.response
         RESPONSE.setHeader('content-type', 'application/pdf')
-        RESPONSE.setHeader('content-length', pdf)
         RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %self.filename)
         return pdf
 
@@ -63,6 +62,5 @@ class BaseXML(BasePDF):
         xml.seek(0)
         RESPONSE = self.request.response
         RESPONSE.setHeader('content-type', 'text/xml')
-        RESPONSE.setHeader('content-length', xml)
         RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %self.filename)
         return xml

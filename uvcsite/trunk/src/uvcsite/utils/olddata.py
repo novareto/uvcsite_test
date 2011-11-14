@@ -91,6 +91,7 @@ class PDF(grok.View):
     grok.view(Altdaten)
     grok.context(Altdaten)
     grok.baseclass()
+    pdf_name = "ihr_exemplar.pdf"
 
     def url(self):
         raise NotImplementedError
@@ -103,5 +104,5 @@ class PDF(grok.View):
         content = server.asRemotePdf(oid, principal)
         RESPONSE = self.request.response
         RESPONSE.setHeader('content-type', 'application/pdf')
-        RESPONSE.setHeader('content-disposition', 'attachment; filename=unfallanzeige.pdf')
+        RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' % self.pdf_name)
         return base64.decodestring(content)
