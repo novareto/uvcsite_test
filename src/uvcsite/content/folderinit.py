@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2011 NovaReto GmbH
+# cklinger@novareto.de 
+
 import grok
 import transaction
 import uvcsite
@@ -21,6 +25,7 @@ def handle_init(event):
             try:
                 productfolders = list(getUtilitiesFor(IProductFolder))
                 folders = getUtility(IHomeFolderManager).homeFolderBase
+                uvcsite.log('Start applying ProductFolders for UVCSite: %s' %len(folders))
                 for folder in folders.values():
                     for name, class_ in productfolders:
                         if name in folder:
@@ -34,6 +39,7 @@ def handle_init(event):
 
 @grok.subscribe(uvcsite.IMyHomeFolder, grok.IObjectAddedEvent)
 def handle_homefolder(homefolder, event):
+    uvcsite.log('Add Productfolders to Homefolder: %s' % homefolder.__name__)
     productfolders = list(getUtilitiesFor(IProductFolder))
     for name, class_ in productfolders:
         homefolder[name] = class_()
