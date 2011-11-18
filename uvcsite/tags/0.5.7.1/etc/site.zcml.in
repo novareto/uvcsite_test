@@ -1,0 +1,19 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           i18n_domain="uvcsite">
+
+  <include package="uvcsite" />
+  <include package="uvcsite.tests" />
+  <!--
+  <includeOverrides package="nva.sliteauth" file="overrides.zcml"/>
+  -->
+
+      <principal id="zope.manager"
+                 title="Manager"
+                 login="admin"
+                 password_manager="SHA1"
+                 password="6d9c28cdd033e22ae348aeb5660fc2140aec35850c4da997"
+                 />
+
+      <grant role="zope.Manager"
+             principal="zope.manager" />
+</configure>
