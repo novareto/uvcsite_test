@@ -72,8 +72,9 @@ div#effect {
  height: 390px;
 }
 
-div#toggler
+div.toggler
 {
+    display: none;
     text-align:left;
     text-indent:20px;
     border:2px solid #B30B16;

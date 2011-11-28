@@ -13,14 +13,6 @@ $(document).ready(function()
         });
 
 
-/*
-        $("form :input").tooltip();
-
-        $('#form-field-id').attr('title', 'EGON');
-        $('#form-field-id').tooltip();
-        alert($('#form-field-id').attr('title'));
-*/
-
         $("form :input[tooltip='1']").not(":button").tooltip({ 
             position: "center right", 
             offset: [-2, 10], 

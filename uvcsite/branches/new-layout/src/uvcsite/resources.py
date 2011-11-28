@@ -3,7 +3,6 @@
 # cklinger@novareto.de
 
 import grok
-import uvcsite 
 import uvc.layout.slots.managers
 
 from zope.interface import Interface
@@ -14,14 +13,14 @@ from js.jquery_tools import jquery_tools
 from js.jquery_tablesorter import tablesorter
 
 
-
 UVCResources = Library('uvcsresource', 'library')
 
 Overlay = Resource(UVCResources, 'overlay.js', depends=[jquery_tools])
 
 Tooltip = Resource(UVCResources, 'tooltip.js', depends=[jquery_tools])
 
-Mask = Resource(UVCResources, 'jquery.maskedinput-1.3.js', depends=[jquery_tools])
+Mask = Resource(UVCResources,
+    'jquery.maskedinput-1.3.js', depends=[jquery_tools])
 
 
 class UVCResourceViewlet(ResourceViewlet):

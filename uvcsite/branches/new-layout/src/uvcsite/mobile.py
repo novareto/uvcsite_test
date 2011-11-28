@@ -7,6 +7,7 @@ import uvcsite
 
 from zope import interface
 from megrok import layout
+from megrok import resourceviewlet
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.component import getMultiAdapter
 
@@ -79,3 +80,35 @@ class MobileMacros(grok.View):
     grok.layer(MobileLayer)
     grok.context(uvcsite.IUVCSite)
     grok.require('zope.Public')
+
+
+class Login(BaseMobilePage):
+    grok.layer(MobileLayer)
+    grok.require('zope.Public')
+
+import megrok.pagetemplate as pt
+from dolmen.app.layout import Form as DAForm
+
+#class MobileFormTemplate(pt.PageTemplate):
+#    pt.view(DAForm)
+#    grok.layer(MobileLayer)
+
+
+from dolmen.app.authentication.browser import login
+class MobileLoginForm(login.Login):
+    grok.name('mobileloginform')
+    grok.layer(MobileLayer)
+
+
+class LoginForm(MobilePage):
+    grok.layer(MobileLayer)
+    grok.context(uvcsite.IUVCSite)
+    grok.view(Login)
+    grok.require('zope.Public')
+
+    def render(self):
+        loginform = getMultiAdapter((self.context, self.request), name="mobileloginform")
+        loginform.update()
+        loginform.updateWidgets()
+        loginform.form_url = self.view.url(self.context, 'mobileloginform')
+        return loginform.render()

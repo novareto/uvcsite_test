@@ -26,6 +26,7 @@ from uvcsite.interfaces import *
 from uvcsite.utils.help import HelpPage
 from uvc.layout.slots.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
+from uvcsite.utils.dataviews import BasePDF, BaseXML 
 from uvc.layout.forms import (Form, AddForm,
     SubForm, GroupForm, Wizard, Step)
 from uvc.layout import *
@@ -51,6 +52,7 @@ from dolmen.forms.base.utils import (
     set_fields_data, notify_changes, apply_data_event)
 
 #from uvcsite.utils.mail import send_mail
+from uvcsite.utils.olddata import Altdaten, PDF
 
 ### LOGGING
 import logging

@@ -1,4 +1,4 @@
-Check the dynamic table elements in the view of the productfolder 
+Check the dynamic table elements in the view of the productfolder
 =================================================================
 
 :doctest:
@@ -19,14 +19,14 @@ Setup
   <uvcsite.tests.simpleaddon.AdressBook object at ...>
 
 The folder should be empty:
-  
+
   >>> len(folder)
   0
 
 Views
 -----
 
-This are some imports which helps us to call the IndexTable 
+This are some imports which helps us to call the IndexTable
 of our folder.
 
   >>> from zope.component import getMultiAdapter
@@ -55,10 +55,10 @@ Let's check this with the testbrowser!
   >>> browser.getControl(name="form.field.name").value = "christian"
   >>> browser.getControl(name="form.field.alter").value = "30"
 
-  >>> save = browser.getControl(name="form.action.48696e7a7566c3bc67656e")
+  >>> save = browser.getControl(name="form.action.uvcsite.add")
   >>> save
-  <SubmitControl name='form.action.48696e7a7566c3bc67656e' type='submit'>
- 
+  <SubmitControl name='form.action.uvcsite.add' type='submit'>
+
 We have a subscriber for the AfterSaveEvent for uvcsite which prints "AfterSaveEvent".
 
   >>> save.click()
