@@ -47,6 +47,7 @@ class ENMSCreateUser(uvcsite.Form):
     def updateForm(self):
         super(ENMSCreateUser, self).updateForm()
         self.fieldWidgets.get('form.field.mnr').template = grok.PageTemplateFile('templates/mnr.pt')
+
     def getNextNumber(self, groups):
         all_azs = []
         for group in groups:
