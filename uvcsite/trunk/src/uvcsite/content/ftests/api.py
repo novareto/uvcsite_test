@@ -34,9 +34,6 @@ POST
 Ok there is no meaningful post method implemented yet!
 
   >>> auth_header="Basic uaz:uaz"
-  >>> response = http_call('POST', 'http://localhost/++rest++api/uaz', AUTHORIZATION=auth_header)
-  >>> print response.getBody()
-  POST
 
 GET
 ---
@@ -78,6 +75,21 @@ One item in the container!
       <status>Entwurf</status>
     </Unfallanzeige>
   </container>
+
+The object itself has also a get method
+
+  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz/christian', 
+  ... AUTHORIZATION=auth_header)
+  >>> print response.getBody()
+  <?xml version='1.0' encoding='UTF-8'?>
+  <unfallanzeige id="christian">
+    <Unfallanzeige id="christian">
+      <title>Mein Unfall</title>
+      <name>Christian Klinger</name>
+      <age>29</age>
+    </Unfallanzeige>
+  </unfallanzeige>
+  <BLANKLINE>
 
 
 More items in the container!

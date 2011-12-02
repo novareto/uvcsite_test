@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import grok
-
+import uvcsite
 
 from lxml import etree
 from lxml.builder import E
@@ -41,9 +41,6 @@ class ProductFolderRest(grok.REST):
                 ))
         return etree.tostring(container, xml_declaration=True, encoding='utf-8', pretty_print=True)
 
-    def POST(self):
-        return "POST"
-
     def PUT(self):
         errors = []
         content = self.context.getContentType()()
@@ -62,6 +59,22 @@ class ProductFolderRest(grok.REST):
             result = etree.Element('failure')
             result.extend(errors)
         return etree.tostring(result, encoding='UTF-8', pretty_print=True)
+
+
+class ContentRest(grok.REST):
+    grok.layer(RestLayer)
+    grok.context(uvcsite.IContent)
+    grok.require('zope.View')
+
+    def GET(self):
+        context = self.context
+        id = context.__name__
+        object = etree.Element('unfallanzeige', id=id)
+        schema = context.schema[0]
+        element = etree.SubElement(object, context.meta_type, id=id)
+        serialize_to_tree(element, schema, context)
+        return etree.tostring(object, xml_declaration=True, encoding='UTF-8', pretty_print=True)
+ 
 
 
 class ISerializer(Interface):

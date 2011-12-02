@@ -12,6 +12,7 @@ from megrok.z3ctable import TablePage
 from zope.traversing.browser import absoluteURL
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from uvc.layout import interfaces
+from uvcsite.homefolder.homefolder import Members
 
 
 class Index(TablePage):
@@ -73,6 +74,7 @@ class DirectAccess(grok.Viewlet):
                 yield dict(href = absoluteURL(value, self.request),
                            name = key) 
 
+
 class HomeFolderValues(Values):
     """This Adapter returns IContent Objects
        form child folders
@@ -87,3 +89,13 @@ class HomeFolderValues(Values):
             if interaction.checkPermission('uvc.ViewContent', productfolder):
                 results.extend(productfolder.values())
         return results
+
+
+class RedirectIndexMembers(grok.View):
+    grok.context(Members)
+    grok.name('index')
+
+    def render(self):
+        url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
+        self.redirect(url)
+
