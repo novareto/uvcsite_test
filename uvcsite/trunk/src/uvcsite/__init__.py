@@ -29,7 +29,7 @@ from uvc.layout.event import IAfterSaveEvent
 from uvcsite.resources import Overlay, Tooltip, Mask
 
 # Mobile
-from uvcsite.mobile import MobilePage, MobileLayer, IMobileLayer
+from uvcsite.mobile import BaseMobilePage, MobilePage, MobileLayer, IMobileLayer
 
 
 ### ZEAM-FORM-API
