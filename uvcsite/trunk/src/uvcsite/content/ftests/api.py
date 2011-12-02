@@ -46,6 +46,7 @@ content objects in it so we only get an empty container listing.
 
   >>> response = http_call('GET', 'http://localhost/++rest++api/uaz', AUTHORIZATION=auth_header)
   >>> print response.getBody()
+  <?xml version='1.0' encoding='utf-8'?>
   <container id="uaz"/>
 
 Now let's add objects to the container and see the GET Request again
@@ -67,13 +68,17 @@ One item in the container!
   >>> response = http_call('GET', 'http://localhost/++rest++api/uaz', 
   ... AUTHORIZATION=auth_header)
   >>> print response.getBody()
+  <?xml version='1.0' encoding='utf-8'?>
   <container id="uaz">
-    <Unfallanzeige id="christian">
-      <title>Mein Unfall</title>
-      <name>Christian Klinger</name>
-      <age>29</age>
+    <Unfallanzeige>
+      <id>christian</id>
+      <titel>Mein Unfall</titel>
+      <author>uvc.uaz</author>
+      <datum>02.12.2011</datum>
+      <status>Entwurf</status>
     </Unfallanzeige>
   </container>
+
 
 More items in the container!
 
@@ -81,18 +86,24 @@ More items in the container!
   >>> response = http_call('GET', 'http://localhost/++rest++api/uaz',
   ... AUTHORIZATION=auth_header)
   >>> print response.getBody()
+  <?xml version='1.0' encoding='utf-8'?>
   <container id="uaz">
-    <Unfallanzeige id="christian">
-      <title>Mein Unfall</title>
-      <name>Christian Klinger</name>
-      <age>29</age>
+    <Unfallanzeige>
+      <id>christian</id>
+      <titel>Mein Unfall</titel>
+      <author>uvc.uaz</author>
+      <datum>02.12.2011</datum>
+      <status>Entwurf</status>
     </Unfallanzeige>
-    <Unfallanzeige id="lars">
-      <title>Unfall von Lars</title>
-      <name>Lars Walther</name>
-      <age>39</age>
+    <Unfallanzeige>
+      <id>lars</id>
+      <titel>Unfall von Lars</titel>
+      <author>uvc.uaz</author>
+      <datum>02.12.2011</datum>
+      <status>Entwurf</status>
     </Unfallanzeige>
   </container>
+
 
 
 PUT

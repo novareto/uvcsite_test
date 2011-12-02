@@ -29,15 +29,17 @@ class Index(TablePage):
     grok.context(IProductFolder)
     uvcsite.sectionmenu(uvcsite.IExtraViews)
 
-    @property
-    def title(self):
-        return self.context.getContentName()
-
     description = u"Hier finden Sie alle Dokumente dazu."
 
     cssClasses = {'table': 'myTable tablesorter'}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
+
+    sortOnId = "table-modified-100" 
+
+    @property
+    def title(self):
+        return self.context.getContentName()
 
     def update(self): 
         items = self.request.form.get('table-checkBox-0-selectedItems')
