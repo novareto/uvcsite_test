@@ -7,21 +7,21 @@ Rest API
 
 Setup
 -----
-First start with an instance of UAZFolder 
+First start with an instance of UAZFolder
 
   >>> from zope.app.testing.functional import getRootFolder
   >>> root = getRootFolder()
 
   >>> from uvcsite.content.ftests.api import UAZFolder
-  >>> folder = UAZFolder() 
-  >>> folder 
-  <uvcsite.content.ftests.api.UAZFolder object at ...> 
+  >>> folder = UAZFolder()
+  >>> folder
+  <uvcsite.content.ftests.api.UAZFolder object at ...>
 
 Add the folder to the RootFolder!
 
   >>> root['uaz'] = folder
   >>> root['uaz']
-  <uvcsite.content.ftests.api.UAZFolder object at ...> 
+  <uvcsite.content.ftests.api.UAZFolder object at ...>
 
 Rest Operations
 ---------------
@@ -34,18 +34,16 @@ POST
 Ok there is no meaningful post method implemented yet!
 
   >>> auth_header="Basic uaz:uaz"
-  >>> response = http_call('POST', 'http://localhost/++rest++api/uaz', AUTHORIZATION=auth_header)
-  >>> print response.getBody()
-  POST
 
 GET
 ---
 
-So start with a GET Request of the Container! Ok are no 
-content objects in it so we only get an empty container listing. 
+So start with a GET Request of the Container! Ok are no
+content objects in it so we only get an empty container listing.
 
   >>> response = http_call('GET', 'http://localhost/++rest++api/uaz', AUTHORIZATION=auth_header)
   >>> print response.getBody()
+  <?xml version='1.0' encoding='utf-8'?>
   <container id="uaz"/>
 
 Now let's add objects to the container and see the GET Request again
@@ -64,16 +62,35 @@ Now let's add objects to the container and see the GET Request again
 One item in the container!
 
   >>> root['uaz']['christian'] = uaz
-  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz', 
+  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz',
   ... AUTHORIZATION=auth_header)
   >>> print response.getBody()
+  <?xml version='1.0' encoding='utf-8'?>
   <container id="uaz">
+    <Unfallanzeige>
+      <id>christian</id>
+      <titel>Mein Unfall</titel>
+      <author>uvc.uaz</author>
+      <datum>...</datum>
+      <status>Entwurf</status>
+    </Unfallanzeige>
+  </container>
+
+The object itself has also a get method
+
+  >>> response = http_call('GET', 'http://localhost/++rest++api/uaz/christian',
+  ... AUTHORIZATION=auth_header)
+  >>> print response.getBody()
+  <?xml version='1.0' encoding='UTF-8'?>
+  <unfallanzeige id="christian">
     <Unfallanzeige id="christian">
       <title>Mein Unfall</title>
       <name>Christian Klinger</name>
       <age>29</age>
     </Unfallanzeige>
-  </container>
+  </unfallanzeige>
+  <BLANKLINE>
+
 
 More items in the container!
 
@@ -81,18 +98,24 @@ More items in the container!
   >>> response = http_call('GET', 'http://localhost/++rest++api/uaz',
   ... AUTHORIZATION=auth_header)
   >>> print response.getBody()
+  <?xml version='1.0' encoding='utf-8'?>
   <container id="uaz">
-    <Unfallanzeige id="christian">
-      <title>Mein Unfall</title>
-      <name>Christian Klinger</name>
-      <age>29</age>
+    <Unfallanzeige>
+      <id>christian</id>
+      <titel>Mein Unfall</titel>
+      <author>uvc.uaz</author>
+      <datum>...</datum>
+      <status>Entwurf</status>
     </Unfallanzeige>
-    <Unfallanzeige id="lars">
-      <title>Unfall von Lars</title>
-      <name>Lars Walther</name>
-      <age>39</age>
+    <Unfallanzeige>
+      <id>lars</id>
+      <titel>Unfall von Lars</titel>
+      <author>uvc.uaz</author>
+      <datum>...</datum>
+      <status>Entwurf</status>
     </Unfallanzeige>
   </container>
+
 
 
 PUT
@@ -126,7 +149,7 @@ We should get this document in our container
 We should now have 3 objects in our container!
 
   >>> len(root['uaz'])
-  3 
+  3
 
 An Invalid uaz_xml file!
 
@@ -165,7 +188,7 @@ An invariant uaz_xml file
 
 import grok
 import uvcsite.tests
-from uvcsite.content import ProductFolder, IContent, Content, schema, name, contenttype 
+from uvcsite.content import ProductFolder, IContent, Content, schema, name, contenttype
 from zope.schema import TextLine, Int
 from zope.interface import Invalid, invariant
 from dolmen import content
@@ -174,7 +197,7 @@ from dolmen import content
 class IUnfallanzeige(IContent):
     name = TextLine(title = u"Name", max_length=20)
     age = Int(title = u"Int")
- 
+
     @invariant
     def no_sample(unfallanzeige):
         if unfallanzeige.name == "hans" and unfallanzeige.age == 10:

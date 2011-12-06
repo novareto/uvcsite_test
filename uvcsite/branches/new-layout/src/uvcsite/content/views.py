@@ -26,13 +26,9 @@ from zeam.form.base.interfaces import ISimpleForm
 class Index(TablePage):
     grok.title(u'Übersicht')
     grok.name('index')
-    grok.implements(IFolderListingTable) 
+    grok.implements(IFolderListingTable)
     grok.context(IProductFolder)
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
-
-    @property
-    def title(self):
-        return self.context.getContentName()
 
     description = u"Hier finden Sie alle Dokumente dazu."
 
@@ -40,7 +36,13 @@ class Index(TablePage):
     cssClassEven = u'even'
     cssClassOdd = u'odd'
 
-    def update(self): 
+    sortOnId = "table-modified-100"
+
+    @property
+    def title(self):
+        return self.context.getContentName()
+
+    def update(self):
         items = self.request.form.get('table-checkBox-0-selectedItems')
         if items and self.request.has_key('form.button.delete'):
             if isinstance(items, (str, unicode)):
@@ -72,7 +74,7 @@ class ExtraViewsViewlet(ContextualActions):
     grok.require("zope.Public")
 
     #menu_factory = menus.ExtraViews
-    menu_factory = object() 
+    menu_factory = object()
 
     def update(self):
         MenuViewlet.update(self)
@@ -110,7 +112,7 @@ class Add(uvcsite.AddForm):
 
     @property
     def label(self):
-        return self.context.getContentName() 
+        return self.context.getContentName()
 
     description = u"Bitte füllen sie die Eingabeform"
 

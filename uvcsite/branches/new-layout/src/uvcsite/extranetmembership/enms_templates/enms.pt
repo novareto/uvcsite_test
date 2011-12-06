@@ -28,7 +28,7 @@
           </td>
       </tr>
       <tr>
-        <td colspan="2"> 
+        <td colspan="2" id="create_button"> 
          <a href="" 
             i18n:translate=""
             tal:attributes="href string:${url}/enmscreateuser">

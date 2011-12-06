@@ -29,7 +29,7 @@ grok.templatedir('templates')
 
 def setup_pau_dolmen(PAU):
     PAU.authenticatorPlugins = ('principals', )
-    PAU.credentialsPlugins = ("cookies", "No Challenge if Authenticated")
+    PAU.credentialsPlugins = ("cookies", "Zope Realm Basic-Auth", "No Challenge if Authenticated")
 
 
 class Icons(grok.DirectoryResource):

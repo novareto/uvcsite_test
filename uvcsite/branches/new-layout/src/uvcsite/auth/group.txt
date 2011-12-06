@@ -31,7 +31,7 @@ Setting up A View
   ...     grok.require('uvc.canView')
   ...
   ...     def render(self):
-  ...         return self.request.interaction.checkPermission('uvc.canView', self.context) 
+  ...         return self.request.interaction.checkPermission('uvc.canView', self.context)
 
   >>> grok_component('GroupView', GroupView)
   True
@@ -60,7 +60,7 @@ Setting up A View
   >>> request = TestRequest()
   >>> principal = AuthenticatedPrincipalFactory(adp, request)(Authenticator())
   >>> principal.groups
-  ['zope.Everybody', 'zope.Authenticated', 'uvc.AdHocGroup', 'uvc.Member']
+  ['zope.Everybody', 'zope.Authenticated', 'uvc.Member']
 
 
   >>> auth.getPrincipal('uvc.Member')
@@ -88,4 +88,4 @@ Setting up A View
   True
 
   >>> canAccess(groupview, '__call__')
-  True 
+  True

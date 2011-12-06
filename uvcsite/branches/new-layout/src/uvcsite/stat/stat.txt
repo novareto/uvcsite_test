@@ -17,7 +17,7 @@ Functional Doctest
   >>> stat_view = getMultiAdapter((uvcsite, TestRequest()), name="statistik")
   >>> stat_view.update()
   >>> stat_view.counter
-  {'HomeFolder': {'entwurf': 0, 'anzahl': 0, 'gesendet': 0}}
+  {'HomeFolder': {'entwurf': 0, 'verarbeitung': 0, 'anzahl': 0, 'gesendet': 0}, 'ProductFolders': {'anzahl': 0}}
 
 
   >>> from zope.app.homefolder.interfaces import IHomeFolderManager
@@ -31,7 +31,7 @@ Functional Doctest
 
   >>> stat_view.update()
   >>> stat_view.counter
-  {u'Adressbook': {'entwurf': 0, 'anzahl': 0, 'gesendet': 0}, 'HomeFolder': {'entwurf': 0, 'anzahl': 1, 'gesendet': 0}}
+  {u'Adressbook': {'entwurf': 0, 'verarbeitung': 0, 'anzahl': 0, 'gesendet': 0}, 'HomeFolder': {'entwurf': 0, 'verarbeitung': 0, 'anzahl': 1, 'gesendet': 0}, 'ProductFolders': {'anzahl': 1}}
 
 
   >>> from uvcsite.tests.simpleaddon import Contact
@@ -42,4 +42,4 @@ Functional Doctest
   >>> adrbook.add(Contact())
   >>> stat = stat_view.update()
   >>> stat_view.counter.get('Adressbook')
-  {'entwurf': 1, 'anzahl': 1, 'gesendet': 0}
+  {'entwurf': 1, 'verarbeitung': 0, 'anzahl': 1, 'gesendet': 0}

@@ -5,12 +5,14 @@
 import grok
 import uvcsite
 
+from zope.interface import Interface
 from uvcsite import uvcsiteMF as _
 from megrok.z3ctable import Values
 from megrok.z3ctable import TablePage
 from zope.traversing.browser import absoluteURL
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from uvc.layout import interfaces
+from uvcsite.homefolder.homefolder import Members
 
 
 class Index(TablePage):
@@ -36,7 +38,7 @@ class Index(TablePage):
     def getContentTypes(self):
         interaction = self.request.interaction
         for key, value in self.context.items():
-            if interaction.checkPermission('uvc.ViewContent', value):
+            if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
                 yield dict(href = absoluteURL(value, self.request),
                            name = key) 
 
@@ -57,10 +59,20 @@ class Index(TablePage):
         
 
 class DirectAccess(grok.Viewlet):
-    grok.view(Index)
+    grok.view(IFolderListingTable)
     grok.order(25)
-    grok.context(IMyHomeFolder)
+    grok.context(Interface)
     grok.viewletmanager(interfaces.IAboveContent)
+
+    def getContentTypes(self):
+        interaction = self.request.interaction
+        items = self.context.items()
+        if uvcsite.IProductFolder.providedBy(self.context):
+            items = self.context.__parent__.items()
+        for key, value in items:
+            if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
+                yield dict(href = absoluteURL(value, self.request),
+                           name = key) 
 
 
 class HomeFolderValues(Values):
@@ -77,3 +89,13 @@ class HomeFolderValues(Values):
             if interaction.checkPermission('uvc.ViewContent', productfolder):
                 results.extend(productfolder.values())
         return results
+
+
+class RedirectIndexMembers(grok.View):
+    grok.context(Members)
+    grok.name('index')
+
+    def render(self):
+        url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
+        self.redirect(url)
+
