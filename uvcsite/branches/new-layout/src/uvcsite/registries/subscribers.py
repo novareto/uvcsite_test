@@ -14,7 +14,7 @@ def check_and_enforce_new_registries(site):
         if not new_registry in sm.__bases__:
             # the registry is not yet here.
             # we ought to add it
-            sm.addSub(new_registry)
+            sm.__bases__ = (new_registry,) + tuple(sm.__bases__)
             print "We added %r as a registry base" % new_registry
         else:
             "%r is already a base" % new_registry
