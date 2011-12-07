@@ -17,7 +17,7 @@ grok.templatedir('templates')
 
 
 class StatistikMenu(uvcsite.MenuItem):
-    grok.context(Interface)
+    grok.context(uvcsite.IUVCSite)
     grok.title('Statistik')
     grok.require('zope.ManageSite')
     grok.viewletmanager(uvcsite.IFooter)

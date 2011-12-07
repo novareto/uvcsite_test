@@ -57,32 +57,6 @@ class Uvcsite(grok.Application, grok.Container):
                        setup=setup_pau_dolmen)
 
 
-class PersonalPanelView(uvcsite.Page):
-    """Page for Personal Properties
-    """
-    grok.order(35)
-    grok.require('zope.View')
-    grok.context(uvcsite.IMyHomeFolder)
-
-    grok.title(u"Meine Einstellungen")
-    title = _(u"Meine Einstellungen")
-    description = _(u"Hier werden Einstellungen zu"
-                     " Ihrem Benutzerprofil vorgenommen.")
-
-
-class PersonalPanelEntry(uvcsite.MenuItem):
-    grok.require('zope.View')
-    grok.order(35)
-
-    grok.title(u"Meine Einstellungen")
-    title = _(u"Meine Einstellungen")
-    grok.viewletmanager(uvcsite.IPersonalPreferences)
-    
-    @property
-    def action(self):
-        return uvcsite.IGetHomeFolderUrl(self.request).getURL() + 'personalpanelview'
-
-
 class NotFound(errors.NotFound):
     """Not Found Error View
     """
