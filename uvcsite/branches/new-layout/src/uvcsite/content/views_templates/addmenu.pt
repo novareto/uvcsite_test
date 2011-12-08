@@ -1,12 +1,10 @@
-<ul id="add-content" class="dropdown">
-  <li>
-   <a> Hinzufügen </a>
-  <ul>
+<li id="add-content" class="dropdown">
+  <a class="dropdown-toggle">Hinzufügen</a>
+  <ul class="dropdown-menu">
     <li>
-    <a href="add" tal:attributes="href view/getAddLinkUrl"> 
-      <span tal:content="view/getAddTitle"></span>
-    </a>
+      <a href="add" tal:attributes="href view/getAddLinkUrl"> 
+	<span tal:content="view/getAddTitle"></span>
+      </a>
     </li>
   </ul>
-  </li>
-</ul>
+</li>

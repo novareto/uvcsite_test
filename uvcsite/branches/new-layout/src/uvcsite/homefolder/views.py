@@ -62,7 +62,7 @@ class DirectAccess(grok.Viewlet):
     grok.view(IFolderListingTable)
     grok.order(25)
     grok.context(Interface)
-    grok.viewletmanager(interfaces.IAboveContent)
+    grok.viewletmanager(interfaces.ITabs)
 
     def getContentTypes(self):
         interaction = self.request.interaction

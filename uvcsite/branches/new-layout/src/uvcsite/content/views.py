@@ -103,7 +103,7 @@ class AddMenu(grok.Viewlet):
     grok.view(Index)
     grok.order(30)
     grok.context(IProductFolder)
-    grok.viewletmanager(interfaces.IAboveContent)
+    grok.viewletmanager(interfaces.ITabs)
 
 
 class Add(uvcsite.AddForm):

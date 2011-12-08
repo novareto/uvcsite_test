@@ -69,5 +69,7 @@ setup(name='uvcsite',
       uvcsite-ctl = grokcore.startup:zdaemon_controller
       [paste.app_factory]
       main = grokcore.startup:application_factory
+      [paste.filter_app_factory]
+      registries = uvcsite.registries:provide_registries
       """,
       )
