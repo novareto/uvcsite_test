@@ -32,7 +32,7 @@ class Index(TablePage):
 
     description = u"Hier finden Sie alle Dokumente dazu."
 
-    cssClasses = {'table': 'myTable tablesorter'}
+    cssClasses = {'table': 'zebra-striped tablesorter'}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
 

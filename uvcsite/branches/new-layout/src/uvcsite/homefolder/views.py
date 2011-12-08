@@ -21,7 +21,7 @@ class Index(TablePage):
     grok.implements(IFolderListingTable)
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
-    cssClasses = {'table': 'tablesorter myTable'}
+    cssClasses = {'table': 'tablesorter zebra-striped'}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
 
