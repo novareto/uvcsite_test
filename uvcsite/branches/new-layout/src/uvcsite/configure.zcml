@@ -32,7 +32,6 @@
   <include package="megrok.z3ctable" file="meta.zcml" />
   <include package="megrok.rendersource" />
   <include package="megrok.pagetemplate" file="meta.zcml" />
-  <include package="megrok.resourceviewlet" />
   
 
   <include package="uvc.layout" />
