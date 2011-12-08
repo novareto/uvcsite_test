@@ -32,6 +32,7 @@
   <include package="megrok.z3ctable" file="meta.zcml" />
   <include package="megrok.rendersource" />
   <include package="megrok.pagetemplate" file="meta.zcml" />
+  <include package="megrok.resourceviewlet" />
   
 
   <include package="uvc.layout" />
@@ -49,9 +50,9 @@
 
   <!--
   <includeOverrides package="uvc.skin" file="overrides.zcml" />
-  -->
   <include package="nva.skin"/>
     <browser:defaultSkin name="uvcskin" />
+  -->
 
   <browser:defaultView name="index.html" />
 
