@@ -13,7 +13,7 @@ from js.jquery_tools import jquery_tools
 from js.jquery_tablesorter import tablesorter
 
 
-UVCResources = Library('uvcsresource', 'library')
+UVCResources = Library('uvcsresource', 'static')
 
 Overlay = Resource(UVCResources, 'overlay.js', depends=[jquery_tools])
 
