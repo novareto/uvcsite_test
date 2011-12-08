@@ -1,15 +1,24 @@
-<div id="uvc_help"
-  tal:define="viewlets viewletmanager/getHelpPages"
-  tal:condition="viewlets">
-  <span:repeat tal:repeat="viewlet viewletmanager/getViewlets">
-    <span tal:replace="structure viewlet/render"/>
-   </span:repeat>
-   <d tal:repeat="hp viewlets">
-      <a style="float:right;" href id="help_button" rel="#toggler" tal:attributes="rel string:#${hp/__class__/__name__}"> 
-        <span tal:content="hp/name|string:Hilfe"/> 
-        </a>
-        <div class="toggler simple_overlay" tal:attributes="id hp/__class__/__name__" title="Hilfe">
-          <div id="effect" tal:content="structure hp/render"/>
-          </div>
-   </d>
-</div>
+<tal:help repeat="viewlet viewletmanager/viewlets">
+  <div class="modal hide fade"
+       tal:attributes="id string:modal-${viewlet/__class__/__name__}">
+    <div class="modal-header">
+      <a href="#" class="close">&times;</a>
+      <h3 tal:content="viewlet/name|string:Hilfe">Title</h3>
+    </div>
+    <div class="modal-body">
+      <p tal:replace="structure viewlet/render" />
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn primary">Read more</a>
+    </div>
+  </div>
+  
+  <div>
+    <button class="help-button btn"
+	    tal:attributes="data-controls-modal string:modal-${viewlet/__class__/__name__}"
+	    data-backdrop="static" class="btn" 
+	    data-keyboard="true" 
+	    tal:content="viewlet/name|string:Hilfe" /> 
+  </div>
+  
+</tal:help>
