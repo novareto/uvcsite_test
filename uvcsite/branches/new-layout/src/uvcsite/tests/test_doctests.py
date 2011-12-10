@@ -12,7 +12,7 @@ from zope.app.testing.functional import FunctionalDocFileSuite
 def test_suite():
     layer = uvcsite.tests.FunctionalLayer
     functional = FunctionalDocFileSuite(
-        'app.txt', 'api/companyinfo.txt', 'auth/handler.txt',
+        'app.txt', 'auth/handler.txt',
         'auth/masteruser.txt', 'content/columnoverride.txt',
         'content/container.txt', 'content/folderinit.txt', 'content/content.txt',
         'content/crudviews.txt', 'content/multiple_workflow.txt',
@@ -24,7 +24,7 @@ def test_suite():
         'workflow/workflow.txt', 'workflow/basic_workflow.txt',
         'content/ftests/api.py', 'content/ftests/homefoldertest.py', 
         'utils/beaker.txt', 'utils/roles.txt', 'utils/tales.txt',
-        'stat/stat.txt', 'adhoc/adhoc.txt', 'auth/group.txt', 'utils/pdf.txt',
+        'stat/stat.txt', 'auth/group.txt', 'utils/pdf.txt',
         'utils/xml.txt',
         package="uvcsite", 
         globs={'__name__': 'uvcsite'},

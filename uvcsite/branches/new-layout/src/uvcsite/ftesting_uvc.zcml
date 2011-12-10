@@ -7,5 +7,6 @@
 
   <include package="uvcsite" file="ftesting.zcml"/>
   <include package="uvcsite.tests" />
+  <include package="uvc.staticcontent" />
 
 </configure>

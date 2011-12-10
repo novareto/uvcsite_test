@@ -44,15 +44,6 @@ class IExtranetMember(Interface):
         """ Return the User Representation"""
 
 
-class IAdHocUserManagement(Interface):
-
-    def checkRule(mnr):
-        """ Check for Special Rules for Users"""
-
-    def getUser(mnr):
-        """ Return the specified User"""
-
-
 class IUserManagement(Interface):
 
     def getUser(mnr):

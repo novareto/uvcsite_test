@@ -79,17 +79,17 @@ Show the Viewlets:
    >>> for x in manager.viewlets:
    ...     print x
    <uvcsite.tests.views.LogoutMenu object at 0...>
-   <uvcsite.viewlets.staticmenuentries.UserName object at 0...>
-   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>
-   <uvcsite.app.PersonalPanelEntry object at 0...>
+   <uvc.staticcontent.staticmenuentries.UserName object at 0...>
+   <uvc.staticcontent.staticmenuentries.MeinOrdner object at 0...>
+   <uvc.staticcontent.staticmenuentries.PersonalPanelEntry object at 0...>
 
 We render the individual viewlets:
 
   >>> [x for x in manager.viewlets]
   [<uvcsite.tests.views.LogoutMenu object at 0...>, 
-   <uvcsite.viewlets.staticmenuentries.UserName object at 0...>, 
-   <uvcsite.viewlets.staticmenuentries.MeinOrdner object at 0...>, 
-   <uvcsite.app.PersonalPanelEntry object at 0...>]
+   <uvc.staticcontent.staticmenuentries.UserName object at 0...>, 
+   <uvc.staticcontent.staticmenuentries.MeinOrdner object at 0...>, 
+   <uvc.staticcontent.staticmenuentries.PersonalPanelEntry object at 0...>]
   >>> logout, username, meinordner, prefs  = manager.viewlets
 
 Username:

@@ -3,28 +3,7 @@
 
 import grok
 import uvcsite
-from uvcsite.extranetmembership.interfaces import IUserManagement, IAdHocUserManagement
-
-
-class ADHocUserManagement(grok.GlobalUtility):
-    """ Implementation of UserManagement for AdHocUsers
-    """
-    grok.implements(IAdHocUserManagement)
-
-    users = (
-       dict(mnr="0101010001", login="A99998888", passwort="passwort"),
-       dict(mnr="0101010001", login="A11112222", passwort="passwort"),
-        )
-
-    def getUser(self, login):
-        for user in self.users:
-            if login == user.get('login'):
-                return user
-        return None
-
-    def checkRule(self, login):
-        return True
-
+from uvcsite.extranetmembership.interfaces import IUserManagement
 
 
 class UserManagement(grok.GlobalUtility):

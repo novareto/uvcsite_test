@@ -6,7 +6,6 @@
 import grok
 import uvcsite
 
-from uvcsite.adhoc.interfaces import IAdHocPrincipal
 from uvcsite.extranetmembership.interfaces import IUserManagement
 from zope.pluggableauth.interfaces import IAuthenticatedPrincipalCreated
 from zope.app.homefolder.interfaces import IHomeFolder
@@ -18,8 +17,6 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 @grok.subscribe(IUserLoggedInEvent)
 def applyPermissionsForExistentCoUsers(factory):
     principal = factory.object
-    if IAdHocPrincipal.providedBy(principal):
-        return 
     homefolder = IHomeFolder(principal).homeFolder
     um = getUtility(IUserManagement)
     rollen = um.getUser(principal.id)['rollen']

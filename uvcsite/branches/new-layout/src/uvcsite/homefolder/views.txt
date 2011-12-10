@@ -61,7 +61,7 @@ Now we can render the Index Page of the Homefolder:
     <div class="page-content">
       <div class="batch"></div>
       <form action="http://127.0.0.1/hf" method="post">
-        <table class="tablesorter myTable">
+        <table class="tablesorter zebra-striped">
     <thead>
       <tr>
         <th class="checkBox"></th>
@@ -145,7 +145,7 @@ Let's check again if we now get **contenttypes** in our homefolder:
     <div class="page-content">
       <div class="batch"></div>
       <form action="http://127.0.0.1/hf" method="post">
-        <table class="tablesorter myTable">
+        <table class="tablesorter zebra-striped">
     <thead>
       <tr>
         <th class="checkBox"></th>

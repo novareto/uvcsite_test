@@ -21,7 +21,7 @@ from zope.pluggableauth.interfaces import ICredentialsPlugin
 from zope.pluggableauth.plugins.session import SessionCredentialsPlugin
 
 from interfaces import IUVCAuth, IMasterUser
-from uvcsite.extranetmembership.interfaces import IUserManagement, IAdHocUserManagement
+from uvcsite.extranetmembership.interfaces import IUserManagement
 
 from dolmen.authentication import UserLoginEvent
 from zope.event import notify
@@ -44,14 +44,6 @@ class UVCAuthenticator(grok.Model):
     grok.implements(IAuthenticatorPlugin)
     prefix = 'contact.principals.'
 
-    def isAdHocUser(self, login):
-        """ 
-        Returns True if the User is a AdHoc-User
-        """
-        if login.startswith('A'):
-            return True
-        return False
-
     def authenticateCredentials(self, credentials):
         """
         Check if username and password match
@@ -66,10 +58,7 @@ class UVCAuthenticator(grok.Model):
                 return
             login, password = credentials['login'], credentials['password']
 
-            if self.isAdHocUser(login):
-                utility = getUtility(IAdHocUserManagement)
-            else:
-                utility = getUtility(IUserManagement)
+            utility = getUtility(IUserManagement)
 
             if not utility.checkRule(login):
                 return 
@@ -85,8 +74,6 @@ class UVCAuthenticator(grok.Model):
                 if password != user.get('passwort'):
                     return
             user_id = login
-            #if self.isAdHocUser(login):
-            #    user_id = user.get('mnr')
             authenticated = session[USER_SESSION_KEY] = dict(
                 id = user_id,
                 title = login,

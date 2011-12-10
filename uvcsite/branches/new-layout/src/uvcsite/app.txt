@@ -65,6 +65,7 @@ Now log on as a user and look if we get the index page
    >>> browser.handleErrors = True 
    >>> browser.addHeader('Authorization', 'Basic user:user')
    >>> browser.open('http://localhost/app/index')
+
    >>> 'uvc.user' in browser.contents
    True
 

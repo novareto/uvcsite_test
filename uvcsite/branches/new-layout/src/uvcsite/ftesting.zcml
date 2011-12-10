@@ -44,5 +44,6 @@
 
   <grant role="zope.Manager" principal="zope.mgr" />
   <grant role="uvc.Editor" principal="uvc.uaz" />
-
+  <include package="uvc.tbskin" />
+  <include package="uvc.staticcontent" />
 </configure>
