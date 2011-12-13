@@ -91,11 +91,8 @@ class MyForm(uvcsite.Form):
         self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))
         double.need()
         DatePickerCSS.need()
-        uvcsite.Overlay.need()
         validation.need()
         DatePicker.need()
-        uvcsite.Tooltip.need()
-        uvcsite.Mask.need()
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):

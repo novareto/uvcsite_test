@@ -23,35 +23,19 @@
   <include package="z3c.schema2xml" />
 
   <include package="megrok.layout" />
-  <!--
-  <include package="megrok.navigation" />
-  <include package="megrok.navigation" file="meta.zcml" />
-  <include package="megrok.menu" />
-  -->
   <include package="megrok.z3ctable" />
   <include package="megrok.z3ctable" file="meta.zcml" />
   <include package="megrok.rendersource" />
   <include package="megrok.pagetemplate" file="meta.zcml" />
-  
+
+  <include package="grokcore.chameleon" />
 
   <include package="uvc.layout" />
-  <!--
-  <include package="uvc.skin" />
-  <include package="uvc.widgets" />
-  -->
-
   <include package="dolmen.beaker" />
   <include package="dolmen.menu" />
   <include package="dolmen.app.security" />
   <include package="dolmen.app.authentication" />
   <include package="dolmen.app.breadcrumbs" />
-
-
-  <!--
-  <includeOverrides package="uvc.skin" file="overrides.zcml" />
-  <include package="nva.skin"/>
-    <browser:defaultSkin name="uvcskin" />
-  -->
 
   <browser:defaultView name="index.html" />
 
