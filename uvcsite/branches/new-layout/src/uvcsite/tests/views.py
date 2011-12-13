@@ -114,3 +114,11 @@ class SortNumber(Column):
 
     def renderCell(self, item):
         return item
+
+class UAA(uvcsite.Altdaten):
+    grok.context(uvcsite.IUVCSite)
+    title = "HANS"
+
+    @property
+    def values(self):
+        return []

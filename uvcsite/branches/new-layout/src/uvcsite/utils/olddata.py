@@ -8,6 +8,8 @@ import time
 import datetime
 import uvcsite
 import xmlrpclib
+from grokcore.chameleon.components import ChameleonPageTemplateFile
+from grokcore.chameleon.components import PageTemplateFile
 
 from megrok.z3ctable import Column, table
 
@@ -17,10 +19,8 @@ grok.templatedir('templates')
 class Altdaten(uvcsite.TablePage):
     """ """
     grok.baseclass()
-    template = grok.PageTemplateFile('templates/altdaten.pt')
-    #grok.context(IUnfallanzeigenFolder)
+    template = ChameleonPageTemplateFile('templates/altdaten.cpt')
     grok.title(u'Alte Dokumente')
-    #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     cssClasses = {'table': 'tablesorter'}
     title = u"Alte Dokumente"
