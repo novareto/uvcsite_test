@@ -23,6 +23,8 @@ from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.i18n.interfaces import IUserPreferredLanguages
 from zope.publisher.interfaces.http import IHTTPRequest
 from zeam.form.ztk.widgets.choice import RadioFieldWidget
+from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
+
 
 grok.templatedir('templates')
 
@@ -93,7 +95,7 @@ class CustomDateWidgetExtractor(DateWidgetExtractor):
             try:
                 value = formatter.parse(value)
             except (ValueError, DateTimeParseError), error:
-                return None, u"Bitte überprüfen Sie das Datumsformat. (tt.mm.jjjj)" 
+                return None, u"Bitte überprüfen Sie das Datumsformat. (tt.mm.jjjj)"
         return value, error
 
 
@@ -120,6 +122,11 @@ class UvcRadioFieldWidget(RadioFieldWidget):
     """ Simple Override for removing <br> between choices
     """
     pass
+
+
+class UvcMultiChoiceFieldWidget(MultiChoiceFieldWidget):
+    """ Simple Override for removing <br> between choices
+    """
 
 
 class HAProxyCheck(grok.View):
