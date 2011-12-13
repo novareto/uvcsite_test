@@ -5,7 +5,7 @@
 import grok
 import uvcsite
 import megrok.layout
-from grokcore.chameleon.components import PageTemplateFile
+from grokcore.chameleon.components import ChameleonPageTemplateFile
 
 from zeam.form import base
 from dolmen.menu import menuentry
@@ -49,7 +49,7 @@ class ENMSCreateUser(uvcsite.Form):
 
     def updateForm(self):
         super(ENMSCreateUser, self).updateForm()
-        self.fieldWidgets.get('form.field.mnr').template = grok.PageTemplateFile('templates/mnr.pt')
+        self.fieldWidgets.get('form.field.mnr').template = ChameleonPageTemplateFile('templates/mnr.cpt')
 
     def getNextNumber(self, groups):
         all_azs = []
@@ -121,9 +121,9 @@ class ENMSUpdateUser(uvcsite.Form):
         pw = self.fieldWidgets.get('form.field.passwort')
         confirm = self.fieldWidgets.get('form.field.confirm')
 
-        mnr.template = grok.PageTemplateFile('templates/mnr.pt')
-        pw.template = grok.PageTemplateFile('templates/password.pt')
-        confirm.template = grok.PageTemplateFile('templates/password.pt')
+        mnr.template = ChameleonPageTemplateFile('templates/mnr.cpt')
+        pw.template = ChameleonPageTemplateFile('templates/password.cpt')
+        confirm.template = ChameleonPageTemplateFile('templates/password.cpt')
 
     @base.action(_(u"Bearbeiten"))
     def anlegen(self):
