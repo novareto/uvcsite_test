@@ -5,6 +5,7 @@
 import grok
 import uvcsite
 import megrok.layout
+from grokcore.chameleon.components import PageTemplateFile
 
 from zeam.form import base
 from dolmen.menu import menuentry
@@ -17,6 +18,8 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
 from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
 
+
+grok.templatedir('templates')
 
 class ENMS(megrok.layout.Page):
     grok.title('Mitbenutzerverwaltung')
