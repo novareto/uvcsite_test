@@ -8,10 +8,6 @@
   <grok:grok package=".forms" />
   <grok:grok package=".menustuff" />
   <grok:grok package=".fragen_andreas" />
-  <!--
-  <grok:grok package=".mobile_app" />
-  -->
-  <grok:grok package=".bgdp_app" />
   <grok:grok package=".zforms" />
 
 
