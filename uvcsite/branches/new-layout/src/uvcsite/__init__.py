@@ -4,18 +4,6 @@
 from zope.i18nmessageid import MessageFactory
 uvcsiteMF = MessageFactory('uvcsite')
 
-
-# MenuStuff
-from megrok.menu import SubMenuItem as Category
-from megrok.menu import menuitem as menu
-from megrok.menu import menuitem as topmenu
-from megrok.menu import menuitem as sectionmenu
-#from uvc.layout.menus import SubMenu as Category
-#from megrok.navigation import sitemenuitem as menu
-#from megrok.navigation import parentmenu as topmenu
-#from megrok.navigation import menuitem as sectionmenu
-
-
 import grok
 from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
     IContent, Content, schema, name)
@@ -26,8 +14,8 @@ from uvcsite.interfaces import *
 from uvcsite.utils.help import HelpPage
 from uvc.layout.slots.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
-from uvcsite.utils.dataviews import BasePDF, BaseXML 
-from uvcsite.utils.dataviews import BasePDF, BaseXML 
+from uvcsite.utils.dataviews import BasePDF, BaseXML
+from uvcsite.utils.dataviews import BasePDF, BaseXML
 from uvc.layout.forms import (Form, AddForm,
     SubForm, GroupForm, Wizard, Step)
 from uvc.layout import *
@@ -53,6 +41,7 @@ from dolmen.forms.base.utils import (
 
 #from uvcsite.utils.mail import send_mail
 from uvcsite.utils.olddata import Altdaten, PDF
+from uvcsite.utils.shorties import getHomeFolderUrl, getHomeFolder
 
 ### LOGGING
 import logging

@@ -16,7 +16,6 @@ from zope.dottedname.resolve import resolve
 from zope.security.interfaces import IPrincipal
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
 from zope.app.homefolder.interfaces import IHomeFolder
-from zope.traversing.browser.absoluteurl import  absoluteURL
 from zope.publisher.interfaces.browser import IBrowserRequest
 
 

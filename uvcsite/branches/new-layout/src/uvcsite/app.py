@@ -7,8 +7,6 @@ from dolmen.app.site import IDolmen
 from dolmen.app.layout import errors
 from zeam.form.ztk.widgets.date import DateWidgetExtractor, DateFieldWidget
 
-from uvcsite import menu
-from uvcsite import uvcsiteMF as _
 from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
 
@@ -31,7 +29,8 @@ grok.templatedir('templates')
 
 def setup_pau_dolmen(PAU):
     PAU.authenticatorPlugins = ('principals', )
-    PAU.credentialsPlugins = ("cookies", "Zope Realm Basic-Auth", "No Challenge if Authenticated")
+    PAU.credentialsPlugins = ("cookies",
+        "Zope Realm Basic-Auth", "No Challenge if Authenticated")
 
 
 class Icons(grok.DirectoryResource):
