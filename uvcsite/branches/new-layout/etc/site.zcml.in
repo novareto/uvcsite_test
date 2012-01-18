@@ -5,9 +5,6 @@
   <include package="uvcsite.tests" />
   <include package="uvc.tbskin" />
   <include package="uvc.staticcontent" />
-  <!--
-  <includeOverrides package="nva.sliteauth" file="overrides.zcml"/>
-  -->
 
       <principal id="zope.manager"
                  title="Manager"
