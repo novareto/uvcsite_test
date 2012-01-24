@@ -1,10 +1,12 @@
-<li class="dropdown">
-<a class="dropdown-toggle" href="#">Quick Navigation</a>
-<ul class="dropdown-menu">
-  <li tal:repeat="type viewlet.getContentTypes()" class="entry"> 
-  <a href="" tal:attributes="href type['href']"> 
-    <span tal:content="type['name']"> </span>
-  </a>
+<ul id="homefolder-contenttypes" class="dropdown">
+  <li>
+  <a  href="#">Quick Navigation</a>
+  <ul>
+    <li tal:repeat="type viewlet.getContentTypes()"> 
+    <a href="" tal:attributes="href type['href']"> 
+      <span tal:content="type['name']"> </span>
+    </a>
+    </li>
+  </ul>
   </li>
 </ul>
-</li>
