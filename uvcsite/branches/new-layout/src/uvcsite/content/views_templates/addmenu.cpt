@@ -1,4 +1,6 @@
-<ul id="add-content" class="dropdown">
+<li id="add-content" class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown">Hinzufügen <b class="caret"></b></a>
+<ul class="dropdown-menu">
   <li>
   <a class="dropdown-toggle">Hinzufügen</a>
   <ul class="dropdown-menu">
