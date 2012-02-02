@@ -80,6 +80,7 @@ class MyForm(uvcsite.Form):
 
     label = u"Beispielform"
     description = u"Beschreibung"
+    legend = "LEGENDE"
 
     def validateData(self, fields, data, errors):
         super(MyForm, self).validateData(fields, data, errors)
