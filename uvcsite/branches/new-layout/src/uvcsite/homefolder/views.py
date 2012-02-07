@@ -13,6 +13,12 @@ from zope.traversing.browser import absoluteURL
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from uvc.layout import interfaces
 from uvcsite.homefolder.homefolder import Members
+from megrok.pagetemplate import PageTemplate
+from zope.component import getMultiAdapter
+from zope.pagetemplate.interfaces import IPageTemplate
+
+
+grok.templatedir('templates')
 
 
 class Index(TablePage):
@@ -58,7 +64,7 @@ class Index(TablePage):
         super(Index, self).update()
         
 
-class DirectAccess(grok.Viewlet):
+class DirectAccessViewlet(grok.Viewlet):
     grok.view(IFolderListingTable)
     grok.order(25)
     grok.context(Interface)
@@ -73,6 +79,14 @@ class DirectAccess(grok.Viewlet):
             if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
                 yield dict(href = absoluteURL(value, self.request),
                            name = key) 
+
+    def render(self):
+        template = getMultiAdapter((self, self.request), IPageTemplate)
+        return template()
+
+
+class DirectAccess(PageTemplate):
+    grok.view(DirectAccessViewlet)
 
 
 class HomeFolderValues(Values):
