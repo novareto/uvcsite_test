@@ -3,6 +3,7 @@
 # cklinger@novareto.de
 
 import grok
+import uvcsite
 
 from uvcsite import uvcsiteMF as _
 from megrok.z3ctable import (table,
@@ -83,8 +84,8 @@ class ModifiedColumn(Column):
     table(IFolderListingTable)
 
     def renderCell(self, item):
-        modified = IZopeDublinCore(item).modified + timedelta(hours=2)
-        return modified.strftime('%d.%m.%Y %H:%M')
+        modified = IZopeDublinCore(item).modified 
+        return uvcsite.fmtDateTime(modified)
 
 
 class StateColumn(GetAttrColumn):

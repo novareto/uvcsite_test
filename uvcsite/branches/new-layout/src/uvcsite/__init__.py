@@ -41,7 +41,7 @@ from dolmen.forms.base.utils import (
 
 #from uvcsite.utils.mail import send_mail
 from uvcsite.utils.olddata import Altdaten, PDF
-from uvcsite.utils.shorties import getHomeFolderUrl, getHomeFolder
+from uvcsite.utils.shorties import fmtDateTime, getHomeFolderUrl, getHomeFolder
 
 ### LOGGING
 import logging

@@ -3,6 +3,7 @@
 # cklinger@novareto.de
 
 
+import pytz
 import uvcsite
 
 from zope.app.homefolder.interfaces import IHomeFolder
@@ -18,3 +19,8 @@ def getHomeFolder(request):
 
 def getHomeFolderUrl(request, suffix=""):
     return uvcsite.IGetHomeFolderUrl(request).getURL(type=suffix)
+
+
+def fmtDateTime(object, fmt="%d.%m.%Y %H:%M:%S"):
+    tz = pytz.timezone("Europe/Berlin")
+    return object.astimezone(tz).strftime(fmt)
