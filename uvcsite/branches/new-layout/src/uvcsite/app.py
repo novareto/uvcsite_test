@@ -27,7 +27,7 @@ from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
 grok.templatedir('templates')
 
 
-def setup_pau_dolmen(PAU):
+def setup_pau(PAU):
     PAU.authenticatorPlugins = ('principals', )
     PAU.credentialsPlugins = ("cookies",
         "Zope Realm Basic-Auth", "No Challenge if Authenticated")
@@ -55,7 +55,7 @@ class Uvcsite(grok.Application, grok.Container):
     grok.local_utility(PluggableAuthentication,
                        IAuthentication,
                        public=True,
-                       setup=setup_pau_dolmen)
+                       setup=setup_pau)
 
 
 class NotFound(errors.NotFound):

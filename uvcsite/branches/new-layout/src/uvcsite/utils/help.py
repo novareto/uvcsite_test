@@ -5,7 +5,9 @@
 import grok
 import uvcsite
 
+from megrok.pagetemplate import PageTemplate
 from zope import interface, component, viewlet
+from zope.pagetemplate.interfaces import IPageTemplate
 
 grok.templatedir('templates')
 
@@ -29,6 +31,14 @@ class HelpManager(grok.ViewletManager):
             if not IHelpPage.providedBy(viewlet):
                 rc.append(viewlet)
         return rc 
+
+    def render(self):
+        template = component.getMultiAdapter((self, self.request), IPageTemplate)
+        return template()
+
+
+class HelpManagerTemplate(PageTemplate):
+    grok.view(HelpManager)
 
 
 class Help(grok.Viewlet):

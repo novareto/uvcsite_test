@@ -26,7 +26,7 @@ def test_suite():
         'content/ftests/api.py', 'content/ftests/homefoldertest.py',
         'utils/beaker.txt', 'utils/roles.txt', 'utils/tales.txt',
         'stat/stat.txt', 'auth/group.txt', 'utils/pdf.txt',
-        'utils/xml.txt', 'stat/event.txt', 'utils/shorties.txt',
+        'utils/xml.txt', 'utils/shorties.txt',
         package="uvcsite",
         globs={'__name__': 'uvcsite'},
         optionflags=doctest.ELLIPSIS |

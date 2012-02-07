@@ -21,6 +21,11 @@ from zeam.form import base
 from megrok.z3ctable import TablePage
 from dolmen.app.layout.viewlets import ContextualActions
 from zeam.form.base.interfaces import ISimpleForm
+from megrok.pagetemplate import PageTemplate
+from zope.pagetemplate.interfaces import IPageTemplate
+
+
+grok.templatedir('templates')
 
 
 class Index(TablePage):
@@ -99,12 +104,19 @@ class ExtraViewsViewlet(ContextualActions):
                 }
 
 
-class AddMenu(grok.Viewlet):
+class AddMenuViewlet(grok.Viewlet):
     grok.view(Index)
     grok.order(30)
     grok.context(IProductFolder)
     grok.viewletmanager(interfaces.ITabs)
 
+    def render(self):
+        template = getMultiAdapter((self, self.request), IPageTemplate)
+        return template()
+
+
+class AddMenu(PageTemplate):
+    grok.view(AddMenuViewlet)
 
 class Add(uvcsite.AddForm):
     grok.context(IProductFolder)
