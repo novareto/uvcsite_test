@@ -69,6 +69,18 @@ class Index(uvcsite.Page):
         self.flash('Fehlermeldung...', 'error')
         self.flash('Warnung...', 'warning')
 
+from grokcore.chameleon.components import ChameleonPageTemplateFile
+class SelectiveIndex(uvcsite.Page):
+    grok.title('Selective Index')
+    grok.context(IUVCSite)
+    grok.require('zope.View')
+ 
+    template = ChameleonPageTemplateFile('views_templates/index.cpt')
+
+    def update(self):
+        if self.request.principal.id == "0202020002":
+            self.template = ChameleonPageTemplateFile('views_templates/index2.cpt')
+
 
 class DefaultSecurity(uvcsite.Page):
     grok.title("DefaultSecurity")

@@ -8,6 +8,7 @@ import uvc.layout
 import zope.schema
 import zope.interface
 import zope.component
+import zope.security
 
 from dolmen import menu
 from uvc.validation import validation
@@ -44,6 +45,13 @@ class AdressBook(uvcsite.ProductFolder):
     grok.title('Adressbuch')
     grok.description('Adressbuch ...')
     uvcsite.contenttype(Contact)
+
+    @property
+    def excludeFromNav(self):
+        principal = zope.security.management.getInteraction().participations[0].principal
+        if principal.id == "0202020002":
+            return True
+        return False
 
 
 class StatMenu(uvcsite.MenuItem):
@@ -97,6 +105,11 @@ class AddMenuEntry(uvcsite.MenuItem):
     def action(self):
         adapter = zope.component.getMultiAdapter((self.request.principal, self.request), uvcsite.IGetHomeFolderUrl)
         return adapter.getAddURL(Contact)
+
+    def available(self):
+        if self.request.principal.id == "0202020002":
+            return False
+        return True
 
 
 def kopf(c):
