@@ -15,7 +15,7 @@ from zope.component import getUtilitiesFor
 from uvcsite.content import IProductFolder, IUVCApplication
 
 
-@grok.subscribe(zope.app.appsetup.interfaces.IDatabaseOpenedWithRootEvent)
+#@grok.subscribe(zope.app.appsetup.interfaces.IDatabaseOpenedWithRootEvent)
 def handle_init(event):
     connection = event.database.open()
     for object in connection.root()[ZopePublication.root_name].values():
@@ -36,10 +36,25 @@ def handle_init(event):
     transaction.commit()
     connection.close()
 
+from uvcsite.content.interfaces import IProductRegistration
+from zope.component import getAdapters
+from zope.pluggableauth.factories import Principal
+
+
+def createProductFolders(principal=None):
+    request = zope.security.management.getInteraction().participations[0]
+    principal = request.principal
+    for name, pr in getAdapters((principal, request), IProductRegistration):
+        uvcsite.log('Add Productfolders %s to Homefolder: %s' % (name, principal.id))
+        pr.createInProductFolder()
+
 
 @grok.subscribe(uvcsite.IMyHomeFolder, grok.IObjectAddedEvent)
 def handle_homefolder(homefolder, event):
-    uvcsite.log('Add Productfolders to Homefolder: %s' % homefolder.__name__)
-    productfolders = list(getUtilitiesFor(IProductFolder))
-    for name, class_ in productfolders:
-        homefolder[name] = class_()
+    principal = Principal(homefolder.__name__, homefolder.__name__)
+    createProductFolders(principal)
+#    uvcsite.log('Add Productfolders to Homefolder: %s' % homefolder.__name__)
+#    productfolders = list(getUtilitiesFor(IProductFolder))
+#    for name, class_ in productfolders:
+#        homefolder[name] = class_()
+

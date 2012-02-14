@@ -4,10 +4,10 @@ Functional Doctest
 :Test-Layer: functional
 
   >>> from uvcsite.app import Uvcsite 
+  >>> from uvcsite.tests import startInteraction, endInteraction
   >>> from zope.component.hooks import setSite
-  >>> uvcsite = Uvcsite()
   >>> root = getRootFolder()
-  >>> root['app'] = uvcsite 
+  >>> root['app'] = uvcsite = Uvcsite()
   >>> setSite(uvcsite)
 
 
@@ -19,6 +19,7 @@ Functional Doctest
   >>> stat_view.counter
   {'HomeFolder': {'entwurf': 0, 'verarbeitung': 0, 'anzahl': 0, 'gesendet': 0}, 'ProductFolders': {'anzahl': 0}}
 
+  >>> request = startInteraction('lars')
 
   >>> from zope.app.homefolder.interfaces import IHomeFolderManager
   >>> utility = getUtility(IHomeFolderManager)
@@ -43,3 +44,5 @@ Functional Doctest
   >>> stat = stat_view.update()
   >>> stat_view.counter.get('Adressbook')
   {'entwurf': 1, 'verarbeitung': 0, 'anzahl': 1, 'gesendet': 0}
+
+  >>> endInteraction()

@@ -66,6 +66,9 @@ Is the MembersContainer the one we specified?
 
 Try to add the user lars. this should work because autoassigment is true
 
+   >>> from uvcsite.tests import startInteraction, endInteraction
+   >>> request = startInteraction('lars')
+
    >>> utility.assignHomeFolder('lars')
    >>> 'lars' in utility.homeFolderBase
    True
@@ -94,3 +97,5 @@ PrincipalRoleMap with settings for lars
    >>> rolemap = IPrincipalRoleMap(homefolder) 
    >>> rolemap.getPrincipalsAndRoles()
    [(u'uvc.MasterUser', 'lars', PermissionSetting: Allow), (u'uvc.Editor', 'lars', PermissionSetting: Allow), (u'uvc.User', 'lars', PermissionSetting: Allow)] 
+
+   >>> endInteraction()

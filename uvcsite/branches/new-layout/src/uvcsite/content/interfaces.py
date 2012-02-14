@@ -28,3 +28,10 @@ class IContent(IContent):
         title = u"Titel",
         description = u"Bitte geben Sie einen Titel an.",
         required = True)
+
+
+class IProductRegistration(Interface):
+    """ Registry for uvcsite.Content objects
+    """
+
+

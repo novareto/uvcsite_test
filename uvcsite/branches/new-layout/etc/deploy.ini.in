@@ -21,7 +21,7 @@ bottom = true
 versioning = true
 minified = true
 rollup = true
-recompute_hashes = false
+recompute_hashes = true 
 
 
 # Logging configuration

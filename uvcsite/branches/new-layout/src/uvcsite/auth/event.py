@@ -12,12 +12,14 @@ from zope.app.homefolder.interfaces import IHomeFolder
 from zope.component import getUtility
 from dolmen.authentication.events import IUserLoggedInEvent
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
+from uvcsite.content.folderinit import createProductFolders
 
 
 @grok.subscribe(IUserLoggedInEvent)
 def applyPermissionsForExistentCoUsers(factory):
     principal = factory.object
     homefolder = IHomeFolder(principal).homeFolder
+    createProductFolders()
     um = getUtility(IUserManagement)
     rollen = um.getUser(principal.id)['rollen']
     if homefolder.__name__ != principal.id:

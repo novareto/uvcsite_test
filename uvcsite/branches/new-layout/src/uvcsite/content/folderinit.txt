@@ -51,6 +51,9 @@ Creating product folders in a new home folder
 
 We create a HomeFolder for lars:
 
+  >>> from uvcsite.tests import startInteraction
+  >>> request = startInteraction('lars')
+
   >>> utility.assignHomeFolder('lars')
   >>> 'lars' in utility.homeFolderBase
   True
@@ -71,11 +74,16 @@ In order to see the effect, we need to empty the home folder first:
   >>> list(lars)
   []
 
-  >>> import zope.app.appsetup.interfaces
-  >>> grok.notify(zope.app.appsetup.interfaces.DatabaseOpenedWithRoot(db))
+  >>> from dolmen.authentication import UserLoginEvent
+
+  >>> grok.notify(UserLoginEvent(request.principal))
 
 After firing the event, all the product folders should be there again in the
 home folder:
 
   >>> list(lars)
   [u'Adressbook']
+
+  >>> import zope.security
+  >>> zope.security.management.endInteraction()
+

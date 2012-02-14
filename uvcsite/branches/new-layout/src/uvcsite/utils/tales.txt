@@ -14,18 +14,8 @@ Tales Convinience Adapter
    >>> root['app'] = app = Uvcsite()
    >>> setSite(app)
 
-
-   >>> class Christian(object):
-   ...     grok.implements(zope.security.interfaces.IPrincipal)
-   ...
-   ...     id = "christian"
-   ...     title = "Christian Klinger"
-   ...     description = "The User Christian"
-
-
-   >>> christian = Christian()
-   >>> request = TestRequest()
-   >>> request.setPrincipal(christian)   
+   >>> from uvcsite.tests import startInteraction, endInteraction
+   >>> request = startInteraction('christian')
 
    >>> from zope.component import getAdapter
    >>> uvcsite_tales = getAdapter(request, IPathAdapter, u'uvcsite')
@@ -34,3 +24,5 @@ Tales Convinience Adapter
 
    >>> uvcsite_tales.homefolder
    'http://127.0.0.1/app/members/christian/'
+
+   >>> endInteraction()

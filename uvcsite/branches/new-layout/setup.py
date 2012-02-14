@@ -20,7 +20,6 @@ setup(name='uvcsite',
       zip_safe=False,
       install_requires=[
           'docutils',
-          'cromlech.sqlalchemy',
           'dolmen.app.site',
           'dolmen.app.layout',
           'dolmen.beaker',

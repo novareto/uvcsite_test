@@ -17,6 +17,9 @@ Erstellen einer Site
   >>> root['app'] = app = Uvcsite()
   >>> setSite(app)
 
+  >>> from uvcsite.tests import startInteraction, endInteraction
+  >>> request = startInteraction('christian')
+
   >>> class Christian(object):
   ...     grok.implements(zope.security.interfaces.IPrincipal)
   ...
@@ -113,3 +116,5 @@ Unteruser
 
   >>> prm_abook.getRolesForPrincipal('christian-01')
   [('uvc.Editor', PermissionSetting: Allow)]
+
+  >>> endInteraction()

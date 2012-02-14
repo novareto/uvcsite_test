@@ -94,22 +94,26 @@ def handle_save(obj, event):
         uvcsite.log('simpleaddon', e.__doc__)
     print "AfterSaveEvent"
 
+from uvcsite.content.productregistration import ProductRegistration
+from uvcsite.content.directive import productfolder
+from uvcsite.content.productregistration import ProductMenuItem
 
-class AddMenuEntry(uvcsite.MenuItem):
+class AddMenuEntry(ProductMenuItem):
     grok.name('Buddy erstellen')
     grok.title('Buddy erstellen')
     grok.context(zope.interface.Interface)
     grok.viewletmanager(uvcsite.IGlobalMenu)
 
     @property
-    def action(self):
-        adapter = zope.component.getMultiAdapter((self.request.principal, self.request), uvcsite.IGetHomeFolderUrl)
-        return adapter.getAddURL(Contact)
+    def reg_name(self):
+        return "adressbook"
 
-    def available(self):
-        if self.request.principal.id == "0202020002":
-            return False
-        return True
+
+class Addressbook(ProductRegistration):
+    grok.name('adressbook')
+    grok.title('Adressbuch')
+    grok.description('Beschreibung Entgeltnachweis')
+    productfolder('uvcsite.tests.simpleaddon.AdressBook')
 
 
 def kopf(c):

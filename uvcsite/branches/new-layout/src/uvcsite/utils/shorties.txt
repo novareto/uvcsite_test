@@ -5,6 +5,7 @@ Shourcut Helpers UVCSite
 
   >>> import uvcsite
   >>> from uvcsite.app import Uvcsite
+  >>> from uvcsite.tests import startInteraction, endInteraction
   >>> from zope.component.hooks import setSite
   >>> from zope.publisher.browser import TestRequest
   >>> from zope.pluggableauth.factories import Principal
@@ -13,12 +14,9 @@ Shourcut Helpers UVCSite
   >>> root['app'] = app = Uvcsite()
   >>> setSite(app)
 
-  >>> christian = Principal('christian')
-  >>> christian
+  >>> request = startInteraction('christian')
+  >>> request.principal 
   Principal('christian')
-
-  >>> request = TestRequest()
-  >>> request.setPrincipal(christian)
 
 getHomeFolder
 
@@ -33,3 +31,6 @@ getHomeFolderUrl
 
   >>> uvcsite.getHomeFolderUrl(request, 'Unfallanzeigen')
   'http://127.0.0.1/app/members/christian/Unfallanzeigen'
+
+
+  >>> endInteraction()

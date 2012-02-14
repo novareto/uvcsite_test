@@ -89,3 +89,5 @@ Setting up A View
 
   >>> canAccess(groupview, '__call__')
   True
+
+  >>> zope.security.management.endInteraction()

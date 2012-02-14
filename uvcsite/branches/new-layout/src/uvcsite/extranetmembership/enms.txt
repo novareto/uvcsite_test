@@ -21,15 +21,21 @@ Setup
    >>> import grok
 
    >>> unfallanzeigen = grok.Container()
+   >>> from uvcsite.tests import startInteraction, endInteraction
+   >>> request = startInteraction('uvc.user')
+
 
    >>> from zope.app.homefolder.interfaces import IHomeFolderManager
    >>> utility = getUtility(IHomeFolderManager)
    >>> utility
    <uvcsite.homefolder.homefolder.PortalMembership object at ...>
 
+
    >>> hf = utility.getHomeFolder('uvc.user')
    >>> print hf
    <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+
+   >>> endInteraction()
 
    >>> hf['unfallanzeige'] = unfallanzeigen
 
@@ -41,6 +47,7 @@ Now log on as a user and look if we get the index page
 
    >>> from zope.testbrowser.testing import Browser
    >>> browser = Browser()
+   >>> browser.handleErrors = False
 
    >>> browser.addHeader('Authorization', 'Basic 0101010001:user')
    >>> browser.open('http://localhost/app/')

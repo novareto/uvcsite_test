@@ -85,6 +85,20 @@ UVCBrowserLayer = BaseUVCBrowserLayer(
     product_config=product_config,
     )
 
+import zope.security
+from zope.publisher.browser import TestRequest
+from zope.pluggableauth.factories import Principal
+
+
+def startInteraction(principal, request=None):
+    if not request:
+        request = TestRequest()
+    request.setPrincipal(Principal(principal))
+    zope.security.management.newInteraction(request)
+    return request
+
+def endInteraction():
+    zope.security.management.endInteraction()
 
 
 #

@@ -10,3 +10,10 @@ class contenttype(martian.Directive):
     store = martian.ONCE
     default = None
     validate = martian.validateClass
+
+
+class productfolder(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
+    default = None
+    validate = martian.validateText

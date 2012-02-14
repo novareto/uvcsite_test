@@ -7,27 +7,23 @@ Functional Doctests on homefolder views
 Setup
 -----
 
+  >>> import uvcsite
   >>> from uvcsite.app import Uvcsite
   >>> root = getRootFolder()
+  >>> from uvcsite.tests import startInteraction, endInteraction
+  >>> request = startInteraction('lars')
 
   >>> from uvcsite.homefolder.homefolder import HomeFolder
-  >>> homefolder = HomeFolder()
-  >>> homefolder
-  <uvcsite.homefolder.homefolder.HomeFolder object at ...> 
+  >>> root['app'] = Uvcsite()
+  >>> from zope.component.hooks import setSite
+  >>> setSite(root['app'])
 
-  >>> root['hf'] = homefolder
+  >>> homefolder = uvcsite.getHomeFolder(request)
 
   >>> import zope.interface
-  >>> import zope.security.interfaces
-  >>> class DummyPrincipal(object):
-  ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
-  ...
-  ...     id = "someuser"
-  ...     title = "Some User's Name"
-  ...     description = "A User"
 
   >>> from zope.securitypolicy.interfaces import IPrincipalRoleManager
-  >>> prm = IPrincipalRoleManager(root['hf'])
+  >>> prm = IPrincipalRoleManager(homefolder)
   >>> prm.assignRoleToPrincipal('uvc.Editor', 'someuser')
 
 TableView
@@ -37,9 +33,6 @@ TableView
   >>> from zope.publisher.browser import TestRequest
   >>> import zope.security.management
 
-  >>> request = TestRequest()
-  >>> request.setPrincipal(DummyPrincipal())
-  >>> zope.security.management.newInteraction(request)
 
   >>> index = getMultiAdapter((homefolder, request), name="index")
   >>> index
@@ -49,18 +42,18 @@ TableView
 We have one folder inside our homefolder.
 
   >>> list(index.getContentTypes())
-  [{'href': 'http://127.0.0.1/hf/Adressbook', 'name': u'Adressbook'}]
+  [{'href': 'http://127.0.0.1/app/members/lars/Adressbook', 'name': u'Adressbook'}]
 
 Now we can render the Index Page of the Homefolder: 
 
   >>> index.update()
   >>> print index.render()
   <div id="homefolder">
-    <h1>Some User's Name</h1>
+    <h1></h1>
     <p class="description">Hier werden Ihre Dokumente abgelegt</p>
     <div class="page-content">
       <div class="batch"></div>
-      <form action="http://127.0.0.1/hf" method="post">
+      <form action="http://127.0.0.1/app/members/lars" method="post">
         <table class="tablesorter table table-striped table-bordered table-condensed">
     <thead>
       <tr>
@@ -133,18 +126,18 @@ Now call the view with some contents...
 Let's check again if we now get **contenttypes** in our homefolder:
 
   >>> [x for x in index.getContentTypes()]
-  [{'href': 'http://127.0.0.1/hf/Adressbook', 'name': u'Adressbook'}, {'href': 'http://127.0.0.1/hf/personcontainer', 'name': u'personcontainer'}]
+  [{'href': 'http://127.0.0.1/app/members/lars/Adressbook', 'name': u'Adressbook'}, {'href': 'http://127.0.0.1/app/members/lars/personcontainer', 'name': u'personcontainer'}]
 
   [u'personcontainer']
 
   >>> index.update()
   >>> print index.render()
   <div id="homefolder">
-    <h1>Some User's Name</h1>
+    <h1></h1>
     <p class="description">Hier werden Ihre Dokumente abgelegt</p>
     <div class="page-content">
       <div class="batch"></div>
-      <form action="http://127.0.0.1/hf" method="post">
+      <form action="http://127.0.0.1/app/members/lars" method="post">
         <table class="tablesorter table table-striped table-bordered table-condensed">
     <thead>
       <tr>
@@ -159,10 +152,10 @@ Let's check again if we now get **contenttypes** in our homefolder:
     <tbody>
       <tr class="even">
         <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="hans"  /></td>
-        <td><a href="http://127.0.0.1/hf/personcontainer/hans/edit"></a></td>
+        <td><a href="http://127.0.0.1/app/members/lars/personcontainer/hans/edit"></a></td>
         <td>Person</td>
         <td>Entwurf</td>
-        <td>someuser</td>
+        <td>lars</td>
         <td>...</td>
       </tr>
     </tbody>
@@ -179,5 +172,5 @@ Delete Item Form
   >>> 'hans' in homefolder['personcontainer']
   True
 
-  >>> zope.security.management.endInteraction()
+  >>> endInteraction()
 
