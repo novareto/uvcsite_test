@@ -16,10 +16,21 @@ from zope.app.homefolder.interfaces import IHomeFolderManager
 from uvcsite.content.meta import default_name
 
 
+def getAllProductRegistrations():
+    request = zope.security.management.getInteraction().participations[0] 
+    principal = request.principal
+    #return getAdapters((principal, request), IProductRegistration)
+    return sorted(getAdapters((principal, request), IProductRegistration), key=lambda k: grok.order.bind(k[1]))
+
+
 def getProductRegistrations():
     request = zope.security.management.getInteraction().participations[0] 
     principal = request.principal
-    return dict(getAdapters((principal, request), IProductRegistration))
+    rc = []
+    for key, value in getAdapters((principal, request), IProductRegistration):
+        if value.available():
+            rc.append({key: value}) 
+    return sorted(rc, key=lambda k: grok.order.bind(k.values()[0]))
 
 
 class ProductRegistration(grok.MultiAdapter):
@@ -36,8 +47,8 @@ class ProductRegistration(grok.MultiAdapter):
 
     @property
     def folderURI(self):
-        grok.name.bind(get_default=default_name).get(self.productfolder)
-        return self.name.capitalize()
+        pfn = grok.name.bind(get_default=default_name).get(self.productfolder)
+        return pfn.capitalize()
 
     @property
     def linkname(self):
@@ -56,6 +67,10 @@ class ProductRegistration(grok.MultiAdapter):
 
     def action(self):
         return "%s/%s/@@add" % (uvcsite.getHomeFolderUrl(self.request), self.folderURI)
+
+    @property
+    def inNav(self):
+        return self.available()
 
     def createInProductFolder(self):
         homefolder = uvcsite.getHomeFolder(self.request)

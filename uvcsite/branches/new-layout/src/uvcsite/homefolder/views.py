@@ -16,6 +16,7 @@ from uvcsite.homefolder.homefolder import Members
 from megrok.pagetemplate import PageTemplate
 from zope.component import getMultiAdapter
 from zope.pagetemplate.interfaces import IPageTemplate
+from uvcsite.content.productregistration import getAllProductRegistrations
 
 
 grok.templatedir('templates')
@@ -72,13 +73,12 @@ class DirectAccessViewlet(grok.Viewlet):
 
     def getContentTypes(self):
         interaction = self.request.interaction
-        items = self.context.items()
-        if uvcsite.IProductFolder.providedBy(self.context):
-            items = self.context.__parent__.items()
-        for key, value in items:
-            if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
-                yield dict(href = absoluteURL(value, self.request),
-                           name = key) 
+        hf = uvcsite.getHomeFolder(self.request)
+        for key, value in getAllProductRegistrations():
+            pf = hf[value.folderURI]
+            if interaction.checkPermission('uvc.ViewContent', pf) and getattr(value, 'inNav', True):
+                yield dict(href = absoluteURL(pf, self.request),
+                           name = value.name) 
 
     def render(self):
         template = getMultiAdapter((self, self.request), IPageTemplate)

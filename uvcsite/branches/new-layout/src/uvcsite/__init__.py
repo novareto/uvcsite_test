@@ -6,7 +6,7 @@ uvcsiteMF = MessageFactory('uvcsite')
 
 import grok
 from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
-    IContent, Content, schema, name)
+    IContent, Content, schema, name, productfolder)
 
 from megrok.layout import Page
 from megrok.z3ctable import TablePage
@@ -43,6 +43,7 @@ from dolmen.forms.base.utils import (
 from uvcsite.utils.olddata import Altdaten, PDF
 from uvcsite.utils.shorties import fmtDateTime, getHomeFolderUrl, getHomeFolder
 from uvcsite.auth.interfaces import IMasterUser
+from uvcsite.content.productregistration import ProductRegistration
 
 ### LOGGING
 import logging
