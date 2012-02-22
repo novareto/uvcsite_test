@@ -19,8 +19,7 @@ from uvcsite.content.meta import default_name
 def getAllProductRegistrations():
     request = zope.security.management.getInteraction().participations[0] 
     principal = request.principal
-    #return getAdapters((principal, request), IProductRegistration)
-    return sorted(getAdapters((principal, request), IProductRegistration), key=lambda k: grok.order.bind(k[1]))
+    return sorted(getAdapters((principal, request), IProductRegistration), key=lambda k: grok.order.bind().get(k[0][0]))
 
 
 def getProductRegistrations():
@@ -30,7 +29,7 @@ def getProductRegistrations():
     for key, value in getAdapters((principal, request), IProductRegistration):
         if value.available():
             rc.append({key: value}) 
-    return sorted(rc, key=lambda k: grok.order.bind(k.values()[0]))
+    return sorted(rc, key=lambda k: grok.order.bind().get(k.values()[0]))
 
 
 class ProductRegistration(grok.MultiAdapter):
@@ -62,7 +61,15 @@ class ProductRegistration(grok.MultiAdapter):
     def productfolder(self):
         return resolve(productfolder.bind().get(self))
 
+    def invalidRole(self):
+        my_roles = uvcsite.IMyRoles(self.principal).getAllRoles()
+        if not self.folderURI in my_roles:
+            return True
+        return False
+
     def available(self):
+        if self.invalidRole():
+            return False
         return True
 
     def action(self):
