@@ -88,7 +88,7 @@ Fill out the Form
 
 And get the right status if no error occur!
 
-   >>> '<p>Der Mitbenutzer wurde gespeichert</p>' in browser.contents
+   >>> 'Der Mitbenutzer wurde gespeichert' in browser.contents
    True
 
 Modify
@@ -131,7 +131,7 @@ So let's check here if we check correctly the password and confirm:
    >>> form.getControl(name='form.field.confirm').value = "passwort" 
    >>> form.getControl(name='form.field.passwort').value = "notequal" 
    >>> form.submit('Bearbeiten')
-   >>> '<p>Es sind Fehler aufgetreten</p>' in browser.contents
+   >>> 'Es sind Fehler aufgetreten' in browser.contents
    True
 
 Now try a good combination of passwort and confirm!
@@ -189,7 +189,7 @@ Here we have the input form!
 Click on the button
 
    >>> form.submit('Entfernen')
-   >>> "<p>Der Mitbenutzer wurde entfernt.</p>" in browser.contents
+   >>> "Der Mitbenutzer wurde entfernt." in browser.contents
    True
 
 
@@ -211,6 +211,6 @@ Let's get the form. We should get our two input forms for passwort and confirm
 
 We should get the right portal status, for changing the passwort!
 
-   >>> "<p>Ihr Passwort wurde gespeichert!</p>" in browser.contents
+   >>> "Ihr Passwort wurde gespeichert!" in browser.contents
    True
 
