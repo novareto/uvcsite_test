@@ -1,0 +1,23 @@
+<tal:help repeat="viewlet viewletmanager/viewlets">
+  <div class="modal hide fade"
+       tal:attributes="id string:modal-${viewlet/__class__/__name__}">
+    <div class="modal-header">
+      <a class="close" data-dismiss="modal">×</a>
+      <h3 tal:content="viewlet/name|string:Hilfe">Title</h3>
+    </div>
+    <div class="modal-body">
+      <p tal:replace="structure viewlet/render" />
+    </div>
+    <div class="modal-footer">
+      <!--
+      <a href="#" class="btn primary">Read more</a>
+      -->
+    </div>
+  </div>
+  
+    <a class="btn help-button"
+	    tal:attributes="href string:#modal-${viewlet/__class__/__name__}"
+	    data-toggle="modal" class="btn" 
+	    tal:content="viewlet/name|string:Hilfe" /> 
+  
+</tal:help>

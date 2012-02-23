@@ -1,0 +1,65 @@
+Do a functional doctest test for viewlet managers.
+==================================================
+
+:Test-Layer: functional
+
+Let's first create an instance of Uvcsite at the top level:
+
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+
+Create some context for the ViewletManager
+
+   >>> from zope.publisher.browser import TestRequest
+   >>> request = TestRequest()
+   >>> from zope import component
+   >>> view = component.getMultiAdapter((uvcsite, request), name='index')
+   >>> from zope.contentprovider.interfaces import IContentProvider
+
+Footer
+------
+
+Let´s call the Viewlet uvcsite.footer
+
+   >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
+   ...   'footermenu')
+   >>> mgr
+   <uvc.layout.slots.menus.Footer object at ...>
+
+Does the viewlet manager provide the right interfce IFooter?
+
+
+GlobalMenu
+----------
+
+Let´s call the Viewlet uvcsite.globalmenu
+
+   >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
+   ...   'globalmenu')
+   >>> mgr
+   <uvc.layout.slots.menus.GlobalMenu object at ...>
+
+Does the viewlet manager provide the right interfce IGlobalMenu?
+
+   >>> from uvcsite.interfaces import IGlobalMenu
+   >>> IGlobalMenu.providedBy(mgr)
+   True
+
+
+Document Actions
+----------------
+
+Let´s call the Viewlet uvcsite.documentactions
+
+   >>> mgr = component.getMultiAdapter((uvcsite, request, view), IContentProvider,
+   ...   'documentactions')
+   >>> mgr
+   <uvc.layout.slots.menus.DocumentActionsMenu object at ...>
+
+Does the viewlet manager provide the right interfce IBreadcrumb?
+
+   >>> from uvcsite.interfaces import IDocumentActions
+   >>> IDocumentActions.providedBy(mgr)
+   True
