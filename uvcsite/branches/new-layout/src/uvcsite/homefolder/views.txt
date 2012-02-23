@@ -49,7 +49,7 @@ Now we can render the Index Page of the Homefolder:
   >>> index.update()
   >>> print index.render()
   <div id="homefolder">
-    <h1></h1>
+    <h1>lars</h1>
     <p class="description">Hier werden Ihre Dokumente abgelegt</p>
     <div class="page-content">
       <div class="batch"></div>
@@ -133,7 +133,7 @@ Let's check again if we now get **contenttypes** in our homefolder:
   >>> index.update()
   >>> print index.render()
   <div id="homefolder">
-    <h1></h1>
+    <h1>lars</h1>
     <p class="description">Hier werden Ihre Dokumente abgelegt</p>
     <div class="page-content">
       <div class="batch"></div>

@@ -7,14 +7,17 @@ Check the dynamic table elements in the view of the productfolder
 Setup
 -----
 
-  >>> from zope.app.testing.functional import getRootFolder
+  >>> from uvcsite.app import Uvcsite
   >>> root = getRootFolder()
   >>> from zope.site.hooks import setSite
-  >>> setSite(root)
+  >>> root['app'] = app = Uvcsite()
+  >>> setSite(app)
+  >>> from uvcsite.tests import startInteraction, endInteraction
+  >>> request = startInteraction('mgr')
+  >>> import uvcsite
+  >>> homefolder = uvcsite.getHomeFolder(request)
+  >>> folder = homefolder.get('Adressbook')
 
-  >>> from uvcsite.tests.simpleaddon import AdressBook, Contact
-
-  >>> root['folder'] = folder = AdressBook()
   >>> folder
   <uvcsite.tests.simpleaddon.AdressBook object at ...>
 
@@ -40,6 +43,8 @@ of our folder.
   >>> add.fields.keys()
   ['title', 'name', 'alter']
 
+  >>> endInteraction()
+
 
 Let's check this with the testbrowser!
 --------------------------------------
@@ -49,7 +54,7 @@ Let's check this with the testbrowser!
   >>> browser.handleErrors = False
   >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
 
-  >>> browser.open('http://127.0.0.1/folder/@@add')
+  >>> browser.open('http://127.0.0.1/app/members/mgr/Adressbook/@@add')
 
   >>> browser.getControl(name="form.field.title").value = "Titel"
   >>> browser.getControl(name="form.field.name").value = "christian"

@@ -93,7 +93,7 @@ from zope.pluggableauth.factories import Principal
 def startInteraction(principal, request=None):
     if not request:
         request = TestRequest()
-    request.setPrincipal(Principal(principal))
+    request.setPrincipal(Principal(principal, principal))
     zope.security.management.newInteraction(request)
     return request
 

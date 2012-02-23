@@ -12,26 +12,11 @@ We have to setup view and context to get our ViewletManager!
    >>> from zope.publisher.browser import TestRequest
    >>> from zope.contentprovider.interfaces import IContentProvider
    >>> from uvcsite.app import Uvcsite
-
-   >>> import zope.interface
-   >>> import zope.security.interfaces
-   >>> class DummyPrincipal(object):
-   ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
-   ...
-   ...     id = "uvc.someuser"
-   ...     title = "Some User's Name"
-   ...     description = "A User"
-
-
-   >>> import zope.security.management
-   >>> request = TestRequest()
-   >>> request.setPrincipal(DummyPrincipal())
-
    >>> root = getRootFolder()
-   >>> uvcsite = Uvcsite()
+   >>> from zope.component.hooks import setSite
    >>> from zope.securitypolicy.interfaces import IPrincipalRoleManager
-   >>> #import pdb; pdb.set_trace()
-   >>> root['app'] = uvcsite
+   >>> root['app'] = uvcsite = Uvcsite()
+   >>> setSite(uvcsite)
 
 Context
 
@@ -41,7 +26,9 @@ Context
    >>> prm = IPrincipalRoleManager(context)
    >>> prm.assignRoleToPrincipal('uvc.User', 'uvc.someuser')
    >>> prm.assignRoleToPrincipal('uvc.ManageUsers', 'uvc.someuser')
-   >>> zope.security.management.newInteraction(request)
+   >>> from uvcsite.tests import startInteraction, endInteraction
+   >>> request = startInteraction('uvc.someuser')
+   >>> #zope.security.management.newInteraction(request)
 
 View
 
@@ -95,7 +82,7 @@ We render the individual viewlets:
 Username:
 
   >>> username.title
-  "Some User's Name"
+  'uvc.someuser' 
 
 
 MeinOrdner:
@@ -138,6 +125,9 @@ Show the Viewlets:
 
 GlobalMenu
 ----------
+   >>> import uvcsite
+   >>> uvcsite.getHomeFolder(request)
+   <uvcsite.homefolder.homefolder.HomeFolder object at 0...> 
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"globalmenu")
    >>> manager 
@@ -149,6 +139,4 @@ Show the Viewlets:
    >>> len(manager.viewlets)
    4
 
-
-   >>> zope.security.management.endInteraction()
-
+   >>> endInteraction()
