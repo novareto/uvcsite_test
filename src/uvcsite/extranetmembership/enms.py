@@ -17,6 +17,7 @@ from zope.app.homefolder.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
 from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
+from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
 
 
 grok.templatedir('templates')
@@ -32,7 +33,8 @@ class ENMS(megrok.layout.Page):
         return um.getUserGroups(principal)
 
     def displayRoles(self, roles):
-        return ', '.join(roles)
+        vb = vocab_berechtigungen(None)
+        return [vb.getTerm(x).title for x in roles]
 
 
 class ENMSCreateUser(uvcsite.Form):
