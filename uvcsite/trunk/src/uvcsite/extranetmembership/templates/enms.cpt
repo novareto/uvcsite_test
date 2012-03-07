@@ -3,7 +3,7 @@
   <fieldset>
     <legend > Benutzer </legend>
     <div>
-      <table id="cousers" class="bordered-table">
+      <table id="cousers" class="table bordered-table">
         <tr>
           <th> Mitbenutzer </th>
           <th> Berechtigung </th>
@@ -16,7 +16,12 @@
             </a>
           </td>    
           <td>
+            <ul tal:repeat="role view.displayRoles(user.get('rollen', []))">
+              <li tal:content="role" />
+            </ul>
+            <!--
             <span tal:content="view.displayRoles(user.get('rollen', []))"> </span>
+            -->
           </td>
         </tr>
         <tr>
