@@ -75,10 +75,11 @@ class DirectAccessViewlet(grok.Viewlet):
         interaction = self.request.interaction
         hf = uvcsite.getHomeFolder(self.request)
         for key, value in getAllProductRegistrations():
-            pf = hf[value.folderURI]
-            if interaction.checkPermission('uvc.ViewContent', pf) and getattr(value, 'inNav', True):
-                yield dict(href = absoluteURL(pf, self.request),
-                           name = value.name) 
+            if getattr(value, 'inNav', True):
+                pf = hf[value.folderURI]
+                if interaction.checkPermission('uvc.ViewContent', pf):
+                    yield dict(href = absoluteURL(pf, self.request),
+                               name = value.name) 
 
     def render(self):
         template = getMultiAdapter((self, self.request), IPageTemplate)
