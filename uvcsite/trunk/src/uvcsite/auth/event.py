@@ -18,7 +18,7 @@ from uvcsite.content.folderinit import createProductFolders
 @grok.subscribe(IUserLoggedInEvent)
 def applyPermissionsForExistentCoUsers(factory):
     principal = factory.object
-    createProductFolders()
+    createProductFolders(principal)
     homefolder = IHomeFolder(principal).homeFolder
     if not homefolder:
         return

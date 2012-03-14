@@ -14,6 +14,7 @@ from zope.dottedname.resolve import resolve
 from zope.component import getMultiAdapter, getAdapters, getUtility
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from uvcsite.content.meta import default_name
+from zope.app.homefolder.interfaces import IHomeFolder
 
 
 def getAllProductRegistrations():
@@ -43,6 +44,7 @@ class ProductRegistration(grok.MultiAdapter):
         self.request = request
         self.title = grok.title.bind().get(self)
         self.name = grok.name.bind().get(self)
+        self.description = grok.description.bind().get(self)
 
     @property
     def folderURI(self):
@@ -80,10 +82,10 @@ class ProductRegistration(grok.MultiAdapter):
         return self.available()
 
     def createInProductFolder(self):
-        homefolder = uvcsite.getHomeFolder(self.request)
+        homefolder = IHomeFolder(self.principal).homeFolder
         if not homefolder:
             utility = getUtility(IHomeFolderManager)
-            utility.assignHomeFolder(uvcsite.IMasterUser(self.request.principal).id)
+            utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
         if not self.folderURI in homefolder.keys():
             pf = self.productfolder
             homefolder[self.folderURI] = pf() 

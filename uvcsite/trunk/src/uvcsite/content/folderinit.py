@@ -43,7 +43,8 @@ from zope.pluggableauth.factories import Principal
 
 def createProductFolders(principal=None):
     request = zope.security.management.getInteraction().participations[0]
-    principal = request.principal
+    if not principal:
+       principal = request.principal
     for name, pr in getAdapters((principal, request), IProductRegistration):
         uvcsite.log('Add Productfolders %s to Homefolder: %s' % (name, principal.id))
         pr.createInProductFolder()
