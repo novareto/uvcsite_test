@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2010 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import os.path
 import uvcsite
@@ -24,7 +24,7 @@ class TestCase(unittest2.TestCase):
         self.app = self.layer.getRootFolder()['app']
 
 
-product_config = """ 
+product_config = """
  <product-config mailer>
     queue-path /tmp/mailer-queue
     hostname localhost
@@ -45,18 +45,16 @@ product_config = """
 
 
 ftesting_zcml = os.path.join(
-    os.path.dirname(uvcsite.__file__), 
-    'ftesting_uvc.zcml'
+    os.path.dirname(uvcsite.__file__),
+    'ftesting_uvc.zcml',
     )
 
 FunctionalLayer = ZCMLLayer(
-    ftesting_zcml, __name__, 
+    ftesting_zcml, __name__,
     'FunctionalLayer',
-    allow_teardown=True, 
-    product_config=product_config
+    allow_teardown=True,
+    product_config=product_config,
     )
-
-
 
 
 class BaseUVCBrowserLayer(zope.app.wsgi.testlayer.BrowserLayer):
@@ -64,7 +62,7 @@ class BaseUVCBrowserLayer(zope.app.wsgi.testlayer.BrowserLayer):
     def __init__(self, *args, **kw):
         self.conf = zope.app.appsetup.product.loadConfiguration(
             StringIO(kw.pop('product_config', '')))
-        self.conf = [ 
+        self.conf = [
             zope.app.appsetup.product.FauxConfiguration(name, values)
             for name, values in self.conf.items()]
         zope.app.wsgi.testlayer.BrowserLayer.__init__(self, *args, **kw)
@@ -111,7 +109,7 @@ def endInteraction():
 #    def __init__(self, *args, **kw):
 #        self.conf = zope.app.appsetup.product.loadConfiguration(
 #            StringIO(kw.pop('product_config', '')))
-#        self.conf = [ 
+#        self.conf = [
 #            zope.app.appsetup.product.FauxConfiguration(name, values)
 #            for name, values in self.conf.items()]
 #        gocept.selenium.grok.Layer.__init__(self, *args, **kw)
@@ -122,7 +120,7 @@ def endInteraction():
 #        root = self.getRootFolder()
 #        root['app'] = Uvcsite()
 #        transaction.commit()
-        
+
 
 
 #SeleniumLayer = SeleniumProductConfigLayer(
