@@ -96,6 +96,6 @@ PrincipalRoleMap with settings for lars
    >>> from zope.securitypolicy.interfaces import IPrincipalRoleMap
    >>> rolemap = IPrincipalRoleMap(homefolder) 
    >>> rolemap.getPrincipalsAndRoles()
-   [(u'uvc.MasterUser', 'lars', PermissionSetting: Allow), (u'uvc.Editor', 'lars', PermissionSetting: Allow), (u'uvc.User', 'lars', PermissionSetting: Allow)] 
+   [(u'uvc.MasterUser', u'lars', PermissionSetting: Allow), (u'uvc.Editor', u'lars', PermissionSetting: Allow), (u'uvc.User', u'lars', PermissionSetting: Allow)] 
 
    >>> endInteraction()

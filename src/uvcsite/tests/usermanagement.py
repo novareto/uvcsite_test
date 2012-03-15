@@ -10,9 +10,9 @@ class UserManagement(grok.GlobalUtility):
     """ Utility for Usermanagement """
     grok.implements(IUserManagement)
     users = ( 
-        {'mnr':'0101010001', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['addressbook']},
+        {'mnr':'0101010001', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
         {'mnr':'0202020002', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':[]},
-        {'mnr':'0101010001-q', 'az': '-q', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['addressbook']},
+        {'mnr':'0101010001-q', 'az': '-q', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
         {'mnr':'0101010001', 'az': '01', 'passwort':'passwort', 'email':'test@test.de'},
         {'mnr':'0101010002', 'az': '02', 'passwort':'passwort', 'email':'test@test.de'},
         {'mnr':'0101010002', 'az': '03', 'passwort':'passwort', 'email':'test@test.de'},
