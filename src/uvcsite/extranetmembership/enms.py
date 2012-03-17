@@ -33,8 +33,15 @@ class ENMS(megrok.layout.Page):
         return um.getUserGroups(principal)
 
     def displayRoles(self, roles):
+        rc = []
         vb = vocab_berechtigungen(None)
-        return [vb.getTerm(x).title for x in roles]
+        for role in roles:
+            try:
+                rc.append(vb.getTerm(role).title)
+            except:
+                print role
+                pass
+        return rc 
 
 
 class ENMSCreateUser(uvcsite.Form):
