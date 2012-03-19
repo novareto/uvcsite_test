@@ -79,7 +79,7 @@ class DirectAccessViewlet(grok.Viewlet):
                 pf = hf[value.folderURI]
                 if interaction.checkPermission('uvc.ViewContent', pf):
                     yield dict(href = absoluteURL(pf, self.request),
-                               name = value.name) 
+                               name = value.title) 
 
     def render(self):
         template = getMultiAdapter((self, self.request), IPageTemplate)

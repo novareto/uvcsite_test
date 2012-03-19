@@ -14,7 +14,6 @@
       -->
     </div>
   </div>
-  
     <a class="btn help-button"
 	    tal:attributes="href string:#modal-${viewlet/__class__/__name__}"
 	    data-toggle="modal" class="btn" 
