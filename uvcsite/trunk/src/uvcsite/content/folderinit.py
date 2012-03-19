@@ -24,7 +24,6 @@ def createProductFolders(principal=None):
     if not principal:
        principal = request.principal
     for name, pr in getAdapters((principal, request), IProductRegistration):
-        uvcsite.log('Add Productfolders %s to Homefolder: %s' % (name, principal.id))
         pr.createInProductFolder()
 
 

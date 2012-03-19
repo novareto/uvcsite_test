@@ -91,7 +91,6 @@ class ExtraViewsViewlet(ContextualActions):
     def compute_actions(self, viewlets):
         for action in viewlets:
             selected = action.viewName == self.view.__name__
-
             context_url = self.menu.view.url(self.menu.context)
             url = not selected and "%s/%s" % (context_url, action.viewName) or None
             yield {
@@ -117,6 +116,7 @@ class AddMenuViewlet(grok.Viewlet):
 
 class AddMenu(PageTemplate):
     grok.view(AddMenuViewlet)
+
 
 class Add(uvcsite.AddForm):
     grok.context(IProductFolder)

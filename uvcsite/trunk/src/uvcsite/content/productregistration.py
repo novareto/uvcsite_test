@@ -30,6 +30,8 @@ def getProductRegistrations():
     for key, value in getAdapters((principal, request), IProductRegistration):
         if value.available():
             rc.append((key, value)) 
+        else:
+            print "NOT THERE", key
     return sorted(rc, key=lambda k: grok.order.bind().get(k[1]))
 
 
@@ -93,6 +95,7 @@ class ProductRegistration(grok.MultiAdapter):
         if self.folderURI and not self.folderURI in homefolder.keys():
             pf = self.productfolder
             homefolder[self.folderURI] = pf() 
+            uvcsite.log('Add Productfolders %s to Homefolder: %s' % (self.folderURI, self.principal.id))
         else:
             uvcsite.log('No need for adding Folder %s to %s' % (self.folderURI, self.principal.id))
 
