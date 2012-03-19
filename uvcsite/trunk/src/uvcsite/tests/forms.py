@@ -59,6 +59,7 @@ from zeam.form.base import Form
 from zope import component
 from megrok.layout.interfaces import ILayout
 from zope.publisher.publish import mapply
+from zope.interface import Interface
 
 
 class StandardFormMenu(uvcsite.MenuItem):
@@ -66,6 +67,23 @@ class StandardFormMenu(uvcsite.MenuItem):
     grok.viewletmanager(FormBeispiele)
 
     action = u"myform"
+
+
+
+
+class SimpleForm(uvcsite.Form):
+    grok.title('SimpleForm')
+    grok.context(uvcsite.IUVCSite)
+    grok.require('zope.Public')
+
+    ignoreContent = False 
+    ignoreRequest = False
+    fields = uvcsite.Fields(IPerson)
+
+    @uvcsite.action(u'Abschicken')
+    def handleButton(self):
+        data, errors = self.extractData()
+
 
 
 class MyForm(uvcsite.Form):

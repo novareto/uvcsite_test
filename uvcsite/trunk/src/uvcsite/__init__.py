@@ -43,7 +43,8 @@ from dolmen.forms.base.utils import (
 from uvcsite.utils.olddata import Altdaten, PDF
 from uvcsite.utils.shorties import fmtDateTime, getHomeFolderUrl, getHomeFolder
 from uvcsite.auth.interfaces import IMasterUser
-from uvcsite.content.productregistration import ProductRegistration
+from uvcsite.content.productregistration import (ProductRegistration,
+    getProductRegistrations, getAllProductRegistrations)
 
 ### LOGGING
 import logging

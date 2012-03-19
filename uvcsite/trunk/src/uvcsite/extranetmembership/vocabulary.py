@@ -18,6 +18,6 @@ def vocabulary(terms):
 def vocab_berechtigungen(context):
     rc = []
     for d in getProductRegistrations():
-        reg = d.values()[0] 
+        id, reg = d 
         rc.append(SimpleTerm(reg.folderURI, reg.linkname, reg.linkname))
     return SimpleVocabulary(rc)

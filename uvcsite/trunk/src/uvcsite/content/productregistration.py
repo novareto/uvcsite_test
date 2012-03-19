@@ -29,8 +29,8 @@ def getProductRegistrations():
     rc = []
     for key, value in getAdapters((principal, request), IProductRegistration):
         if value.available():
-            rc.append({key: value}) 
-    return sorted(rc, key=lambda k: grok.order.bind().get(k.values()[0]))
+            rc.append((key, value)) 
+    return sorted(rc, key=lambda k: grok.order.bind().get(k[1]))
 
 
 class ProductRegistration(grok.MultiAdapter):
@@ -48,6 +48,8 @@ class ProductRegistration(grok.MultiAdapter):
 
     @property
     def folderURI(self):
+        if not self.productfolder:
+            return
         pfn = grok.name.bind(get_default=default_name).get(self.productfolder)
         return pfn.capitalize()
 
@@ -61,7 +63,9 @@ class ProductRegistration(grok.MultiAdapter):
 
     @property
     def productfolder(self):
-        return resolve(productfolder.bind().get(self))
+        pfolder = productfolder.bind().get(self)
+        if pfolder:
+            return resolve(pfolder)
 
     def invalidRole(self):
         my_roles = uvcsite.IMyRoles(self.principal).getAllRoles()
@@ -86,11 +90,11 @@ class ProductRegistration(grok.MultiAdapter):
         if not homefolder:
             utility = getUtility(IHomeFolderManager)
             utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
-        if not self.folderURI in homefolder.keys():
+        if self.folderURI and not self.folderURI in homefolder.keys():
             pf = self.productfolder
             homefolder[self.folderURI] = pf() 
         else:
-            print "FOLDER %s ---> already there" % self.folderURI
+            uvcsite.log('No need for adding Folder %s to %s' % (self.folderURI, self.principal.id))
 
 
 class ProductMenuItem(uvcsite.MenuItem):

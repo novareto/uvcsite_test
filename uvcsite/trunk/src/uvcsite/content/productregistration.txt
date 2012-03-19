@@ -66,7 +66,6 @@ Functional Doctest
   [u'Adressbook']
 
   >>> adr.createInProductFolder()
-  FOLDER Adressbook ---> already there
 
   >>> [x for x in homefolder.keys()]
   [u'Adressbook']
@@ -126,5 +125,11 @@ CUSTOM GROUP
 
   >>> spe_uaz_reg.title
   'Spezial Unfallanzeige'
+
+  >>> uvcsite.getProductRegistrations()
+  [(u'adressbook', <uvcsite.Addressbook object at ...>)]
+
+  >>> uvcsite.getAllProductRegistrations()
+  [(u'adressbook', <uvcsite.Addressbook object at ...>), (u'Unfallanzeige', <uvcsite.SpecialUAZRegistration object at ...)]
 
   >>> zope.security.management.endInteraction()
