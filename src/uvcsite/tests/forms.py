@@ -10,7 +10,6 @@ from zope import schema
 
 from zeam.form.base.widgets import getWidgetExtractor
 from uvc.widgets import DatePicker, DatePickerCSS, double
-from uvc.widgets.resources import validation
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
 
@@ -110,7 +109,6 @@ class MyForm(uvcsite.Form):
         self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))
         double.need()
         DatePickerCSS.need()
-        validation.need()
         DatePicker.need()
 
     @uvcsite.action(u'Abschicken')
