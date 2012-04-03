@@ -1,0 +1,7 @@
+<h1> Beispielform </h1>
+
+<div metal:use-macro="path: context/@@formmacros/template/macros/editform"/>
+
+<div tal:condition="view.frage">
+ <span tal:content="view.frage"/>
+</div>
