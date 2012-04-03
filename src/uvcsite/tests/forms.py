@@ -32,8 +32,8 @@ class IPerson(interface.Interface):
         description = u"Bitte geben Sie den Vornamen ein",
         )
 
-    geschlecht = schema.Choice(
-        title = u"Gender",
+    geschlecht = OptionalChoice(
+        title = u"Geschlecht",
         description = u"Bitte geben Sie das Geschlecht ein",
         values = ('men', 'woman', 'kid', 'grandpa', 'sister', 'brother'),
         )
@@ -68,7 +68,8 @@ class StandardFormMenu(uvcsite.MenuItem):
     action = u"myform"
 
 
-
+class IFrage(Interface):
+    frage = schema.TextLine(title=u"Frage")
 
 class SimpleForm(uvcsite.Form):
     grok.title('SimpleForm')
@@ -77,12 +78,15 @@ class SimpleForm(uvcsite.Form):
 
     ignoreContent = False 
     ignoreRequest = False
-    fields = uvcsite.Fields(IPerson)
+    fields = uvcsite.Fields(IFrage)
+    frage = u"" 
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
         data, errors = self.extractData()
-
+        if errors:
+            return 
+        self.frage = data.get('frage')
 
 
 class MyForm(uvcsite.Form):
