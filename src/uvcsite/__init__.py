@@ -22,7 +22,7 @@ from uvc.layout import *
 #from uvc.layout.event import IAfterSaveEvent
 
 # Mobile
-from uvcsite.mobile import BaseMobilePage, MobilePage, MobileLayer, IMobileLayer
+#from uvcsite.mobile import BaseMobilePage, MobilePage, MobileLayer, IMobileLayer
 
 
 ### ZEAM-FORM-API
