@@ -9,11 +9,13 @@ from zope.interface import Interface
 from reportlab.pdfgen import canvas
 
 
-class BasePDF(grok.View):
+class BaseDataView(grok.View):
     grok.context(Interface)
     grok.baseclass()
-    grok.name('pdf')
-    grok.title('uvcsite.pdf')
+    grok.name('basedateview')
+    grok.title('basedataview')
+    content_type = ""
+
 
     def getFile(self, fn):
         if fn:
@@ -25,44 +27,38 @@ class BasePDF(grok.View):
         return grok.title.bind().get(self)
 
     def update(self, filename=None):
-        self.pdf_file = self.getFile(filename)
-        self.c = canvas.Canvas(self.pdf_file)
-        self.genpdf()
-        self.c.save()
+        self.base_file = self.getFile(filename)
+        self.generate()
 
     def create(self, fn):
+        """schreibt die Datei weg und schliesst das File"""
         self.update(fn)
-        self.pdf_file.close()
+        self.base_file.close()
 
-    def genpdf(self):
+    def generate(self):
+        """Methode muss von jedem Konsumenten ausprogrammiert werden,
+           weil diese Methode beim Aufruf von der Methode update aufgerufen wird."""
         raise NotImplementedError
 
     def render(self):
-        pdf = self.pdf_file
-        pdf.seek(0)
+        currentfile = self.base_file
+        currentfile.seek(0)
         RESPONSE = self.request.response
-        RESPONSE.setHeader('content-type', 'application/pdf')
-        RESPONSE.setHeader('content-length', pdf)
+        RESPONSE.setHeader('content-type', self.content_type)
+        RESPONSE.setHeader('content-length', currentfile )
         RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %self.filename)
-        return pdf
+        return currentfile
 
 
-class BaseXML(BasePDF):
+class BasePDF(BaseDataView):
+    grok.baseclass()
+    grok.name('pdf')
+    grok.title('uvcsite.pdf')
+    content_type = "application/pdf"
+
+
+class BaseXML(BaseDataView):
     grok.name('xml')
     grok.title('uvcsite.xml')
-
-    def update(self, filename=None):
-        self.xml_file = self.getFile(filename)
-        self.genxml()
-
-    def genxml(self):
-        raise NotImplementedError
-
-    def render(self):
-        xml = self.xml_file
-        xml.seek(0)
-        RESPONSE = self.request.response
-        RESPONSE.setHeader('content-type', 'text/xml')
-        RESPONSE.setHeader('content-length', xml)
-        RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %self.filename)
-        return xml
+    grok.baseclass()
+    content_type = "application/xml"

@@ -15,12 +15,12 @@ Setup
 
 Erstellen eines einfachen PDF's
 
-  >>> class SimplePDF(uvcsite.BasePDF):
+  >>> class SimplePDF(uvcsite.BaseDataView):
   ...     grok.name('simplepdf')
   ...     grok.title('enw.pdf')
   ...     grok.context(uvcsite.IUVCSite)
   ...
-  ...     def genpdf(self):
+  ...     def generate(self):
   ...         print "I am called"
 
   >>> grok_component('SimplePDF', SimplePDF)
@@ -35,7 +35,7 @@ Erstellen eines einfachen PDF's
   >>> view.update()
   I am called
 
-  >>> view.pdf_file
+  >>> view.base_file
   <open file '<fdopen>', mode 'w+b' at ...>
 
   >>> view.filename
@@ -44,5 +44,33 @@ Erstellen eines einfachen PDF's
   >>> view.update(filename='/tmp/example.pdf')
   I am called
 
-  >>> view.pdf_file
+  >>> view.base_file
   <open file '/tmp/example.pdf', mode 'w+b' at ...>
+
+  >>> view.render()
+  Traceback (most recent call last):
+     ...
+  NotImplementedError
+
+ContentType muss gesetzt sein, da sonst render nicht augerufen werden kann.
+
+  >>> class SimplePDF(uvcsite.BaseDataView):
+  ...     grok.name('simplepdf')
+  ...     grok.title('enw.pdf')
+  ...     grok.context(uvcsite.IUVCSite)
+  ...
+  ...     contenttype="application/pdf"
+  ...
+  ...     def generate(self):
+  ...         print "I am called"
+
+  >>> grok_component('SimplePDF', SimplePDF)
+  True
+  >>> request = TestRequest()
+  >>> view = getMultiAdapter((app, request), name="simplepdf")
+  >>> view.update()
+  I am called
+  >>> view.render()
+  <open file '<fdopen>', mode 'w+b' at ...>
+
+

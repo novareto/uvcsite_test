@@ -14,8 +14,7 @@ from uvcsite.interfaces import *
 from uvcsite.utils.help import HelpPage
 from uvc.layout.slots.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
-from uvcsite.utils.dataviews import BasePDF, BaseXML
-from uvcsite.utils.dataviews import BasePDF, BaseXML
+from uvcsite.utils.dataviews import BasePDF, BaseXML, BaseDataView
 from uvc.layout.forms import (Form, AddForm,
     SubForm, GroupForm, Wizard, Step)
 from uvc.layout import *

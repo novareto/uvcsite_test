@@ -120,11 +120,11 @@ def kopf(c):
     c.drawString(200,200, u"Ich bin der KOPF")
 
 
-class KontaktPdf(uvcsite.BasePDF):
+class KontaktPdf(uvcsite.BaseDataView):
     grok.context(IContact)
     grok.name('pdf')
 
-    def genpdf(self):
+    def generate(self):
         c = self.c
         kopf(c)
         c.drawString(100,100, "Hello World")
@@ -138,12 +138,12 @@ from elementtree.SimpleXMLWriter import XMLWriter
 from xml.dom.minidom import parseString
 
 
-class KontaktXML(uvcsite.BaseXML):
+class KontaktXML(uvcsite.BaseDataView):
     grok.context(IContact)
     grok.name('xml')
     grok.title('kontakt.xml')
 
-    def genxml(self):
+    def generate(self):
         io = StringIO()
         w = XMLWriter(io, encoding="utf-8")
         kon = w.start('kontakt')
@@ -161,11 +161,11 @@ def kopf(c):
     c.drawString(200,200, u"Ich bin der KOPF")
 
 
-class KontaktPdf(uvcsite.BasePDF):
+class KontaktPdf(uvcsite.BaseDataView):
     grok.context(IContact)
     grok.name('pdf')
 
-    def genpdf(self):
+    def generate(self):
         c = self.c
         kopf(c)
         c.drawString(100,100, "Hello World")
@@ -179,12 +179,12 @@ from elementtree.SimpleXMLWriter import XMLWriter
 from xml.dom.minidom import parseString
 
 
-class KontaktXML(uvcsite.BaseXML):
+class KontaktXML(uvcsite.BaseDataView):
     grok.context(IContact)
     grok.name('xml')
     grok.title('kontakt.xml')
 
-    def genxml(self):
+    def generate(self):
         io = StringIO()
         w = XMLWriter(io, encoding="utf-8")
         kon = w.start('kontakt')
