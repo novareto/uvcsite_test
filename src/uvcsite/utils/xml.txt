@@ -15,12 +15,12 @@ Setup
 
 Erstellen eines einfachen XML's
 
-  >>> class SimpleXML(uvcsite.BaseXML):
+  >>> class SimpleXML(uvcsite.BaseDataView):
   ...     grok.name('simplexml')
   ...     grok.title('enw.xml')
   ...     grok.context(uvcsite.IUVCSite)
-  ...
-  ...     def genxml(self):
+  ...     
+  ...     def generate(self):
   ...         print "I am called"
 
   >>> grok_component('SimpleXML', SimpleXML)
@@ -35,7 +35,7 @@ Erstellen eines einfachen XML's
   >>> view.update()
   I am called
 
-  >>> view.xml_file
+  >>> view.base_file
   <open file '<fdopen>', mode 'w+b' at ...>
 
   >>> view.filename
@@ -44,5 +44,34 @@ Erstellen eines einfachen XML's
   >>> view.update(filename='/tmp/example.xml')
   I am called
 
-  >>> view.xml_file
+  >>> view.base_file
   <open file '/tmp/example.xml', mode 'w+b' at ...>
+
+  >>> view.render()
+  Traceback (most recent call last):
+     ...
+  NotImplementedError
+
+  >>> class SimpleXML(uvcsite.BaseDataView):
+  ...     grok.name('simplexml')
+  ...     grok.title('enw.xml')
+  ...     grok.context(uvcsite.IUVCSite)
+  ...
+  ...     contenttype = "text/xml"     
+  ...
+  ...     def generate(self):
+  ...         print "I am called"
+
+  >>> grok_component('SimpleXML', SimpleXML)
+  True
+  >>> request = TestRequest()
+  >>> view = getMultiAdapter((app, request), name="simplexml")
+  >>> view.contenttype
+  'text/xml'
+  >>> view.update()
+  I am called
+  >>> view.render()
+  <open file '<fdopen>', mode 'w+b' at ...>
+
+
+
