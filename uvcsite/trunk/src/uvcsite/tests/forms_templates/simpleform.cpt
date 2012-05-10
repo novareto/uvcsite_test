@@ -1,5 +1,7 @@
 <h1> Beispielform </h1>
 
+<link tal:attributes="href static['main.css']"/>
+
 <div metal:use-macro="path: context/@@formmacros/template/macros/editform"/>
 
 <div tal:condition="view.frage">

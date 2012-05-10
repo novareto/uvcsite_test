@@ -15,7 +15,7 @@ Setup
 
 Erstellen eines einfachen PDF's
 
-  >>> class SimplePDF(uvcsite.BaseDataView):
+  >>> class SimplePDF(uvcsite.BasePDF):
   ...     grok.name('simplepdf')
   ...     grok.title('enw.pdf')
   ...     grok.context(uvcsite.IUVCSite)
@@ -48,9 +48,7 @@ Erstellen eines einfachen PDF's
   <open file '/tmp/example.pdf', mode 'w+b' at ...>
 
   >>> view.render()
-  Traceback (most recent call last):
-     ...
-  NotImplementedError
+  <open file '/tmp/example.pdf', mode 'w+b' at 0...>
 
 ContentType muss gesetzt sein, da sonst render nicht augerufen werden kann.
 

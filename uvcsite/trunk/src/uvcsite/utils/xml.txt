@@ -48,9 +48,7 @@ Erstellen eines einfachen XML's
   <open file '/tmp/example.xml', mode 'w+b' at ...>
 
   >>> view.render()
-  Traceback (most recent call last):
-     ...
-  NotImplementedError
+  <open file '/tmp/example.xml', mode 'w+b' at ...>
 
   >>> class SimpleXML(uvcsite.BaseDataView):
   ...     grok.name('simplexml')
@@ -72,6 +70,3 @@ Erstellen eines einfachen XML's
   I am called
   >>> view.render()
   <open file '<fdopen>', mode 'w+b' at ...>
-
-
-
