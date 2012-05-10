@@ -12,6 +12,11 @@ from zeam.form.base.widgets import getWidgetExtractor
 from uvc.widgets import DatePicker, DatePickerCSS, double
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
+from zeam.form.base import Form
+from zope import component
+from megrok.layout.interfaces import ILayout
+from zope.publisher.publish import mapply
+from zope.interface import Interface
 
 
 class IPerson(interface.Interface):
@@ -54,11 +59,6 @@ class FormBeispiele(uvcsite.SubMenu):
     grok.context(interface.Interface)
     grok.viewletmanager(uvcsite.IGlobalMenu)
 
-from zeam.form.base import Form
-from zope import component
-from megrok.layout.interfaces import ILayout
-from zope.publisher.publish import mapply
-from zope.interface import Interface
 
 
 class StandardFormMenu(uvcsite.MenuItem):
@@ -87,6 +87,50 @@ class SimpleForm(uvcsite.Form):
         if errors:
             return 
         self.frage = data.get('frage')
+
+
+from zeam.form.table import SubTableForm, TableActions
+
+from zeam.form.base import Action, SUCCESS, Actions
+
+class MailAction(Action):
+
+   def __call__(self, form, selected, deselected):
+       # Send a mail
+       import pdb; pdb.set_trace()
+       form.status = u"Mail sent"
+       return SUCCESS
+
+
+
+class TF(uvcsite.GroupForm):
+    grok.title(u'FieldsetBasedForm')
+    grok.context(uvcsite.IUVCSite)
+
+    @uvcsite.action(u'Speichern')
+    def handle_save(self):
+        data, errors = self.extractData()
+        print data, errors
+
+
+class TForm(SubTableForm):
+    grok.title('TableForm')
+    grok.context(uvcsite.IUVCSite)
+    grok.require('zope.Public')
+    grok.view(TF)
+    prefix = "G"
+
+    tableFields = uvcsite.Fields(IFrage)
+    tableActions = TableActions(MailAction(u'dd')) 
+
+    @uvcsite.action(u'Speichern')
+    def handle_save(self):
+        data, errors = self.extractData()
+        print data, errors
+        import pdb; pdb.set_trace() 
+
+    def getItems(self):
+        return [dict(frage=1), dict(frage=2), dict(frage=3)]
 
 
 class MyForm(uvcsite.Form):

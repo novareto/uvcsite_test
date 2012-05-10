@@ -69,6 +69,17 @@ class Index(uvcsite.Page):
         self.flash('Fehlermeldung...', 'error')
         self.flash('Warnung...', 'warning')
 
+from uvc.layout.slots.interfaces import IRenderable
+class RenderableItem(grok.Viewlet):
+    grok.context(Interface)
+    grok.viewletmanager(uvcsite.IGlobalMenu)
+    grok.implements(IRenderable)
+
+    def render(self):
+        return "<li> <a href=''> HALLO WELT </a> </li>"
+
+
+
 from grokcore.chameleon.components import ChameleonPageTemplateFile
 class SelectiveIndex(uvcsite.Page):
     grok.title('Selective Index')

@@ -6,7 +6,6 @@ import datetime
 from megrok.layout import ILayout
 from mock import Mock
 from uvcsite.app import Uvcsite, CustomDateFieldWidget
-from uvcsite.mobile import MobileLayer
 from zeam.form.base import Form
 from zope import component
 from zope import interface, component

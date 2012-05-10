@@ -35,6 +35,9 @@ class BaseDataView(grok.View):
         self.update(fn)
         self.base_file.close()
 
+    def genpdf(self):
+        return self.generate()
+
     def generate(self):
         """Methode muss von jedem Konsumenten ausprogrammiert werden,
            weil diese Methode beim Aufruf von der Methode update aufgerufen wird."""

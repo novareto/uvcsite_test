@@ -11,6 +11,7 @@
   <include package="zeam.form.ztk" />
   <include package="zeam.form.composed" />
   <include package="zeam.form.viewlet" />
+  <include package="zeam.form.table" />
 
   <include package="zope.i18n" />
   <include package="zope.session" />
