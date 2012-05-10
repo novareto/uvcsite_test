@@ -56,6 +56,13 @@ class BasePDF(BaseDataView):
     grok.title('uvcsite.pdf')
     content_type = "application/pdf"
 
+    def update(self, filename=None):
+        self.base_file = self.getFile(filename)
+        self.c = canvas.Canvas(self.base_file)
+        self.genpdf()
+        self.c.save()
+
+
 
 class BaseXML(BaseDataView):
     grok.name('xml')
