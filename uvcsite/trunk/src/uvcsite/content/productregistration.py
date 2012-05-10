@@ -85,6 +85,10 @@ class ProductRegistration(grok.MultiAdapter):
     def inNav(self):
         return self.available()
 
+    @property
+    def asRole(self):
+        return self.available()
+
     def createInProductFolder(self):
         homefolder = IHomeFolder(self.principal).homeFolder
         if not homefolder:

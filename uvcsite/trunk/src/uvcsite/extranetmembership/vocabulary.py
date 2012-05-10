@@ -19,5 +19,6 @@ def vocab_berechtigungen(context):
     rc = []
     for d in getProductRegistrations():
         id, reg = d 
-        rc.append(SimpleTerm(reg.folderURI, reg.linkname, reg.linkname))
+        if reg.asRole == True:
+            rc.append(SimpleTerm(reg.folderURI, reg.folderURI, reg.linkname))
     return SimpleVocabulary(rc)
