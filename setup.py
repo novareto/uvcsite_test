@@ -67,7 +67,6 @@ setup(name='uvcsite',
           'zope.principalannotation',
           'zope.sendmail',
           'zope.testbrowser [zope-functional-testing]',
-          'z3c.baseregistry',
           ],
       entry_points = """
       [console_scripts]
