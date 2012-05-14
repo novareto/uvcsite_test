@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2011 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import grok
 import uvcsite
@@ -36,4 +36,3 @@ class MyRoles(grok.Adapter):
                     if 'uvc.Editor' == role and setting is Allow:
                         ret.append(name)
         return ret
-
