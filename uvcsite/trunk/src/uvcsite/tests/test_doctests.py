@@ -15,7 +15,7 @@ def test_suite():
         'app.txt', 'auth/handler.txt',
         'auth/masteruser.txt', 'content/columnoverride.txt',
         'content/container.txt', 'content/folderinit.txt',
-        'content/content.txt',
+        'content/content.txt', 'content/p_reg_integration.txt',
         'content/crudviews.txt', 'content/multiple_workflow.txt',
         'content/productfolderutilities.txt', 'content/table.txt',
         'content/views.txt', 'content/withoutclass.txt',
