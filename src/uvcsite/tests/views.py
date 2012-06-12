@@ -15,6 +15,15 @@ import uvcsite
 from zope.authentication.interfaces import IUnauthenticatedPrincipal
 
 
+class PDF(uvcsite.MenuItem):
+    grok.viewletmanager(IDocumentActions)
+    grok.name('pdf')
+    icon = "@@/uvc-icons/icon_pdf.gif"
+    action = "/index"
+
+    
+
+
 class Auskunftsdienste(uvcsite.SubMenu):
     grok.context(Interface)
     grok.name('BausAuskunft')
