@@ -10,7 +10,5 @@
   <grok:grok package=".fragen_andreas" />
   <grok:grok package=".zforms" />
   <grok:grok package=".hfadapters" />
-  <grok:grok package=".adhoc" />
-
 
 </configure>
