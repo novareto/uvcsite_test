@@ -55,6 +55,7 @@ class ProductFolderRest(grok.REST):
                 name=content.meta_type,
                 id=content.__name__
                 )
+            grok.notify(AfterSaveEvent(content, self.request))
         else:
             result = etree.Element('failure')
             result.extend(errors)
