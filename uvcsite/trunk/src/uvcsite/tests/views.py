@@ -18,10 +18,10 @@ from zope.authentication.interfaces import IUnauthenticatedPrincipal
 class PDF(uvcsite.MenuItem):
     grok.viewletmanager(IDocumentActions)
     grok.name('pdf')
-    icon = "@@/uvc-icons/icon_pdf.gif"
+    icon = "/@@/uvc-icons/icon_pdf.gif"
     action = "/index"
 
-    
+
 
 
 class Auskunftsdienste(uvcsite.SubMenu):
@@ -58,7 +58,7 @@ class Logout(grok.View):
                 self.request.response.expireCookie(key, path='/')
 
     def render(self):
-        return self.redirect(self.application_url()) 
+        return self.redirect(self.application_url())
 
 
 class SSMenu(uvcsite.MenuItem):
@@ -94,7 +94,7 @@ class SelectiveIndex(uvcsite.Page):
     grok.title('Selective Index')
     grok.context(IUVCSite)
     grok.require('zope.View')
- 
+
     template = ChameleonPageTemplateFile('views_templates/index.cpt')
 
     def update(self):
@@ -121,8 +121,8 @@ class Table(TablePage):
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
 
-    startBatchingAt = 10 
-    batchSize = 10 
+    startBatchingAt = 10
+    batchSize = 10
 
     @property
     def values(self):

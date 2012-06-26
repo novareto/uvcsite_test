@@ -10,6 +10,7 @@ from uvcsite.auth.interfaces import IMasterUser
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleMap, Allow
 
+
 class MyRoles(grok.Adapter):
     grok.context(IPrincipal)
     grok.implements(uvcsite.IMyRoles)
