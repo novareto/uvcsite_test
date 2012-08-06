@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import grok
 import uvcsite
+import zope.component
 
 
 from dolmen.app.site import IDolmen
@@ -12,8 +13,10 @@ from uvcsite.homefolder.homefolder import PortalMembership
 
 from zope.interface import Interface
 from zope.i18n.format import DateTimeParseError
+from zope.component.interfaces import IComponents
 from zope.pluggableauth import PluggableAuthentication
 from zope.interface.common.interfaces import IException
+from grokcore.registries import create_components_registry
 from zope.authentication.interfaces import IAuthentication
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
@@ -40,6 +43,16 @@ class Icons(grok.DirectoryResource):
     grok.path('icons')
 
 
+
+uvcsiteRegistry = create_components_registry(
+    name="uvcsiteRegistry",
+    bases = (zope.component.globalSiteManager, ),
+    )
+
+
+grok.global_utility(uvcsiteRegistry, name="uvcsiteRegistry", provides=IComponents, direct=True)
+
+
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
     """
@@ -56,6 +69,11 @@ class Uvcsite(grok.Application, grok.Container):
                        IAuthentication,
                        public=True,
                        setup=setup_pau)
+
+    def getSiteManager(self):
+        current = super(Uvcsite, self).getSiteManager()
+        current.__bases__ += (uvcsiteRegistry,)
+        return current
 
 
 class NotFound(errors.NotFound):

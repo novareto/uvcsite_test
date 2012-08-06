@@ -31,6 +31,7 @@
   <include package="megrok.pagetemplate" file="meta.zcml" />
 
   <include package="grokcore.chameleon" />
+  <include package="grokcore.registries" />
 
   <include package="uvc.layout" />
   <include package="dolmen.beaker" />
