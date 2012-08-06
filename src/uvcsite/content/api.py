@@ -14,6 +14,7 @@ from hurry.workflow.interfaces import IWorkflowState
 from zope.pagetemplate.interfaces import IPageTemplate
 from z3c.schema2xml import serialize_to_tree, deserialize
 from uvcsite.workflow.basic_workflow import titleForState
+from uvc.layout.forms.event import AfterSaveEvent
 
 
 class RestLayer(grok.IRESTLayer):
