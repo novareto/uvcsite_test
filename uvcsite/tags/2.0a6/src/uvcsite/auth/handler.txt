@@ -1,0 +1,63 @@
+Doctest for the AuthenticationUtility
+=====================================
+
+:Test-Layer: functional
+
+UVCAuthenticator Utility 
+-------------------------
+
+Create an instance of the UVCAuthenticator Utility and
+check the methods
+
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> import zope.security.management
+
+  >>> request = TestRequest()
+  >>> zope.security.management.newInteraction(request)
+
+  >>> from uvcsite.auth.handler import UVCAuthenticator 
+  >>> authenticator = UVCAuthenticator(prefix = "uvc") 
+  >>> authenticator
+  <uvcsite.auth.handler.UVCAuthenticator object at 0...>
+
+Check the principalInfo
+-----------------------
+
+  >>> authenticator.principalInfo(id="id")
+
+
+Check the authenticateCredentials
+---------------------------------
+
+Without any credentials
+
+  >>> authenticator.authenticateCredentials({})
+
+Only login
+
+  >>> authenticator.authenticateCredentials({'login':'0101010001'})
+
+Only password
+
+  >>> authenticator.authenticateCredentials({'password':'secret'})
+
+Both but wrong password 
+
+  >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'klaus'})
+
+This user is not in the Database!
+
+  >>> authenticator.authenticateCredentials({'login':'0101010009', 'password':'klaus'})
+
+Right combination of credentials
+
+  >>> authenticator.authenticateCredentials({'login':'0101010001', 'password':'passwort'})
+  PrincipalInfo('0101010001')
+
+
+We have to finsish the Interaction.
+
+  >>> zope.security.management.endInteraction()
+
