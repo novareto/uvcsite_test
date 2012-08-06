@@ -9,6 +9,9 @@ Setup
 -----
 First start with an instance of UAZFolder
 
+  >>> import grok
+  >>> grok.grok('uvcsite.content.ftests.api')
+
   >>> from zope.app.testing.functional import getRootFolder
   >>> root = getRootFolder()
 
@@ -131,6 +134,7 @@ A Valid uaz_xml file!
   ...    </Unfallanzeige>'''
   >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz', uaz_xml,
   ... AUTHORIZATION=auth_header)
+  CALLED: After Save Event
   >>> print response.getBody()
   <success id="Unfallanzeige" name="Unfallanzeige"/>
 
@@ -212,3 +216,8 @@ class Unfallanzeige(Content):
 
 class UAZFolder(ProductFolder):
     contenttype(Unfallanzeige)
+
+
+@grok.subscribe(Unfallanzeige, uvcsite.IAfterSaveEvent)
+def handle_save_print(event, obj):
+    print "CALLED: After Save Event"
