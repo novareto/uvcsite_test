@@ -73,8 +73,7 @@ class Uvcsite(grok.Application, grok.Container):
 
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
-        hashes = [x.__hash__() for x in current.__bases__]
-        if uvcsiteRegistry.__hash__() not in hashes:
+        if uvcsiteRegistry not in current.__bases__:
             current.__bases__ += (uvcsiteRegistry,)
         return current
 
