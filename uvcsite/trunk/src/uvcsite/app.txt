@@ -81,7 +81,7 @@ to the login page.
 
 Now log on as a user and look if we get the index page
 
-   >>> browser.handleErrors = True
+   >>> browser.handleErrors = False 
    >>> browser.addHeader('Authorization', 'Basic user:user')
    >>> browser.open('http://localhost/app/index')
 
