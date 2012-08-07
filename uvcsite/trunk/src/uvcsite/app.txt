@@ -33,6 +33,25 @@ Let's look if we have our authenticate infrastucture
    ('principals', <uvcsite.auth.handler.UVCAuthenticator object at 0...>)
 
 
+Registries
+----------
+
+   >>> from zope.component.interfaces import IComponents
+   >>> reg = getUtility(IComponents, name=u"uvcsiteRegistry")
+   >>> reg
+   <BaseComponents uvcsiteRegistry>
+
+   >>> sm = uvcsite.getSiteManager()
+   >>> sm
+   <LocalSiteManager ++etc++site>
+
+   >>> sm.__bases__
+   (<LocalSiteManager ++etc++site>, <BaseComponents uvcsiteRegistry>)
+
+   >>> lsm = sm.__bases__[0]
+   >>> lsm.__bases__
+   (<BaseGlobalComponents base>,)
+
 Run tests in the testbrowser
 ----------------------------
 

@@ -33,7 +33,7 @@ We have to grok some components first...
   ...           destination=666)
   ...     return workflow.Workflow([create_transition])
 
-  >>> from zope.component import provideUtility
+  >>> from grokcore.component import provideUtility
   >>> provideUtility(create_workflow(), IWorkflow, name="special")
 
   >>> class WorkflowState(workflow.WorkflowState, grok.Adapter):
