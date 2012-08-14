@@ -46,8 +46,8 @@ class Icons(grok.DirectoryResource):
 
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
-    #bases = (zope.component.globalSiteManager, ),
-    bases = (),
+    bases = (zope.component.globalSiteManager, ),
+    #bases = (),
     )
 
 
@@ -74,6 +74,7 @@ class Uvcsite(grok.Application, grok.Container):
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
         if uvcsiteRegistry not in current.__bases__:
+            uvcsiteRegistry.__bases__ = tuple([x for x in uvcsiteRegistry.__bases__ if x.__hash__() != zope.component.globalSiteManager.__hash__()])
             current.__bases__ += (uvcsiteRegistry,)
         return current
 
