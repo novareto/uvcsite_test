@@ -1,0 +1,51 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <h1> 
+      Statistik
+    </h1>
+    <table class="tablesorter">
+      <thead>
+        <tr>
+          <th>
+            Applikation
+          </th>
+          <th>
+            Gesamt 
+          </th>
+          <th>
+            Entwurf
+          </th>
+          <th>
+            Versendet
+          </th>
+          <th>
+            in Verarbeitung 
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr tal:define="counter view/counter" 
+          tal:repeat="key counter"
+          tal:attributes="class python: repeat['key'].even() and 'even' or 'odd'">
+          <td>
+            <span tal:content="key"> </span>
+          </td>
+          <td class="right">
+            <span tal:content="python: counter.get(key).get('anzahl')"> </span>
+          </td>
+          <td class="right">
+            <span tal:content="python: counter.get(key).get('entwurf')"> </span>
+          </td>
+          <td class="right">
+            <span tal:content="python: counter.get(key).get('gesendet')"> </span>
+          </td>
+          <td class="right">
+            <span tal:content="python: counter.get(key).get('verarbeitung')"> </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
