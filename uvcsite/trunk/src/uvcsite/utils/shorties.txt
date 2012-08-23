@@ -33,4 +33,10 @@ getHomeFolderUrl
   'http://127.0.0.1/app/members/christian/Unfallanzeigen'
 
 
+  >>> uvcsite.getRequest()
+  <zope.publisher.browser.TestRequest instance URL=http://127.0.0.1>
+
+  >>> uvcsite.getPrincipal()
+  Principal('christian')
+
   >>> endInteraction()

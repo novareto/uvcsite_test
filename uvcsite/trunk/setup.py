@@ -70,9 +70,6 @@ setup(name='uvcsite',
           'zope.testbrowser [zope-functional-testing]',
           ],
       entry_points = """
-      [console_scripts]
-      uvcsite-debug = grokcore.startup:interactive_debug_prompt
-      uvcsite-ctl = grokcore.startup:zdaemon_controller
       [paste.app_factory]
       main = grokcore.startup:application_factory
       [paste.filter_app_factory]

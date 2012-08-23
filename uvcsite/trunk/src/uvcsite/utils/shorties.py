@@ -5,6 +5,7 @@
 
 import pytz
 import uvcsite
+import zope.security
 
 from zope.app.homefolder.interfaces import IHomeFolder
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
@@ -24,3 +25,11 @@ def getHomeFolderUrl(request, suffix=""):
 def fmtDateTime(object, fmt="%d.%m.%Y %H:%M:%S"):
     tz = pytz.timezone("Europe/Berlin")
     return object.astimezone(tz).strftime(fmt)
+
+
+def getRequest():
+    return zope.security.management.getInteraction().participations[0]
+
+
+def getPrincipal():
+    return getRequest().principal
