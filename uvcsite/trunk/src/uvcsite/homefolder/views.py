@@ -34,6 +34,7 @@ class Index(TablePage):
 
     startBachtAt = 15
     bachtSize = 15
+    sortOn = "table-modified-5"
 
     @property
     def title(self):
