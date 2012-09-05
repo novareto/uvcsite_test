@@ -41,7 +41,9 @@ class Index(TablePage):
     cssClassEven = u'even'
     cssClassOdd = u'odd'
 
-    sortOnId = "table-modified-100"
+    sortOnId = "table-modified-5"
+    sortOn = "table-modified-5" 
+    #sortOrder = "down"
 
     @property
     def title(self):

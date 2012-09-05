@@ -83,9 +83,11 @@ class ModifiedColumn(Column):
     weight = 100
     table(IFolderListingTable)
 
+    def getSortKey(self, item):
+        return item.modtime
+
     def renderCell(self, item):
-        modified = IZopeDublinCore(item).modified 
-        return uvcsite.fmtDateTime(modified)
+        return uvcsite.fmtDateTime(item.modtime)
 
 
 class StateColumn(GetAttrColumn):
