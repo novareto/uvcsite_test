@@ -1,0 +1,14 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:grok="http://namespaces.zope.org/grok">
+
+  <grok:grok package=".views" />
+  <grok:grok package=".simpleaddon" />
+  <grok:grok package=".usermanagement" />
+  <grok:grok package=".forms" />
+  <grok:grok package=".menustuff" />
+  <grok:grok package=".fragen_andreas" />
+  <grok:grok package=".zforms" />
+  <grok:grok package=".news" />
+
+</configure>
