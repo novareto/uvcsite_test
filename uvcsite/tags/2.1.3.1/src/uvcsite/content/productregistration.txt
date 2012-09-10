@@ -1,0 +1,135 @@
+Functional Doctest
+==================
+
+:Test-Layer: functional
+
+  >>> import grok
+  >>> import uvcsite
+  >>> from uvcsite.app import Uvcsite
+  >>> from zope.pluggableauth.factories import Principal
+  >>> from zope.publisher.browser import TestRequest
+  >>> from zope.component import getUtility, getMultiAdapter, queryMultiAdapter, getAdapters
+  >>> from uvcsite.content.interfaces import IProductRegistration
+  >>> from uvcsite.content.directive import productfolder 
+  >>> from uvcsite.content.productregistration import ProductRegistration
+  >>> from grokcore.component.testing import grok_component
+  >>> from zope.app.homefolder.interfaces import IHomeFolderManager
+  >>> from zope.component.hooks import setSite
+  >>> import zope.security.management
+
+  >>> root = getRootFolder()
+  >>> root['app'] = app = Uvcsite()
+  >>> setSite(app)
+
+  >>> root['app']
+  <uvcsite.app.Uvcsite object at ...>
+
+  >>> utility = getUtility(IHomeFolderManager)
+  >>> christian = Principal('christian', 'christian')
+  >>> christian
+  Principal('christian')
+
+  >>> request = TestRequest()
+  >>> request.setPrincipal(christian)
+  >>> zope.security.management.newInteraction(request)
+
+  >>> class Addressbook(ProductRegistration):
+  ...     grok.name('adressbook')
+  ...     grok.title('Adressbuch')
+  ...     grok.description('Beschreibung Entgeltnachweis')
+  ...     productfolder('uvcsite.tests.simpleaddon.AdressBook')
+
+  >>> grok_component('Addressbook', Addressbook)
+  True
+
+  >>> utility.assignHomeFolder('christian')
+
+  >>> regs = dict([x for x in getAdapters((christian, request), IProductRegistration)])
+  >>> adr = regs['adressbook']
+  >>> adr 
+  <uvcsite.Addressbook object at ...>
+
+  >>> adr.folderURI
+  'Adressbook'
+
+  >>> adr.linkname
+  'Adressbuch'
+
+  >>> adr.rolename
+  'Adressbuch'
+
+  >>> adr.productfolder
+  <class 'uvcsite.tests.simpleaddon.AdressBook'>
+
+  >>> homefolder = uvcsite.getHomeFolder(request)
+  >>> [x for x in homefolder.keys()]
+  [u'Adressbook']
+
+  >>> adr.createInProductFolder()
+
+  >>> [x for x in homefolder.keys()]
+  [u'Adressbook']
+
+  >>> class UAZRegistration(ProductRegistration):
+  ...     grok.name('Unfallanzeige')
+  ...     grok.title('Unfallanzeige')
+  ...     grok.description('Elektronische Unfallanzeige')
+
+  >>> grok_component('UAZRegistration', UAZRegistration)
+  True
+
+  >>> len(list(getAdapters((christian, request), IProductRegistration)))
+  2
+
+  >>> uaz_registration = getMultiAdapter((christian, request), IProductRegistration, name="Unfallanzeige")
+  >>> uaz_registration
+  <uvcsite.UAZRegistration object at ...>
+
+  >>> zope.security.management.endInteraction()
+
+
+CUSTOM GROUP
+------------
+
+  >>> from zope.interface import Interface, alsoProvides
+  >>> from zope.publisher.interfaces.http import IHTTPRequest
+
+  >>> class ISpecialPrincipal(Interface):
+  ...     """ MARKER """
+
+  >>> lars = Principal('lars', 'lars')
+  >>> alsoProvides(lars, ISpecialPrincipal)
+  >>> lars 
+  Principal('lars')
+
+  >>> request = TestRequest()
+  >>> request.setPrincipal(lars)
+  >>> zope.security.management.newInteraction(request)
+  >>> uaz_reg = getMultiAdapter((lars, request), IProductRegistration, name="Unfallanzeige")
+  >>> uaz_reg
+  <uvcsite.UAZRegistration object at ...>
+
+  >>> class SpecialUAZRegistration(UAZRegistration):
+  ...     grok.adapts(ISpecialPrincipal, IHTTPRequest)
+  ...     grok.title('Spezial Unfallanzeige')
+
+  >>> grok_component('SpecialUAZRegistration', SpecialUAZRegistration)
+  True
+
+  >>> spe_uaz_reg = getMultiAdapter((lars, request), IProductRegistration, name="Unfallanzeige")
+  >>> spe_uaz_reg
+  <uvcsite.SpecialUAZRegistration object at ...>
+
+  >>> spe_uaz_reg is not uaz_reg
+  True
+
+  >>> spe_uaz_reg.title
+  'Spezial Unfallanzeige'
+
+  >>> uvcsite.getProductRegistrations()
+  [(u'adressbook', <uvcsite.Addressbook object at ...>)]
+
+  >>> uvcsite.getAllProductRegistrations()
+  [(u'adressbook', <uvcsite.Addressbook object at ...>), (u'Unfallanzeige', <uvcsite.SpecialUAZRegistration object at ...)]
+
+  >>> zope.security.management.endInteraction()
