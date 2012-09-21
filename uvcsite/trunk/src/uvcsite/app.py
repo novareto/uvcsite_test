@@ -79,18 +79,15 @@ class Uvcsite(grok.Application, grok.Container):
         return current
 
 
-class NotFound(errors.NotFound):
+class NotFound(uvcsite.Page, grok.components.NotFoundView):
     """Not Found Error View
     """
     pass
 
 
-class SystemError(uvcsite.Page):
+class SystemError(uvcsite.Page, grok.components.ExceptionView):
     """Custom System Error for UVCSITE
     """
-    grok.context(IException)
-    grok.name('index.html')
-    grok.require('zope.Public')
 
 
 class CustomDateFieldWidget(DateFieldWidget):
