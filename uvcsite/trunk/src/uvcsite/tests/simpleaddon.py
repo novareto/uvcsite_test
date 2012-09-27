@@ -69,7 +69,7 @@ class ADMenu(grok.Viewlet):
 
     def render(self):
         url = self.view.url(self.context, 'stat')
-        return "<dl class='dropdown'> <dt> <a href=%s> Alte Dokumente </a> </dt> </dl>" % url
+        return "<ul class='nav'> <li class='dropdown'> <a class='dropdown-toggle' href=%s> Alte Dokumente </a> </li> </ul>" % url
 
 
 
@@ -91,6 +91,7 @@ def handle_save(obj, event):
         IWorkflowInfo(obj).fireTransition('publish')
     except StandardError, e:
         IWorkflowInfo(obj).fireTransition('progress')
+        uvcsite.logger.exception("FUCK OFF")
         uvcsite.log('simpleaddon', e.__doc__)
     print "AfterSaveEvent"
 
