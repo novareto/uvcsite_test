@@ -9,7 +9,7 @@ from zope import interface
 from zope import schema
 
 from zeam.form.base.widgets import getWidgetExtractor
-from uvc.widgets import DatePicker, DatePickerCSS, double
+from uvc.widgets import DatePicker, DatePickerCSS, double, masked_input
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
 from zeam.form.base import Form
@@ -70,6 +70,7 @@ class StandardFormMenu(uvcsite.MenuItem):
 
 class IFrage(Interface):
     frage = schema.TextLine(title=u"Frage")
+
 
 class SimpleForm(uvcsite.Form):
     grok.title('SimpleForm')
@@ -136,7 +137,7 @@ class TForm(SubTableForm):
 class MyForm(uvcsite.Form):
     grok.title(u'Beispielform')
     grok.description(u"Beschreibugn Beschreibugn")
-    grok.context(uvcsite.IUVCSite)
+    grok.context(Interface)
 
     ignoreContent = False 
     ignoreRequest = False
@@ -158,6 +159,7 @@ class MyForm(uvcsite.Form):
         double.need()
         DatePickerCSS.need()
         DatePicker.need()
+        masked_input.need()
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
