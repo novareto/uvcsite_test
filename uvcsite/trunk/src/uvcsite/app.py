@@ -104,7 +104,7 @@ class CustomDateFieldWidget(DateFieldWidget):
 class CustomDateWidgetExtractor(DateWidgetExtractor):
     """ Extractor for German Date Notation
     """
-
+    valueType = "date"
 
     def extract(self):
         value, error = super(DateWidgetExtractor, self).extract()
