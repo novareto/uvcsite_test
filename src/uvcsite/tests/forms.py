@@ -152,12 +152,6 @@ class MyForm(uvcsite.Form):
     description = u"Beschreibung"
     legend = "LEGENDE"
 
-    def validateData(self, fields, data, errors):
-        super(MyForm, self).validateData(fields, data, errors)
-        if data.get('name') == "hans":
-            errors.append(uvcsite.Error('Hans ist doof', identifier=self.prefix))
-        return errors
-
     def update(self):
         self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))
         double.need()
