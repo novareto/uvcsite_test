@@ -93,6 +93,7 @@ class SystemError(uvcsite.Page, grok.components.ExceptionView):
 class CustomDateFieldWidget(DateFieldWidget):
     """ Extractor for German Date Notation
     """
+    valueType = "date"
 
     def valueToUnicode(self, value):
         locale = self.request.locale
@@ -103,6 +104,7 @@ class CustomDateFieldWidget(DateFieldWidget):
 class CustomDateWidgetExtractor(DateWidgetExtractor):
     """ Extractor for German Date Notation
     """
+
 
     def extract(self):
         value, error = super(DateWidgetExtractor, self).extract()

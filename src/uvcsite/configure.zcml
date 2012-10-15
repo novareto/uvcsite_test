@@ -34,6 +34,7 @@
   <include package="grokcore.registries" />
 
   <include package="uvc.layout" />
+  <include package="uvc.widgets" />
   <include package="dolmen.beaker" />
   <include package="dolmen.menu" />
   <include package="dolmen.app.security" />

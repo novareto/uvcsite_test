@@ -8,8 +8,8 @@ import uvcsite
 from zope import interface
 from zope import schema
 
-from zeam.form.base.widgets import getWidgetExtractor
 from uvc.widgets import DatePicker, DatePickerCSS, double, masked_input
+from zeam.form.base.widgets import getWidgetExtractor
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
 from zeam.form.base import Form
@@ -17,6 +17,7 @@ from zope import component
 from megrok.layout.interfaces import ILayout
 from zope.publisher.publish import mapply
 from zope.interface import Interface
+from zeam.form.ztk import customize
 
 
 class IPerson(interface.Interface):
@@ -143,6 +144,9 @@ class MyForm(uvcsite.Form):
     ignoreRequest = False
     fields = uvcsite.Fields(IPerson)
     #fields['geschlecht'].mode = "radio"
+    #fields['name'].htmlAttributes['maxlength'] = 10
+    fields['vorname'].htmlAttributes['placeholder'] = u"BLA" 
+    fields['datum'].htmlAttributes = {'placeholder': 'tt.mm.jjjj'}
 
     label = u"Beispielform"
     description = u"Beschreibung"
@@ -168,6 +172,11 @@ class MyForm(uvcsite.Form):
             self.flash(u"FEHLER", type="error")
             return
         self.flash('Alles Klar')
+
+
+@customize(schema=IPerson, name="name")
+def handle_name(field):
+    field.htmlAttributes['maxlength'] = 3
 
 
 class MyFormHilfe(uvcsite.HelpPage):
@@ -377,67 +386,4 @@ class oComplexForm(uvcsite.Form):
     def handleButton(self):
         data, errors = self.extractData()
         print errors.title
-
-from zeam.form.ztk.widgets.collection import MultiObjectFieldWidget, newCollectionWidgetFactory
-from zope.interface import Interface
-from zeam.form.ztk.interfaces import ICollectionSchemaField
-from zeam.form.ztk.widgets.object import ObjectSchemaField 
-from zeam.form.base.interfaces import IWidget 
-from zeam.form.base import HIDDEN
-from zope import component
-
-
-
-class UOFW(MultiObjectFieldWidget):
-    grok.adapts(ICollectionSchemaField, ObjectSchemaField, Interface, Interface)
-    grok.name('bgdp')
-
-    def getDisplayWidgets(self, widget):
-        ww = component.getMultiAdapter(
-            (widget.component, widget.form, self.request), 
-            IWidget, 
-            name='hidden')
-        ww.update()
-        return "%s %s" %(ww.render(), ww.inputValue())
-
-    @property
-    def getValueWidgets(self):
-        widgets = [x for x in self.valueWidgets]
-        if self.request.has_key(self.identifier + '.add'):
-            widgets.pop()
-        return widgets 
-   
-    @property
-    def getInputWidget(self):
-        if self.request.has_key(self.identifier + '.add'):
-            vv= [x for x in self.valueWidgets].pop()
-            return [x for x in self.valueWidgets].pop()
-        return None 
-
-    @property
-    def allowAddingCustom(self):
-        return self.request.has_key(self.identifier + '.add')
-
-
-    def iupdate(self):
-        from zeam.form.base.widgets import getWidgetExtractor
-        super(UOFW, self).update()
-        if self.request.has_key(self.identifier + '.dadd'):
-            for field in self.getFields():
-                extractor = getWidgetExtractor(self.component, self.form, self.request)
-                value, error = extractor.extract()
-                print value, error
-                if error is None:
-                    error = field.validate(value, self.form)
-
-
-
-import grokcore.component
-from zeam.form.base.interfaces import IField, IWidget
-grokcore.component.global_adapter(
-    newCollectionWidgetFactory(mode='bgdp'),
-    adapts=(ICollectionSchemaField, Interface, Interface),
-    provides=IWidget,
-    name='bgdp')
-
 

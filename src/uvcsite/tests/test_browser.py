@@ -43,6 +43,8 @@ class ZeamFormOverridesTests(unittest.TestCase):
         obj = Mock()
         obj.prefix = "objprefix"
         obj.identifier= "objident"
+        obj.htmlAttributes = {}
+        obj.valueType = "medium"
         request = TestRequest()
         form = Form(obj, request)
         form.prefix="form.prefix"
