@@ -123,7 +123,7 @@ SystemError
    <uvcsite.app.SystemError object at ...>
 
 
-   >>> print system_error.content()
+   >>> print system_error
    <div id="error-page">
    <div>
       <h1>Entschuldigen Sie bitte...</h1>
