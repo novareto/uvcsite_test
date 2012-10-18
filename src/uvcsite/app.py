@@ -86,9 +86,16 @@ class NotFound(uvcsite.Page, grok.components.NotFoundView):
     pass
 
 
-class SystemError(grok.components.ExceptionView):
+class SystemError(uvcsite.Page, grok.components.ExceptionView):
     """Custom System Error for UVCSITE
     """
+
+    def __init__(self, context, request):
+        super(SystemError, self).__init__(context, request)
+        self.context = grok.getSite()
+        self.origin_context = context
+        
+
 
 @customize(origin=IDate)
 def customize_size(field):
