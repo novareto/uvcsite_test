@@ -90,10 +90,9 @@ class SystemError(grok.components.ExceptionView):
     """Custom System Error for UVCSITE
     """
 
-
-@customize(schema=IDate)
+@customize(origin=IDate)
 def customize_size(field):
-   field.valueLength = 'medium'
+    field.valueLength = 'medium'
 
 
 class Favicon(grok.View):
