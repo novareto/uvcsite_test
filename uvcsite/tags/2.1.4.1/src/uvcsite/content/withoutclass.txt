@@ -1,0 +1,31 @@
+Exceptions for Directives and Components
+========================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+The directive contenttype is needed
+-----------------------------------
+
+  >>> from uvcsite.content import ProductFolder
+
+  >>> class PF(ProductFolder):
+  ...     pass
+
+  >>> from grok.testing import grok_component
+  >>> grok_component('PF', PF)
+  Traceback (most recent call last):
+  ...
+  GrokError: <class 'PF'> must specify which contenttype should go into this ProductFolder. Please use thedirecitve 'contenttype' for it.
+
+ 
+
+The ProductFolder should have a class in every case.
+----------------------------------------------------
+
+  >>> from uvcsite.content import ProductFolder, contenttype
+  >>> class ContainerWithNoClass(ProductFolder):
+  ...     contenttype('I am not a Class')
+  Traceback (most recent call last):
+  ...
+  GrokImportError: The 'contenttype' directive can only be called with a class.
