@@ -27,6 +27,7 @@ class MyRoles(grok.Adapter):
             role, setting = rolesetting
             if 'uvc.Editor' == role and setting is Allow:
                 masteruser = True
+                ret.append('ENMS')
         for name, productfolder in self.homefolder.items():
             if masteruser:
                 ret.append(name)
