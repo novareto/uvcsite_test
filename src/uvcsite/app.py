@@ -25,8 +25,6 @@ from zope.i18n.interfaces import IUserPreferredLanguages
 from zope.publisher.interfaces.http import IHTTPRequest
 from zeam.form.ztk.widgets.choice import RadioFieldWidget
 from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
-from zeam.form.ztk import customize
-from zope.schema.interfaces import IDate
 
 
 grok.templatedir('templates')
@@ -49,6 +47,7 @@ class Icons(grok.DirectoryResource):
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
     bases = (zope.component.globalSiteManager, ),
+    #bases = (),
     )
 
 
@@ -90,16 +89,33 @@ class SystemError(uvcsite.Page, grok.components.ExceptionView):
     """Custom System Error for UVCSITE
     """
 
-    def __init__(self, context, request):
-        super(SystemError, self).__init__(context, request)
-        self.context = grok.getSite()
-        self.origin_context = context
-        
+
+class CustomDateFieldWidget(DateFieldWidget):
+    """ Extractor for German Date Notation
+    """
+    valueType = "date"
+
+    def valueToUnicode(self, value):
+        locale = self.request.locale
+        formatter = locale.dates.getFormatter(self.valueType, 'medium')
+        return formatter.format(value)
 
 
-@customize(origin=IDate)
-def customize_size(field):
-    field.valueLength = 'medium'
+class CustomDateWidgetExtractor(DateWidgetExtractor):
+    """ Extractor for German Date Notation
+    """
+    valueType = "date"
+
+    def extract(self):
+        value, error = super(DateWidgetExtractor, self).extract()
+        if value is not uvcsite.NO_VALUE:
+            locale = self.request.locale
+            formatter = locale.dates.getFormatter(self.valueType, 'medium')
+            try:
+                value = formatter.parse(value)
+            except (ValueError, DateTimeParseError), error:
+                return None, u"Bitte überprüfen Sie das Datumsformat. (tt.mm.jjjj)"
+        return value, error
 
 
 class Favicon(grok.View):
