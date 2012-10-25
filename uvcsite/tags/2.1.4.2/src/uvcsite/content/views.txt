@@ -1,0 +1,78 @@
+Check the dynamic table elements in the view of the productfolder
+=================================================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Setup
+-----
+
+  >>> from uvcsite.app import Uvcsite
+  >>> root = getRootFolder()
+  >>> from zope.site.hooks import setSite
+  >>> root['app'] = app = Uvcsite()
+  >>> setSite(app)
+  >>> from uvcsite.tests import startInteraction, endInteraction
+  >>> request = startInteraction('mgr')
+  >>> import uvcsite
+  >>> homefolder = uvcsite.getHomeFolder(request)
+  >>> folder = homefolder.get('Adressbook')
+
+  >>> folder
+  <uvcsite.tests.simpleaddon.AdressBook object at ...>
+
+The folder should be empty:
+
+  >>> len(folder)
+  0
+
+Views
+-----
+
+This are some imports which helps us to call the IndexTable
+of our folder.
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> request = TestRequest()
+
+  >>> add = getMultiAdapter((folder, request), name='add')
+  >>> add
+  <uvcsite.content.views.Add object at ...>
+
+  >>> add.fields.keys()
+  ['title', 'name', 'alter']
+
+  >>> endInteraction()
+
+
+Let's check this with the testbrowser!
+--------------------------------------
+
+  >>> from zope.testbrowser.testing import Browser
+  >>> browser = Browser()
+  >>> browser.handleErrors = False
+  >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+
+  >>> browser.open('http://127.0.0.1/app/members/mgr/Adressbook/@@add')
+
+  >>> browser.getControl(name="form.field.title").value = "Titel"
+  >>> browser.getControl(name="form.field.name").value = "christian"
+  >>> browser.getControl(name="form.field.alter").value = "30"
+
+  >>> save = browser.getControl(name="form.action.uvcsite.add")
+  >>> save
+  <SubmitControl name='form.action.uvcsite.add' type='submit'>
+
+We have a subscriber for the AfterSaveEvent for uvcsite which prints "AfterSaveEvent".
+
+  >>> save.click()
+  AfterSaveEvent
+
+  >>> "Added Content" in browser.contents
+  True
+
+Of course the len of the folder should now be one:
+
+  >>> len(folder)
+  1

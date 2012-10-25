@@ -1,0 +1,22 @@
+<script>
+ $(document).ready(function() {
+   $('#stepmenutitle').click(function() {
+       $(this).next().toggle();
+      })
+ });
+</script>
+
+<div class="WizardStepMenu" tal:condition="viewlet.steps">
+  <h2 id="stepmenutitle" tal:content="viewlet.title"/> 
+  <div style="display:none">
+    <ul> 
+      <li class="" tal:repeat="step viewlet.steps" tal:attributes="class step['css']">
+        <a title="" tal:attributes="href step['link']" tal:condition="step['css'] == 'past'">
+          <span tal:content="step['description']" />
+        </a>
+        <span tal:content="step['description']" tal:condition="step['css'] != 'past'" />
+      </li>
+    </ul>
+  </div>
+</div>
+
