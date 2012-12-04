@@ -5,9 +5,8 @@ import datetime
 
 from megrok.layout import ILayout
 from mock import Mock
-from uvcsite.app import Uvcsite
+from uvcsite.app import Uvcsite, CustomDateFieldWidget
 from zeam.form.base import Form
-from zeam.form.ztk.widgets.date import DateFieldWidget 
 from zope import component
 from zope import interface, component
 from zope.authentication.interfaces import IAuthentication
@@ -49,7 +48,7 @@ class ZeamFormOverridesTests(unittest.TestCase):
         request = TestRequest()
         form = Form(obj, request)
         form.prefix="form.prefix"
-        datefield = DateFieldWidget(obj, form, request)
+        datefield = CustomDateFieldWidget(obj, form, request)
         datum = datetime.date(2011,01,01)
-        #self.assertEqual(datefield.valueToUnicode(datum), u'2011 1 1 ')
+        self.assertEqual(datefield.valueToUnicode(datum), u'2011 1 1 ')
         
