@@ -5,6 +5,7 @@
 import grok
 import uvcsite
 
+from zope.broken.interfaces import IBroken
 from zope.security.interfaces import IPrincipal
 from uvcsite.auth.interfaces import IMasterUser
 from zope.app.homefolder.interfaces import IHomeFolder
@@ -32,9 +33,10 @@ class MyRoles(grok.Adapter):
             if masteruser:
                 ret.append(name)
             else:
-                prm = IPrincipalRoleMap(productfolder)
-                for rolesetting in prm.getRolesForPrincipal(self.principal.id):
-                    role, setting = rolesetting
-                    if 'uvc.Editor' == role and setting is Allow:
-                        ret.append(name)
+                if not IBroken.providedBy(productfolder):
+                    prm = IPrincipalRoleMap(productfolder)
+                    for rolesetting in prm.getRolesForPrincipal(self.principal.id):
+                        role, setting = rolesetting
+                        if 'uvc.Editor' == role and setting is Allow:
+                            ret.append(name)
         return ret
