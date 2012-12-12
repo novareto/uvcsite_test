@@ -81,11 +81,17 @@ class SimpleForm(uvcsite.Form):
     ignoreContent = False 
     ignoreRequest = False
     fields = uvcsite.Fields(IFrage)
-    frage = u"" 
+    frage = u"0" 
+
+    def update(self):
+        from js.jquery_maskmoney import jquery_maskmoney
+        jquery_maskmoney.need()
+        print "neeed"
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
         data, errors = self.extractData()
+        print data
         if errors:
             return 
         self.frage = data.get('frage')

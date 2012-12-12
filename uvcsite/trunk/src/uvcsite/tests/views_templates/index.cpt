@@ -3,6 +3,10 @@
 <p> Lorem Ipsum </p>
 
 <strong tal:content="view.__name__"> </strong>
+<div>
+<a rel="tooltip" href="#" data-original-title="Default tooltip">you probably</a>
+<a data-placement="top" rel="tooltip" href="#" data-original-title="Tooltip on top">Tooltip on top</a>
+</div>
 
 <h3> Collapse </h3>
 
