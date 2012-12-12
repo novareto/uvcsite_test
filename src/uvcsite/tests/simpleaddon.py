@@ -14,12 +14,16 @@ from dolmen import menu
 from uvc.validation import validation
 from hurry.workflow.interfaces import IWorkflowInfo
 
+desc_name = u"""Wie ist Ihr <a rel="tooltip" href="#" data-original-title="Default tooltip">Name</a>"""
+
+
+
 
 class IContact(uvcsite.IContent):
 
     name = zope.schema.TextLine(
         title = u"Name",
-        description = u"Wie ist ihr Name",
+        description = desc_name,
         )
 
     alter = zope.schema.TextLine(

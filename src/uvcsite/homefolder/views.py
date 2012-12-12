@@ -17,6 +17,7 @@ from megrok.pagetemplate import PageTemplate
 from zope.component import getMultiAdapter
 from zope.pagetemplate.interfaces import IPageTemplate
 from uvcsite.content.productregistration import getAllProductRegistrations
+from grokcore.rest.interfaces import IRESTLayer
 
 
 grok.templatedir('templates')
@@ -115,3 +116,9 @@ class RedirectIndexMembers(grok.View):
         url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
         self.redirect(url)
 
+class RestHomeFolderTraverser(grok.Traverser):
+    grok.context(Members)
+    grok.layer(IRESTLayer)
+
+    def traverse(self, name):
+        return uvcsite.getHomeFolder(self.request).get(name)
