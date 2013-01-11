@@ -45,10 +45,10 @@ Erstellen eines einfachen XML's
   I am called
 
   >>> view.base_file
-  <open file '/tmp/example.xml', mode 'w+b' at ...>
+  <open file '<fdopen>', mode 'w+b' at ...>
 
   >>> view.render()
-  <open file '/tmp/example.xml', mode 'w+b' at ...>
+  <open file '<fdopen>', mode 'w+b' at ...>
 
   >>> class SimpleXML(uvcsite.BaseDataView):
   ...     grok.name('simplexml')
