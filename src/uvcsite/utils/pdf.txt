@@ -45,10 +45,10 @@ Erstellen eines einfachen PDF's
   I am called
 
   >>> view.base_file
-  <open file '/tmp/example.pdf', mode 'w+b' at ...>
+  <open file '<fdopen>', mode 'w+b' at ...>
 
   >>> view.render()
-  <open file '/tmp/example.pdf', mode 'w+b' at 0...>
+  <open file '<fdopen>', mode 'w+b' at ...>
 
 ContentType muss gesetzt sein, da sonst render nicht augerufen werden kann.
 

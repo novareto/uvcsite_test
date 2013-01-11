@@ -5,8 +5,9 @@
 import grok
 import tempfile
 
-from zope.interface import Interface
 from reportlab.pdfgen import canvas
+from repoze.filesafe import create_file
+from zope.interface import Interface
 
 
 class BaseDataView(grok.View):
@@ -16,10 +17,9 @@ class BaseDataView(grok.View):
     grok.title('basedataview')
     content_type = ""
 
-
     def getFile(self, fn):
         if fn:
-            return open(fn, 'w+b')
+            return create_file(fn, 'w+b')
         return tempfile.TemporaryFile()
 
     @property
@@ -48,7 +48,7 @@ class BaseDataView(grok.View):
         currentfile.seek(0)
         RESPONSE = self.request.response
         RESPONSE.setHeader('content-type', self.content_type)
-        RESPONSE.setHeader('content-length', currentfile )
+        RESPONSE.setHeader('content-length', currentfile)
         RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %self.filename)
         return currentfile
 
@@ -64,7 +64,6 @@ class BasePDF(BaseDataView):
         self.c = canvas.Canvas(self.base_file)
         self.genpdf()
         self.c.save()
-
 
 
 class BaseXML(BaseDataView):
