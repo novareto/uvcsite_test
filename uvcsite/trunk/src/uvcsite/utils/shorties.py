@@ -4,6 +4,7 @@
 
 
 import pytz
+import urllib
 import uvcsite
 import zope.security
 
@@ -19,7 +20,9 @@ def getHomeFolder(request):
 
 
 def getHomeFolderUrl(request, suffix=""):
-    return uvcsite.IGetHomeFolderUrl(request).getURL(type=suffix)
+    return urllib.unquote(
+        uvcsite.IGetHomeFolderUrl(request).getURL(type=suffix)
+    )
 
 
 def fmtDateTime(object, fmt="%d.%m.%Y %H:%M:%S"):
