@@ -5,17 +5,13 @@ import zope.component
 
 
 from dolmen.app.site import IDolmen
-from dolmen.app.layout import errors
-from zeam.form.ztk.widgets.date import DateWidgetExtractor, DateFieldWidget
 
 from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
 
 from zope.interface import Interface
-from zope.i18n.format import DateTimeParseError
 from zope.component.interfaces import IComponents
 from zope.pluggableauth import PluggableAuthentication
-from zope.interface.common.interfaces import IException
 from grokcore.registries import create_components_registry
 from zope.authentication.interfaces import IAuthentication
 from zope.app.homefolder.interfaces import IHomeFolderManager
@@ -35,7 +31,8 @@ grok.templatedir('templates')
 def setup_pau(PAU):
     PAU.authenticatorPlugins = ('principals', )
     PAU.credentialsPlugins = ("cookies",
-        "Zope Realm Basic-Auth", "No Challenge if Authenticated")
+                              "Zope Realm Basic-Auth",
+                              "No Challenge if Authenticated",)
 
 
 class Icons(grok.DirectoryResource):
@@ -45,11 +42,10 @@ class Icons(grok.DirectoryResource):
     grok.path('icons')
 
 
-
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
-    bases = (zope.component.globalSiteManager, ),
-    )
+    bases=(zope.component.globalSiteManager, ),
+)
 
 
 grok.global_utility(uvcsiteRegistry, name="uvcsiteRegistry", provides=IComponents, direct=True)
@@ -94,7 +90,6 @@ class SystemError(uvcsite.Page, grok.components.ExceptionView):
         super(SystemError, self).__init__(context, request)
         self.context = grok.getSite()
         self.origin_context = context
-        
 
 
 @customize(origin=IDate)

@@ -18,15 +18,17 @@ from megrok.layout.interfaces import ILayout
 from zope.publisher.publish import mapply
 from zope.interface import Interface
 from zeam.form.ztk import customize
+from uvc.validation import validation
 
 
 class IPerson(interface.Interface):
 
     id = schema.TextLine(
-       title = u"Id",
-       description = u"Id",
-       max_length=3,
-       )
+        title = u"Id",
+        description = u"Id",
+        max_length=3,
+        constraint = validation.validateZahl,
+        )
 
     name = schema.TextLine(
        title = u"Name",
@@ -52,6 +54,7 @@ class IPerson(interface.Interface):
     datum1 = schema.Date(
         title = u"Datumiii1",
         description = u"Bitte wählen Sie ein Datum aus",
+        required = False,
         )
 
 
@@ -78,10 +81,10 @@ class SimpleForm(uvcsite.Form):
     grok.context(uvcsite.IUVCSite)
     grok.require('zope.Public')
 
-    ignoreContent = False 
+    ignoreContent = False
     ignoreRequest = False
     fields = uvcsite.Fields(IFrage)
-    frage = u"0" 
+    frage = u"0"
 
     def update(self):
         from js.jquery_maskmoney import jquery_maskmoney
@@ -93,7 +96,7 @@ class SimpleForm(uvcsite.Form):
         data, errors = self.extractData()
         print data
         if errors:
-            return 
+            return
         self.frage = data.get('frage')
 
 
@@ -105,7 +108,6 @@ class MailAction(Action):
 
    def __call__(self, form, selected, deselected):
        # Send a mail
-       import pdb; pdb.set_trace()
        form.status = u"Mail sent"
        return SUCCESS
 
@@ -129,13 +131,12 @@ class TForm(SubTableForm):
     prefix = "G"
 
     tableFields = uvcsite.Fields(IFrage)
-    tableActions = TableActions(MailAction(u'dd')) 
+    tableActions = TableActions(MailAction(u'dd'))
 
     @uvcsite.action(u'Speichern')
     def handle_save(self):
         data, errors = self.extractData()
         print data, errors
-        import pdb; pdb.set_trace() 
 
     def getItems(self):
         return [dict(frage=1), dict(frage=2), dict(frage=3)]
@@ -146,12 +147,12 @@ class MyForm(uvcsite.Form):
     grok.description(u"Beschreibugn Beschreibugn")
     grok.context(Interface)
 
-    ignoreContent = False 
+    ignoreContent = False
     ignoreRequest = False
     fields = uvcsite.Fields(IPerson)
     #fields['geschlecht'].mode = "radio"
     #fields['name'].htmlAttributes['maxlength'] = 10
-    fields['vorname'].htmlAttributes['placeholder'] = u"BLA" 
+    fields['vorname'].htmlAttributes['placeholder'] = u"BLA"
     fields['datum'].htmlAttributes = {'placeholder': 'tt.mm.jjjj'}
 
     label = u"Beispielform"
@@ -168,6 +169,7 @@ class MyForm(uvcsite.Form):
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
         data, errors = self.extractData()
+        print data
         if errors or self.errors:
             self.flash(u"FEHLER", type="error")
             return
@@ -217,7 +219,7 @@ class Father(uvcsite.SubForm):
 class Mother(uvcsite.SubForm):
     grok.context(uvcsite.IUVCSite)
     grok.view(SplitContact)
-    fields = uvcsite.Fields(IPerson)
+    fields = uvcsite.Fields(IPerson).omit('name')
 
     label = "Mother"
 
@@ -256,7 +258,7 @@ class Step1(uvcsite.Step):
     grok.context(uvcsite.IUVCSite)
     grok.view(MyWizard)
     fields = uvcsite.Fields(IPerson).select('datum')
-    ignoreContent = False 
+    ignoreContent = False
 
     label = "Step 1"
 
@@ -290,7 +292,7 @@ def kk(context):
     terms = []
     for gwz in range(5):
         terms.append( SimpleTerm(gwz, gwz, gwz) )
-    return SimpleVocabulary(terms) 
+    return SimpleVocabulary(terms)
 
 class ISimplePerson(interface.Interface):
 
@@ -317,7 +319,7 @@ class SimplePerson(uvcsite.Content):
     uvcsite.schema(ISimplePerson)
 
 
-grok.global_utility(SimplePerson, 
+grok.global_utility(SimplePerson,
     name='uvcsite.tests.forms.ISimplePerson',
     direct=True,
     provides=IFactory)
@@ -329,16 +331,16 @@ class IAdressen(interface.Interface):
         title=u"Personen",
         description=u"Bitte tragen Sie alle Personen ein...",
         value_type=schema.Object(
-            title=u"Person", 
+            title=u"Person",
             schema=ISimplePerson),
         )
-        
+
 class IAdressen1(interface.Interface):
 
     personen = schema.Object(
-            title=u"Person", 
+            title=u"Person",
             schema=ISimplePerson)
-        
+
 
 
 class ComplexForm(uvcsite.Form):
@@ -348,7 +350,7 @@ class ComplexForm(uvcsite.Form):
     grok.context(uvcsite.IUVCSite)
     #uvcsite.menu(FormBeispiele)
 
-    ignoreContent = False 
+    ignoreContent = False
     ignoreRequest = False
     fields = uvcsite.Fields(IAdressen)
     #fields['personen'].mode = "bgdp"
@@ -365,8 +367,8 @@ class ComplexForm(uvcsite.Form):
     def handleButton(self):
         data, errors = self.extractData()
         print errors
-        import pdb; pdb.set_trace() 
-        
+        import pdb; pdb.set_trace()
+
 
 class oComplexForm(uvcsite.Form):
     """ """
@@ -375,7 +377,7 @@ class oComplexForm(uvcsite.Form):
     grok.context(uvcsite.IUVCSite)
     #uvcsite.menu(FormBeispiele)
 
-    ignoreContent = False 
+    ignoreContent = False
     ignoreRequest = False
     fields = uvcsite.Fields(IAdressen)
 
