@@ -31,6 +31,17 @@ def fmtDateTime(object, fmt="%d.%m.%Y %H:%M:%S"):
     return object.astimezone(tz).strftime(fmt)
 
 
+def fmtZahl(n):
+    if isinstance(n, str) or isinstance(n, int):
+        r = []
+        for i, c in enumerate(reversed(str(n))):
+            if i and (not (i % 3)):
+                r.insert(0, '.')
+            r.insert(0, c)
+        return ''.join(r)
+    return n
+
+
 def getRequest():
     return zope.security.management.getInteraction().participations[0]
 

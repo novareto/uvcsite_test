@@ -43,3 +43,16 @@ getHomeFolderUrl
   Principal('christian')
 
   >>> endInteraction()
+
+Formatiern von Zahlen mit Tausenderpunkt.
+-----------------------------------------
+
+  >>> uvcsite.fmtZahl( 1000000 )
+  '1.000.000'
+
+  >>> uvcsite.fmtZahl('1000000')
+  '1.000.000'
+
+  >>> uvcsite.fmtZahl(1000000.00)
+  1000000.0
+
