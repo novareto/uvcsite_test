@@ -20,9 +20,10 @@ def getHomeFolder(request):
 
 
 def getHomeFolderUrl(request, suffix=""):
-    return urllib.unquote(
-        uvcsite.IGetHomeFolderUrl(request).getURL(type=suffix)
-    )
+    url = uvcsite.IGetHomeFolderUrl(request).getURL(type=suffix)
+    if url:
+        url = urllib.unquote(url)
+    return url
 
 
 def fmtDateTime(object, fmt="%d.%m.%Y %H:%M:%S"):
