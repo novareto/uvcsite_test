@@ -1,0 +1,52 @@
+Default Views for Content 
+=========================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Setup
+-----
+
+  >>> from zope.app.testing.functional import getRootFolder
+  >>> root = getRootFolder()
+
+  >>> from uvcsite.tests.simpleaddon import AdressBook, Contact
+
+  >>> root['folder'] = folder = AdressBook()
+  >>> folder
+  <uvcsite.tests.simpleaddon.AdressBook object at ...>
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> request = TestRequest()
+
+Add
+---
+
+  >>> add = getMultiAdapter((folder, request), name='add')
+  >>> add
+  <uvcsite.content.views.Add object at ...>
+
+  >>> add.fields.keys()
+  ['title', 'name', 'alter']
+
+Edit
+----
+
+  >>> contact = Contact(title=u"Titel", name=u"christian", alter=u"12")
+  >>> edit = getMultiAdapter((contact, request), name='edit')
+  >>> edit 
+  <uvcsite.content.views.Edit object at ...>
+
+  >>> edit.fields.keys()
+  ['title', 'name', 'alter']
+
+Views (Index)
+-------------
+
+  >>> index = getMultiAdapter((contact, request), name='index')
+  >>> index 
+  <uvcsite.content.views.Display object at ...>
+
+  >>> index.fields.keys()
+  ['title', 'name', 'alter']
