@@ -1,0 +1,124 @@
+Do a functional doctest test on the app.
+========================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Let's first create an instance of Uvcsite at the top level:
+
+   >>> from zope.app.testing.functional import getRootFolder
+   >>> from uvcsite.app import Uvcsite
+   >>> from zope.site.hooks import setSite
+   >>> root = getRootFolder()
+   >>> uvcsite = Uvcsite()
+   >>> root['app'] = uvcsite
+   >>> setSite(root['app'])
+
+Let's look if we have our authenticate infrastucture
+----------------------------------------------------
+
+   >>> from zope.component import getUtility
+   >>> from zope.authentication.interfaces import IAuthentication
+
+   >>> auth = getUtility(IAuthentication)
+   >>> print auth
+   <zope.pluggableauth.authentication.PluggableAuthentication object at ...>
+
+   >>> for plugin in auth.getCredentialsPlugins():
+   ...     print plugin
+   ('cookies', <dolmen.app.authentication.plugins.cookies.CookiesCredentials object at 0...>)
+
+   >>> for plugin in auth.getAuthenticatorPlugins():
+   ...     print plugin
+   ('principals', <uvcsite.auth.handler.UVCAuthenticator object at 0...>)
+
+
+Registries
+----------
+
+   >>> from zope.component.interfaces import IComponents
+   >>> reg = getUtility(IComponents, name=u"uvcsiteRegistry")
+   >>> reg
+   <BaseComponents uvcsiteRegistry>
+
+   >>> sm = uvcsite.getSiteManager()
+   >>> sm
+   <LocalSiteManager ++etc++site>
+
+   >>> sm.__bases__
+   (<LocalSiteManager ++etc++site>, <BaseComponents uvcsiteRegistry>)
+
+   >>> lsm = sm.__bases__[0]
+   >>> lsm.__bases__
+   (<BaseGlobalComponents base>,)
+
+Run tests in the testbrowser
+----------------------------
+
+The zope.testbrowser.browser module exposes a Browser class that
+simulates a web browser similar to Mozilla Firefox or IE.  We use that
+to test how our application behaves in a browser.  For more
+information, see http://pypi.python.org/pypi/zope.testbrowser.
+
+Only Authorzied people should get access
+----------------------------------------
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+   >>> browser.handleErrors = False 
+
+This means if we open the index page. We get redirected
+to the login page.
+
+
+#   >>> browser.open('http://localhost/app/index')
+#   >>> browser.url
+#   'http://localhost/app/@@login?camefrom=http%3A%2F%2Flocalhost%2Fapp%2Findex'
+#
+#   >>> browser.open('http://localhost/app/defaultsecurity')
+#   >>> browser.url
+#   'http://localhost/app/@@login?camefrom=http%3A%2F%2Flocalhost%2Fapp%2Fdefaultsecurity'
+
+Now log on as a user and look if we get the index page
+
+   >>> browser.handleErrors = False 
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.open('http://localhost/app/index')
+
+   >>> 'uvc.user' in browser.contents
+   True
+
+   >>> "Herzlich Willkommen" in browser.contents
+   True
+
+Not Found View
+--------------
+
+   >>> browser.handleErrors = True
+
+We should get the Error Page:
+
+   >>> browser.open('http://localhost/app/not_found')
+   Traceback (most recent call last):
+   ...
+   HTTPError: HTTP Error 404: Not Found
+
+
+And we should get a Status 404
+
+   >>> print browser.headers['Status'].upper()
+   404 NOT FOUND
+
+
+SystemError
+-----------
+
+   >>> from zope.component import getMultiAdapter
+   >>> from zope.publisher.browser import TestRequest
+   >>> request = TestRequest()
+   >>> exception = Exception()
+
+   >>> system_error = getMultiAdapter((exception, request), name=u"index")
+   >>> system_error
+   <uvcsite.app.SystemError object at ...>
+

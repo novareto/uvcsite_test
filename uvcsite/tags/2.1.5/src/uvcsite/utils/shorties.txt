@@ -1,0 +1,58 @@
+Shourcut Helpers UVCSite
+=========================
+
+:Test-Layer: functional
+
+  >>> import uvcsite
+  >>> from uvcsite.app import Uvcsite
+  >>> from uvcsite.tests import startInteraction, endInteraction
+  >>> from zope.component.hooks import setSite
+  >>> from zope.publisher.browser import TestRequest
+  >>> from zope.pluggableauth.factories import Principal
+
+  >>> root = getRootFolder()
+  >>> root['app'] = app = Uvcsite()
+  >>> setSite(app)
+
+  >>> request = startInteraction('christian')
+  >>> request.principal 
+  Principal('christian')
+
+getHomeFolder
+
+  >>> uvcsite.getHomeFolder(request)
+  <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+
+
+getHomeFolderUrl
+
+  >>> uvcsite.getHomeFolderUrl(request)
+  'http://127.0.0.1/app/members/christian/'
+
+  >>> uvcsite.getHomeFolderUrl(request, 'Unfallanzeigen')
+  'http://127.0.0.1/app/members/christian/Unfallanzeigen'
+
+
+  >>> uvcsite.getHomeFolderUrl(request, 'bla/bla')
+  'http://127.0.0.1/app/members/christian/bla/bla'
+
+  >>> uvcsite.getRequest()
+  <zope.publisher.browser.TestRequest instance URL=http://127.0.0.1>
+
+  >>> uvcsite.getPrincipal()
+  Principal('christian')
+
+  >>> endInteraction()
+
+Formatiern von Zahlen mit Tausenderpunkt.
+-----------------------------------------
+
+  >>> uvcsite.fmtZahl( 1000000 )
+  '1.000.000'
+
+  >>> uvcsite.fmtZahl('1000000')
+  '1.000.000'
+
+  >>> uvcsite.fmtZahl(1000000.00)
+  1000000.0
+
