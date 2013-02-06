@@ -2,14 +2,19 @@
 # Copyright (c) 2007-2010 NovaReto GmbH
 # cklinger@novareto.de
 
-
+import uvcsite
 import doctest
+import unittest
 import uvcsite.tests
 
 from zope.app.testing.functional import FunctionalDocFileSuite
+from zope.app.wsgi.testlayer import BrowserLayer
 
+
+FunctionalLayer = BrowserLayer(uvcsite, 'ftesting_uvc.zcml')
 
 def test_suite():
+    suite = unittest.TestSuite()
     layer = uvcsite.tests.FunctionalLayer
     functional = FunctionalDocFileSuite(
         'app.txt', 'auth/handler.txt',
@@ -33,6 +38,19 @@ def test_suite():
                     doctest.IGNORE_EXCEPTION_DETAIL |
                     doctest.REPORT_NDIFF |
                     doctest.NORMALIZE_WHITESPACE,
-        )
+    )
     functional.layer = layer
-    return functional
+    suite.addTest(functional)
+    uvc_layer = uvcsite.tests.UVCBrowserLayer
+    test = doctest.DocFileSuite(
+        'workflow/workflow_api.txt',
+        package='uvcsite',
+        globs={'getRootFolder': uvc_layer.getRootFolder},
+        optionflags=doctest.ELLIPSIS |
+            doctest.IGNORE_EXCEPTION_DETAIL |
+            doctest.REPORT_NDIFF |
+            doctest.NORMALIZE_WHITESPACE,
+    )
+    test.layer = uvc_layer
+    suite.addTest(test)
+    return suite

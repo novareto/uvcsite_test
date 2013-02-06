@@ -8,10 +8,8 @@ from lxml import etree
 from lxml.builder import E
 from dolmen.content import IContent
 from uvcsite.content import IProductFolder
-from zope.component import getMultiAdapter
 from zope.interface import Invalid, Interface
 from hurry.workflow.interfaces import IWorkflowState
-from zope.pagetemplate.interfaces import IPageTemplate
 from z3c.schema2xml import serialize_to_tree, deserialize
 from uvcsite.workflow.basic_workflow import titleForState
 from uvc.layout.forms.event import AfterSaveEvent
@@ -38,8 +36,8 @@ class ProductFolderRest(grok.REST):
                     E('titel', obj.title),
                     E('author', obj.principal.id),
                     E('datum', obj.modtime.strftime('%d.%m.%Y')),
-                    E('status', state)
-                ))
+                    E('status', state))
+            )
         return etree.tostring(container, xml_declaration=True, encoding='utf-8', pretty_print=True)
 
     def PUT(self):
@@ -52,10 +50,10 @@ class ProductFolderRest(grok.REST):
         if not errors:
             self.context.add(content)
             result = etree.Element(
-                'success', 
+                'success',
                 name=content.meta_type,
                 id=content.__name__
-                )
+            )
             grok.notify(AfterSaveEvent(content, self.request))
         else:
             result = etree.Element('failure')
@@ -76,7 +74,6 @@ class ContentRest(grok.REST):
         element = etree.SubElement(object, context.meta_type, id=id)
         serialize_to_tree(element, schema, context)
         return etree.tostring(object, xml_declaration=True, encoding='UTF-8', pretty_print=True)
- 
 
 
 class ISerializer(Interface):
@@ -100,10 +97,13 @@ class DefaultSerializer(grok.Adapter):
     def work(self, payload, interface, errors):
         try:
             deserialize(payload, interface, self.context)
-        except Exception, e: # Here should be a DeserializeError
+        except Exception, e:  # Here should be a DeserializeError
             for field, (exception, element) in e.field_errors.items():
-                error = etree.Element('error', field=field.__name__,
-                    message=exception.__doc__)
+                error = etree.Element(
+                    'error',
+                    field=field.__name__,
+                    message=exception.__doc__,
+                )
                 error.append(element)
                 errors.append(error)
         try:
