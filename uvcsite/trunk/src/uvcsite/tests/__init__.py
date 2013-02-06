@@ -3,17 +3,20 @@
 # cklinger@novareto.de
 
 import os.path
-import uvcsite
-import unittest2
 import transaction
+import unittest2
+import uvcsite
 import zope.app.appsetup
 import zope.app.wsgi.testlayer
 import zope.component.testlayer
+import zope.security
 
 from StringIO import StringIO
 from uvcsite.app import Uvcsite
 from zope.site.hooks import setSite
 from zope.app.testing.functional import ZCMLLayer
+from zope.publisher.browser import TestRequest
+from zope.pluggableauth.factories import Principal
 
 
 class TestCase(unittest2.TestCase):
@@ -47,14 +50,15 @@ product_config = """
 ftesting_zcml = os.path.join(
     os.path.dirname(uvcsite.__file__),
     'ftesting_uvc.zcml',
-    )
+)
+
 
 FunctionalLayer = ZCMLLayer(
     ftesting_zcml, __name__,
     'FunctionalLayer',
     allow_teardown=True,
     product_config=product_config,
-    )
+)
 
 
 class BaseUVCBrowserLayer(zope.app.wsgi.testlayer.BrowserLayer):
@@ -65,6 +69,7 @@ class BaseUVCBrowserLayer(zope.app.wsgi.testlayer.BrowserLayer):
         self.conf = [
             zope.app.appsetup.product.FauxConfiguration(name, values)
             for name, values in self.conf.items()]
+        #super(BaseUVCBrowserLayer, self).__init__(*args, **kw)
         zope.app.wsgi.testlayer.BrowserLayer.__init__(self, *args, **kw)
         zope.component.testlayer.ZCMLFileLayer.__init__(self, *args, **kw)
 
@@ -81,11 +86,7 @@ UVCBrowserLayer = BaseUVCBrowserLayer(
     uvcsite,
     zcml_file='ftesting_uvc.zcml',
     product_config=product_config,
-    )
-
-import zope.security
-from zope.publisher.browser import TestRequest
-from zope.pluggableauth.factories import Principal
+)
 
 
 def startInteraction(principal, request=None):
@@ -94,6 +95,7 @@ def startInteraction(principal, request=None):
     request.setPrincipal(Principal(principal, principal))
     zope.security.management.newInteraction(request)
     return request
+
 
 def endInteraction():
     zope.security.management.endInteraction()
@@ -120,7 +122,6 @@ def endInteraction():
 #        root = self.getRootFolder()
 #        root['app'] = Uvcsite()
 #        transaction.commit()
-
 
 
 #SeleniumLayer = SeleniumProductConfigLayer(
