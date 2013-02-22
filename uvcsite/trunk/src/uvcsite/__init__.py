@@ -36,7 +36,8 @@ from zeam.form.base.errors import Error
 from dolmen.forms.base.models import ApplicationForm
 from dolmen.forms.base.interfaces import IFieldUpdate
 from dolmen.forms.base.utils import (
-    set_fields_data, notify_changes, apply_data_event)
+    notify_changes, apply_data_event)
+from uvcsite.utils.form import set_fields_data
 
 #from uvcsite.utils.mail import send_mail
 from uvcsite.utils.olddata import Altdaten, PDF

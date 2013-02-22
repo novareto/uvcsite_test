@@ -8,7 +8,7 @@ import uvcsite
 from zope import interface
 from zope import schema
 
-from uvc.widgets import DatePicker, DatePickerCSS, double, masked_input
+from uvc.widgets import DatePicker, DatePickerCSS, double
 from zeam.form.base.widgets import getWidgetExtractor
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
@@ -17,7 +17,7 @@ from zope import component
 from megrok.layout.interfaces import ILayout
 from zope.publisher.publish import mapply
 from zope.interface import Interface
-from zeam.form.ztk import customize
+#from zeam.form.ztk import customize
 from uvc.validation import validation
 
 
@@ -176,9 +176,9 @@ class MyForm(uvcsite.Form):
         self.flash('Alles Klar')
 
 
-@customize(schema=IPerson, name="name")
-def handle_name(field):
-    field.htmlAttributes['maxlength'] = 3
+#@customize(schema=IPerson, name="name")
+#def handle_name(field):
+#    field.htmlAttributes['maxlength'] = 3
 
 
 class MyFormHilfe(uvcsite.HelpPage):
@@ -370,12 +370,12 @@ class ComplexForm(uvcsite.Form):
         import pdb; pdb.set_trace()
 
 
-class oComplexForm(uvcsite.Form):
+class BGVExampleForm(uvcsite.Form):
     """ """
+    grok.name('sform')
     grok.title(u'oKomplexForm')
     grok.description(u"oKomplexe Form")
     grok.context(uvcsite.IUVCSite)
-    #uvcsite.menu(FormBeispiele)
 
     ignoreContent = False
     ignoreRequest = False

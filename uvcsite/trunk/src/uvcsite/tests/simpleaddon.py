@@ -33,6 +33,7 @@ class IContact(uvcsite.IContent):
     alter = zope.schema.TextLine(
         title=u"Alter",
         description=u"Wie ist ihr Alter",
+        required=False,
         constraint=validation.validateZahl
     )
 

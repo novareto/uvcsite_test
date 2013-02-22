@@ -21,7 +21,7 @@ from zope.i18n.interfaces import IUserPreferredLanguages
 from zope.publisher.interfaces.http import IHTTPRequest
 from zeam.form.ztk.widgets.choice import RadioFieldWidget
 from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
-from zeam.form.ztk import customize
+#from zeam.form.ztk import customize
 from zope.schema.interfaces import IDate
 
 
@@ -92,9 +92,9 @@ class SystemError(uvcsite.Page, grok.components.ExceptionView):
         self.origin_context = context
 
 
-@customize(origin=IDate)
-def customize_size(field):
-    field.valueLength = 'medium'
+#@customize(origin=IDate)
+#def customize_size(field):
+#    field.valueLength = 'medium'
 
 
 class Favicon(grok.View):
