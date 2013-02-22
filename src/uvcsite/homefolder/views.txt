@@ -62,7 +62,7 @@ Now we can render the Index Page of the Homefolder:
         <th>Objekt</th>
         <th>Status</th>
         <th>Autor</th>
-        <th>Datum</th>
+        <th class="sorted-on ascending">Datum</th>
       </tr>
     </thead>
     <tbody>
@@ -146,7 +146,7 @@ Let's check again if we now get **contenttypes** in our homefolder:
         <th>Objekt</th>
         <th>Status</th>
         <th>Autor</th>
-        <th>Datum</th>
+        <th class="sorted-on ascending">Datum</th>
       </tr>
     </thead>
     <tbody>
@@ -156,7 +156,7 @@ Let's check again if we now get **contenttypes** in our homefolder:
         <td>Person</td>
         <td>Entwurf</td>
         <td>lars</td>
-        <td>...</td>
+        <td class="sorted-on ascending">...</td>
       </tr>
     </tbody>
   </table>

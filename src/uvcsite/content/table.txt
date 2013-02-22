@@ -67,7 +67,7 @@ of our table
         <td>Contact</td>
         <td>Entwurf</td>
         <td></td>
-        <td>...</td>
+        <td class="sorted-on ascending">...</td>
       </tr>
       <tr class="odd">
         <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="mycontent2"  /></td>
@@ -75,7 +75,7 @@ of our table
         <td>Contact</td>
         <td>Entwurf</td>
         <td></td>
-        <td>...</td>
+        <td class="sorted-on ascending">...</td>
       </tr>
     </tbody>
   ...
@@ -102,7 +102,7 @@ edit action it now points on the view action.
         <td>Contact</td>
         <td>gesendet</td>
         <td>someuser</td>
-        <td>...</td>
+        <td class="sorted-on ascending">...</td>
       </tr>
       <tr class="odd">
         <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="mycontent2"  /></td>
@@ -110,7 +110,7 @@ edit action it now points on the view action.
         <td>Contact</td>
         <td>Entwurf</td>
         <td></td>
-        <td>...</td>
+        <td class="sorted-on ascending">...</td>
       </tr>
     </tbody>
   ...

@@ -66,7 +66,7 @@ Instead of the <th>Title<th> we should get <th>OverrideTable</th>:
         <th>Objekt</th>
         <th>Status</th>
         <th>Autor</th>
-        <th>Datum</th>
+        <th class="sorted-on ascending">Datum</th>
       </tr>...  
   </div>
 

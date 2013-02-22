@@ -5,11 +5,11 @@
   <grok:grok package=".views" />
   <grok:grok package=".simpleaddon" />
   <grok:grok package=".usermanagement" />
-  <grok:grok package=".forms" />
   <grok:grok package=".menustuff" />
   <grok:grok package=".fragen_andreas" />
   <grok:grok package=".zforms" />
   <grok:grok package=".tableformviews" />
   <grok:grok package=".ftes" />
+  <grok:grok package=".bgvform" />
 
 </configure>
