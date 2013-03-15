@@ -56,3 +56,44 @@ Formatiern von Zahlen mit Tausenderpunkt.
   >>> uvcsite.fmtZahl(1000000.00)
   1000000.0
 
+  >>> uvcsite.fmtFloat(10000.00)
+  '10.000,00'
+
+  >>> uvcsite.fmtFloat('10000.00')
+  Traceback (most recent call last):
+  ...
+  AssertionError
+
+  >>> uvcsite.fmtFloat('10000.00')
+  Traceback (most recent call last):
+  ...
+  AssertionError
+
+
+Konvertieren von Datum's Angaben
+--------------------------------
+
+  >>> uvcsite.fmtDate(20131101)
+  '01.11.2013'
+
+  >>> uvcsite.fmtDate('20120422')
+  '22.04.2012'
+
+  >>> from datetime import datetime, date
+  >>> jetzt = datetime.now()
+  >>> uvcsite.fmtDate(jetzt) == jetzt.strftime('%d.%m.%Y')
+  True
+
+  >>> uvcsite.fmtDate(jetzt.date()) == jetzt.strftime('%d.%m.%Y')
+  True
+
+  >>> uvcsite.fmtDate(None)
+  ''
+
+  >>> import pytz
+  >>> d2 = datetime.now(pytz.timezone('US/Eastern'))
+  >>> uvcsite.fmtDate(d2) == d2.strftime('%d.%m.%Y')
+  True
+
+  >>> uvcsite.fmtDate(d2.date()) == d2.strftime('%d.%m.%Y')
+  True

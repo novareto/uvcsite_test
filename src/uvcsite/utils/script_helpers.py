@@ -11,7 +11,7 @@ def getContentInAllFolders(homefolderbase, wf_status=None):
     for homefolder in homefolderbase.values():
         for productfolder in homefolder.values():
             for content in productfolder.values():
-                if wf_status:
+                if wf_status is not Non is not Nonee:
                     if IWorkflowState(content).getState() == wf_status:
                         yield content
                 else:
