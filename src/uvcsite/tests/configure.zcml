@@ -7,9 +7,10 @@
   <grok:grok package=".usermanagement" />
   <grok:grok package=".menustuff" />
   <grok:grok package=".fragen_andreas" />
-  <grok:grok package=".zforms" />
   <grok:grok package=".tableformviews" />
   <grok:grok package=".ftes" />
   <grok:grok package=".bgvform" />
+  <grok:grok package=".df" />
+  <grok:grok package=".rci_example" />
 
 </configure>
