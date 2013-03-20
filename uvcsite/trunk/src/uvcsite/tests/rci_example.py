@@ -7,7 +7,7 @@ import uvcsite
 
 from grokcore.component import provider
 from zope.interface import Interface
-from zope.schema import Choice
+from zope.schema import Choice, TextLine
 
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
@@ -21,6 +21,8 @@ def jobs(context):
 
 class IExampleForm(Interface):
 
+    name = TextLine(title=u"Name")
+
     berufe = Choice(
         title=u"Berufe",
         description=u"Bitte wählen Sie zunächst Ihre Sparte und anschließend\
@@ -29,6 +31,8 @@ class IExampleForm(Interface):
     )
 
 
+grok.templatedir('templates')
+
 class ExampleForm(uvcsite.Form):
     grok.context(uvcsite.IUVCSite)
     grok.name('ef')
@@ -36,13 +40,6 @@ class ExampleForm(uvcsite.Form):
 
     fields = uvcsite.Fields(IExampleForm)
 
-    @property
-    def mastervalues(self):
-        return ('bbg', 'stbg', 'lpz')
-
-    def updateForm(self):
-        super(ExampleForm, self).updateForm()
-        self.fieldWidgets.get('form.field.berufe').template = ChameleonPageTemplateFile('templates/ms.cpt')
 
     @uvcsite.action(u'Speichern')
     def handle_save(self):
@@ -50,13 +47,3 @@ class ExampleForm(uvcsite.Form):
         print data
 
 
-class MasterSelect(grok.JSON):
-    grok.context(ExampleForm)
-    grok.view(ExampleForm)
-
-    def select(self, master):
-        if master == "stbg":
-            rc = "<option value='STBG'> STBG-BERUFE</option>"
-        else:
-            rc = "<option value='BBG'> BBG-Berufre</option"
-        return {'options': rc}

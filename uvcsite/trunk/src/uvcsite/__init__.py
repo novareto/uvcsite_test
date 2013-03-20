@@ -41,7 +41,7 @@ from uvcsite.utils.form import set_fields_data
 
 #from uvcsite.utils.mail import send_mail
 from uvcsite.utils.olddata import Altdaten, PDF
-from uvcsite.utils.shorties import fmtZahl, getPrincipal, getRequest, fmtDateTime, getHomeFolderUrl, getHomeFolder
+from uvcsite.utils.shorties import fmtDate, fmtFloat, fmtZahl, getPrincipal, getRequest, fmtDateTime, getHomeFolderUrl, getHomeFolder
 from uvcsite.auth.interfaces import IMasterUser
 from uvcsite.content.productregistration import (ProductRegistration,
     getProductRegistrations, getAllProductRegistrations, ProductMenuItem)
