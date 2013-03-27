@@ -5,7 +5,7 @@ Let's first create an instance of Uvcsite at the top level:
 
 We have a special Layout for mobile applications:
 
-   >>> from megrok.layout.interfaces import ILayout
+   >>> from grokcore.layout.interfaces import ILayout
    >>> from zope.component import getMultiAdapter
    >>> from zope.interface import Interface
    >>> from zope.publisher.browser import TestRequest

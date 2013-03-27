@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2010 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import grok
 import uvcsite
-import megrok.layout
 from grokcore.chameleon.components import ChameleonPageTemplateFile
 
 from zeam.form import base
 from dolmen.menu import menuentry
 from uvcsite import uvcsiteMF as _
-from dolmen.forms.base import Fields 
+from dolmen.forms.base import Fields
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
 from zope.app.homefolder.interfaces import IHomeFolder
@@ -22,7 +21,7 @@ from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
 
 grok.templatedir('templates')
 
-class ENMS(megrok.layout.Page):
+class ENMS(uvcsite.Page):
     grok.title('Mitbenutzerverwaltung')
     grok.context(IMyHomeFolder)
     grok.require('uvc.ManageCoUsers')
@@ -41,7 +40,7 @@ class ENMS(megrok.layout.Page):
             except:
                 print role
                 pass
-        return rc 
+        return rc
 
 
 class ENMSCreateUser(uvcsite.Form):
@@ -77,7 +76,7 @@ class ENMSCreateUser(uvcsite.Form):
         return {'mnr': user, 'rollen': rollen}
 
     def update(self):
-        data = self.getDefaultData() 
+        data = self.getDefaultData()
         self.setContentData(base.DictDataManager(data))
 
     @base.action(_(u"Anlegen"))
@@ -112,16 +111,16 @@ class ENMSUpdateUser(uvcsite.Form):
     def getDefaultData(self):
         principal = self.request.principal.title
         id = "%s-%s" % (self.request.principal.title, self.request.get('cn'))
-        user = {} 
-        if self.request.get('cn'): 
+        user = {}
+        if self.request.get('cn'):
             um = getUtility(IUserManagement)
             user = um.getUser(id)
-            user['mnr'] = id 
+            user['mnr'] = id
             user['confirm'] = user['passwort']
-        return user 
+        return user
 
     def update(self):
-        data = self.getDefaultData() 
+        data = self.getDefaultData()
         self.setContentData(base.DictDataManager(data))
 
     def updateForm(self):
