@@ -14,7 +14,7 @@ from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
 from zeam.form.base import Form
 from zope import component
-from megrok.layout.interfaces import ILayout
+from grokcore.layout.interfaces import ILayout
 from zope.publisher.publish import mapply
 from zope.interface import Interface
 #from zeam.form.ztk import customize

@@ -8,7 +8,7 @@ import grok
 from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
     IContent, Content, schema, name, productfolder)
 
-from megrok.layout import Page
+from grokcore.layout import Page
 from megrok.z3ctable import TablePage
 from uvcsite.interfaces import *
 from uvcsite.utils.help import HelpPage

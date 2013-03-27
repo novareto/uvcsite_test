@@ -24,7 +24,7 @@
   <include package="zope.pluggableauth.plugins" file="generic.zcml"/>
   <include package="z3c.schema2xml" />
 
-  <include package="megrok.layout" />
+  <include package="grokcore.layout" />
   <include package="megrok.z3ctable" />
   <include package="megrok.z3ctable" file="meta.zcml" />
   <include package="megrok.rendersource" />

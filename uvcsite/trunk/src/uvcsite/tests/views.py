@@ -3,7 +3,6 @@
 # cklinger@novareto.de
 
 import grok
-import megrok.layout
 
 from dolmen.menu import menuentry, global_menuentry
 from zope.interface import Interface
