@@ -66,6 +66,14 @@ class BasePDF(BaseDataView):
         self.c.save()
 
 
+class WatermarkPDF(BasePDF):
+    grok.baseclass()
+
+    def update(self, filename=None):
+        super(WatermarkPDF, self).update(filename=filename)
+        self.watermark()
+
+
 class BaseXML(BaseDataView):
     grok.name('xml')
     grok.title('uvcsite.xml')

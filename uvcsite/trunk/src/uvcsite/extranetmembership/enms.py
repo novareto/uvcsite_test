@@ -191,6 +191,7 @@ class ChangePassword(uvcsite.Form):
     fields = Fields(IExtranetMember).select('passwort', 'confirm')
     ignoreContext = True
 
+
     @base.action(_(u"Bearbeiten"))
     def changePasswort(self):
         data, errors = self.extractData()
