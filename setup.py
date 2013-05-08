@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '2.1.6.2.dev0'
+version = '2.1.6.3'
 
 setup(name='uvcsite',
       version=version,
@@ -40,8 +40,8 @@ setup(name='uvcsite',
           'hurry.workflow',
           'js.jquery_tablesorter',
           'lxml',
-          'megrok.layout',
           'megrok.rendersource',
+          'megrok.layout',
           'megrok.z3ctable',
           'mock',
           'plone.memoize',
