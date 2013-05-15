@@ -128,7 +128,7 @@ class Add(uvcsite.AddForm):
     def label(self):
         return self.context.getContentName()
 
-    description = u"Bitte füllen sie die Eingabeform"
+    description = u"Bitte füllen Sie die Eingabeform."
 
     @property
     def fields(self):
