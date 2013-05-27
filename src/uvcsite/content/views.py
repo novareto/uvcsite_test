@@ -187,3 +187,4 @@ class Display(uvcsite.Form):
         content_object = self.context
         schemas = schema.bind().get(content_object)
         return Fields(*schemas)
+

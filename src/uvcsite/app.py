@@ -73,6 +73,7 @@ class Uvcsite(grok.Application, grok.Container):
         if uvcsiteRegistry not in current.__bases__:
             uvcsiteRegistry.__bases__ = tuple([x for x in uvcsiteRegistry.__bases__ if x.__hash__() != zope.component.globalSiteManager.__hash__()])
             current.__bases__ += (uvcsiteRegistry,)
+        current.__bases__ = current.__bases__[::-1]
         return current
 
 

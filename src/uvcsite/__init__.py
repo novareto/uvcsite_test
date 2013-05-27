@@ -39,7 +39,7 @@ from dolmen.forms.base.utils import (
     notify_changes, apply_data_event)
 from uvcsite.utils.form import set_fields_data
 
-#from uvcsite.utils.mail import send_mail
+from uvcsite.utils.mail import send_mail
 from uvcsite.utils.olddata import Altdaten, PDF
 from uvcsite.utils.shorties import fmtDate, fmtFloat, fmtZahl, getPrincipal, getRequest, fmtDateTime, getHomeFolderUrl, getHomeFolder
 from uvcsite.auth.interfaces import IMasterUser
