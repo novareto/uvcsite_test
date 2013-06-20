@@ -3,6 +3,8 @@
            xmlns:grok="http://namespaces.zope.org/grok">
 
   <grok:grok package=".views" />
+  <grok:grok package=".daf" />
+  <grok:grok package=".forms" />
   <grok:grok package=".simpleaddon" />
   <grok:grok package=".usermanagement" />
   <grok:grok package=".menustuff" />

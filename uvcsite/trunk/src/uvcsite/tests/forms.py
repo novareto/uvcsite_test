@@ -149,10 +149,10 @@ class MyForm(uvcsite.Form):
 
     ignoreContent = False
     ignoreRequest = False
-    fields = uvcsite.Fields(IPerson)
+    fields = uvcsite.Fields(IPerson).select('datum')
     #fields['geschlecht'].mode = "radio"
     #fields['name'].htmlAttributes['maxlength'] = 10
-    fields['vorname'].htmlAttributes['placeholder'] = u"BLA"
+    #fields['vorname'].htmlAttributes['placeholder'] = u"BLA"
     fields['datum'].htmlAttributes = {'placeholder': 'tt.mm.jjjj'}
 
     label = u"Beispielform"
@@ -161,13 +161,14 @@ class MyForm(uvcsite.Form):
 
     def update(self):
         self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))
-        double.need()
-        DatePickerCSS.need()
-        DatePicker.need()
-        masked_input.need()
+        #double.need()
+        #DatePickerCSS.need()
+        #DatePicker.need()
+        #masked_input.need()
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
+        import pdb; pdb.set_trace()
         data, errors = self.extractData()
         print data
         if errors or self.errors:
