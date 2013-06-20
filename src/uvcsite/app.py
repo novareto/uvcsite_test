@@ -92,10 +92,30 @@ class SystemError(uvcsite.Page, grok.components.ExceptionView):
         self.context = grok.getSite()
         self.origin_context = context
 
+from zeam.form.ztk import customize
+from zeam.form.ztk.widgets.date import DateWidgetExtractor
+from zeam.form.base import NO_VALUE
+from zope.i18n.format import DateTimeParseError
 
-#@customize(origin=IDate)
-#def customize_size(field):
-#    field.valueLength = 'medium'
+
+class UVCDateWidgetExtractor(DateWidgetExtractor):
+
+    def extract(self):
+        value, error = super(DateWidgetExtractor, self).extract()
+        if value is not NO_VALUE:
+            if not len(value):
+                return NO_VALUE, None
+            formatter = self.component.getFormatter(self.form)
+            try:
+                value = formatter.parse(value)
+            except (ValueError, DateTimeParseError), error:
+                return None, u"Bitte überprüfen Sie das Datumsformat."
+        return value, error
+
+
+@customize(origin=IDate)
+def customize_size(field):
+    field.valueLength = 'medium'
 
 
 class Favicon(grok.View):
