@@ -64,7 +64,7 @@ def send_mail(sender, recipient, subject, body, file=None, filename=None):
     # Attachment von Dateien
     if file != None:
         fn = file.split("/")
-        fn = filename[-1]
+        fn = fn[-1]
         part = MIMEBase('application', 'octet-stream')
         part.set_payload(open(file, 'rb').read())
         Encoders.encode_base64(part)
