@@ -11,5 +11,6 @@
   <grok:grok package=".fragen_andreas" />
   <grok:grok package=".tableformviews" />
   <grok:grok package=".rci_example" />
+  <grok:grok package=".bgvform" />
 
 </configure>
