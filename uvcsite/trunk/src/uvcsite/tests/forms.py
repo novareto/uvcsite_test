@@ -30,6 +30,10 @@ class IPerson(interface.Interface):
         constraint = validation.validateZahl,
         )
 
+    check = schema.Bool(
+        title=u"Bestaetigung"
+    )
+
     name = schema.TextLine(
        title = u"Name",
        description = u"Bitte geben Sie hier den Namen ein",
@@ -149,11 +153,12 @@ class MyForm(uvcsite.Form):
 
     ignoreContent = False
     ignoreRequest = False
-    fields = uvcsite.Fields(IPerson).select('datum')
-    #fields['geschlecht'].mode = "radio"
-    #fields['name'].htmlAttributes['maxlength'] = 10
-    #fields['vorname'].htmlAttributes['placeholder'] = u"BLA"
+    fields = uvcsite.Fields(IPerson)
+    fields['geschlecht'].mode = "radio"
+    fields['name'].htmlAttributes['maxlength'] = 10
+    fields['vorname'].htmlAttributes['placeholder'] = u"BLA"
     fields['datum'].htmlAttributes = {'placeholder': 'tt.mm.jjjj'}
+    fields['check'].htmlAttributes = {'disabled': 'disabled'}
 
     label = u"Beispielform"
     description = u"Beschreibung"
