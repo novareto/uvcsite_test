@@ -46,9 +46,9 @@ Registries
    <LocalSiteManager ++etc++site>
 
    >>> sm.__bases__
-   (<LocalSiteManager ++etc++site>, <BaseComponents uvcsiteRegistry>)
+   (<BaseComponents uvcsiteRegistry>, <LocalSiteManager ++etc++site>)
 
-   >>> lsm = sm.__bases__[0]
+   >>> lsm = sm.__bases__[1]
    >>> lsm.__bases__
    (<BaseGlobalComponents base>,)
 

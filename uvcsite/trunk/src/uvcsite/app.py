@@ -9,19 +9,22 @@ from dolmen.app.site import IDolmen
 from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
 
-from zope.interface import Interface
-from zope.component.interfaces import IComponents
-from zope.pluggableauth import PluggableAuthentication
-from grokcore.registries import create_components_registry
-from zope.authentication.interfaces import IAuthentication
-from zope.app.homefolder.interfaces import IHomeFolderManager
-from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 
-from zope.i18n.interfaces import IUserPreferredLanguages
-from zope.publisher.interfaces.http import IHTTPRequest
+from grokcore.registries import create_components_registry
+from zeam.form.base import NO_VALUE
+from zeam.form.ztk import customize
 from zeam.form.ztk.widgets.choice import RadioFieldWidget
 from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
-#from zeam.form.ztk import customize
+from zeam.form.ztk.widgets.date import DateWidgetExtractor
+from zope.app.homefolder.interfaces import IHomeFolderManager
+from zope.authentication.interfaces import IAuthentication
+from zope.component.interfaces import IComponents
+from zope.i18n.format import DateTimeParseError
+from zope.i18n.interfaces import IUserPreferredLanguages
+from zope.interface import Interface
+from zope.pluggableauth import PluggableAuthentication
+from zope.pluggableauth.interfaces import IAuthenticatorPlugin
+from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
 
 
@@ -48,7 +51,11 @@ uvcsiteRegistry = create_components_registry(
 )
 
 
-grok.global_utility(uvcsiteRegistry, name="uvcsiteRegistry", provides=IComponents, direct=True)
+grok.global_utility(
+    uvcsiteRegistry,
+    name="uvcsiteRegistry",
+    provides=IComponents,
+    direct=True)
 
 
 class Uvcsite(grok.Application, grok.Container):
@@ -71,7 +78,9 @@ class Uvcsite(grok.Application, grok.Container):
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
         if uvcsiteRegistry not in current.__bases__:
-            uvcsiteRegistry.__bases__ = tuple([x for x in uvcsiteRegistry.__bases__ if x.__hash__() != zope.component.globalSiteManager.__hash__()])
+            uvcsiteRegistry.__bases__ = tuple(
+                [x for x in uvcsiteRegistry.__bases__ if x.__hash__() != zope.component.globalSiteManager.__hash__()]
+            )
             current.__bases__ += (uvcsiteRegistry,)
         current.__bases__ = current.__bases__[::-1]
         return current
@@ -91,11 +100,6 @@ class SystemError(uvcsite.Page, grok.components.ExceptionView):
         super(SystemError, self).__init__(context, request)
         self.context = grok.getSite()
         self.origin_context = context
-
-from zeam.form.ztk import customize
-from zeam.form.ztk.widgets.date import DateWidgetExtractor
-from zeam.form.base import NO_VALUE
-from zope.i18n.format import DateTimeParseError
 
 
 class UVCDateWidgetExtractor(DateWidgetExtractor):

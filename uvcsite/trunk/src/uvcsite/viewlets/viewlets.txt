@@ -137,6 +137,6 @@ Show the Viewlets:
 
    >>> manager.update()
    >>> len(manager.viewlets)
-   4 
+   5 
 
    >>> endInteraction()
