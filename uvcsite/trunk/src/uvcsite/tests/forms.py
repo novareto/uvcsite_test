@@ -8,7 +8,7 @@ import uvcsite
 from zope import interface
 from zope import schema
 
-from uvc.widgets import DatePicker, DatePickerCSS, double
+from uvc.widgets import DatePicker, DatePickerCSS, double, masked_input
 from zeam.form.base.widgets import getWidgetExtractor
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
@@ -159,6 +159,7 @@ class MyForm(uvcsite.Form):
     fields['vorname'].htmlAttributes['placeholder'] = u"BLA"
     fields['datum'].htmlAttributes = {'placeholder': 'tt.mm.jjjj'}
     fields['check'].htmlAttributes = {'disabled': 'disabled'}
+    fields['datum'].mode = "dp-date"
 
     label = u"Beispielform"
     description = u"Beschreibung"
@@ -166,10 +167,10 @@ class MyForm(uvcsite.Form):
 
     def update(self):
         self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))
-        #double.need()
+        double.need()
         #DatePickerCSS.need()
         #DatePicker.need()
-        #masked_input.need()
+        masked_input.need()
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
