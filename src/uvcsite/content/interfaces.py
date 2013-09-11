@@ -26,7 +26,7 @@ class IContent(IContent):
 
     title = TextLine(
         title = u"Titel",
-        description = u"Bitte geben Sie einen Titel an.",
+        description = u"Bitte geben Sie einen Titel für das Dokument an. Dieses Dokument erscheint dann unter dem Titel in Mein Ordner.",
         required = True)
 
 

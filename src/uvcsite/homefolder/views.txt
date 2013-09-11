@@ -52,7 +52,7 @@ Now we can render the Index Page of the Homefolder:
     <h1>lars</h1>
     <p class="description">Hier werden Ihre Dokumente abgelegt</p>
     <div class="page-content">
-      <div class="batch"></div>
+      <div class="batch pagination"></div>
       <form action="http://127.0.0.1/app/members/lars" method="post">
         <table class="tablesorter table table-striped table-bordered table-condensed">
     <thead>
@@ -136,7 +136,7 @@ Let's check again if we now get **contenttypes** in our homefolder:
     <h1>lars</h1>
     <p class="description">Hier werden Ihre Dokumente abgelegt</p>
     <div class="page-content">
-      <div class="batch"></div>
+      <div class="batch pagination"></div>
       <form action="http://127.0.0.1/app/members/lars" method="post">
         <table class="tablesorter table table-striped table-bordered table-condensed">
     <thead>
