@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2010 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import grok
 import uvcsite
@@ -30,7 +30,7 @@ class StepsProgressBar(grok.Viewlet):
                 css = "future"
             elif i < current:
                 css = "past"
-                link= "%s/edit?form.field.step=%s" % (self.view.url(), i)
+                link= "%s/edit?jump_step=%s" % (self.view.url(), i)
             self.steps.append(
                 dict(description = step.label, css=css, link = link)
                 )

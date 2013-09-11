@@ -49,13 +49,13 @@ class Index(TablePage):
         for key, value in self.context.items():
             if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
                 yield dict(href = absoluteURL(value, self.request),
-                           name = key) 
+                           name = key)
 
     def executeDelete(self, item):
         self.flash(_(u'Ihre Dokumente wurden entfernt'))
         del item.__parent__[item.__name__]
 
-    def update(self): 
+    def update(self):
         items = self.request.form.get('table-checkBox-0-selectedItems')
         if items and self.request.has_key('form.button.delete'):
             if isinstance(items, (str, unicode)):
@@ -65,7 +65,7 @@ class Index(TablePage):
                     if pf.has_key(key):
                         self.executeDelete(pf[key])
         super(Index, self).update()
-        
+
 
 class DirectAccessViewlet(grok.Viewlet):
     grok.view(IFolderListingTable)
@@ -81,7 +81,7 @@ class DirectAccessViewlet(grok.Viewlet):
                 pf = hf[value.folderURI]
                 if interaction.checkPermission('uvc.ViewContent', pf):
                     yield dict(href = absoluteURL(pf, self.request),
-                               name = value.title) 
+                               name = value.title)
 
     def render(self):
         template = getMultiAdapter((self, self.request), IPageTemplate)
