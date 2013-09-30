@@ -57,7 +57,8 @@ class AdressBook(uvcsite.ProductFolder):
 
     @property
     def excludeFromNav(self):
-        principal = zope.security.management.getInteraction().participations[0].principal
+        interaction = zope.security.management.getInteraction()
+        principal = interaction.participations[0].principal
         if principal.id == "0202020002":
             return True
         return False
@@ -76,9 +77,15 @@ class ADMenu(grok.Viewlet):
     grok.context(AdressBook)
     grok.order(40)
 
+    def update(self):
+        self.url = self.view.url(self.context, 'stat')
+        self.active = str(self.request.URL).startswith(self.url)
+
     def render(self):
-        url = self.view.url(self.context, 'stat')
-        return "<ul class='nav'> <li class='dropdown'> <a class='dropdown-toggle' href=%s> Alte Dokumente </a> </li> </ul>" % url
+        return """
+<ul class='nav nav-tabs'>
+  <li class='%s'><a href='%s'>Alte Dokumente</a></li>
+</ul>""" % (self.active and 'active' or 'inactive', self.url)
 
 
 class Stat(uvcsite.Page):
