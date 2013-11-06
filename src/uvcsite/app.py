@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
+
 import grok
 import uvcsite
 import zope.component
 
-
-from dolmen.app.site import IDolmen
-
 from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
-
 
 from grokcore.registries import create_components_registry
 from zeam.form.base import NO_VALUE
@@ -21,7 +18,7 @@ from zope.authentication.interfaces import IAuthentication
 from zope.component.interfaces import IComponents
 from zope.i18n.format import DateTimeParseError
 from zope.i18n.interfaces import IUserPreferredLanguages
-from zope.interface import Interface
+from zope.interface import Interface, implementer
 from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
@@ -58,11 +55,10 @@ grok.global_utility(
     direct=True)
 
 
+@implementer(uvcsite.IUVCSite)
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
     """
-    grok.implements(uvcsite.IUVCSite, IDolmen)
-
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
 
@@ -84,6 +80,13 @@ class Uvcsite(grok.Application, grok.Container):
             current.__bases__ += (uvcsiteRegistry,)
         current.__bases__ = current.__bases__[::-1]
         return current
+
+
+class Index(uvcsite.Page):
+    grok.context(Uvcsite)
+
+    def render(self):
+        return "FIXME"
 
 
 class NotFound(uvcsite.Page, grok.components.NotFoundView):
