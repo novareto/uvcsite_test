@@ -5,19 +5,18 @@
 import grok
 import uvcsite
 
-from zope.interface import Interface
-from uvcsite import uvcsiteMF as _
-from megrok.z3ctable import Values
-from megrok.z3ctable import TablePage
-from zope.traversing.browser import absoluteURL
-from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
-from uvc.layout import interfaces
-from uvcsite.homefolder.homefolder import Members
-from megrok.pagetemplate import PageTemplate
-from zope.component import getMultiAdapter
-from zope.pagetemplate.interfaces import IPageTemplate
-from uvcsite.content.productregistration import getAllProductRegistrations
 from grokcore.rest.interfaces import IRESTLayer
+from megrok.pagetemplate import PageTemplate
+from megrok.z3ctable import Values
+from uvc.layout import interfaces, TablePage
+from uvcsite import uvcsiteMF as _
+from uvcsite.content.productregistration import getAllProductRegistrations
+from uvcsite.homefolder.homefolder import Members
+from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
+from zope.component import getMultiAdapter
+from zope.interface import Interface
+from zope.pagetemplate.interfaces import IPageTemplate
+from zope.traversing.browser import absoluteURL
 
 
 grok.templatedir('templates')
