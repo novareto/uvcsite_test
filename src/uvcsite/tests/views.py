@@ -21,8 +21,6 @@ class PDF(uvcsite.MenuItem):
     action = "/index"
 
 
-
-
 class Auskunftsdienste(uvcsite.SubMenu):
     grok.context(Interface)
     grok.name('BausAuskunft')
@@ -77,6 +75,7 @@ class Index(uvcsite.Page):
         self.flash('Fehlermeldung...', 'error')
         self.flash('Warnung...', 'warning')
 
+
 from uvc.layout.slots.interfaces import IRenderable
 class RenderableItem(grok.Viewlet):
     grok.context(Interface)
@@ -85,7 +84,6 @@ class RenderableItem(grok.Viewlet):
 
     def render(self):
         return "<li> <a href=''> HALLO WELT </a> </li>"
-
 
 
 from grokcore.chameleon.components import ChameleonPageTemplateFile

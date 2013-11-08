@@ -5,39 +5,20 @@ from zope.i18nmessageid import MessageFactory
 uvcsiteMF = MessageFactory('uvcsite')
 
 import grok
-from grok import util as grok_util
-from grok.interfaces import IGrokView
-
-import grokcore.message
 from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
     IContent, Content, schema, name, productfolder)
-
-from grokcore.layout import Page as BasePage
-from megrok.z3ctable import TablePage
 from uvcsite.interfaces import *
 from uvcsite.utils.help import HelpPage
 from uvc.layout.slots.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
 from uvcsite.utils.dataviews import BasePDF, BaseXML, BaseDataView, WatermarkPDF
-from uvc.layout.forms import (Form, AddForm,
-    SubForm, GroupForm, Wizard, Step)
+from uvc.layout.forms import Form, AddForm, SubForm, GroupForm, Wizard, Step
 from uvc.layout import *
-from zope.interface import implementer
+
 #from uvc.layout.event import IAfterSaveEvent
 
 # Mobile
 #from uvcsite.mobile import BaseMobilePage, MobilePage, MobileLayer, IMobileLayer
-
-
-@implementer(IGrokView)
-class Page(BasePage):
-    grok.baseclass()
-    
-    def application_url(self, name=None, data=None):
-        return grok_util.application_url(self.request, self.context, name, data)
-
-    def flash(self, message, type='message'):
-        grokcore.message.send(message, type=type, name='session')
 
 
 ### ZEAM-FORM-API

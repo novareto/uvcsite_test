@@ -82,13 +82,6 @@ class Uvcsite(grok.Application, grok.Container):
         return current
 
 
-class Index(uvcsite.Page):
-    grok.context(Uvcsite)
-
-    def render(self):
-        return "FIXME"
-
-
 class NotFound(uvcsite.Page, grok.components.NotFoundView):
     """Not Found Error View
     """

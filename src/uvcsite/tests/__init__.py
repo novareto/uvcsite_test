@@ -71,7 +71,6 @@ class BaseUVCBrowserLayer(zope.app.wsgi.testlayer.BrowserLayer):
             for name, values in self.conf.items()]
         #super(BaseUVCBrowserLayer, self).__init__(*args, **kw)
         zope.app.wsgi.testlayer.BrowserLayer.__init__(self, *args, **kw)
-        zope.component.testlayer.ZCMLFileLayer.__init__(self, *args, **kw)
 
     def setUp(self):
         zope.app.appsetup.product.setProductConfigurations(self.conf)
