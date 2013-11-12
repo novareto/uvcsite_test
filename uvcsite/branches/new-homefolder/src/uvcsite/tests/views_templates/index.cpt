@@ -1,0 +1,31 @@
+<h1> Herzlich Willkommen </h1>
+
+<p> Lorem Ipsum </p>
+
+<strong tal:content="view.__name__"> </strong>
+<div>
+<a rel="tooltip" href="#" data-original-title="Default tooltip">you probably</a>
+<a data-placement="top" rel="tooltip" href="#" data-original-title="Tooltip on top">Tooltip on top</a>
+</div>
+
+<h3> Collapse </h3>
+
+<div id="accordion2" class="accordion">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a href="#collapseOne" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
+        Collapsible Group Item #1
+      </a>
+    </div>
+    <div class="accordion-body collapse in" id="collapseOne">
+      <div class="accordion-inner">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+</div>
+      <button class="btn btn-danger" data-toggle="collapse" data-target="#demo">
+      simple collapsible
+      </button>
+       
+      <div id="demo" class="collapse in"> BLA BLA BAL</div>
