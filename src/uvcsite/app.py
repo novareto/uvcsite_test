@@ -4,8 +4,8 @@ import grok
 import uvcsite
 import zope.component
 
+from uvc.homefolder import HomeFolder, Homefolders, IHomefolders
 from uvcsite.auth.handler import UVCAuthenticator
-from uvcsite.homefolder.homefolder import PortalMembership
 
 from grokcore.registries import create_components_registry
 from zeam.form.base import NO_VALUE
@@ -59,8 +59,10 @@ grok.global_utility(
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
     """
-    grok.local_utility(PortalMembership,
-                       provides=IHomeFolderManager)
+    grok.local_utility(Homefolders,
+                       name=u"homefolders",
+                       public=True,
+                       provides=IHomefolders)
 
     grok.local_utility(UVCAuthenticator,
                        name=u"principals",
@@ -75,8 +77,9 @@ class Uvcsite(grok.Application, grok.Container):
         current = super(Uvcsite, self).getSiteManager()
         if uvcsiteRegistry not in current.__bases__:
             uvcsiteRegistry.__bases__ = tuple(
-                [x for x in uvcsiteRegistry.__bases__ if x.__hash__() != zope.component.globalSiteManager.__hash__()]
-            )
+                [x for x in uvcsiteRegistry.__bases__ if
+                 x.__hash__() != zope.component.globalSiteManager.__hash__()]
+                 )
             current.__bases__ += (uvcsiteRegistry,)
         current.__bases__ = current.__bases__[::-1]
         return current
@@ -87,7 +90,8 @@ class NotFound(uvcsite.Page, grok.components.NotFoundView):
     """
     def update(self):
         super(NotFound, self).update()
-        uvcsite.logger.error('NOT FOUND: %s' % self.request.get('PATH_INFO', ''))
+        uvcsite.logger.error(
+            'NOT FOUND: %s' % self.request.get('PATH_INFO', ''))
 
 
 class SystemError(uvcsite.Page, grok.components.ExceptionView):
