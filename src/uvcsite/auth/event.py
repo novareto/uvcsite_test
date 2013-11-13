@@ -6,20 +6,21 @@
 import grok
 import uvcsite
 
-from uvcsite.extranetmembership.interfaces import IUserManagement
-from zope.pluggableauth.interfaces import IAuthenticatedPrincipalCreated
-from zope.app.homefolder.interfaces import IHomeFolder
-from zope.component import getUtility
+from uvc.homefolder import IHomefolder
 from dolmen.authentication.events import IUserLoggedInEvent
-from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.content.folderinit import createProductFolders
+from uvcsite.extranetmembership.interfaces import IUserManagement
+from uvcsite.utils.shorties import getHomeFolder
+from zope.component import getUtility
+from zope.pluggableauth.interfaces import IAuthenticatedPrincipalCreated
+from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
 
 @grok.subscribe(IUserLoggedInEvent)
 def applyPermissionsForExistentCoUsers(factory):
     principal = factory.object
     createProductFolders(principal)
-    homefolder = IHomeFolder(principal).homeFolder
+    homefolder = IHomefolder(principal)
     if not homefolder:
         return
     um = getUtility(IUserManagement)

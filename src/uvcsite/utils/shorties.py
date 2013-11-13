@@ -9,22 +9,22 @@ import uvcsite
 import zope.security
 
 from datetime import datetime, date
-from zope.app.homefolder.interfaces import IHomeFolder
-from zope.app.security.interfaces import IUnauthenticatedPrincipal
+from uvc.homefolder import IHomefolder, homefolder_url
+from zope.component import getUtility
+from zope.authentication.interfaces import IUnauthenticatedPrincipal
+from zope.traversing.browser.interfaces import IAbsoluteURL
 
 
 def getHomeFolder(request):
     principal = request.principal
     if IUnauthenticatedPrincipal.providedBy(principal):
         return
-    return IHomeFolder(principal).homeFolder
+    folders = getUtility(IHomefolders)
+    return folders.get(principal.id)
 
 
-def getHomeFolderUrl(request, suffix=""):
-    url = uvcsite.IGetHomeFolderUrl(request).getURL(type=suffix)
-    if url:
-        url = urllib.unquote(url)
-    return url
+def getHomeFolderUrl(request):
+    return homefolder_url(request)
 
 
 def fmtDateTime(object, fmt="%d.%m.%Y %H:%M:%S"):

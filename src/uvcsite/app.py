@@ -4,7 +4,7 @@ import grok
 import uvcsite
 import zope.component
 
-from uvc.homefolder import HomeFolder, Homefolders, IHomefolders
+from uvc.homefolder import Homefolder, Homefolders, IHomefolders
 from uvcsite.auth.handler import UVCAuthenticator
 
 from grokcore.registries import create_components_registry
@@ -13,7 +13,6 @@ from zeam.form.ztk import customize
 from zeam.form.ztk.widgets.choice import RadioFieldWidget
 from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
 from zeam.form.ztk.widgets.date import DateWidgetExtractor
-from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.authentication.interfaces import IAuthentication
 from zope.component.interfaces import IComponents
 from zope.i18n.format import DateTimeParseError
@@ -60,7 +59,7 @@ class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
     """
     grok.local_utility(Homefolders,
-                       name=u"homefolders",
+                       name_in_container=u"homefolders",
                        public=True,
                        provides=IHomefolders)
 

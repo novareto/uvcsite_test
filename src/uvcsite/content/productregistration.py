@@ -10,11 +10,11 @@ from zope.security.interfaces import IPrincipal
 from zope.publisher.interfaces.http import IHTTPRequest
 from uvcsite.content.interfaces import IProductRegistration
 from uvcsite.content.directive import productfolder
+from uvcsite.utils.shorties import getHomeFolder
+from uvc.homefolder import IHomefolders
 from zope.dottedname.resolve import resolve
 from zope.component import getMultiAdapter, getAdapters, getUtility
-from zope.app.homefolder.interfaces import IHomeFolderManager
 from uvcsite.content.meta import default_name
-from zope.app.homefolder.interfaces import IHomeFolder
 
 
 def getAllProductRegistrations():
@@ -90,10 +90,10 @@ class ProductRegistration(grok.MultiAdapter):
         return self.available()
 
     def createInProductFolder(self):
-        homefolder = IHomeFolder(self.principal).homeFolder
+        homefolder = getHomeFolder(self.request)
         if not homefolder:
-            utility = getUtility(IHomeFolderManager)
-            utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
+            utility = getUtility(IHomefolders)
+            utility.assign_homefolder(uvcsite.IMasterUser(self.principal).id)
         if self.folderURI and not self.folderURI in homefolder.keys():
             pf = self.productfolder
             homefolder[self.folderURI] = pf() 
