@@ -11,7 +11,6 @@ from megrok.z3ctable import Values
 from uvc.layout import interfaces, TablePage
 from uvcsite import uvcsiteMF as _
 from uvcsite.content.productregistration import getAllProductRegistrations
-from uvcsite.homefolder.homefolder import Members
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from zope.component import getMultiAdapter
 from zope.interface import Interface
@@ -105,19 +104,3 @@ class HomeFolderValues(Values):
             if interaction.checkPermission('uvc.ViewContent', productfolder):
                 results.extend(productfolder.values())
         return results
-
-
-class RedirectIndexMembers(grok.View):
-    grok.context(Members)
-    grok.name('index')
-
-    def render(self):
-        url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
-        self.redirect(url)
-
-class RestHomeFolderTraverser(grok.Traverser):
-    grok.context(Members)
-    grok.layer(IRESTLayer)
-
-    def traverse(self, name):
-        return uvcsite.getHomeFolder(self.request).get(name)

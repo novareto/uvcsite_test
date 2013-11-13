@@ -11,8 +11,8 @@ from dolmen.menu import menuentry
 from uvcsite import uvcsiteMF as _
 from dolmen.forms.base import Fields
 from zope.component import getUtility
+from uvc.homefolder import IHomefolder
 from uvcsite.interfaces import IUVCSite
-from zope.app.homefolder.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
 from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
@@ -93,7 +93,7 @@ class ENMSCreateUser(uvcsite.Form):
             principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         principal = self.request.principal
-        homeFolder = IHomeFolder(principal).homeFolder
+        homeFolder = IHomefolder(principal)
         self.redirect(self.url(homeFolder, 'enms'))
 
 
