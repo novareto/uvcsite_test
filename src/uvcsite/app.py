@@ -4,7 +4,7 @@ import grok
 import uvcsite
 import zope.component
 
-from uvc.homefolder import Homefolder, Homefolders, IHomefolders
+from uvc.homefolder import Homefolders, IHomefolders
 from uvcsite.auth.handler import UVCAuthenticator
 
 from grokcore.registries import create_components_registry
@@ -18,6 +18,7 @@ from zope.component.interfaces import IComponents
 from zope.i18n.format import DateTimeParseError
 from zope.i18n.interfaces import IUserPreferredLanguages
 from zope.interface import Interface, implementer
+from zope.interface.registry import Components
 from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
@@ -44,7 +45,7 @@ class Icons(grok.DirectoryResource):
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
     bases=(zope.component.globalSiteManager, ),
-)
+    )
 
 
 grok.global_utility(
@@ -75,36 +76,8 @@ class Uvcsite(grok.Application, grok.Container):
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
         if uvcsiteRegistry not in current.__bases__:
-            uvcsiteRegistry.__bases__ = tuple(
-                [x for x in uvcsiteRegistry.__bases__ if
-                 x.__hash__() != zope.component.globalSiteManager.__hash__()]
-                 )
-            current.__bases__ += (uvcsiteRegistry,)
-        current.__bases__ = current.__bases__[::-1]
+            return Components(bases=(uvcsiteRegistry, current))
         return current
-
-
-class NotFound(uvcsite.Page, grok.components.NotFoundView):
-    """Not Found Error View
-    """
-    def update(self):
-        super(NotFound, self).update()
-        uvcsite.logger.error(
-            'NOT FOUND: %s' % self.request.get('PATH_INFO', ''))
-
-
-class SystemError(uvcsite.Page, grok.components.ExceptionView):
-    """Custom System Error for UVCSITE
-    """
-
-    def __init__(self, context, request):
-        super(SystemError, self).__init__(context, request)
-        self.context = grok.getSite()
-        self.origin_context = context
-
-    def update(self):
-        super(SystemError, self).update()
-        uvcsite.logger.error(self.origin_context)
 
 
 class UVCDateWidgetExtractor(DateWidgetExtractor):

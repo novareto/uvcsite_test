@@ -14,7 +14,6 @@ from dolmen.app.layout import MenuViewlet
 from uvcsite.content import IContent, IProductFolder
 from uvcsite.interfaces import IFolderListingTable
 from zope.component import getMultiAdapter
-from uvcsite import IGetHomeFolderUrl
 from dolmen.content import schema
 from dolmen import menu
 from zeam.form import base
@@ -64,9 +63,11 @@ class Index(TablePage):
         del item.__parent__[item.__name__]
 
     def getAddLinkUrl(self):
-        adapter = getMultiAdapter(
-            (self.request.principal, self.request), IGetHomeFolderUrl)
-        return adapter.getAddURL(self.context.getContentType())
+        # We need a replacement for that
+        #adapter = getMultiAdapter(
+        #    (self.request.principal, self.request), IGetHomeFolderUrl)
+        #return adapter.getAddURL(self.context.getContentType())
+        pass
 
     def getAddTitle(self):
         return self.context.getContentName()

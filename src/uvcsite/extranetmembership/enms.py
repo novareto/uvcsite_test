@@ -14,7 +14,7 @@ from zope.component import getUtility
 from uvc.homefolder import IHomefolder
 from uvcsite.interfaces import IUVCSite
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
-from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
+from uvcsite.interfaces import IPersonalPreferences, IPersonalMenu
 from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
 from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
 
@@ -23,7 +23,7 @@ grok.templatedir('templates')
 
 class ENMS(uvcsite.Page):
     grok.title('Mitbenutzerverwaltung')
-    grok.context(IMyHomeFolder)
+    grok.context(IHomefolder)
     grok.require('uvc.ManageCoUsers')
 
     def getUserGroup(self):
@@ -45,7 +45,7 @@ class ENMS(uvcsite.Page):
 
 class ENMSCreateUser(uvcsite.Form):
     """ Simple Form which displays values from a Dict"""
-    grok.context(IMyHomeFolder)
+    grok.context(IHomefolder)
     grok.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer anlegen"
@@ -99,7 +99,7 @@ class ENMSCreateUser(uvcsite.Form):
 
 class ENMSUpdateUser(uvcsite.Form):
     """ A Form for updating a User in ENMS"""
-    grok.context(IMyHomeFolder)
+    grok.context(IHomefolder)
     grok.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer verwalten"
@@ -182,7 +182,7 @@ class ChangePasswordMenu(uvcsite.MenuItem):
 class ChangePassword(uvcsite.Form):
     """ A Form for updating a User in ENMS"""
     grok.title(u'Passwort ändern')
-    grok.context(IMyHomeFolder)
+    grok.context(IHomefolder)
     label = _(u'Passwort ändern')
     description = _(u'Hier können Sie Ihr Passwort ändern')
     #uvcsite.menu(uvcsite.PersonalMenu)

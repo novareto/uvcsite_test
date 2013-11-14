@@ -10,8 +10,9 @@ from megrok.pagetemplate import PageTemplate
 from megrok.z3ctable import Values
 from uvc.layout import interfaces, TablePage
 from uvcsite import uvcsiteMF as _
+from uvc.homefolder import IHomefolder
 from uvcsite.content.productregistration import getAllProductRegistrations
-from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
+from uvcsite.interfaces import IFolderListingTable
 from zope.component import getMultiAdapter
 from zope.interface import Interface
 from zope.pagetemplate.interfaces import IPageTemplate
@@ -23,7 +24,7 @@ grok.templatedir('templates')
 
 class Index(TablePage):
     grok.title(u'Mein Ordner')
-    grok.context(IMyHomeFolder)
+    grok.context(IHomefolder)
     grok.implements(IFolderListingTable)
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
@@ -94,7 +95,7 @@ class HomeFolderValues(Values):
     """This Adapter returns IContent Objects
        form child folders
     """
-    grok.adapts(IMyHomeFolder, None, Index)
+    grok.adapts(IHomefolder, None, Index)
 
     @property
     def values(self):
