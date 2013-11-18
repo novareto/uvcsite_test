@@ -6,7 +6,6 @@ import grok
 import uvcsite
 
 from hurry.workflow.interfaces import IWorkflowState
-from zope.interface import Interface
 from zope.component import getUtility
 from uvc.homefolder.interfaces import IHomefolders
 from ZODB.interfaces import IBroken
@@ -36,7 +35,7 @@ class StatistikView(uvcsite.Page):
     def update(self):
         self.counter = dict()
         inc = dict(anzahl=0, entwurf=0, gesendet=0, verarbeitung=0)
-        hFB = getUtility(IHomeFolderManager)
+        hFB = getUtility(IHomefolders)
         self.counter['HomeFolder'] = inc
         self.counter['HomeFolder']['anzahl'] = len(hFB)
         pf_c = 0

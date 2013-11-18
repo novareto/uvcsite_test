@@ -3,18 +3,15 @@
 # cklinger@novareto.de 
 
 import grok
-import transaction
-import uvcsite
-
-from uvc.homefolder.interfaces import IHomefolder, IHomefolders
-from uvcsite.content import IProductFolder, IUVCApplication
+from uvc.homefolder.interfaces import IHomefolder
 from uvcsite.content.interfaces import IProductRegistration
 from zope.component import getAdapters
 from zope.pluggableauth.factories import Principal
+from zope.security.management import getInteraction
 
 
 def createProductFolders(principal=None):
-    request = zope.security.management.getInteraction().participations[0]
+    request = getInteraction().participations[0]
     if not principal:
        principal = request.principal
     for name, pr in getAdapters((principal, request), IProductRegistration):

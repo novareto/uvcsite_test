@@ -4,15 +4,11 @@
 
 
 import pytz
-import urllib
-import uvcsite
 import zope.security
-
 from datetime import datetime, date
-from uvc.homefolder import IHomefolder, homefolder_url
+from uvc.homefolder import IHomefolders, homefolder_url
 from zope.component import getUtility
 from zope.authentication.interfaces import IUnauthenticatedPrincipal
-from zope.traversing.browser.interfaces import IAbsoluteURL
 
 
 def getHomeFolder(request):

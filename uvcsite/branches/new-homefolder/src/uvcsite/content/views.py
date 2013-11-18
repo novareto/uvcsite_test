@@ -6,21 +6,19 @@ import grok
 import uvcsite
 from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 
-from zope.interface import Interface
-from uvcsite import uvcsiteMF as _
-from uvc.layout import interfaces
-from uvc.layout.slots import menus
 from dolmen.app.layout import MenuViewlet
+from dolmen.app.layout.viewlets import ContextualActions
+from dolmen.content import schema
+from megrok.pagetemplate import PageTemplate
+from uvc.layout import TablePage
+from uvc.layout import interfaces
+from uvcsite import uvcsiteMF as _
 from uvcsite.content import IContent, IProductFolder
 from uvcsite.interfaces import IFolderListingTable
-from zope.component import getMultiAdapter
-from dolmen.content import schema
-from dolmen import menu
 from zeam.form import base
-from uvc.layout import TablePage
-from dolmen.app.layout.viewlets import ContextualActions
 from zeam.form.base.interfaces import ISimpleForm
-from megrok.pagetemplate import PageTemplate
+from zope.component import getMultiAdapter
+from zope.interface import Interface
 from zope.pagetemplate.interfaces import IPageTemplate
 
 

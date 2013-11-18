@@ -6,7 +6,8 @@ import grok
 import uvcsite
 
 from megrok.pagetemplate import PageTemplate
-from zope import interface, component, viewlet
+from zope import interface, component
+from zope.viewlet.interfaces import IViewletManager
 from zope.pagetemplate.interfaces import IPageTemplate
 
 grok.templatedir('templates')
@@ -48,8 +49,7 @@ class Help(grok.Viewlet):
 
     def render(self):
         helpmanager = component.getMultiAdapter(
-            (self.context, self.request, self.view), 
-            viewlet.interfaces.IViewletManager,
+            (self.context, self.request, self.view), IViewletManager,
             name=u'uvc.hilfen')
         helpmanager.update()
         return helpmanager.render()
