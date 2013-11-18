@@ -8,12 +8,12 @@ import zope.app.testing.functional
 
 from uvcsite.app import Uvcsite
 from uvcsite import IGetHomeFolderUrl
+from uvc.homefolder.interfaces import IHomefolder
 
 from grok.testing import grok_component
 from zope.component import getMultiAdapter
 from zope.site.hooks import getSite, setSite
 from zope.publisher.browser import TestRequest
-from zope.app.homefolder.interfaces import IHomeFolder
 from zope.pluggableauth.factories import PrincipalInfo, Principal
 
 
@@ -35,10 +35,9 @@ class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
         zope.security.management.endInteraction()
         super(HomeFolderTest, self).tearDown()
 
-
     def test_homefolder_instance(self):
         self.assert_(isinstance(
-                IHomeFolder(self.user),
+                IHomefolder(self.user),
                 uvcsite.homefolder.homefolder.HomeFolderForPrincipal))
 
     def test_homefolder_url(self):

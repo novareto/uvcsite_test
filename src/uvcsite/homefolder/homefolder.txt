@@ -28,10 +28,10 @@ Do we get the correct object ?
    <uvcsite.homefolder.homefolder.Members object at ...>
    
 
-Do we get a utility with our IHomeFolderManager
+Do we get a utility with our IHomefolders
 
-   >>> from zope.app.homefolder.interfaces import IHomeFolderManager
-   >>> utility = getUtility(IHomeFolderManager)
+   >>> from uvc.homefolder.interfaces import IHomefolders
+   >>> utility = getUtility(IHomefolders)
    >>> utility
    <uvcsite.homefolder.homefolder.PortalMembership object at ...>
 

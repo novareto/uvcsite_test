@@ -41,8 +41,8 @@ our Product folders work. This means i add the user lars to
 the HomeFolderManager
 
   >>> from zope.component import getUtility
-  >>> from zope.app.homefolder.interfaces import IHomeFolderManager
-  >>> utility = getUtility(IHomeFolderManager)
+  >>> from uvc.homefolder.interfaces import IHomefolders
+  >>> utility = getUtility(IHomefolders)
   >>> utility
   <uvcsite.homefolder.homefolder.PortalMembership object at ...>
 
