@@ -13,7 +13,7 @@ Functional Doctest
   >>> from uvcsite.content.directive import productfolder 
   >>> from uvcsite.content.productregistration import ProductRegistration
   >>> from grokcore.component.testing import grok_component
-  >>> from zope.app.homefolder.interfaces import IHomeFolderManager
+  >>> from uvc.homefolder.interfaces import IHomefolders
   >>> from zope.component.hooks import setSite
   >>> import zope.security.management
 
@@ -24,7 +24,7 @@ Functional Doctest
   >>> root['app']
   <uvcsite.app.Uvcsite object at ...>
 
-  >>> utility = getUtility(IHomeFolderManager)
+  >>> utility = getUtility(IHomefolders)
   >>> christian = Principal('christian', 'christian')
   >>> christian
   Principal('christian')
