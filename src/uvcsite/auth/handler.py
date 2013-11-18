@@ -6,25 +6,15 @@ import grok
 import uvcsite
 import zope.security
 
-from grokcore import message
-from persistent import Persistent
+from dolmen.authentication import UserLoginEvent
+from interfaces import IMasterUser
+from uvcsite.extranetmembership.interfaces import IUserManagement
 from zope.component import getUtility
-from zope.interface import implements, Interface
-from zope.schema import ASCIILine
-from zope.session.interfaces import ISession
-from zope.location.interfaces import ILocation
-from zope.security.interfaces import IPrincipal
-
+from zope.event import notify
 from zope.pluggableauth.factories import PrincipalInfo, Principal
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
-from zope.pluggableauth.interfaces import ICredentialsPlugin
-from zope.pluggableauth.plugins.session import SessionCredentialsPlugin
-
-from interfaces import IUVCAuth, IMasterUser
-from uvcsite.extranetmembership.interfaces import IUserManagement
-
-from dolmen.authentication import UserLoginEvent
-from zope.event import notify
+from zope.security.interfaces import IPrincipal
+from zope.session.interfaces import ISession
 
 USER_SESSION_KEY = "uvcsite.authentication"
 

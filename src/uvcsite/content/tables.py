@@ -6,16 +6,14 @@ import grok
 import uvcsite
 
 from uvcsite import uvcsiteMF as _
-from megrok.z3ctable import (table,
-    Column, GetAttrColumn, CheckBoxColumn, LinkColumn, ModifiedColumn)
-
-from hurry.workflow.interfaces import IWorkflowState
-from zope.dublincore.interfaces import IZopeDublinCore
 from uvcsite.workflow.basic_workflow import titleForState
 from uvcsite.interfaces import IFolderColumnTable, IFolderListingTable
+from hurry.workflow.interfaces import IWorkflowState
+from megrok.z3ctable import (
+    table, Column, GetAttrColumn, CheckBoxColumn, LinkColumn)
+
+from zope.dublincore.interfaces import IZopeDublinCore
 from zope.traversing.browser import absoluteURL
-from uvcsite.homefolder.views import Index
-from datetime import timedelta
 
 
 class CheckBox(CheckBoxColumn):

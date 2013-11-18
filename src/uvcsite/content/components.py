@@ -1,10 +1,13 @@
+# -*- coding: utf-8 -*-
+
 import grok
 import dolmen.content
 import zope.security
 
-from zope.schema import TextLine
-from uvcsite.content.interfaces import IContent, IProductFolder, IFolderColumnTable
 from uvcsite.content.directive import contenttype
+from uvcsite.content.interfaces import (
+    IContent, IProductFolder, IFolderColumnTable)
+
 from grokcore.component import directive
 from zope.container.interfaces import INameChooser
 from zope.dublincore.interfaces import IZopeDublinCore

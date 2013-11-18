@@ -5,7 +5,6 @@
 import grok
 import uvcsite
 
-from grokcore.rest.interfaces import IRESTLayer
 from megrok.pagetemplate import PageTemplate
 from megrok.z3ctable import Values
 from uvc.layout import interfaces, TablePage

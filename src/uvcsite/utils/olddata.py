@@ -9,9 +9,8 @@ import datetime
 import uvcsite
 import xmlrpclib
 from grokcore.chameleon.components import ChameleonPageTemplateFile
-from grokcore.chameleon.components import PageTemplateFile
-
 from megrok.z3ctable import Column, table
+
 
 grok.templatedir('templates')
 

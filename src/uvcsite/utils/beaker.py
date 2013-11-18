@@ -3,7 +3,6 @@
 # cklinger@novareto.de 
 
 import grok
-import uvcsite
 import zope.app.appsetup.product
 
 from dolmen.beaker.utilities import ImmutableDict

@@ -6,7 +6,6 @@
 import grok
 import uvcsite
 
-from zope.interface import Interface
 from zope.publisher.interfaces import IRequest
 from zope.traversing.interfaces import IPathAdapter
 from zope.app.pagetemplate.talesapi import ZopeTalesAPI

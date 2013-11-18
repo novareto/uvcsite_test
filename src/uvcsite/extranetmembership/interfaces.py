@@ -2,36 +2,36 @@
 
 from uvcsite import uvcsiteMF as _
 from zope.interface import Interface, invariant, Invalid
-from zope.schema import Password, TextLine, Choice, List, Set
+from zope.schema import Password, TextLine, Choice, Set
 from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
 
 
 class IExtranetMember(Interface):
 
     mnr = TextLine(
-             title = _(u"Mitgliedsnummer"),
-             description = _(u"Benutzername für den Mitbenutzer (Mitgliedsnummer-lfd.Nr.)"),
-             required = True)
+        title = _(u"Mitgliedsnummer"),
+        description = _(u"Benutzername für den Mitbenutzer (Mitgliedsnummer-lfd.Nr.)"),
+        required = True)
 
     rollen = Set(
-             title=_(u"Berechtigung"),
-             description=_(u"Berechtigung"),
-             value_type=Choice(source=vocab_berechtigungen),
-             required = False)
+        title=_(u"Berechtigung"),
+        description=_(u"Berechtigung"),
+        value_type=Choice(source=vocab_berechtigungen),
+        required = False)
 
     passwort = Password(
-              title = _(u"Passwort"),
-              description = _(u"Bitte tragen Sie hier das Passwort ein."),
-              min_length = 5,
-              max_length = 8,
-              required = True)
+        title = _(u"Passwort"),
+        description = _(u"Bitte tragen Sie hier das Passwort ein."),
+        min_length = 5,
+        max_length = 8,
+        required = True)
 
     confirm = Password(
-              title = _(u"Bestätigung"),
-              description = _(u"Bitte bestätigen Sie das eingegebene Passwort."),
-              min_length = 5,
-              max_length = 8,
-              required = True)
+        title = _(u"Bestätigung"),
+        description = _(u"Bitte bestätigen Sie das eingegebene Passwort."),
+        min_length = 5,
+        max_length = 8,
+        required = True)
 
     @invariant
     def arePasswordsEqual(user):

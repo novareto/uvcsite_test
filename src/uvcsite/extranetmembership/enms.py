@@ -4,22 +4,21 @@
 
 import grok
 import uvcsite
-from grokcore.chameleon.components import ChameleonPageTemplateFile
 
-from zeam.form import base
-from dolmen.menu import menuentry
-from uvcsite import uvcsiteMF as _
 from dolmen.forms.base import Fields
-from zope.component import getUtility
+from grokcore.chameleon.components import ChameleonPageTemplateFile
 from uvc.homefolder import IHomefolder
-from uvcsite.interfaces import IUVCSite
+from uvcsite import uvcsiteMF as _
+from zeam.form import base
+from zope.component import getUtility
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
-from uvcsite.interfaces import IPersonalPreferences, IPersonalMenu
-from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
-from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
+
+from .interfaces import IUserManagement, IExtranetMember
+from .vocabulary import vocab_berechtigungen
 
 
 grok.templatedir('templates')
+
 
 class ENMS(uvcsite.Page):
     grok.title('Mitbenutzerverwaltung')
@@ -110,7 +109,7 @@ class ENMSUpdateUser(uvcsite.Form):
 
     def getDefaultData(self):
         principal = self.request.principal.title
-        id = "%s-%s" % (self.request.principal.title, self.request.get('cn'))
+        id = "%s-%s" % (principal, self.request.get('cn'))
         user = {}
         if self.request.get('cn'):
             um = getUtility(IUserManagement)
@@ -150,7 +149,7 @@ class ENMSUpdateUser(uvcsite.Form):
             principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         principal = self.request.principal
-        homeFolder = IHomeFolder(principal).homeFolder
+        homeFolder = IHomefolder(principal).homeFolder
         self.redirect(self.url(homeFolder, 'enms'))
 
     @base.action(_(u"Entfernen"))
@@ -165,7 +164,7 @@ class ENMSUpdateUser(uvcsite.Form):
                             data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde entfernt.'))
         principal = self.request.principal
-        homeFolder = IHomeFolder(principal).homeFolder
+        homeFolder = IHomefolder(principal).homeFolder
         self.redirect(self.url(homeFolder, 'enms'))
 
 
@@ -176,7 +175,8 @@ class ChangePasswordMenu(uvcsite.MenuItem):
 
     @property
     def action(self):
-       return self.view.url(IHomeFolder(self.request.principal).homeFolder, 'changepassword')
+       return self.view.url(
+           IHomefolder(self.request.principal), 'changepassword')
 
 
 class ChangePassword(uvcsite.Form):

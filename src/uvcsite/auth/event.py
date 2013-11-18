@@ -10,7 +10,6 @@ from uvc.homefolder import IHomefolder
 from dolmen.authentication.events import IUserLoggedInEvent
 from uvcsite.content.folderinit import createProductFolders
 from uvcsite.extranetmembership.interfaces import IUserManagement
-from uvcsite.utils.shorties import getHomeFolder
 from zope.component import getUtility
 from zope.pluggableauth.interfaces import IAuthenticatedPrincipalCreated
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
