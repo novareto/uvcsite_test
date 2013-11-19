@@ -179,7 +179,7 @@ An Invalid uaz_xml file!
   >>> from formencode.doctest_xml_compare import xml_compare
   >>> tree1 = etree.fromstring(result.strip())
   >>> tree2 = etree.fromstring(expected_result.strip())
-  >>> assert xml_compare(tree1,tree2) is False  # identical.
+  >>> assert xml_compare(tree1, tree2) is False  # identical.
 
 
 An invariant uaz_xml file

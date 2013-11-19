@@ -33,6 +33,7 @@
   <include package="grokcore.registries" />
 
   <include package="uvc.layout" />
+  <include package="uvc.tbskin" />
   <include package="uvc.widgets" />
   <include package="dolmen.beaker" />
   <include package="dolmen.menu" />
