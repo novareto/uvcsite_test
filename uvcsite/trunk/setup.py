@@ -69,6 +69,7 @@ setup(name='uvcsite',
           'zope.principalannotation',
           'zope.sendmail',
           'zope.testbrowser [zope-functional-testing]',
+          'formencode',
           ],
       entry_points = """
       [paste.app_factory]

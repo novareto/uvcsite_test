@@ -60,8 +60,11 @@ class UVCAuthenticator(grok.Model):
 
             utility = getUtility(IUserManagement)
 
+            if hasattr(utility, 'changeLogin'):
+                login = utility.changeLogin(login)
+
             if not utility.checkRule(login):
-                return 
+                return
 
             user = utility.getUser(login)
             if not user:

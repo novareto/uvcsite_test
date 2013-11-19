@@ -4,14 +4,13 @@
 
 import grok
 
-from dolmen.menu import menuentry, global_menuentry
 from zope.interface import Interface
-from uvcsite.interfaces import IMyHomeFolder, IUVCSite, IHelp, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
-from uvc.layout.slots.menus import DocumentActionsMenu
+from uvcsite.interfaces import IMyHomeFolder, IUVCSite, IDocumentActions
 from megrok.z3ctable import TablePage, Column, table
-from uvcsite import HelpPage
 import uvcsite
 from zope.authentication.interfaces import IUnauthenticatedPrincipal
+from uvc.layout.slots.interfaces import IRenderable
+from grokcore.chameleon.components import ChameleonPageTemplateFile
 
 
 class PDF(uvcsite.MenuItem):
@@ -106,6 +105,7 @@ class DefaultSecurity(uvcsite.Page):
     def render(self):
         return "hi"
 
+
 class Table(TablePage):
     """
     """
@@ -116,7 +116,6 @@ class Table(TablePage):
     title = "Tabelle"
     description = "Beispieltabelle"
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
-
 
     startBatchingAt = 10
     batchSize = 10
@@ -130,10 +129,11 @@ class Number(Column):
     table(Table)
     grok.context(IMyHomeFolder)
     header = "Number"
-    cssClasses = {'td':'right',}
+    cssClasses = {'td': 'right'}
 
     def renderCell(self, item):
         return item
+
 
 class SortNumber(Column):
     grok.name('hase')
@@ -143,6 +143,7 @@ class SortNumber(Column):
 
     def renderCell(self, item):
         return item
+
 
 class UAA(uvcsite.Altdaten):
     grok.context(uvcsite.IUVCSite)
