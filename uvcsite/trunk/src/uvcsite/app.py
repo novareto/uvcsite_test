@@ -29,7 +29,7 @@ from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
 from zope.site.site import SiteManagerContainer, LocalSiteManager
-
+from zope.component.persistentregistry import PersistentComponents
 
 grok.templatedir('templates')
 
@@ -50,7 +50,7 @@ class Icons(grok.DirectoryResource):
 
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
-    bases=(zope.component.globalSiteManager, ),
+    bases=tuple(),
 )
 
 
@@ -61,15 +61,11 @@ grok.global_utility(
     direct=True)
 
 
-class UVCManager(LocalSiteManager):
-    subs = (uvcsiteRegistry,)
-
-
 @implementer(uvcsite.IUVCSite, IApplication)  # this can be reduced
 class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
     """Application Object for uvc.site """
 
-    _managerClass = UVCManager
+    _managerClass = LocalSiteManager
     
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
@@ -87,8 +83,9 @@ class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
 @grokcore.component.subscribe(uvcsite.IUVCSite, IObjectAddedEvent)
 def addSiteHandler(site, event):
     manager = site._managerClass
-    sitemanager = manager(site)
-    del sitemanager['default']
+    sitemanager = manager(site, default_folder=False)
+    sitemanager.__bases__ += (uvcsiteRegistry,) 		
+    sitemanager.__bases__ = sitemanager.__bases__[::-1]
     site.setSiteManager(sitemanager)
 
 
