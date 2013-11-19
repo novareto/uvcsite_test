@@ -23,6 +23,7 @@ from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
+from zope.interface.registry import Components
 
 
 grok.templatedir('templates')
@@ -57,8 +58,7 @@ grok.global_utility(
 
 @implementer(uvcsite.IUVCSite)
 class Uvcsite(grok.Application, grok.Container):
-    """Application Object for uvc.site
-    """
+    """Application Object for uvc.site """
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
 
@@ -74,11 +74,7 @@ class Uvcsite(grok.Application, grok.Container):
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
         if uvcsiteRegistry not in current.__bases__:
-            uvcsiteRegistry.__bases__ = tuple(
-                [x for x in uvcsiteRegistry.__bases__ if x.__hash__() != zope.component.globalSiteManager.__hash__()]
-            )
-            current.__bases__ += (uvcsiteRegistry,)
-        current.__bases__ = current.__bases__[::-1]
+            return Components(bases=(uvcsiteRegistry, current))
         return current
 
 
