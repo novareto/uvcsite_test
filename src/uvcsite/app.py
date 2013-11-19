@@ -3,11 +3,14 @@
 import grok
 import uvcsite
 import zope.component
+import grokcore.component
 
 from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
 
 from grokcore.registries import create_components_registry
+from grokcore.site.components import BaseSite
+from grokcore.site import IApplication
 from zeam.form.base import NO_VALUE
 from zeam.form.ztk import customize
 from zeam.form.ztk.widgets.choice import RadioFieldWidget
@@ -19,11 +22,13 @@ from zope.component.interfaces import IComponents
 from zope.i18n.format import DateTimeParseError
 from zope.i18n.interfaces import IUserPreferredLanguages
 from zope.interface import Interface, implementer
+from zope.interface.registry import Components
+from zope.lifecycleevent.interfaces import IObjectAddedEvent
 from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
-from zope.interface.registry import Components
+from zope.site.site import SiteManagerContainer, LocalSiteManager
 
 
 grok.templatedir('templates')
@@ -56,9 +61,16 @@ grok.global_utility(
     direct=True)
 
 
-@implementer(uvcsite.IUVCSite)
-class Uvcsite(grok.Application, grok.Container):
+class UVCManager(LocalSiteManager):
+    subs = (uvcsiteRegistry,)
+
+
+@implementer(uvcsite.IUVCSite, IApplication)  # this can be reduced
+class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
     """Application Object for uvc.site """
+
+    _managerClass = UVCManager
+    
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
 
@@ -71,11 +83,13 @@ class Uvcsite(grok.Application, grok.Container):
                        public=True,
                        setup=setup_pau)
 
-    def getSiteManager(self):
-        current = super(Uvcsite, self).getSiteManager()
-        if uvcsiteRegistry not in current.__bases__:
-            return Components(bases=(uvcsiteRegistry, current))
-        return current
+
+@grokcore.component.subscribe(uvcsite.IUVCSite, IObjectAddedEvent)
+def addSiteHandler(site, event):
+    manager = site._managerClass
+    sitemanager = manager(site)
+    del sitemanager['default']
+    site.setSiteManager(sitemanager)
 
 
 class NotFound(uvcsite.Page, grok.components.NotFoundView):
@@ -83,7 +97,8 @@ class NotFound(uvcsite.Page, grok.components.NotFoundView):
     """
     def update(self):
         super(NotFound, self).update()
-        uvcsite.logger.error('NOT FOUND: %s' % self.request.get('PATH_INFO', ''))
+        uvcsite.logger.error(
+            'NOT FOUND: %s' % self.request.get('PATH_INFO', ''))
 
 
 class SystemError(uvcsite.Page, grok.components.ExceptionView):
