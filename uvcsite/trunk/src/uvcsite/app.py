@@ -28,7 +28,8 @@ from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
-from zope.site.site import SiteManagerContainer, LocalSiteManager
+from zope.site.site import SiteManagerContainer
+from zope.site.site import LocalSiteManager as BaseLocalSiteManager
 from zope.component.persistentregistry import PersistentComponents
 
 grok.templatedir('templates')
@@ -61,6 +62,16 @@ grok.global_utility(
     direct=True)
 
 
+class LocalSiteManager(BaseLocalSiteManager):
+
+    __bases__ = property(
+        lambda self:
+           (uvcsiteRegistry,) + self.__dict__.get('__bases__', tuple()),
+        lambda self, bases:
+           self._setBases(bases),
+        )
+            
+
 @implementer(uvcsite.IUVCSite, IApplication)  # this can be reduced
 class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
     """Application Object for uvc.site """
@@ -84,8 +95,6 @@ class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
 def addSiteHandler(site, event):
     manager = site._managerClass
     sitemanager = manager(site, default_folder=False)
-    sitemanager.__bases__ += (uvcsiteRegistry,) 		
-    sitemanager.__bases__ = sitemanager.__bases__[::-1]
     site.setSiteManager(sitemanager)
 
 
