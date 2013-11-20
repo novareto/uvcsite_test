@@ -18,14 +18,13 @@ Let´s set the Site this is a hack because traversal set´s the site
 
 Check the HomeFolderBase which should be the Members Container
 
-   >>> from uvcsite.homefolder.homefolder import Members
    >>> root['app'].has_key('members')
    True
 
 Do we get the correct object ?
 
    >>> root['app']['members']
-   <uvcsite.homefolder.homefolder.Members object at ...>
+   <uvc.homefolder.components.Homefolders object at 0...>
    
 
 Do we get a utility with our IHomefolders
@@ -33,7 +32,7 @@ Do we get a utility with our IHomefolders
    >>> from uvc.homefolder.interfaces import IHomefolders
    >>> utility = getUtility(IHomefolders)
    >>> utility
-   <uvcsite.homefolder.homefolder.PortalMembership object at ...>
+   <uvc.homefolder.components.Homefolders object at 0...>
 
 
 Look at the constants of the PortalMembership

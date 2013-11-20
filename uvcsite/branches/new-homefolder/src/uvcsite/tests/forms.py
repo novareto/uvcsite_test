@@ -188,9 +188,9 @@ class MyForm(uvcsite.Form):
 #    field.htmlAttributes['maxlength'] = 3
 
 
-class MyFormHilfe(uvcsite.HelpPage):
-    grok.context(uvcsite.IUVCSite)
-    grok.view(MyForm)
+#class MyFormHilfe(uvcsite.HelpPage):
+#    grok.context(uvcsite.IUVCSite)
+#    grok.view(MyForm)
 
 
 #

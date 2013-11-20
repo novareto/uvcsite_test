@@ -9,7 +9,7 @@ from uvcsite.extranetmembership.interfaces import IUserManagement
 class UserManagement(grok.GlobalUtility):
     """ Utility for Usermanagement """
     grok.implements(IUserManagement)
-    users = ( 
+    users = (
         {'mnr':'0101010001', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
         {'mnr':'0202020002', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':[]},
         {'mnr':'0101010001-q', 'az': '-q', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
@@ -17,11 +17,11 @@ class UserManagement(grok.GlobalUtility):
         {'mnr':'0101010002', 'az': '02', 'passwort':'passwort', 'email':'test@test.de'},
         {'mnr':'0101010002', 'az': '03', 'passwort':'passwort', 'email':'test@test.de'},
         {'mnr':'lars', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':[]},
-        ) 
+        )
 
     def updUser(self, **kwargs):
         """Updates a User"""
-        
+
     def deleteUser(self, mnr):
         """Delete the User"""
 
@@ -50,18 +50,18 @@ class UserManagement(grok.GlobalUtility):
         for x in deepcopy(self.users):
             usr = "%s-%s" % (x['mnr'], x['az'])
             ret.append(dict(cn=usr, mnr=usr, rollen=x.get('rollen', []), az=x.get('az')))
-        return ret 
+        return ret
 
     def updatePasswort(self, **kwargs):
         """Change a passwort from a user"""
 
     def checkRule(self, login):
         uvcsite.log(login)
-        return True 
+        return True
 
 
 
-from uvcsite.interfaces import IMyHomeFolder
+from uvcsite import IMyHomeFolder
 from zope import interface
 from zope.securitypolicy.interfaces import Allow
 from dolmen.security.policies.principalrole import ExtraRoleMap
@@ -80,7 +80,7 @@ class ViewPermission(grok.View):
         context = self.context
         print settingsForObject(context)
 
-        
+
 #from uvcsite.tests.simpleaddon import IAdressBook
 #class QuickUserRoleManager(ExtraRoleMap):
 #    grok.implements(IPrincipalRoleManager, IPrincipalRoleMap)

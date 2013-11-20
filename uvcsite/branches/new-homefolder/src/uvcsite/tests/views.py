@@ -6,7 +6,8 @@ import grok
 
 from dolmen.menu import menuentry, global_menuentry
 from zope.interface import Interface
-from uvcsite.interfaces import IMyHomeFolder, IUVCSite, IHelp, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
+from uvcsite.interfaces import IUVCSite, IHelp, IPersonalMenu, IDocumentActions, ISidebar, IFooter, IPersonalPreferences
+from uvcsite import IMyHomeFolder
 from uvc.layout.slots.menus import DocumentActionsMenu
 from megrok.z3ctable import TablePage, Column, table
 from uvcsite import HelpPage
