@@ -14,6 +14,7 @@ from uvc.layout.slots.menus import  (Footer, GlobalMenu,
 from uvcsite.utils.dataviews import BasePDF, BaseXML, BaseDataView, WatermarkPDF
 from uvc.layout.forms import Form, AddForm, SubForm, GroupForm, Wizard, Step
 from uvc.layout import *
+from uvc.homefolder import IHomefolder as IMyHomeFolder
 
 #from uvc.layout.event import IAfterSaveEvent
 

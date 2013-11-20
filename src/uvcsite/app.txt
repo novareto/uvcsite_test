@@ -121,5 +121,5 @@ SystemError
 
    >>> system_error = getMultiAdapter((exception, request), name=u"index")
    >>> system_error
-   <uvcsite.app.SystemError object at ...>
+   <uvcsite.errors.SystemError object at ...>
 
