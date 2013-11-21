@@ -23,6 +23,6 @@ Tales Convinience Adapter
    <uvcsite.utils.tales.UVCSiteTalesAdapter object at ...>
 
    >>> uvcsite_tales.homefolder
-   'http://127.0.0.1/app/members/christian/'
+   'http://127.0.0.1/app/members/christian'
 
    >>> endInteraction()

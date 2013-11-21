@@ -24,10 +24,10 @@ Functional Doctest
   >>> from uvc.homefolder.interfaces import IHomefolders
   >>> utility = getUtility(IHomefolders)
   >>> utility
-  <uvcsite.homefolder.homefolder.PortalMembership object at ...>
+  <uvc.homefolder.components.Homefolders object at 0...>
 
-  >>> utility.assignHomeFolder('lars')
-  >>> 'lars' in utility.homeFolderBase
+  >>> utility.assign_homefolder('lars')
+  >>> 'lars' in utility.keys()
   True
 
   >>> stat_view.update()
@@ -36,7 +36,7 @@ Functional Doctest
 
 
   >>> from uvcsite.tests.simpleaddon import Contact
-  >>> adrbook = utility.homeFolderBase.get('lars').get('Adressbook')
+  >>> adrbook = utility.get('lars').get('Adressbook')
   >>> adrbook
   <uvcsite.tests.simpleaddon.AdressBook object at ...>
 
