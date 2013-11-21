@@ -127,7 +127,7 @@ GlobalMenu
 ----------
    >>> import uvcsite
    >>> uvcsite.getHomeFolder(request)
-   <uvcsite.homefolder.homefolder.HomeFolder object at 0...> 
+   <uvc.homefolder.components.Homefolder object at 0...>
 
    >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"globalmenu")
    >>> manager 

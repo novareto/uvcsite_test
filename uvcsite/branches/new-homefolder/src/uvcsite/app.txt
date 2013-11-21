@@ -11,6 +11,8 @@ Let's first create an instance of Uvcsite at the top level:
    >>> from zope.site.hooks import setSite
    >>> root = getRootFolder()
    >>> uvcsite = Uvcsite()
+   >>> from grok.testing import grok_component
+
    >>> root['app'] = uvcsite
    >>> setSite(root['app'])
 

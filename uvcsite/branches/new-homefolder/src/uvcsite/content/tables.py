@@ -30,7 +30,7 @@ class CheckBox(CheckBoxColumn):
             state = titleForState(state)
         if state == "Entwurf":
             return CheckBoxColumn.renderCell(self, item)
-        return ''    
+        return ''
 
 
 class Link(LinkColumn):

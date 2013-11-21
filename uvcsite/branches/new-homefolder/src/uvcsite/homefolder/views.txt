@@ -13,7 +13,6 @@ Setup
   >>> from uvcsite.tests import startInteraction, endInteraction
   >>> request = startInteraction('lars')
 
-  >>> from uvcsite.homefolder.homefolder import HomeFolder
   >>> root['app'] = Uvcsite()
   >>> from zope.component.hooks import setSite
   >>> setSite(root['app'])

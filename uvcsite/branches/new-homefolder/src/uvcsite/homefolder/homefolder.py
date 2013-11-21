@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-
+import uvcsite
 from grokcore.component import adapter, implementer
-from uvc.homefolder import IHomefolder, IHomefolders
-from zope.component import getUtility
+from uvc.homefolder import IHomefolder
 from zope.security.interfaces import IPrincipal
 
 
 @adapter(IPrincipal)
 @implementer(IHomefolder)
 def principal_homefolder(principal):
-    hfs = getUtility(IHomefolders)
-    return hfs.get(principal.id)
+    return uvcsite.getHomeFolder(principal)

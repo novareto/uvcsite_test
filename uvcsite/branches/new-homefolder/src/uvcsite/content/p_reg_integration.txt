@@ -49,7 +49,7 @@ Functional Doctest
   >>> grok_component('AdrBookWithoutRole', AdrBookWithoutRole)
   True
 
-  >>> utility.assignHomeFolder('christian')
+  >>> utility.assign_homefolder('christian')
 
   >>> regs = dict([x for x in getAdapters((christian, request), IProductRegistration)])
   >>> adr = regs['adressbook']
@@ -71,7 +71,7 @@ Functional Doctest
 
   >>> hf = uvcsite.getHomeFolder(request)
   >>> hf
-  <uvcsite.homefolder.homefolder.HomeFolder object at 0...>
+  <uvc.homefolder.components.Homefolder object at 0...>
 
   >>> from pprint import pprint
   >>> from zope.securitypolicy.interfaces import IPrincipalRoleManager

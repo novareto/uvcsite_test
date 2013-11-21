@@ -38,29 +38,17 @@ Do we get a utility with our IHomefolders
 Look at the constants of the PortalMembership
 ---------------------------------------------
 
-Auto Assignment?
-
-   >>> utility.autoCreateAssignment
-   True
-
 homeFolderRole?
 
-   >>> utility.homeFolderRole
+   >>> utility.roles
    [u'uvc.User', u'uvc.Editor', u'uvc.MasterUser']
 
 containerObject?
 
-   >>> print utility.containerObject
-   uvcsite.homefolder.homefolder.HomeFolder
+   >>> print utility.default
+   <class 'uvc.homefolder.components.Homefolder'>
 
-Is the MembersContainer the one we specified?
-
-   >>> utility.homeFolderBase
-   <uvcsite.homefolder.homefolder.Members object at ...>
-   >>> root['app']['members']
-   <uvcsite.homefolder.homefolder.Members object at ...>
-
-   >>> utility.homeFolderBase is root['app']['members']
+   >>> utility is root['app']['members']
    True
 
 Try to add the user lars. this should work because autoassigment is true
@@ -68,26 +56,16 @@ Try to add the user lars. this should work because autoassigment is true
    >>> from uvcsite.tests import startInteraction, endInteraction
    >>> request = startInteraction('lars')
 
-   >>> utility.assignHomeFolder('lars')
-   >>> 'lars' in utility.homeFolderBase
+   >>> utility.assign_homefolder('lars')
+   >>> 'lars' in utility
    True
 
 Do we get the HomeFolder thourgh the api
 
-   >>> homefolder = utility.getHomeFolder('lars')
+   >>> homefolder = utility.get('lars')
    >>> homefolder
-   <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+   <uvc.homefolder.components.Homefolder object at 0...>
 
-Is this the right HomeFolder?
-
-   >>> from uvcsite.interfaces import IMyHomeFolder
-   >>> from uvcsite.homefolder.homefolder import HomeFolder
-   >>> hf = HomeFolder()
-   >>> IMyHomeFolder.providedBy(hf)
-   True
-
-   >>> IMyHomeFolder.providedBy(homefolder)
-   True
 
 OK now we have our homefolder. this homefolder should now have it´s own
 PrincipalRoleMap with settings for lars
@@ -95,6 +73,6 @@ PrincipalRoleMap with settings for lars
    >>> from zope.securitypolicy.interfaces import IPrincipalRoleMap
    >>> rolemap = IPrincipalRoleMap(homefolder) 
    >>> rolemap.getPrincipalsAndRoles()
-   [(u'uvc.MasterUser', u'lars', PermissionSetting: Allow), (u'uvc.Editor', u'lars', PermissionSetting: Allow), (u'uvc.User', u'lars', PermissionSetting: Allow)] 
+   [(u'uvc.MasterUser', 'lars', PermissionSetting: Allow), (u'uvc.Editor', 'lars', PermissionSetting: Allow), (u'uvc.User', 'lars', PermissionSetting: Allow)] 
 
    >>> endInteraction()

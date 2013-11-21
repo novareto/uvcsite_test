@@ -3,6 +3,7 @@
 from grok.interfaces import IContainer
 from uvcsite.content import IUVCApplication, IFolderColumnTable
 from uvc.layout.interfaces import *
+from uvc.homefolder import IHomefolders, IHomefolder
 
 
 class IUVCSite(IUVCApplication):

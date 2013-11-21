@@ -31,7 +31,8 @@ Setup
    <uvcsite.homefolder.homefolder.PortalMembership object at ...>
 
 
-   >>> hf = utility.getHomeFolder('uvc.user')
+   >>> hf = utility.assign_homefolder('uvc.user')
+   >>> hf = utility.get('uvc.user')
    >>> print hf
    <uvcsite.homefolder.homefolder.HomeFolder object at ...>
 

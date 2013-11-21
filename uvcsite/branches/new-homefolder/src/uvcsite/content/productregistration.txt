@@ -42,7 +42,7 @@ Functional Doctest
   >>> grok_component('Addressbook', Addressbook)
   True
 
-  >>> utility.assignHomeFolder('christian')
+  >>> utility.assign_homefolder('christian')
 
   >>> regs = dict([x for x in getAdapters((christian, request), IProductRegistration)])
   >>> adr = regs['adressbook']
@@ -102,9 +102,12 @@ CUSTOM GROUP
   >>> lars 
   Principal('lars')
 
+
+
   >>> request = TestRequest()
   >>> request.setPrincipal(lars)
   >>> zope.security.management.newInteraction(request)
+  >>> utility.assign_homefolder('lars')
   >>> uaz_reg = getMultiAdapter((lars, request), IProductRegistration, name="Unfallanzeige")
   >>> uaz_reg
   <uvcsite.UAZRegistration object at ...>
