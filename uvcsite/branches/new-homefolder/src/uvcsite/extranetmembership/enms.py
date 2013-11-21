@@ -149,7 +149,7 @@ class ENMSUpdateUser(uvcsite.Form):
             principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         principal = self.request.principal
-        homeFolder = IHomefolder(principal).homeFolder
+        homeFolder = IHomefolder(principal)
         self.redirect(self.url(homeFolder, 'enms'))
 
     @base.action(_(u"Entfernen"))
@@ -164,7 +164,7 @@ class ENMSUpdateUser(uvcsite.Form):
                             data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde entfernt.'))
         principal = self.request.principal
-        homeFolder = IHomefolder(principal).homeFolder
+        homeFolder = IHomefolder(principal)
         self.redirect(self.url(homeFolder, 'enms'))
 
 

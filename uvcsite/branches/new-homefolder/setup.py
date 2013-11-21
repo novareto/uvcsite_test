@@ -71,6 +71,7 @@ install_requires = [
 
 
 tests_require = [
+    'docutils',
     'dolmen.security.policies',
     'elementtree',
     'formencode',

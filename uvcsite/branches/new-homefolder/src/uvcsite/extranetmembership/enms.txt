@@ -28,13 +28,13 @@ Setup
    >>> from uvc.homefolder.interfaces import IHomefolders
    >>> utility = getUtility(IHomefolders)
    >>> utility
-   <uvcsite.homefolder.homefolder.PortalMembership object at ...>
+   <uvc.homefolder.components.Homefolders object at ...>
 
 
    >>> hf = utility.assign_homefolder('uvc.user')
    >>> hf = utility.get('uvc.user')
    >>> print hf
-   <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+   <uvc.homefolder.components.Homefolder object at ...>
 
    >>> endInteraction()
 
