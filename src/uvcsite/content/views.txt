@@ -15,6 +15,7 @@ Setup
   >>> from uvcsite.tests import startInteraction, endInteraction
   >>> request = startInteraction('mgr')
   >>> import uvcsite
+
   >>> homefolder = uvcsite.getHomeFolder(request)
   >>> folder = homefolder.get('Adressbook')
 
