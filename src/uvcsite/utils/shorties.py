@@ -2,7 +2,8 @@
 # Copyright (c) 2007-2011 NovaReto GmbH
 # cklinger@novareto.de
 
-
+import grok
+import urllib
 import pytz
 import zope.security
 from datetime import datetime, date
@@ -16,11 +17,16 @@ def getHomeFolder(request):
     if IUnauthenticatedPrincipal.providedBy(principal):
         return
     folders = getUtility(IHomefolders)
-    return folders.get(principal.id)
+    homefolder = folders.get(principal.id)
+    if homefolder is None:
+        folders.assign_homefolder(principal.id)
+        homefolder = folders.get(principal.id)
+    return homefolder
 
 
-def getHomeFolderUrl(request):
-    return homefolder_url(request)
+def getHomeFolderUrl(request, suffix=None):
+    homefolder = getHomeFolder(request)
+    return urllib.unquote(grok.util.url(request, homefolder, suffix))
 
 
 def fmtDateTime(object, fmt="%d.%m.%Y %H:%M:%S"):

@@ -41,8 +41,8 @@ Erstellen einer Site
 
   >>> hfm = getUtility(IHomefolders)
   >>> hfm
-  <uvcsite.homefolder.homefolder.PortalMembership object at ...>
-  >>> hfm.assignHomeFolder('christian')
+  <uvc.homefolder.components.Homefolders object at ...>
+  >>> hfm.assign_homefolder('christian')
 
   >>> christian = Christian()
   >>> homefolder = IHomefolder(christian)

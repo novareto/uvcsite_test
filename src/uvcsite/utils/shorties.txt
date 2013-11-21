@@ -21,13 +21,13 @@ Shourcut Helpers UVCSite
 getHomeFolder
 
   >>> uvcsite.getHomeFolder(request)
-  <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+  <uvc.homefolder.components.Homefolder object at 0...>
 
 
 getHomeFolderUrl
 
   >>> uvcsite.getHomeFolderUrl(request)
-  'http://127.0.0.1/app/members/christian/'
+  'http://127.0.0.1/app/members/christian'
 
   >>> uvcsite.getHomeFolderUrl(request, 'Unfallanzeigen')
   'http://127.0.0.1/app/members/christian/Unfallanzeigen'

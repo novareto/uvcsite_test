@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2011 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 
 import grok
@@ -19,5 +19,4 @@ class UVCSiteTalesAdapter(grok.Adapter, ZopeTalesAPI):
 
     @property
     def homefolder(self):
-        hf_url = uvcsite.IGetHomeFolderUrl(self.context).getURL()
-        return hf_url
+        return uvcsite.getHomeFolderUrl(self.context)
