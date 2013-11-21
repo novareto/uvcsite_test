@@ -18,6 +18,7 @@ from zope.site.site import LocalSiteManager as BaseLocalSiteManager
 from zope.lifecycleevent.interfaces import IObjectAddedEvent
 from grokcore.site.components import BaseSite
 from zope.site.site import SiteManagerContainer
+from grokcore.site import IApplication
 
 
 grok.templatedir('templates')
@@ -51,7 +52,7 @@ class LocalSiteManager(BaseLocalSiteManager):
     )
 
 
-@implementer(uvcsite.IUVCSite)
+@implementer(uvcsite.IUVCSite, IApplication)
 class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
     """Application Object for uvc.site
     """

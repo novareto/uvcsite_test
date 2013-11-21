@@ -44,7 +44,7 @@ the HomeFolderManager
   >>> from uvc.homefolder.interfaces import IHomefolders
   >>> utility = getUtility(IHomefolders)
   >>> utility
-  <uvcsite.homefolder.homefolder.PortalMembership object at ...>
+  <uvc.homefolder.components.Homefolders object at ...>
 
 Creating product folders in a new home folder
 ---------------------------------------------
@@ -54,14 +54,14 @@ We create a HomeFolder for lars:
   >>> from uvcsite.tests import startInteraction
   >>> request = startInteraction('lars')
 
-  >>> utility.assignHomeFolder('lars')
-  >>> 'lars' in utility.homeFolderBase
+  >>> utility.assign_homefolder('lars')
+  >>> 'lars' in utility
   True
 
 All known product folder types have been instantiated and added to the home
 folder in the process:
 
-  >>> lars = utility.homeFolderBase['lars']
+  >>> lars = utility['lars']
   >>> list(lars)
   [u'Adressbook']
 

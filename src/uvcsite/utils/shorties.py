@@ -9,11 +9,14 @@ import zope.security
 from datetime import datetime, date
 from uvc.homefolder import IHomefolders, homefolder_url
 from zope.component import getUtility
-from zope.authentication.interfaces import IUnauthenticatedPrincipal
+from zope.authentication.interfaces import IUnauthenticatedPrincipal, IPrincipal
 
 
-def getHomeFolder(request):
-    principal = request.principal
+def getHomeFolder(obj):
+    if not IPrincipal.providedBy(obj):
+        principal = obj.principal
+    else:
+        principal = obj
     if IUnauthenticatedPrincipal.providedBy(principal):
         return
     folders = getUtility(IHomefolders)
