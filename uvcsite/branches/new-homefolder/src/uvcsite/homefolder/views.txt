@@ -25,13 +25,13 @@ Setup
   >>> prm = IPrincipalRoleManager(homefolder)
   >>> prm.assignRoleToPrincipal('uvc.Editor', 'someuser')
 
+
 TableView
 ---------
 
   >>> from zope.component import getMultiAdapter
   >>> from zope.publisher.browser import TestRequest
   >>> import zope.security.management
-
 
   >>> index = getMultiAdapter((homefolder, request), name="index")
   >>> index
