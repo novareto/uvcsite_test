@@ -12,7 +12,6 @@ class UVCSiteGrokker(martian.ClassGrokker):
     martian.priority(500)
 
     def grok(self, name, factory, module_info, config, **kw):
-        import pdb; pdb.set_trace()
         provides = IApplication
         name = '%s.%s' % (module_info.dotted_name, name)
         config.action(
