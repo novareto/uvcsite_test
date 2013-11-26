@@ -26,6 +26,11 @@ from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
+from zope.site.site import SiteManagerContainer
+from zope.site.site import LocalSiteManager as BaseLocalSiteManager
+from grokcore.site.components import BaseSite
+from grokcore.site import IApplication
+from zope.lifecycleevent.interfaces import IObjectAddedEvent
 
 
 grok.templatedir('templates')
@@ -58,10 +63,21 @@ grok.global_utility(
     direct=True)
 
 
-class Uvcsite(grok.Application, grok.Container):
+class LocalSiteManager(BaseLocalSiteManager):
+
+    __bases__ = property(
+        lambda self:
+        (uvcsiteRegistry,) + self.__dict__.get('__bases__', tuple()),
+        lambda self, bases:
+        self._setBases(bases),
+    )
+
+
+class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
     """Application Object for uvc.site
     """
-    grok.implements(uvcsite.IUVCSite, IDolmen)
+    grok.implements(uvcsite.IUVCSite, IDolmen, IApplication)
+    _managerClass = LocalSiteManager
 
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
@@ -75,15 +91,12 @@ class Uvcsite(grok.Application, grok.Container):
                        public=True,
                        setup=setup_pau)
 
-    def getSiteManager(self):
-        current = super(Uvcsite, self).getSiteManager()
-        if uvcsiteRegistry not in current.__bases__:
-            uvcsiteRegistry.__bases__ = tuple(
-                [x for x in uvcsiteRegistry.__bases__ if x.__hash__() != zope.component.globalSiteManager.__hash__()]
-            )
-            current.__bases__ += (uvcsiteRegistry,)
-        current.__bases__ = current.__bases__[::-1]
-        return current
+
+@grok.subscribe(uvcsite.IUVCSite, IObjectAddedEvent)
+def addSiteHandler(site, event):
+    manager = site._managerClass
+    sitemanager = manager(site, default_folder=False)
+    site.setSiteManager(sitemanager)
 
 
 class NotFound(uvcsite.Page, grok.components.NotFoundView):
