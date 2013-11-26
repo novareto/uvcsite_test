@@ -8,8 +8,8 @@ from zope.generations.generations import SchemaManager
 from zope.generations.interfaces import ISchemaManager
 
 UVCSchemaManager = SchemaManager(
-    minimum_generation = 2,
-    generation = 2,
+    minimum_generation = 3,
+    generation = 3,
     package_name = __name__
 )
 
