@@ -30,7 +30,7 @@ from zope.site.site import SiteManagerContainer
 from zope.site.site import LocalSiteManager as BaseLocalSiteManager
 from grokcore.site.components import BaseSite
 from grokcore.site import IApplication
-from zope.lifecycleevent.interfaces import IObjectAddedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 
 grok.templatedir('templates')
@@ -92,7 +92,7 @@ class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
                        setup=setup_pau)
 
 
-@grok.subscribe(uvcsite.IUVCSite, IObjectAddedEvent)
+@grok.subscribe(uvcsite.IUVCSite, IObjectCreatedEvent)
 def addSiteHandler(site, event):
     manager = site._managerClass
     sitemanager = manager(site, default_folder=False)
