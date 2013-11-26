@@ -1,6 +1,6 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            i18n_domain="uvcsite">
-
+  <include package="uvcsite" file="meta.zcml" />
   <include package="uvcsite" />
   <include package="uvcsite.tests" />
   <include package="uvc.tbskin" />
