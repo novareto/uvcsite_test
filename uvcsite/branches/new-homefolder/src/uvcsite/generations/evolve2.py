@@ -7,7 +7,7 @@ import zope.generations.utility
 def evolve(context):
     # This depends on zope.app.publication.
     root = zope.generations.utility.getRootFolder(context)
-    for name, obj in root.item():
+    for name, obj in root.items():
         if uvcsite.IUVCSite.providedBy(obj):
             if obj._sm.__class__ != uvcsite.app.LocalSiteManager:
                 newsm = uvcsite.app.LocalSiteManager(obj, default_folder=False)

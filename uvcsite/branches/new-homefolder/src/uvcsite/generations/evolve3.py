@@ -10,7 +10,7 @@ from uvc.homefolder import IHomefolders
 def evolve(context):
     """ MIGRATION OF HOMEFOLDERS"""
     root = zope.generations.utility.getRootFolder(context)
-    for name, obj in root.item():
+    for name, obj in root.items():
         if uvcsite.IUVCSite.providedBy(obj):
 
             # migration of member area
