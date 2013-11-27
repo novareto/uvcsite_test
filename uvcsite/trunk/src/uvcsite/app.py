@@ -9,8 +9,8 @@ from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
 
 from grokcore.registries import create_components_registry
-from grokcore.site.components import BaseSite
 from grokcore.site import IApplication
+from grokcore.site.components import BaseSite
 from zeam.form.base import NO_VALUE
 from zeam.form.ztk import customize
 from zeam.form.ztk.widgets.choice import RadioFieldWidget
@@ -18,19 +18,19 @@ from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
 from zeam.form.ztk.widgets.date import DateWidgetExtractor
 from zope.app.homefolder.interfaces import IHomeFolderManager
 from zope.authentication.interfaces import IAuthentication
+from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents
 from zope.i18n.format import DateTimeParseError
 from zope.i18n.interfaces import IUserPreferredLanguages
 from zope.interface import Interface, implementer
 from zope.interface.registry import Components
-from zope.lifecycleevent.interfaces import IObjectAddedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
 from zope.site.site import SiteManagerContainer
-from zope.site.site import LocalSiteManager as BaseLocalSiteManager
-from zope.component.persistentregistry import PersistentComponents
+
 
 grok.templatedir('templates')
 
@@ -62,21 +62,9 @@ grok.global_utility(
     direct=True)
 
 
-class LocalSiteManager(BaseLocalSiteManager):
-
-    __bases__ = property(
-        lambda self:
-           (uvcsiteRegistry,) + self.__dict__.get('__bases__', tuple()),
-        lambda self, bases:
-           self._setBases(bases),
-        )
-            
-
 @implementer(uvcsite.IUVCSite, IApplication)  # this can be reduced
-class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
+class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site """
-
-    _managerClass = LocalSiteManager
     
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
@@ -90,13 +78,18 @@ class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
                        public=True,
                        setup=setup_pau)
 
-
-@grokcore.component.subscribe(uvcsite.IUVCSite, IObjectAddedEvent)
-def addSiteHandler(site, event):
-    manager = site._managerClass
-    sitemanager = manager(site, default_folder=False)
-    site.setSiteManager(sitemanager)
-
+    def getSiteManager(self):
+        current = super(Uvcsite, self).getSiteManager()
+        if uvcsiteRegistry not in current.__bases__:
+            uvcsiteRegistry.__bases__ = tuple(
+                [x for x in uvcsiteRegistry.__bases__
+                    if x._hash_() != globalSiteManager._hash_()])
+            current.__bases__ = (uvcsiteRegistry,) + current.__bases__
+        elif current.__bases__[0] is not uvcsiteRegistry:
+            current.__bases__ = (uvcsiteRegistry,) + tuple((
+                b for b in current.__bases__ if b != uvcsiteRegistry))
+        return current
+    
 
 class NotFound(uvcsite.Page, grok.components.NotFoundView):
     """Not Found Error View
