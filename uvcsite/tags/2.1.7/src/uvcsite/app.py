@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import grok
 import uvcsite
-import zope.component
-
 
 from dolmen.app.site import IDolmen
 
@@ -26,11 +24,8 @@ from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
-from zope.site.site import SiteManagerContainer
-from zope.site.site import LocalSiteManager as BaseLocalSiteManager
-from grokcore.site.components import BaseSite
 from grokcore.site import IApplication
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.component import globalSiteManager
 
 
 grok.templatedir('templates')
@@ -52,7 +47,6 @@ class Icons(grok.DirectoryResource):
 
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
-    bases=(zope.component.globalSiteManager, ),
 )
 
 
@@ -63,21 +57,10 @@ grok.global_utility(
     direct=True)
 
 
-class LocalSiteManager(BaseLocalSiteManager):
-
-    __bases__ = property(
-        lambda self:
-        (uvcsiteRegistry,) + self.__dict__.get('__bases__', tuple()),
-        lambda self, bases:
-        self._setBases(bases),
-    )
-
-
-class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
+class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
     """
     grok.implements(uvcsite.IUVCSite, IDolmen, IApplication)
-    _managerClass = LocalSiteManager
 
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
@@ -91,12 +74,17 @@ class Uvcsite(BaseSite, SiteManagerContainer, grok.Container):
                        public=True,
                        setup=setup_pau)
 
-
-@grok.subscribe(uvcsite.IUVCSite, IObjectCreatedEvent)
-def addSiteHandler(site, event):
-    manager = site._managerClass
-    sitemanager = manager(site, default_folder=False)
-    site.setSiteManager(sitemanager)
+    def getSiteManager(self):
+        current = super(Uvcsite, self).getSiteManager()
+        if uvcsiteRegistry not in current.__bases__:
+            uvcsiteRegistry.__bases__ = tuple(
+                [x for x in uvcsiteRegistry.__bases__
+                    if x._hash_() != globalSiteManager._hash_()])
+            current.__bases__ = (uvcsiteRegistry,) + current.__bases__
+        elif current.__bases__[0] is not uvcsiteRegistry:
+            current.__bases__ = (uvcsiteRegistry,) + tuple((
+                b for b in current.__bases__ if b != uvcsiteRegistry))
+        return current
 
 
 class NotFound(uvcsite.Page, grok.components.NotFoundView):
