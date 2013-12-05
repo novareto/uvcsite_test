@@ -4,6 +4,7 @@
 
 import grok
 import uvcsite
+import logging
 import zope.security
 
 from zope.security.interfaces import IPrincipal
