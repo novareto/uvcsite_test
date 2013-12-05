@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import grok
 import uvcsite
+import zope.component
 
 from dolmen.app.site import IDolmen
 
@@ -47,6 +48,7 @@ class Icons(grok.DirectoryResource):
 
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
+    bases=(zope.component.globalSiteManager, ),
 )
 
 
