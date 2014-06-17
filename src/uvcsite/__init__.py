@@ -12,14 +12,11 @@ from uvcsite.utils.help import HelpPage
 from uvc.layout.slots.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
 from uvcsite.utils.dataviews import BasePDF, BaseXML, BaseDataView, WatermarkPDF
-from uvc.layout.forms import Form, AddForm, SubForm, GroupForm, Wizard, Step
-from uvc.layout import *
-
-#from uvc.layout.event import IAfterSaveEvent
+from uvc.layout.forms import AddForm, SubForm, GroupForm, Wizard, Step
+from uvc.api import *
 
 # Mobile
 #from uvcsite.mobile import BaseMobilePage, MobilePage, MobileLayer, IMobileLayer
-
 
 ### ZEAM-FORM-API
 from zeam.form.base import Fields, Action, Actions, action, DictDataManager
@@ -32,8 +29,7 @@ from zeam.form.base.errors import Error
 ### DOLMEN-FORMS-API
 from dolmen.forms.base.models import ApplicationForm
 from dolmen.forms.base.interfaces import IFieldUpdate
-from dolmen.forms.base.utils import (
-    notify_changes, apply_data_event)
+from dolmen.forms.base.utils import notify_changes, apply_data_event
 from uvcsite.utils.form import set_fields_data
 
 #from uvcsite.utils.mail import send_mail
