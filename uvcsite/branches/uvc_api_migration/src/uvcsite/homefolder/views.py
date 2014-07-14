@@ -1,17 +1,15 @@
-# -*- coding: utf-8 -*-
-# Copyright (c) 2007-2008 NovaReto GmbH
-# cklinger@novareto.de
+## # -*- coding: utf-8 -*-
+## # Copyright (c) 2007-2008 NovaReto GmbH
+## # cklinger@novareto.de
 
-import grok
+import uvclight
 import uvcsite
 
-from grokcore.rest.interfaces import IRESTLayer
-from megrok.pagetemplate import PageTemplate
 from megrok.z3ctable import Values
-from uvc.layout import interfaces, TablePage
+from uvc.layout import interfaces
 from uvcsite import uvcsiteMF as _
-from uvcsite.content.productregistration import getAllProductRegistrations
-from uvcsite.homefolder.homefolder import Members
+#from uvcsite.content.productregistration import getAllProductRegistrations
+#from uvcsite.homefolder.homefolder import Members
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from zope.component import getMultiAdapter
 from zope.interface import Interface
@@ -19,16 +17,19 @@ from zope.pagetemplate.interfaces import IPageTemplate
 from zope.traversing.browser import absoluteURL
 
 
-grok.templatedir('templates')
+## uvclight.templatedir('templates')
 
 
-class Index(TablePage):
-    grok.title(u'Mein Ordner')
-    grok.context(IMyHomeFolder)
-    grok.implements(IFolderListingTable)
+class Index(uvclight.TablePage):
+    uvclight.title(u'Mein Ordner')
+    uvclight.context(IMyHomeFolder)
+    uvclight.implements(IFolderListingTable)
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
-    cssClasses = {'table': 'tablesorter table table-striped table-bordered table-condensed'}
+    cssClasses = {
+        'table': 'tablesorter table table-striped ' +
+                 'table-bordered table-condensed',
+        }
     cssClassEven = u'even'
     cssClassOdd = u'odd'
 
@@ -46,7 +47,8 @@ class Index(TablePage):
     def getContentTypes(self):
         interaction = self.request.interaction
         for key, value in self.context.items():
-            if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
+            if (interaction.checkPermission('uvc.ViewContent', value) and
+                not getattr(value, 'excludeFromNav', False)):
                 yield dict(href = absoluteURL(value, self.request),
                            name = key)
 
@@ -66,58 +68,58 @@ class Index(TablePage):
         super(Index, self).update()
 
 
-class DirectAccessViewlet(grok.Viewlet):
-    grok.view(IFolderListingTable)
-    grok.order(25)
-    grok.context(Interface)
-    grok.viewletmanager(interfaces.ITabs)
+## class DirectAccessViewlet(uvclight.Viewlet):
+##     uvclight.view(IFolderListingTable)
+##     uvclight.order(25)
+##     uvclight.context(Interface)
+##     uvclight.viewletmanager(interfaces.ITabs)
 
-    def getContentTypes(self):
-        interaction = self.request.interaction
-        hf = uvcsite.getHomeFolder(self.request)
-        for key, value in getAllProductRegistrations():
-            if getattr(value, 'inNav', True):
-                pf = hf[value.folderURI]
-                if interaction.checkPermission('uvc.ViewContent', pf):
-                    yield dict(href = absoluteURL(pf, self.request),
-                               name = value.title)
+##     def getContentTypes(self):
+##         interaction = self.request.interaction
+##         hf = uvcsite.getHomeFolder(self.request)
+##         for key, value in getAllProductRegistrations():
+##             if getattr(value, 'inNav', True):
+##                 pf = hf[value.folderURI]
+##                 if interaction.checkPermission('uvc.ViewContent', pf):
+##                     yield dict(href = absoluteURL(pf, self.request),
+##                                name = value.title)
 
-    def render(self):
-        template = getMultiAdapter((self, self.request), IPageTemplate)
-        return template()
-
-
-class DirectAccess(PageTemplate):
-    grok.view(DirectAccessViewlet)
+##     def render(self):
+##         template = getMultiAdapter((self, self.request), IPageTemplate)
+##         return template()
 
 
-class HomeFolderValues(Values):
-    """This Adapter returns IContent Objects
-       form child folders
-    """
-    grok.adapts(IMyHomeFolder, None, Index)
-
-    @property
-    def values(self):
-        results = []
-        interaction = self.request.interaction
-        for productfolder in self.context.values():
-            if interaction.checkPermission('uvc.ViewContent', productfolder):
-                results.extend(productfolder.values())
-        return results
+## class DirectAccess(PageTemplate):
+##     uvclight.view(DirectAccessViewlet)
 
 
-class RedirectIndexMembers(grok.View):
-    grok.context(Members)
-    grok.name('index')
+## class HomeFolderValues(Values):
+##     """This Adapter returns IContent Objects
+##        form child folders
+##     """
+##     uvclight.adapts(IMyHomeFolder, None, Index)
 
-    def render(self):
-        url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
-        self.redirect(url)
+##     @property
+##     def values(self):
+##         results = []
+##         interaction = self.request.interaction
+##         for productfolder in self.context.values():
+##             if interaction.checkPermission('uvc.ViewContent', productfolder):
+##                 results.extend(productfolder.values())
+##         return results
 
-class RestHomeFolderTraverser(grok.Traverser):
-    grok.context(Members)
-    grok.layer(IRESTLayer)
 
-    def traverse(self, name):
-        return uvcsite.getHomeFolder(self.request).get(name)
+## class RedirectIndexMembers(uvclight.View):
+##     uvclight.context(Members)
+##     uvclight.name('index')
+
+##     def render(self):
+##         url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
+##         self.redirect(url)
+
+## class RestHomeFolderTraverser(uvclight.Traverser):
+##     uvclight.context(Members)
+##     uvclight.layer(IRESTLayer)
+
+##     def traverse(self, name):
+##         return uvcsite.getHomeFolder(self.request).get(name)

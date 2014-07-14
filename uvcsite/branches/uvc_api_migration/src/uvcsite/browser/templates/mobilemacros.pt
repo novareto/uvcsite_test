@@ -1,9 +1,0 @@
-<html>
-  <div data-role="header" metal:define-macro="header">
-    <h1>UV-Mobile</h1>
-  </div>
-
-  <div data-role="footer" metal:define-macro="footer">
-    <h4>xxUV-Mobile</h4>
-  </div>
-</html>

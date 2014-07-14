@@ -3,24 +3,20 @@
 # cklinger@novareto.de
 
 import base64
-import grok
+import uvclight
 import time
 import datetime
 import uvcsite
 import xmlrpclib
-from grokcore.chameleon.components import ChameleonPageTemplateFile
-from grokcore.chameleon.components import PageTemplateFile
-
 from megrok.z3ctable import Column, table
+from uvcsite.content import IProductFolder
 
-grok.templatedir('templates')
 
-
-class Altdaten(uvcsite.TablePage):
+class Altdaten(uvclight.TablePage):
     """ """
-    grok.baseclass()
-    template = ChameleonPageTemplateFile('templates/altdaten.cpt')
-    grok.title(u'Alte Dokumente')
+    uvclight.baseclass()
+    template = uvclight.get_template('altdaten.cpt', __file__)
+    uvclight.title(u'Alte Dokumente')
 
     cssClasses = {'table': 'tablesorter'}
     title = u"Alte Dokumente"
@@ -35,9 +31,9 @@ class Altdaten(uvcsite.TablePage):
 
 class Title(Column):
     """ """
-    grok.name('title')
+    uvclight.name('title')
     table(Altdaten)
-    grok.context(uvcsite.IProductFolder)
+    uvclight.context(IProductFolder)
     header = u"Titel"
     weight = 10
 
@@ -49,9 +45,9 @@ class Title(Column):
 
 class Autor(Column):
     """ """
-    grok.name('autor')
+    uvclight.name('autor')
     table(Altdaten)
-    grok.context(uvcsite.IProductFolder)
+    uvclight.context(IProductFolder)
     header = u"Erstellt von"
     weight = 20
 
@@ -61,9 +57,9 @@ class Autor(Column):
 
 class Status(Column):
     """ """
-    grok.name('status')
+    uvclight.name('status')
     table(Altdaten)
-    grok.context(uvcsite.IProductFolder)
+    uvclight.context(IProductFolder)
     header = u"Status"
     weight = 30
 
@@ -73,9 +69,9 @@ class Status(Column):
 
 class Datum(Column):
     """ """
-    grok.name('datum')
+    uvclight.name('datum')
     table(Altdaten)
-    grok.context(uvcsite.IProductFolder)
+    uvclight.context(IProductFolder)
     header = u"Datum"
     weight = 40
 
@@ -87,10 +83,10 @@ class Datum(Column):
         return datum
 
 
-class PDF(grok.View):
-    grok.view(Altdaten)
-    grok.context(Altdaten)
-    grok.baseclass()
+class PDF(uvclight.View):
+    uvclight.view(Altdaten)
+    uvclight.context(Altdaten)
+    uvclight.baseclass()
 
     def url(self):
         raise NotImplementedError

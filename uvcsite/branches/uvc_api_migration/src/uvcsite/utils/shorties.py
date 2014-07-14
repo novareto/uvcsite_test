@@ -2,22 +2,21 @@
 # Copyright (c) 2007-2011 NovaReto GmbH
 # cklinger@novareto.de
 
-
 import pytz
 import urllib
 import uvcsite
 import zope.security
 
 from datetime import datetime, date
-from zope.app.homefolder.interfaces import IHomeFolder
-from zope.app.security.interfaces import IUnauthenticatedPrincipal
+from uvc.homefolder.interfaces import IHomefolder
+from cromlech.security.interfaces import IUnauthenticatedPrincipal
 
 
 def getHomeFolder(request):
     principal = request.principal
     if IUnauthenticatedPrincipal.providedBy(principal):
         return
-    return IHomeFolder(principal).homeFolder
+    return IHomefolder(principal)
 
 
 def getHomeFolderUrl(request, suffix=""):

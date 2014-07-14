@@ -3,22 +3,22 @@
 # cklinger@novareto.de 
 
 
-import grok
-import uvcsite
+## import grok
+## import uvcsite
 
-from zope.interface import Interface
-from zope.publisher.interfaces import IRequest
-from zope.traversing.interfaces import IPathAdapter
-from zope.app.pagetemplate.talesapi import ZopeTalesAPI
+## from zope.interface import Interface
+## from zope.publisher.interfaces import IRequest
+## from zope.traversing.interfaces import IPathAdapter
+## from zope.app.pagetemplate.talesapi import ZopeTalesAPI
 
 
-class UVCSiteTalesAdapter(grok.Adapter, ZopeTalesAPI):
-    """extend the zope implementation by providing additional dublin core """
-    grok.provides(IPathAdapter)
-    grok.context(IRequest)
-    grok.name('uvcsite')
+## class UVCSiteTalesAdapter(grok.Adapter, ZopeTalesAPI):
+##     """extend the zope implementation by providing additional dublin core """
+##     grok.provides(IPathAdapter)
+##     grok.context(IRequest)
+##     grok.name('uvcsite')
 
-    @property
-    def homefolder(self):
-        hf_url = uvcsite.IGetHomeFolderUrl(self.context).getURL()
-        return hf_url
+##     @property
+##     def homefolder(self):
+##         hf_url = uvcsite.IGetHomeFolderUrl(self.context).getURL()
+##         return hf_url

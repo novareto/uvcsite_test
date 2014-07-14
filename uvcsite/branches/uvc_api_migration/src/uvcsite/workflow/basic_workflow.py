@@ -2,14 +2,15 @@
 # Copyright (c) 2007-2008 NovaReto GmbH
 # cklinger@novareto.de
 
-import grok
+import uvclight
 
-from uvcsite import IContent
+from dolmen.content import IContent
 from datetime import datetime
-
+from zope.lifecycleevent import IObjectAddedEvent
+from grokcore.component import subscribe, global_utility
 from hurry.workflow import workflow
-from hurry.workflow.interfaces import (
-    IWorkflow, IWorkflowState, IWorkflowInfo, IWorkflowTransitionEvent)
+from hurry.workflow.interfaces import IWorkflow, IWorkflowState
+from hurry.workflow.interfaces import IWorkflowInfo, IWorkflowTransitionEvent
 
 
 CREATED = 0
@@ -54,29 +55,29 @@ def create_workflow():
                               fix_transition,
                               publish_transition])
 
-grok.global_utility(create_workflow, provides=IWorkflow)
+global_utility(create_workflow, provides=IWorkflow)
 
 
 # Workflow States
 
-class WorkflowState(workflow.WorkflowState, grok.Adapter):
-    grok.context(IContent)
-    grok.provides(IWorkflowState)
+class WorkflowState(workflow.WorkflowState, uvclight.Adapter):
+    uvclight.context(IContent)
+    uvclight.provides(IWorkflowState)
 
 # Workflow Info
 
-class WorkflowInfo(workflow.WorkflowInfo, grok.Adapter):
-    grok.context(IContent)
-    grok.provides(IWorkflowInfo)
+class WorkflowInfo(workflow.WorkflowInfo, uvclight.Adapter):
+    uvclight.context(IContent)
+    uvclight.provides(IWorkflowInfo)
 
 # Events
 
 
-@grok.subscribe(IContent, grok.IObjectAddedEvent)
+@subscribe(IContent, IObjectAddedEvent)
 def initializeWorkflow(content, event):
     IWorkflowInfo(content).fireTransition('create')
 
 
-@grok.subscribe(IWorkflowTransitionEvent)
+@subscribe(IWorkflowTransitionEvent)
 def set_publish_action(event):
     event.object.published = datetime.now()

@@ -2,21 +2,20 @@
 # Copyright (c) 2007-2010 NovaReto GmbH
 # cklinger@novareto.de 
 
-import grok
+import uvclight
 import uvcsite
+from uvc.layout.interfaces import IAboveContent
+from zope.component import getMultiAdapter
+from grokcore.component import adapter, implementer
+from zope.interface import Interface
+from cromlech.browser import ITemplate, ISlot
 
-from megrok.pagetemplate import PageTemplate
-from zope import interface, component, viewlet
-from zope.pagetemplate.interfaces import IPageTemplate
 
-grok.templatedir('templates')
-
-
-class HelpManager(grok.ViewletManager):
+class HelpManager(uvclight.ViewletManager):
     """ ViewletManager für HilfeSeiten
     """
-    grok.context(interface.Interface)
-    grok.name('uvc.hilfen')
+    uvclight.context(Interface)
+    uvclight.name('uvc.hilfen')
 
     def getHelpPages(self):
         rc = []
@@ -33,36 +32,38 @@ class HelpManager(grok.ViewletManager):
         return rc 
 
     def render(self):
-        template = component.getMultiAdapter((self, self.request), IPageTemplate)
+        template = getMultiAdapter((self, self.request), ITemplate)
         return template()
 
 
-class HelpManagerTemplate(PageTemplate):
-    grok.view(HelpManager)
+@adapter(HelpManager, Interface)
+@implementer(ITemplate)
+def HelpManagerTemplate(context, request):
+    return uvclight.get_template('helpmanagertemplate.cpt', __file__)
 
 
-class Help(grok.Viewlet):
-    grok.viewletmanager(uvcsite.IAboveContent)
-    grok.context(interface.Interface)
-    grok.order(9999)
+class Help(uvclight.Viewlet):
+    uvclight.viewletmanager(IAboveContent)
+    uvclight.context(Interface)
+    uvclight.order(9999)
 
     def render(self):
-        helpmanager = component.getMultiAdapter(
-            (self.context, self.request, self.view), 
-            viewlet.interfaces.IViewletManager,
-            name=u'uvc.hilfen')
+        helpmanager = getMultiAdapter(
+            (self.context, self.request, self.view), ISlot, name=u'uvc.hilfen')
         helpmanager.update()
         return helpmanager.render()
 
 
 
-class IHelpPage(interface.Interface):
-    """ """
+class IHelpPage(Interface):
+    """Marker interface
+    """
 
-class HelpPage(grok.Viewlet):
-    grok.viewletmanager(HelpManager)
-    grok.implements(IHelpPage)
-    grok.baseclass()
+
+class HelpPage(uvclight.Viewlet):
+    uvclight.viewletmanager(HelpManager)
+    uvclight.implements(IHelpPage)
+    uvclight.baseclass()
 
     def update(self):
         self.response = self.request.response

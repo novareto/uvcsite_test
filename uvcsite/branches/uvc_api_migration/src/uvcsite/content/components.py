@@ -1,18 +1,19 @@
-import grok
+# -*- coding: utf-8 -*-
+
+import uvclight
 import dolmen.content
 import zope.security
 
-from zope.schema import TextLine
-from uvcsite.content.interfaces import IContent, IProductFolder, IFolderColumnTable
-from uvcsite.content.directive import contenttype
+from dolmen.container.components import BTreeContainer
+from cromlech.container.interfaces import INameChooser
 from grokcore.component import directive
-from zope.container.interfaces import INameChooser
-from zope.dublincore.interfaces import IZopeDublinCore
-from zope.pluggableauth.factories import Principal
+from uvcsite.content.directive import contenttype
+from uvcsite.content.interfaces import IContent, IProductFolder, IFolderColumnTable
+from zope.schema import TextLine
 
 
-class ProductFolder(grok.Container):
-    grok.implements(IProductFolder, IFolderColumnTable)
+class ProductFolder(BTreeContainer):
+    uvclight.implements(IProductFolder, IFolderColumnTable)
 
     @property
     def name(self):
@@ -42,9 +43,8 @@ class ProductFolder(grok.Container):
 
 
 class Content(dolmen.content.Content):
-    grok.implements(IContent)
-    grok.baseclass()
-    dolmen.content.nofactory()
+    uvclight.implements(IContent)
+    uvclight.baseclass()
 
     @property
     def meta_type(self):

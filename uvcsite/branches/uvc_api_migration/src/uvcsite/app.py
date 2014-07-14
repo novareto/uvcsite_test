@@ -1,52 +1,35 @@
 # -*- coding: utf-8 -*-
 
-import grok
-import uvcsite
-import zope.component
-import grokcore.component
+import uvclight
 
-from uvcsite.auth.handler import UVCAuthenticator
-from uvcsite.homefolder.homefolder import PortalMembership
+from .interfaces import IUVCSite
 
+from webob.dec import wsgify
+
+from grokcore.component import global_utility
 from grokcore.registries import create_components_registry
-from grokcore.site import IApplication
-from grokcore.site.components import BaseSite
-from zeam.form.base import NO_VALUE
-from zeam.form.ztk import customize
-from zeam.form.ztk.widgets.choice import RadioFieldWidget
-from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
-from zeam.form.ztk.widgets.date import DateWidgetExtractor
-from zope.app.homefolder.interfaces import IHomeFolderManager
-from zope.authentication.interfaces import IAuthentication
+
+from cromlech.dawnlight import DawnlightPublisher
+from cromlech.dawnlight.directives import traversable
+from cromlech.browser import IPublicationRoot
+from cromlech.browser import PublicationBeginsEvent, PublicationEndsEvent
+from cromlech.security import Interaction
+from cromlech.webob import request
+from cromlech.zodb import Site, PossibleSite, get_site
+from cromlech.zodb.middleware import ZODBApp
+from cromlech.zodb.utils import init_db
+from cromlech.configuration.utils import load_zcml
+from cromlech.i18n import register_allowed_languages
+
+from dolmen.container.components import BTreeContainer
+
+from transaction import manager as transaction_manager
 from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents
-from zope.i18n.format import DateTimeParseError
-from zope.i18n.interfaces import IUserPreferredLanguages
-from zope.interface import Interface, implementer
-from zope.interface.registry import Components
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent
-from zope.pluggableauth import PluggableAuthentication
-from zope.pluggableauth.interfaces import IAuthenticatorPlugin
-from zope.publisher.interfaces.http import IHTTPRequest
-from zope.schema.interfaces import IDate
-from zope.site.site import SiteManagerContainer
-
-
-grok.templatedir('templates')
-
-
-def setup_pau(PAU):
-    PAU.authenticatorPlugins = ('principals', )
-    PAU.credentialsPlugins = ("cookies",
-                              "Zope Realm Basic-Auth",
-                              "No Challenge if Authenticated",)
-
-
-class Icons(grok.DirectoryResource):
-    """Directory Resource for Icons like pdf.png
-    """
-    grok.name('uvc-icons')
-    grok.path('icons')
+from zope.event import notify
+from zope.interface import implementer
+from zope.location import Location
+from zope.security.proxy import removeSecurityProxy
 
 
 uvcsiteRegistry = create_components_registry(
@@ -55,28 +38,16 @@ uvcsiteRegistry = create_components_registry(
 )
 
 
-grok.global_utility(
+global_utility(
     uvcsiteRegistry,
     name="uvcsiteRegistry",
     provides=IComponents,
     direct=True)
 
 
-@implementer(uvcsite.IUVCSite, IApplication)  # this can be reduced
-class Uvcsite(grok.Application, grok.Container):
-    """Application Object for uvc.site """
-    
-    grok.local_utility(PortalMembership,
-                       provides=IHomeFolderManager)
-
-    grok.local_utility(UVCAuthenticator,
-                       name=u"principals",
-                       provides=IAuthenticatorPlugin)
-
-    grok.local_utility(PluggableAuthentication,
-                       IAuthentication,
-                       public=True,
-                       setup=setup_pau)
+@implementer(IPublicationRoot, IUVCSite)
+class UVCSite(BTreeContainer, PossibleSite, Location):
+    traversable('members')
 
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
@@ -89,84 +60,60 @@ class Uvcsite(grok.Application, grok.Container):
             current.__bases__ = (uvcsiteRegistry,) + tuple((
                 b for b in current.__bases__ if b != uvcsiteRegistry))
         return current
-    
-
-class NotFound(uvcsite.Page, grok.components.NotFoundView):
-    """Not Found Error View
-    """
-    def update(self):
-        super(NotFound, self).update()
-        uvcsite.logger.error(
-            'NOT FOUND: %s' % self.request.get('PATH_INFO', ''))
 
 
-class SystemError(uvcsite.Page, grok.components.ExceptionView):
-    """Custom System Error for UVCSITE
-    """
+class UVCApplication(object):
 
-    def __init__(self, context, request):
-        super(SystemError, self).__init__(context, request)
-        self.context = grok.getSite()
-        self.origin_context = context
+    def __init__(self, environ_key, name):
+        self.environ_key = environ_key
+        self.name = name
+        self.publisher = DawnlightPublisher(view_lookup=view_lookup)
 
-    def update(self):
-        super(SystemError, self).update()
-        uvcsite.logger.error(self.origin_context)
+    @wsgify(RequestClass=request.Request)
+    def __call__(self, request):
+        conn = request.environment[self.environ_key]
+        site = get_site(conn, self.name)
+        with Site(site):
+            with Interaction():
+                # This sets the current user. Empty = anonymous
+                # FIXME : add authentication
 
+                # Publication is about to begin
+                notify(PublicationBeginsEvent(self, request))
 
-class UVCDateWidgetExtractor(DateWidgetExtractor):
+                # Because we use Zope's sticky security system, the response is
+                # returned wrapped in a security manager. The response is the
+                # final HTTP entity to be returned. Security is no longer
+                # needed here. We do strip the object off the proxy.
+                # FIXME : do our own security ?
+                response = removeSecurityProxy(
+                    self.publisher.publish(request, site, handle_errors=True))
 
-    def extract(self):
-        value, error = super(DateWidgetExtractor, self).extract()
-        if value is not NO_VALUE:
-            if not len(value):
-                return NO_VALUE, None
-            formatter = self.component.getFormatter(self.form)
-            try:
-                value = formatter.parse(value)
-            except (ValueError, DateTimeParseError), error:
-                return None, u"Bitte überprüfen Sie das Datumsformat."
-        return value, error
+                # Publication ends
+                notify(PublicationEndsEvent(request, response))
 
-
-@customize(origin=IDate)
-def customize_size(field):
-    field.valueLength = 'medium'
-
-
-class Favicon(grok.View):
-    """ Helper for Favicon.ico Errors Request
-    """
-    grok.context(Interface)
-    grok.name('favicon.ico')
-    grok.require('zope.Public')
-
-    def render(self):
-        return "BLA"
+                return response
 
 
-class GermanBrowserLangugage(grok.Adapter):
-    grok.context(IHTTPRequest)
-    grok.implements(IUserPreferredLanguages)
-
-    def getPreferredLanguages(self):
-        return ['de', 'de-de']
-
-
-class UvcRadioFieldWidget(RadioFieldWidget):
-    """ Simple Override for removing <br> between choices
-    """
-    pass
-
-
-class UvcMultiChoiceFieldWidget(MultiChoiceFieldWidget):
-    """ Simple Override for removing <br> between choices
-    """
+def make_application(model, name):
+    def create_app(db):
+        conn = db.open()
+        try:
+            root = conn.root()
+            if not name in root:
+                with transaction_manager:
+                    application = root[name] = model()
+                    if (not ISite.providedBy(application) and
+                        IPossibleSite.providedBy(application)):
+                        LocalSiteManager(application)
+        finally:
+            conn.close()
+    return create_app
 
 
-class HAProxyCheck(grok.View):
-    grok.context(uvcsite.IUVCSite)
-    grok.require('zope.Public')
-
-    def render(self):
-        return "OK"
+def uvcsite(global_conf, configuration, zcml_file, env_key, app_key):
+    load_zcml(zcml_file)
+    register_allowed_languages(['de', 'de-de'])
+    db = init_db(configuration, make_application(UVCSite, app_key))
+    app = UVCApplication(env_key, app_key)
+    return ZODBApp(app, db, key=env_key)

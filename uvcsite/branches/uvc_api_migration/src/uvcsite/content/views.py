@@ -2,189 +2,188 @@
 # Copyright (c) 2007-2008 NovaReto GmbH
 # cklinger@novareto.de
 
-import grok
-import uvcsite
-from dolmen.forms.base import Fields, set_fields_data, apply_data_event
+## import uvclight
+## import uvcsite
+## from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 
-from zope.interface import Interface
-from uvcsite import uvcsiteMF as _
-from uvc.layout import interfaces
-from uvc.layout.slots import menus
-from dolmen.app.layout import MenuViewlet
-from uvcsite.content import IContent, IProductFolder
-from uvcsite.interfaces import IFolderListingTable
-from zope.component import getMultiAdapter
-from uvcsite import IGetHomeFolderUrl
-from dolmen.content import schema
-from dolmen import menu
-from zeam.form import base
-from uvc.layout import TablePage
-from dolmen.app.layout.viewlets import ContextualActions
-from zeam.form.base.interfaces import ISimpleForm
-from megrok.pagetemplate import PageTemplate
-from zope.pagetemplate.interfaces import IPageTemplate
-
-
-grok.templatedir('templates')
+## from zope.interface import Interface
+## from uvcsite import uvcsiteMF as _
+## from uvc.layout import interfaces
+## from uvc.layout.slots import menus
+## from uvcsite.content import IContent, IProductFolder
+## from uvcsite.interfaces import IFolderListingTable
+## from zope.component import getMultiAdapter
+## from uvcsite import IGetHomeFolderUrl
+## from dolmen.content import schema
+## from dolmen import menu
+## from zeam.form import base
+## from uvc.layout import TablePage
+## from dolmen.app.layout.viewlets import ContextualActions
+## from zeam.form.base.interfaces import ISimpleForm
+## from megrok.pagetemplate import PageTemplate
+## from zope.pagetemplate.interfaces import IPageTemplate
 
 
-class Index(TablePage):
-    grok.title(u'Übersicht')
-    grok.name('index')
-    grok.implements(IFolderListingTable)
-    grok.context(IProductFolder)
-    #uvcsite.sectionmenu(uvcsite.IExtraViews)
-
-    description = u"Hier finden Sie alle Dokumente dazu."
-
-    cssClasses = {'table': 'tablesorter table table-striped table-bordered table-condensed'}
-    cssClassEven = u'even'
-    cssClassOdd = u'odd'
-
-    sortOnId = "table-modified-5"
-    sortOn = "table-modified-5" 
-    #sortOrder = "down"
-
-    @property
-    def title(self):
-        return self.context.getContentName()
-
-    def update(self):
-        items = self.request.form.get('table-checkBox-0-selectedItems')
-        if items and self.request.has_key('form.button.delete'):
-            if isinstance(items, (str, unicode)):
-                items = [items,]
-            for key in items:
-                if self.context.has_key(key):
-                    self.executeDelete(self.context[key])
-        TablePage.update(self)
-
-    def executeDelete(self, item):
-        self.flash(_(u'Ihre Dokumente wurden entfernt'))
-        del item.__parent__[item.__name__]
-
-    def getAddLinkUrl(self):
-        adapter = getMultiAdapter(
-            (self.request.principal, self.request), IGetHomeFolderUrl)
-        return adapter.getAddURL(self.context.getContentType())
-
-    def getAddTitle(self):
-        return self.context.getContentName()
+## uvclight.templatedir('templates')
 
 
-class ExtraViewsViewlet(ContextualActions):
-    grok.order(20)
-    grok.baseclass()
-    grok.view(Interface)
-    grok.name('extra-views')
-    grok.viewletmanager(interfaces.IAboveContent)
-    grok.require("zope.Public")
+## class Index(TablePage):
+##     uvclight.title(u'Übersicht')
+##     uvclight.name('index')
+##     uvclight.implements(IFolderListingTable)
+##     uvclight.context(IProductFolder)
+##     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
-    #menu_factory = menus.ExtraViews
-    menu_factory = object()
+##     description = u"Hier finden Sie alle Dokumente dazu."
 
-    def update(self):
-        MenuViewlet.update(self)
-        if not len(self.menu.viewlets) or ISimpleForm.providedBy(self.view):
-            self.actions = None
-        else:
-            self.actions = self.compute_actions(self.menu.viewlets)
+##     cssClasses = {'table': 'tablesorter table table-striped table-bordered table-condensed'}
+##     cssClassEven = u'even'
+##     cssClassOdd = u'odd'
 
-    def compute_actions(self, viewlets):
-        for action in viewlets:
-            selected = action.viewName == self.view.__name__
-            context_url = self.menu.view.url(self.menu.context)
-            url = not selected and "%s/%s" % (context_url, action.viewName) or None
-            yield {
-                'id': action.__name__,
-                'url': url,
-                'title': action.title or action.__name__,
-                'selected': selected,
-                'class': (selected and 'selected ' +
-                          self.menu.menu_class or self.menu.menu_class),
-                }
+##     sortOnId = "table-modified-5"
+##     sortOn = "table-modified-5" 
+##     #sortOrder = "down"
 
+##     @property
+##     def title(self):
+##         return self.context.getContentName()
 
-class AddMenuViewlet(grok.Viewlet):
-    grok.view(Index)
-    grok.order(30)
-    grok.context(IProductFolder)
-    grok.viewletmanager(interfaces.ITabs)
+##     def update(self):
+##         items = self.request.form.get('table-checkBox-0-selectedItems')
+##         if items and self.request.has_key('form.button.delete'):
+##             if isinstance(items, (str, unicode)):
+##                 items = [items,]
+##             for key in items:
+##                 if self.context.has_key(key):
+##                     self.executeDelete(self.context[key])
+##         TablePage.update(self)
 
-    def render(self):
-        template = getMultiAdapter((self, self.request), IPageTemplate)
-        return template()
+##     def executeDelete(self, item):
+##         self.flash(_(u'Ihre Dokumente wurden entfernt'))
+##         del item.__parent__[item.__name__]
 
+##     def getAddLinkUrl(self):
+##         adapter = getMultiAdapter(
+##             (self.request.principal, self.request), IGetHomeFolderUrl)
+##         return adapter.getAddURL(self.context.getContentType())
 
-class AddMenu(PageTemplate):
-    grok.view(AddMenuViewlet)
+##     def getAddTitle(self):
+##         return self.context.getContentName()
 
 
-class Add(uvcsite.AddForm):
-    grok.context(IProductFolder)
-    grok.require('uvc.AddContent')
+## class ExtraViewsViewlet(ContextualActions):
+##     uvclight.order(20)
+##     uvclight.baseclass()
+##     uvclight.view(Interface)
+##     uvclight.name('extra-views')
+##     uvclight.viewletmanager(interfaces.IAboveContent)
+##     uvclight.require("zope.Public")
 
-    @property
-    def label(self):
-        return self.context.getContentName()
+##     #menu_factory = menus.ExtraViews
+##     menu_factory = object()
 
-    description = u"Bitte füllen Sie die Eingabeform."
+##     def update(self):
+##         MenuViewlet.update(self)
+##         if not len(self.menu.viewlets) or ISimpleForm.providedBy(self.view):
+##             self.actions = None
+##         else:
+##             self.actions = self.compute_actions(self.menu.viewlets)
 
-    @property
-    def fields(self):
-        content_object = self.context.getContentType()
-        schemas = schema.bind().get(content_object)
-        return Fields(*schemas)
-
-    def create(self, data):
-        content = self.context.getContentType()()
-        set_fields_data(self.fields, content, data)
-        return content
-
-    def add(self, content):
-        self.context.add(content)
-
-    def nextURL(self):
-        self.flash(_('Added Content'))
-        return self.url(self.context)
-
-
-class Edit(uvcsite.Form):
-    grok.context(IContent)
-    grok.require('uvc.EditContent')
-    ignoreContent = False
-
-    @property
-    def fields(self):
-        content_object = self.context
-        schemas = schema.bind().get(content_object)
-        return Fields(*schemas)
-
-    @base.action(u'Speichern')
-    def handle_apply(self):
-        data, errors = self.extractData()
-        if errors:
-            self.flash('Es sind Fehler aufgetreten', type="error")
-            return
-        changes = apply_data_event(self.fields, self.context, data)
-        if changes:
-            self.flash(u'Ihre Daten wurden erfolgreich gendert', type="info")
-            return
-        else:
-            self.flash('Kein Änderung', type="info")
+##     def compute_actions(self, viewlets):
+##         for action in viewlets:
+##             selected = action.viewName == self.view.__name__
+##             context_url = self.menu.view.url(self.menu.context)
+##             url = not selected and "%s/%s" % (context_url, action.viewName) or None
+##             yield {
+##                 'id': action.__name__,
+##                 'url': url,
+##                 'title': action.title or action.__name__,
+##                 'selected': selected,
+##                 'class': (selected and 'selected ' +
+##                           self.menu.menu_class or self.menu.menu_class),
+##                 }
 
 
-class Display(uvcsite.Form):
-    grok.context(IContent)
-    grok.name('index')
-    grok.require('uvc.ViewContent')
+## class AddMenuViewlet(uvclight.Viewlet):
+##     uvclight.view(Index)
+##     uvclight.order(30)
+##     uvclight.context(IProductFolder)
+##     uvclight.viewletmanager(interfaces.ITabs)
 
-    mode = base.DISPLAY
-    ignoreContent = False
+##     def render(self):
+##         template = getMultiAdapter((self, self.request), IPageTemplate)
+##         return template()
 
-    @property
-    def fields(self):
-        content_object = self.context
-        schemas = schema.bind().get(content_object)
-        return Fields(*schemas)
+
+## class AddMenu(PageTemplate):
+##     uvclight.view(AddMenuViewlet)
+
+
+## class Add(uvcsite.AddForm):
+##     uvclight.context(IProductFolder)
+##     uvclight.require('uvc.AddContent')
+
+##     @property
+##     def label(self):
+##         return self.context.getContentName()
+
+##     description = u"Bitte füllen Sie die Eingabeform."
+
+##     @property
+##     def fields(self):
+##         content_object = self.context.getContentType()
+##         schemas = schema.bind().get(content_object)
+##         return Fields(*schemas)
+
+##     def create(self, data):
+##         content = self.context.getContentType()()
+##         set_fields_data(self.fields, content, data)
+##         return content
+
+##     def add(self, content):
+##         self.context.add(content)
+
+##     def nextURL(self):
+##         self.flash(_('Added Content'))
+##         return self.url(self.context)
+
+
+## class Edit(uvcsite.Form):
+##     uvclight.context(IContent)
+##     uvclight.require('uvc.EditContent')
+##     ignoreContent = False
+
+##     @property
+##     def fields(self):
+##         content_object = self.context
+##         schemas = schema.bind().get(content_object)
+##         return Fields(*schemas)
+
+##     @base.action(u'Speichern')
+##     def handle_apply(self):
+##         data, errors = self.extractData()
+##         if errors:
+##             self.flash('Es sind Fehler aufgetreten', type="error")
+##             return
+##         changes = apply_data_event(self.fields, self.context, data)
+##         if changes:
+##             self.flash(u'Ihre Daten wurden erfolgreich gendert', type="info")
+##             return
+##         else:
+##             self.flash('Kein Änderung', type="info")
+
+
+## class Display(uvcsite.Form):
+##     uvclight.context(IContent)
+##     uvclight.name('index')
+##     uvclight.require('uvc.ViewContent')
+
+##     mode = base.DISPLAY
+##     ignoreContent = False
+
+##     @property
+##     def fields(self):
+##         content_object = self.context
+##         schemas = schema.bind().get(content_object)
+##         return Fields(*schemas)
 

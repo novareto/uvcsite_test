@@ -2,22 +2,22 @@
 # Copyright (c) 2007-2011 NovaReto GmbH
 # cklinger@novareto.de
 
-import grok
+import uvclight
 import uvcsite
-
-from zope.security.interfaces import IPrincipal
+from uvcsite.interfaces import IMyRoles
 from uvcsite.auth.interfaces import IMasterUser
-from zope.app.homefolder.interfaces import IHomeFolder
+from uvc.homefolder.interfaces import IHomefolder
 from zope.securitypolicy.interfaces import IPrincipalRoleMap, Allow
+from zope.security.interfaces import IPrincipal
 
 
-class MyRoles(grok.Adapter):
-    grok.context(IPrincipal)
-    grok.implements(uvcsite.IMyRoles)
+class MyRoles(uvclight.Adapter):
+    uvclight.context(IPrincipal)
+    uvclight.implements(IMyRoles)
 
     def __init__(self, principal):
         self.principal = principal
-        self.homefolder = IHomeFolder(IMasterUser(self.principal)).homeFolder
+        self.homefolder = IHomefolder(IMasterUser(self.principal))
 
     def getAllRoles(self):
         hfr = IPrincipalRoleMap(self.homefolder)

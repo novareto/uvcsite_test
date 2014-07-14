@@ -4,7 +4,7 @@
 from zope.schema import TextLine
 from dolmen.content import IContent
 from zope.interface import Interface
-from grok.interfaces import IContainer
+from cromlech.container.interfaces import IContainer
 
 
 class IUVCApplication(Interface):

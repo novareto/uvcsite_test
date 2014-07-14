@@ -2,30 +2,30 @@
 # Copyright (c) 2007-2010 NovaReto GmbH
 # cklinger@novareto.de
 
-import grok
+import uvclight
 import uvcsite
 from grokcore.chameleon.components import ChameleonPageTemplateFile
 
-from zeam.form import base
+from dolmen.forms import base
 from dolmen.menu import menuentry
 from uvcsite import uvcsiteMF as _
 from dolmen.forms.base import Fields
 from zope.component import getUtility
 from uvcsite.interfaces import IUVCSite
-from zope.app.homefolder.interfaces import IHomeFolder
+from uvc.layout.interfaces import IPersonalMenu
+from uvc.homefolder import IHomefolder
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
 from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
 from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
 
 
-grok.templatedir('templates')
-
-class ENMS(uvcsite.Page):
-    grok.title('Mitbenutzerverwaltung')
-    grok.context(IMyHomeFolder)
-    grok.require('uvc.ManageCoUsers')
-
+class ENMS(uvclight.Page):
+    uvclight.title('Mitbenutzerverwaltung')
+    uvclight.context(IMyHomeFolder)
+    uvclight.require('uvc.ManageCoUsers')
+    template = uvclight.get_template('enms.cpt', __file__)
+    
     def getUserGroup(self):
         principal = self.request.principal.id
         um = getUtility(IUserManagement)
@@ -43,10 +43,10 @@ class ENMS(uvcsite.Page):
         return rc
 
 
-class ENMSCreateUser(uvcsite.Form):
+class ENMSCreateUser(uvclight.Form):
     """ Simple Form which displays values from a Dict"""
-    grok.context(IMyHomeFolder)
-    grok.require('uvc.ManageCoUsers')
+    uvclight.context(IMyHomeFolder)
+    uvclight.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer anlegen"
     description = u"Nutzen Sie diese Form um einen neuen Mitbenutzer anzulegen"
@@ -57,7 +57,7 @@ class ENMSCreateUser(uvcsite.Form):
 
     def updateForm(self):
         super(ENMSCreateUser, self).updateForm()
-        self.fieldWidgets.get('form.field.mnr').template = ChameleonPageTemplateFile('templates/mnr.cpt')
+        self.fieldWidgets.get('form.field.mnr').template = uvclight.get_template('mnr.cpt', __file__)
 
     def getNextNumber(self, groups):
         all_azs = []
@@ -93,14 +93,14 @@ class ENMSCreateUser(uvcsite.Form):
             principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         principal = self.request.principal
-        homeFolder = IHomeFolder(principal).homeFolder
+        homeFolder = IHomefolder(principal)
         self.redirect(self.url(homeFolder, 'enms'))
 
 
-class ENMSUpdateUser(uvcsite.Form):
+class ENMSUpdateUser(uvclight.Form):
     """ A Form for updating a User in ENMS"""
-    grok.context(IMyHomeFolder)
-    grok.require('uvc.ManageCoUsers')
+    uvclight.context(IMyHomeFolder)
+    uvclight.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer verwalten"
     description = u"Nutzen Sie diese Form um die Daten eines Mitbenutzers zu pflegen."
@@ -150,7 +150,7 @@ class ENMSUpdateUser(uvcsite.Form):
             principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         principal = self.request.principal
-        homeFolder = IHomeFolder(principal).homeFolder
+        homeFolder = IHomefolder(principal)
         self.redirect(self.url(homeFolder, 'enms'))
 
     @base.action(_(u"Entfernen"))
@@ -169,24 +169,25 @@ class ENMSUpdateUser(uvcsite.Form):
         self.redirect(self.url(homeFolder, 'enms'))
 
 
-class ChangePasswordMenu(uvcsite.MenuItem):
-    grok.title(u'Passwort ändern')
-    grok.require('zope.View')
-    grok.viewletmanager(uvcsite.IPersonalMenu)
+class ChangePasswordMenu(uvclight.MenuItem):
+    uvclight.title(u'Passwort ändern')
+    uvclight.require('zope.View')
+    uvclight.menu(IPersonalMenu)
 
     @property
     def action(self):
-       return self.view.url(IHomeFolder(self.request.principal).homeFolder, 'changepassword')
+       return self.view.url(
+           IHomeFolder(self.request.principal).homeFolder, 'changepassword')
 
 
-class ChangePassword(uvcsite.Form):
+class ChangePassword(uvclight.Form):
     """ A Form for updating a User in ENMS"""
-    grok.title(u'Passwort ändern')
-    grok.context(IMyHomeFolder)
+    uvclight.title(u'Passwort ändern')
+    uvclight.context(IMyHomeFolder)
     label = _(u'Passwort ändern')
     description = _(u'Hier können Sie Ihr Passwort ändern')
     #uvcsite.menu(uvcsite.PersonalMenu)
-    grok.require('zope.View')
+    uvclight.require('zope.View')
 
     fields = Fields(IExtranetMember).select('passwort', 'confirm')
     ignoreContext = True

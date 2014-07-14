@@ -2,7 +2,7 @@
 # Copyright (c) 2007-2008 NovaReto GmbH
 # cklinger@novareto.de
 
-import grok
+import uvclight
 import uvcsite
 
 from uvcsite import uvcsiteMF as _
@@ -19,9 +19,10 @@ from datetime import timedelta
 
 
 class CheckBox(CheckBoxColumn):
-    grok.name('checkBox')
-    grok.context(IFolderColumnTable)
+    uvclight.name('checkBox')
+    uvclight.context(IFolderColumnTable)
     table(IFolderListingTable)
+
     weight = 0
     cssClasses = {'th': 'checkBox'}
     header = u""
@@ -36,10 +37,11 @@ class CheckBox(CheckBoxColumn):
 
 
 class Link(LinkColumn):
-    grok.name('link')
-    grok.context(IFolderColumnTable)
-    weight = 1
+    uvclight.name('link')
+    uvclight.context(IFolderColumnTable)
     table(IFolderListingTable)
+    
+    weight = 1
     header = _(u"Titel")
     linkName = u"edit"
 
@@ -57,8 +59,8 @@ class Link(LinkColumn):
 
 
 class MetaTypeColumn(GetAttrColumn):
-    grok.name('meta_type')
-    grok.context(IFolderColumnTable)
+    uvclight.name('meta_type')
+    uvclight.context(IFolderColumnTable)
     header = _(u'Objekt')
     attrName = 'meta_type'
     weight = 2
@@ -66,22 +68,24 @@ class MetaTypeColumn(GetAttrColumn):
 
 
 class CreatorColumn(Column):
-    grok.name('creator')
-    grok.context(IFolderColumnTable)
+    uvclight.name('creator')
+    uvclight.context(IFolderColumnTable)
+    table(IFolderListingTable)
+    
     header = _(u"Autor")
     weight = 99
-    table(IFolderListingTable)
 
     def renderCell(self, item):
         return ', '.join(IZopeDublinCore(item).creators)
 
 
 class ModifiedColumn(Column):
-    grok.name('modified')
-    grok.context(IFolderColumnTable)
+    uvclight.name('modified')
+    uvclight.context(IFolderColumnTable)
+    table(IFolderListingTable)
+    
     header = _(u"Datum")
     weight = 100
-    table(IFolderListingTable)
 
     def getSortKey(self, item):
         return item.modtime
@@ -91,13 +95,14 @@ class ModifiedColumn(Column):
 
 
 class StateColumn(GetAttrColumn):
-    grok.name('state')
-    grok.context(IFolderColumnTable)
+    uvclight.name('state')
+    uvclight.context(IFolderColumnTable)
+    table(IFolderListingTable)
+    
     header = _(u'Status')
     attrName = 'status'
     weight = 3
-    table(IFolderListingTable)
-
+    
     def getValue(self, obj):
         state = IWorkflowState(obj).getState()
         if state != None:

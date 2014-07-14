@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from grok.interfaces import IContainer
+
+from cromlech.container.interfaces import IContainer
 from uvcsite.content import IUVCApplication, IFolderColumnTable
 from uvc.layout.interfaces import *
+from zope.interface import Interface
 
 
 class IUVCSite(IUVCApplication):
@@ -24,6 +26,7 @@ class IFolderListingTable(Interface):
     """Marker Interface for tables with a listing interface
        for contenttypes
     """
+
 
 class IMyRoles(Interface):
     """Return all allowed Roles in various forms

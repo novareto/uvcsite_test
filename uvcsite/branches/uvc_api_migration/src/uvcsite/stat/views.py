@@ -2,42 +2,41 @@
 # Copyright (c) 2007-2011 NovaReto GmbH
 # cklinger@novareto.de 
 
-import grok
+import uvclight
 import uvcsite
 
-from hurry.workflow.interfaces import IWorkflowState
-
-from zope.interface import Interface
-from zope.component import getUtility
-from zope.app.homefolder.interfaces import IHomeFolderManager
 from ZODB.interfaces import IBroken
+from hurry.workflow.interfaces import IWorkflowState
+from uvc.homefolder import IHomefolder
+from uvc.layout.interfaces import IFooter
+from uvcsite.interfaces import IUVCSite
+from zope.component import getUtility
+from zope.interface import Interface
 
 
-grok.templatedir('templates')
-
-
-class StatistikMenu(uvcsite.MenuItem):
-    grok.context(uvcsite.IUVCSite)
-    grok.title('Statistik')
-    grok.require('zope.ManageSite')
-    grok.viewletmanager(uvcsite.IFooter)
+class StatistikMenu(uvclight.MenuItem):
+    uvclight.context(IUVCSite)
+    uvclight.title('Statistik')
+    uvclight.require('zope.ManageSite')
+    uvclight.menu(IFooter)
 
     @property
     def action(self):
         return "%s/statistik" % self.view.application_url()
 
 
-class StatistikView(uvcsite.Page):
-    grok.name('statistik')
-    grok.title('Statistik')
-    grok.require('zope.ManageSite')
+class StatistikView(uvclight.Page):
+    uvclight.name('statistik')
+    uvclight.title('Statistik')
+    uvclight.require('zope.ManageSite')
+    uvclight.context(IUVCSite)
 
-    grok.context(uvcsite.IUVCSite)
+    template = uvclight.get_template('statistikview.cpt', __file__)
 
     def update(self):
         self.counter = dict()
         inc = dict(anzahl=0, entwurf=0, gesendet=0, verarbeitung=0)
-        hFB = getUtility(IHomeFolderManager).homeFolderBase
+        #hFB = getUtility(IHomeFolderManager).homeFolderBase
         self.counter['HomeFolder'] = inc
         self.counter['HomeFolder']['anzahl'] = len(hFB)
         pf_c = 0
