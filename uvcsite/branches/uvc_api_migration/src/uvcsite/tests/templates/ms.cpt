@@ -1,0 +1,34 @@
+<script>
+$(document).ready(function() {
+    $('#master-form-field-berufe').change(function() {
+        var master = $(this).val()
+        var app_url = window.location.href + '/@@select';
+               $.getJSON(app_url, {master:master}, function(d)
+                   {
+                     $('#form-field-berufe > option').replaceWith(d.options);
+                  });
+    })
+})
+
+</script>
+
+
+
+<select tal:attributes="name string:master_${widget.identifier}; id string:master-${widget.htmlId()}">
+   <option tal:repeat="mvalue widget.form.mastervalues" tal:attributes="value mvalue" tal:content="mvalue"> </option>
+</select>
+
+<select id="#" name="#" class="#"
+        tal:define="value widget.inputValue()"
+        tal:attributes="name widget.identifier;
+                        id widget.htmlId();
+                        class widget.htmlClass();
+                        widget.htmlAttributes()">
+  <option value="#"
+          tal:repeat="choice widget.choices()"
+          tal:attributes="value choice.token;
+                          selected choice.token == value and 'selected' or None"
+          tal:content="choice.title or choice.value">
+    Option
+  </option>
+</select>

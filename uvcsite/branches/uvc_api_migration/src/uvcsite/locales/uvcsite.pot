@@ -1,0 +1,154 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Unknown\n"
+"POT-Creation-Date: Mon Oct 12 10:33:43 2009\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: src/uvcsite/app.py:36
+msgid "Pers\303\266nliche Einstellungen"
+msgstr ""
+
+#: src/uvcsite/app.py:37
+msgid "Hier k\303\266nnen Sie Einstellungen zu Ihrem Benutzerprofil vornehmen."
+msgstr ""
+
+#: src/uvcsite/content/tabels.py:37
+msgid "Titel"
+msgstr ""
+
+#: src/uvcsite/content/tabels.py:56
+msgid "Objekt"
+msgstr ""
+
+#: src/uvcsite/content/tabels.py:64
+msgid "Autor"
+msgstr ""
+
+#: src/uvcsite/content/tabels.py:74
+msgid "Datum"
+msgstr ""
+
+#: src/uvcsite/content/tabels.py:81
+msgid "Status"
+msgstr ""
+
+#: src/uvcsite/content/views.py:23
+#: src/uvcsite/homefolder/views.py:42
+msgid "Ihre Dokumente wurden entfernt"
+msgstr ""
+
+#: src/uvcsite/content/views.py:45
+msgid "Added Content"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/enms.py:107
+msgid "Bearbeiten"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/enms.py:121
+msgid "Entfernen"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/enms.py:66
+msgid "Anlegen"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/enms.py:74
+msgid "Der Mitbenutzer wurde gespeichert"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/interfaces.py:11
+#: src/uvcsite/extranetmembership/interfaces.py:12
+msgid "Mitgliedsnummer"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/interfaces.py:16
+msgid "Berechtigung"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/interfaces.py:17
+msgid "Berechtiung"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/interfaces.py:22
+#: src/uvcsite/extranetmembership/interfaces.py:23
+msgid "Email"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/interfaces.py:27
+#: src/uvcsite/extranetmembership/interfaces.py:28
+#: src/uvcsite/viewlets/globalmenuitems.py:74
+msgid "Passwort"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/interfaces.py:32
+#: src/uvcsite/extranetmembership/interfaces.py:33
+msgid "Bestaetigung"
+msgstr ""
+
+#: src/uvcsite/extranetmembership/viewlets.py:14
+msgid "Benutzerverwaltung"
+msgstr ""
+
+#: src/uvcsite/helpsystem/folder.py:32
+#: src/uvcsite/helpsystem/folder.py:37
+msgid "Hilfe"
+msgstr ""
+
+#: src/uvcsite/homefolder/views.py:34
+#. Default: ""
+msgid "Ordner von %s"
+msgstr ""
+
+#: src/uvcsite/homefolder/views.py:36
+msgid "Hier werden Ihre Dokumente abgelegt"
+msgstr ""
+
+#: src/uvcsite/viewlets/footer.py:19
+msgid "Impressum"
+msgstr ""
+
+#: src/uvcsite/viewlets/footer.py:30
+msgid "Barrierefreiheit"
+msgstr ""
+
+#: src/uvcsite/viewlets/footer.py:41
+msgid "Kontakt"
+msgstr ""
+
+#: src/uvcsite/viewlets/globalmenuitems.py:33
+msgid "Mein Ordner"
+msgstr ""
+
+#: src/uvcsite/viewlets/globalmenuitems.py:53
+msgid "ausloggen"
+msgstr ""
+
+#: src/uvcsite/viewlets/globalmenuitems.py:63
+#: src/uvcsite/viewlets/globalmenuitems.py:68
+msgid "Meine Einstellungen"
+msgstr ""
+
+#: src/uvcsite/viewlets/sidebar.py:15
+msgid "Startseite"
+msgstr ""
+
