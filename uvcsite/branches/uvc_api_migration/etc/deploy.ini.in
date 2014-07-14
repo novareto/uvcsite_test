@@ -7,10 +7,7 @@ host = ${:host}
 port = ${:port}
 
 [pipeline:main]
-pipeline = gzip fanstatic grok
-
-[app:grok]
-use = egg:grokcore.startup
+pipeline = gzip fanstatic uvcsite
 
 [filter:gzip]
 use = egg:Paste#gzip
@@ -24,8 +21,22 @@ rollup = true
 recompute_hashes = true 
 compile = true
 
-# Logging configuration
+[app:uvcsite]
+use = egg:uvcsite#app
+env_key = zodb.connection
+app_key = uvcsite
+zcml_file = ${site_zcml:output}
+configuration =
+  <zodb>
+    <blobstorage>
+      blob-dir ${buildout:directory}/var/blob
+      <filestorage>
+        path ${buildout:directory}/var/Data.fs
+      </filestorage>
+    </blobstorage>
+  </zodb>
 
+# Logging configuration
 [loggers]
 keys = root, accesslogging, grok
 
@@ -70,4 +81,3 @@ format = %(asctime)s %(levelname)s [%(name)s] %(message)s
 
 [formatter_accesslog]
 format = %(message)s
-
