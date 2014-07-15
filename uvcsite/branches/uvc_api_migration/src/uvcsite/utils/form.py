@@ -3,9 +3,9 @@
 # cklinger@novareto.de
 
 
-from zeam.form.base.markers import NO_VALUE, NO_CHANGE
-from zeam.form.base.interfaces import IDataManager
-from zeam.form.base.datamanager import ObjectDataManager
+from dolmen.forms.base.markers import NO_VALUE, NO_CHANGE
+from dolmen.forms.base.interfaces import IDataManager
+from dolmen.forms.base.datamanager import ObjectDataManager
 
 
 def set_fields_data(fields, content, data):
@@ -20,7 +20,8 @@ def set_fields_data(fields, content, data):
 
     for identifier, value in data.items():
         field = fields.get(identifier, default=None)
-        if field is None or value is NO_VALUE or value is NO_CHANGE or field.isEmpty(value):
+        if (field is None or value is NO_VALUE or
+            value is NO_CHANGE or field.isEmpty(value)):
             continue
 
         content.set(identifier, value)
