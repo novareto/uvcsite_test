@@ -20,9 +20,10 @@ from cromlech.zodb.middleware import ZODBApp
 from cromlech.zodb.utils import init_db
 from cromlech.configuration.utils import load_zcml
 from cromlech.i18n import register_allowed_languages
-
+from zope.component.interfaces import ISite, IPossibleSite
+from cromlech.dawnlight import ViewLookup
+from cromlech.dawnlight import view_locator, query_view
 from dolmen.container.components import BTreeContainer
-
 from transaction import manager as transaction_manager
 from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents
@@ -30,6 +31,7 @@ from zope.event import notify
 from zope.interface import implementer
 from zope.location import Location
 from zope.security.proxy import removeSecurityProxy
+from cromlech.zodb.components import LocalSiteManager
 
 
 uvcsiteRegistry = create_components_registry(
@@ -50,7 +52,7 @@ class UVCSite(BTreeContainer, PossibleSite, Location):
     traversable('members')
 
     def getSiteManager(self):
-        current = super(Uvcsite, self).getSiteManager()
+        current = super(UVCSite, self).getSiteManager()
         if uvcsiteRegistry not in current.__bases__:
             uvcsiteRegistry.__bases__ = tuple(
                 [x for x in uvcsiteRegistry.__bases__
@@ -62,6 +64,9 @@ class UVCSite(BTreeContainer, PossibleSite, Location):
         return current
 
 
+view_lookup = ViewLookup(view_locator(query_view))
+
+    
 class UVCApplication(object):
 
     def __init__(self, environ_key, name):
