@@ -2,36 +2,37 @@
 # Copyright (c) 2007-2011 NovaReto GmbH
 # cklinger@novareto.de 
 
-import grok
-
+import uvclight
+from grokcore.security import Role, Permission, permissions
 from zope.securitypolicy.interfaces import IRolePermissionManager
 from uvcsite.workflow.basic_workflow import PUBLISHED
 from hurry.workflow.interfaces import IWorkflowTransitionEvent
+from grokcore.component import subscribe
 
 
-class User(grok.Role):
-    grok.name('uvc.User')
-    grok.permissions('zope.View')
+class User(Role):
+    uvclight.name('uvc.User')
+    permissions('zope.View')
 
 
-class Editor(grok.Role):
-    grok.name('uvc.Editor')
-    grok.permissions('uvc.AddContent', 'uvc.ViewContent', 'uvc.EditContent')
+class Editor(Role):
+    uvclight.name('uvc.Editor')
+    permissions('uvc.AddContent', 'uvc.ViewContent', 'uvc.EditContent')
 
 
-class View(grok.Permission):
-    grok.name('uvc.ViewContent')
+class View(Permission):
+    uvclight.name('uvc.ViewContent')
 
 
-class Add(grok.Permission):
-    grok.name('uvc.AddContent')
+class Add(Permission):
+    uvclight.name('uvc.AddContent')
 
 
-class Edit(grok.Permission):
-    grok.name('uvc.EditContent')
+class Edit(Permission):
+    uvclight.name('uvc.EditContent')
 
 
-@grok.subscribe(IWorkflowTransitionEvent)
+@subscribe(IWorkflowTransitionEvent)
 def remove_edit_permission(event):
     if event.destination != PUBLISHED:
         return

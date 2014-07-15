@@ -2,7 +2,7 @@
 # Copyright (c) 2007-2011 NovaReto GmbH
 # cklinger@novareto.de
 
-import grok
+import uvclight
 import tempfile
 
 from reportlab.pdfgen import canvas
@@ -10,11 +10,11 @@ from repoze.filesafe import create_file
 from zope.interface import Interface
 
 
-class BaseDataView(grok.View):
-    grok.context(Interface)
-    grok.baseclass()
-    grok.name('basedateview')
-    grok.title('basedataview')
+class BaseDataView(uvclight.View):
+    uvclight.context(Interface)
+    uvclight.baseclass()
+    uvclight.name('basedateview')
+    uvclight.title('basedataview')
     content_type = ""
 
     def getFile(self, fn):
@@ -24,7 +24,7 @@ class BaseDataView(grok.View):
 
     @property
     def filename(self):
-        return grok.title.bind().get(self)
+        return uvclight.title.bind().get(self)
 
     def update(self, filename=None):
         self.base_file = self.getFile(filename)
@@ -54,9 +54,9 @@ class BaseDataView(grok.View):
 
 
 class BasePDF(BaseDataView):
-    grok.baseclass()
-    grok.name('pdf')
-    grok.title('uvcsite.pdf')
+    uvclight.baseclass()
+    uvclight.name('pdf')
+    uvclight.title('uvcsite.pdf')
     content_type = "application/pdf"
 
     def update(self, filename=None):
@@ -67,7 +67,7 @@ class BasePDF(BaseDataView):
 
 
 class WatermarkPDF(BasePDF):
-    grok.baseclass()
+    uvclight.baseclass()
 
     def update(self, filename=None):
         super(WatermarkPDF, self).update(filename=filename)
@@ -75,7 +75,7 @@ class WatermarkPDF(BasePDF):
 
 
 class BaseXML(BaseDataView):
-    grok.name('xml')
-    grok.title('uvcsite.xml')
-    grok.baseclass()
+    uvclight.name('xml')
+    uvclight.title('uvcsite.xml')
+    uvclight.baseclass()
     content_type = "application/xml"
