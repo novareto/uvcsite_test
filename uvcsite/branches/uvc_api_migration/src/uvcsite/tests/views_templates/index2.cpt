@@ -1,7 +1,0 @@
-<h1> Herzlich Willkommen </h1>
-
-<p> Hello On EARHT</p>
-
-<strong tal:content="view.__name__"> </strong>
-
-<h3> Collapse </h3>
