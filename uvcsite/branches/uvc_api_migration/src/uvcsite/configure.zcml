@@ -22,6 +22,8 @@
   <include package="dolmen.beaker" />
   <include package="dolmen.menu" />
 
+  <include package="uvc.testcontent" />
+
   <i18n:registerTranslations directory="locales" />
 
   <grok:grok package="." />
