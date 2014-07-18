@@ -4,26 +4,27 @@
 
 import uvclight
 import uvcsite
-from grokcore.chameleon.components import ChameleonPageTemplateFile
 
 from dolmen.forms import base
-from dolmen.menu import menuentry
-from uvcsite import uvcsiteMF as _
 from dolmen.forms.base import Fields
-from zope.component import getUtility
-from uvcsite.interfaces import IUVCSite
-from uvc.layout.interfaces import IPersonalMenu
+from dolmen.menu import menuentry
+from uvc.design.canvas import IPersonalPreferences, IPersonalMenu
 from uvc.homefolder import IHomefolder
+from uvcsite import uvcsiteMF as _
+from uvcsite.interfaces import IUVCSite
+from zope.component import getUtility
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
-from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
-from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
-from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
+
+from ..interfaces import IMyHomeFolder
+from .interfaces import IUserManagement, IExtranetMember
+from .vocabulary import vocab_berechtigungen
 
 
 class ENMS(uvclight.Page):
     uvclight.title('Mitbenutzerverwaltung')
     uvclight.context(IMyHomeFolder)
     uvclight.require('uvc.ManageCoUsers')
+
     template = uvclight.get_template('enms.cpt', __file__)
     
     def getUserGroup(self):

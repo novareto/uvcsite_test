@@ -4,11 +4,12 @@
 
 import uvclight
 import uvcsite
-from uvc.layout.interfaces import IAboveContent
-from zope.component import getMultiAdapter
-from grokcore.component import adapter, implementer
-from zope.interface import Interface
+
 from cromlech.browser import ITemplate, ISlot
+from grokcore.component import adapter, implementer
+from uvc.design.canvas import IAboveContent
+from zope.component import getMultiAdapter
+from zope.interface import Interface
 
 
 class HelpManager(uvclight.ViewletManager):
@@ -33,13 +34,14 @@ class HelpManager(uvclight.ViewletManager):
 
     def render(self):
         template = getMultiAdapter((self, self.request), ITemplate)
-        return template()
+        return template.render(
+            self, **self.namespace())
 
 
 @adapter(HelpManager, Interface)
 @implementer(ITemplate)
 def HelpManagerTemplate(context, request):
-    return uvclight.get_template('helpmanagertemplate.cpt', __file__)
+    return uvclight.get_template('helpmanagertemplate.pt', __file__)
 
 
 class Help(uvclight.Viewlet):

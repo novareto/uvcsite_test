@@ -6,18 +6,13 @@ import uvclight
 import uvcsite
 
 from megrok.z3ctable import Values
-from uvc.layout import interfaces
 from uvcsite import uvcsiteMF as _
-#from uvcsite.content.productregistration import getAllProductRegistrations
-#from uvcsite.homefolder.homefolder import Members
+
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from zope.component import getMultiAdapter
 from zope.interface import Interface
-from zope.pagetemplate.interfaces import IPageTemplate
-from zope.traversing.browser import absoluteURL
-
-
-## uvclight.templatedir('templates')
+#from uvcsite.content.productregistration import getAllProductRegistrations
+#from uvcsite.homefolder.homefolder import Members
 
 
 class Index(uvclight.TablePage):

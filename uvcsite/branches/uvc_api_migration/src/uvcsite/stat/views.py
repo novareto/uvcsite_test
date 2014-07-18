@@ -8,7 +8,7 @@ import uvcsite
 from ZODB.interfaces import IBroken
 from hurry.workflow.interfaces import IWorkflowState
 from uvc.homefolder import IHomefolder
-from uvc.layout.interfaces import IFooter
+from uvc.design.canvas import IFooterMenu
 from uvcsite.interfaces import IUVCSite
 from zope.component import getUtility
 from zope.interface import Interface
@@ -18,7 +18,7 @@ class StatistikMenu(uvclight.MenuItem):
     uvclight.context(IUVCSite)
     uvclight.title('Statistik')
     uvclight.require('zope.ManageSite')
-    uvclight.menu(IFooter)
+    uvclight.menu(IFooterMenu)
 
     @property
     def action(self):

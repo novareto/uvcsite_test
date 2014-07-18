@@ -9,29 +9,33 @@ from webob.dec import wsgify
 from grokcore.component import global_utility
 from grokcore.registries import create_components_registry
 
-from cromlech.dawnlight import DawnlightPublisher
-from cromlech.dawnlight.directives import traversable
 from cromlech.browser import IPublicationRoot
 from cromlech.browser import PublicationBeginsEvent, PublicationEndsEvent
+from cromlech.configuration.utils import load_zcml
+from cromlech.dawnlight import DawnlightPublisher
+from cromlech.dawnlight import ViewLookup
+from cromlech.dawnlight import view_locator, query_view
+from cromlech.dawnlight.directives import traversable
+from cromlech.i18n import register_allowed_languages
 from cromlech.security import Interaction
 from cromlech.webob import request
 from cromlech.zodb import Site, PossibleSite, get_site
+from cromlech.zodb.components import LocalSiteManager
 from cromlech.zodb.middleware import ZODBApp
 from cromlech.zodb.utils import init_db
-from cromlech.configuration.utils import load_zcml
-from cromlech.i18n import register_allowed_languages
-from zope.component.interfaces import ISite, IPossibleSite
-from cromlech.dawnlight import ViewLookup
-from cromlech.dawnlight import view_locator, query_view
 from dolmen.container.components import BTreeContainer
 from transaction import manager as transaction_manager
 from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents
+from zope.component.interfaces import ISite, IPossibleSite
 from zope.event import notify
 from zope.interface import implementer
 from zope.location import Location
 from zope.security.proxy import removeSecurityProxy
-from cromlech.zodb.components import LocalSiteManager
+
+# this is to test
+from uvc.themes.dguv import IDGUVRequest
+from zope.interface import alsoProvides
 
 
 uvcsiteRegistry = create_components_registry(
@@ -82,6 +86,9 @@ class UVCApplication(object):
             with Interaction():
                 # This sets the current user. Empty = anonymous
                 # FIXME : add authentication
+
+                # apply skin
+                alsoProvides(request, IDGUVRequest)
 
                 # Publication is about to begin
                 notify(PublicationBeginsEvent(self, request))

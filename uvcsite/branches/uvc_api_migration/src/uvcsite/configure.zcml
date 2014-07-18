@@ -3,26 +3,23 @@
            xmlns:browser="http://namespaces.zope.org/browser"
            xmlns:grok="http://namespaces.zope.org/grok">
 
-  <include package="dolmen.forms.base" />
-  <include package="dolmen.forms.ztk" />
-  <include package="dolmen.forms.composed" />
-  <include package="dolmen.forms.table" />
-
+  <include package="zope.security" />
   <include package="zope.generations" file="subscriber.zcml" />
   <include package="z3c.schema2xml" />
 
+  <include package="dolmen.beaker" />
+  <include package="dolmen.forms.base" />
+  <include package="dolmen.forms.composed" />
+  <include package="dolmen.forms.table" />
+  <include package="dolmen.forms.ztk" />
+  <include package="dolmen.menu" />
+  <include package="grokcore.registries" />
   <include package="megrok.z3ctable" />
   <include package="megrok.z3ctable" file="meta.zcml" />
 
-  <include package="grokcore.registries" />
-
-  <include package="uvc.layout" />
-  <include package="uvc.tbskin" />
-  <include package="uvc.widgets" />
-  <include package="dolmen.beaker" />
-  <include package="dolmen.menu" />
-
+  <include package="uvclight" />
   <include package="uvc.testcontent" />
+  <include package="uvc.themes.dguv" />
 
   <i18n:registerTranslations directory="locales" />
 

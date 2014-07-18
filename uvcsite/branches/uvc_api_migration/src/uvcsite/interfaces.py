@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-
 from cromlech.container.interfaces import IContainer
 from uvcsite.content import IUVCApplication, IFolderColumnTable
-from uvc.layout.interfaces import *
 from zope.interface import Interface
 
 

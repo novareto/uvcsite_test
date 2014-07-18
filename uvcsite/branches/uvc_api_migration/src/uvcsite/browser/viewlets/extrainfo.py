@@ -3,11 +3,11 @@
 # cklinger@novareto.de 
 
 import uvclight
-from uvc.layout.interfaces import IExtraInfo
+from uvc.design.canvas import IExtraInfo
 from zope import interface
 
 
 class ExtraInfo(uvclight.ViewletManager):
     uvclight.implements(IExtraInfo)
-    uvclight.name('uvc.layout.extrainfo')
+    uvclight.name('uvc.design.canvas.extrainfo')
     uvclight.context(interface.Interface)

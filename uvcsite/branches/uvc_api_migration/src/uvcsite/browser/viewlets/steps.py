@@ -3,20 +3,22 @@
 # cklinger@novareto.de
 
 from os import path
+
 import uvclight
 import uvcsite
-from uvc.layout.forms import Wizard
-from uvc.layout.interfaces import IAboveContent
+
+from uvc.design.canvas import IAboveContent
 from zope.interface import Interface
 
 
 class StepsProgressBar(uvclight.Viewlet):
     uvclight.context(Interface)
-    uvclight.view(Wizard)
+    uvclight.view(uvclight.Wizard)
     uvclight.viewletmanager(IAboveContent)
     uvclight.order(10000)
 
-    template = uvclight.get_template('stepsprogressbar.cpt', path.dirname(__file__))
+    template = uvclight.get_template(
+        'stepsprogressbar.cpt', path.dirname(__file__))
     
     current = "current"
     past = "past"
@@ -26,7 +28,9 @@ class StepsProgressBar(uvclight.Viewlet):
         self.steps = []
         current = self.view.step
         subforms = self.view._getAvailableSubForms()
-        self.title = "Fortschrittsanzeige: %s von %s" %(current+1, len(subforms))
+        self.title = "Fortschrittsanzeige: %s von %s" % (
+            current+1, len(subforms))
+
         for i, step in enumerate(subforms):
             link = ''
             if i == current:
