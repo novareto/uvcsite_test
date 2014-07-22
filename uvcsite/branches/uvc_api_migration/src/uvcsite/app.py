@@ -33,7 +33,7 @@ from zope.interface import implementer
 from zope.location import Location
 from zope.security.proxy import removeSecurityProxy
 from uvclight import sessionned
-from uvclight.auth import secured, Principal
+from uvclight.auth import Principal
 from .auth.handler import USERS
 
 # this is to test
@@ -85,19 +85,21 @@ class UVCApplication(object):
         conn = environ[self.environ_key]
         site = get_site(conn, self.name)
 
-        @sessionned('session.key')
-        @secured(USERS, u"Please Login")
+        @uvclight.sessionned('session.key')
+        @uvclight.auth.secured(USERS, u"Please Login")
         def publish(environ, start_response):
-            request = Request(environ)
-            alsoProvides(request, IDGUVRequest)
-            principal = request.principal = Principal(environ['REMOTE_USER'])
+            with uvclight.Request(environ) as request:
+                alsoProvides(request, IDGUVRequest)
+                principal = request.principal = uvclight.Principal(
+                    environ['REMOTE_USER'])
             
-            with Site(site):
-                with Interaction(principal):
-                    notify(PublicationBeginsEvent(self, request))
-                    response = removeSecurityProxy(self.publisher.publish(
-                        request, site, handle_errors=True))
-                    notify(PublicationEndsEvent(request, response))
+                with Site(site):
+                    with Interaction(principal):
+                        notify(PublicationBeginsEvent(self, request))
+                        response = removeSecurityProxy(self.publisher.publish(
+                            request, site, handle_errors=True))
+                        notify(PublicationEndsEvent(request, response))
+
             return response(environ, start_response)
 
         return publish(environ, start_response)
