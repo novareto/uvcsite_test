@@ -33,6 +33,7 @@ from zope.interface import implementer
 from zope.location import Location
 from zope.security.proxy import removeSecurityProxy
 from uvclight import sessionned
+from uvclight import events
 from uvclight.auth import Principal
 from .auth.handler import USERS
 
@@ -104,7 +105,7 @@ class UVCApplication(object):
             return response(environ, start_response)
 
         return publish(environ, start_response)
-        
+
 
 def make_application(model, name):
     def create_app(db):
@@ -117,6 +118,7 @@ def make_application(model, name):
                     if (not ISite.providedBy(application) and
                         IPossibleSite.providedBy(application)):
                         LocalSiteManager(application)
+                    notify(events.ApplicationInitializedEvent(application))
         finally:
             conn.close()
     return create_app
