@@ -21,6 +21,7 @@ setup(name='uvcsite',
       install_requires=[
           'Paste',
           'WebOb',
+          'barrel',
           'cromlech.browser',
           'cromlech.configuration',
           'cromlech.container',

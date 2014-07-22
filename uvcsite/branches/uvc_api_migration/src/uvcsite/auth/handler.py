@@ -66,3 +66,35 @@
 ##         manager = IPrincipalRoleManager(self.context)
 ##         setting = manager.getRolesForPrincipal(user)
 ##         return [role[0] for role in setting if role[1] is Allow]
+
+
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007-2010 NovaReto GmbH
+# cklinger@novareto.de
+
+
+from zope.location import LocationProxy, locate
+
+
+class User(object):
+
+    def __init__(self, id, pwd):
+        self.password = pwd
+        self.username = id
+
+
+class Users(dict):
+
+    def add(self, username, email, password, real_name, role):
+        pass
+
+    def delete(self, user):
+        pass
+
+    def getRoles(self, login):
+        return []
+
+
+USERS = Users({
+    'admin': User('admin', 'admin'),
+    })

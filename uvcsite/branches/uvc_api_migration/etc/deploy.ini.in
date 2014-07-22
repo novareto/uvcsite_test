@@ -21,8 +21,14 @@ rollup = true
 recompute_hashes = true 
 compile = true
 
+[filter:session]
+use = egg:cromlech.wsgistate#file_session
+session_key = session.key
+session_cache = ${settings:session_cache}
+
 [app:uvcsite]
 use = egg:uvcsite#app
+filter-with = session
 env_key = zodb.connection
 app_key = uvcsite
 zcml_file = ${site_zcml:output}

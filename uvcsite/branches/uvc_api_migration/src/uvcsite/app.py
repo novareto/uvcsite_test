@@ -18,7 +18,7 @@ from cromlech.dawnlight import view_locator, query_view
 from cromlech.dawnlight.directives import traversable
 from cromlech.i18n import register_allowed_languages
 from cromlech.security import Interaction
-from cromlech.webob import request
+from cromlech.webob.request import Request
 from cromlech.zodb import Site, PossibleSite, get_site
 from cromlech.zodb.components import LocalSiteManager
 from cromlech.zodb.middleware import ZODBApp
@@ -32,6 +32,9 @@ from zope.event import notify
 from zope.interface import implementer
 from zope.location import Location
 from zope.security.proxy import removeSecurityProxy
+from uvclight import sessionned
+from uvclight.auth import secured, Principal
+from .auth.handler import USERS
 
 # this is to test
 from uvc.themes.dguv import IDGUVRequest
@@ -78,34 +81,27 @@ class UVCApplication(object):
         self.name = name
         self.publisher = DawnlightPublisher(view_lookup=view_lookup)
 
-    @wsgify(RequestClass=request.Request)
-    def __call__(self, request):
-        conn = request.environment[self.environ_key]
+    def __call__(self, environ, start_response):
+        conn = environ[self.environ_key]
         site = get_site(conn, self.name)
-        with Site(site):
-            with Interaction():
-                # This sets the current user. Empty = anonymous
-                # FIXME : add authentication
 
-                # apply skin
-                alsoProvides(request, IDGUVRequest)
+        @sessionned('session.key')
+        @secured(USERS, u"Please Login")
+        def publish(environ, start_response):
+            request = Request(environ)
+            alsoProvides(request, IDGUVRequest)
+            principal = request.principal = Principal(environ['REMOTE_USER'])
+            
+            with Site(site):
+                with Interaction(principal):
+                    notify(PublicationBeginsEvent(self, request))
+                    response = removeSecurityProxy(self.publisher.publish(
+                        request, site, handle_errors=True))
+                    notify(PublicationEndsEvent(request, response))
+            return response(environ, start_response)
 
-                # Publication is about to begin
-                notify(PublicationBeginsEvent(self, request))
-
-                # Because we use Zope's sticky security system, the response is
-                # returned wrapped in a security manager. The response is the
-                # final HTTP entity to be returned. Security is no longer
-                # needed here. We do strip the object off the proxy.
-                # FIXME : do our own security ?
-                response = removeSecurityProxy(
-                    self.publisher.publish(request, site, handle_errors=True))
-
-                # Publication ends
-                notify(PublicationEndsEvent(request, response))
-
-                return response
-
+        return publish(environ, start_response)
+        
 
 def make_application(model, name):
     def create_app(db):
