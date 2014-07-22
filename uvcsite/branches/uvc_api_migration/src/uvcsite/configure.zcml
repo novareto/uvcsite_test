@@ -4,8 +4,12 @@
            xmlns:grok="http://namespaces.zope.org/grok">
 
   <include package="zope.security" />
+  <include package="zope.component" />
   <include package="zope.generations" file="subscriber.zcml" />
   <include package="z3c.schema2xml" />
+
+  <include package="grokcore.component" file="meta.zcml" />
+  <include package="megrok.z3ctable" file="meta.zcml" />
 
   <include package="dolmen.beaker" />
   <include package="dolmen.forms.base" />
@@ -15,7 +19,6 @@
   <include package="dolmen.menu" />
   <include package="grokcore.registries" />
   <include package="megrok.z3ctable" />
-  <include package="megrok.z3ctable" file="meta.zcml" />
 
   <include package="uvclight" />
   <include package="uvc.testcontent" />
@@ -24,5 +27,6 @@
   <i18n:registerTranslations directory="locales" />
 
   <grok:grok package="." />
+  <grok:grok package="uvc.homefolder.event_handlers" />
 
 </configure>

@@ -52,7 +52,8 @@ global_utility(
     uvcsiteRegistry,
     name="uvcsiteRegistry",
     provides=IComponents,
-    direct=True)
+    direct=True,
+    )
 
 
 @implementer(IPublicationRoot, IUVCSite)
@@ -119,6 +120,7 @@ def make_application(model, name):
                         IPossibleSite.providedBy(application)):
                         LocalSiteManager(application)
                     notify(events.ApplicationInitializedEvent(application))
+
         finally:
             conn.close()
     return create_app

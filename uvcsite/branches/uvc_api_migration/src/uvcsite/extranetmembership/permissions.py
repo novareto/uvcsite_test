@@ -1,10 +1,12 @@
-import grok
+# -*- coding: utf-8 -*-
+
+from grokcore.security import name, permissions, Role, Permission
 
 
-class MasterUser(grok.Role):
-    grok.name('uvc.MasterUser')
-    grok.permissions('uvc.ManageCoUsers')
+class MasterUser(Role):
+    name('uvc.MasterUser')
+    permissions('uvc.ManageCoUsers')
 
 
-class ManageCoUsers(grok.Permission):
-    grok.name('uvc.ManageCoUsers')
+class ManageCoUsers(Permission):
+    name('uvc.ManageCoUsers')
