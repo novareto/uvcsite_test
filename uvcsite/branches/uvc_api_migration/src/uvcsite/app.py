@@ -84,21 +84,22 @@ class UVCApplication(object):
     def __call__(self, environ, start_response):
         conn = environ[self.environ_key]
         site = get_site(conn, self.name)
-
+        request = Request(environ)
+        alsoProvides(request, IDGUVRequest)
+        uvclight.setRequest(request)
+        
         @uvclight.sessionned('session.key')
         @uvclight.auth.secured(USERS, u"Please Login")
         def publish(environ, start_response):
-            with uvclight.Request(environ) as request:
-                alsoProvides(request, IDGUVRequest)
-                principal = request.principal = uvclight.Principal(
-                    environ['REMOTE_USER'])
+            principal = request.principal = uvclight.Principal(
+                environ['REMOTE_USER'])
             
-                with Site(site):
-                    with Interaction(principal):
-                        notify(PublicationBeginsEvent(self, request))
-                        response = removeSecurityProxy(self.publisher.publish(
-                            request, site, handle_errors=True))
-                        notify(PublicationEndsEvent(request, response))
+            with Site(site):
+                with Interaction(principal):
+                    notify(PublicationBeginsEvent(self, request))
+                    response = removeSecurityProxy(self.publisher.publish(
+                        request, site, handle_errors=True))
+                    notify(PublicationEndsEvent(request, response))
 
             return response(environ, start_response)
 
