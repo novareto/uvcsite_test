@@ -128,17 +128,16 @@ class UVCApplication(object):
         def publish(environ, start_response):
             principal = request.principal = uvclight.Principal(
                 environ['REMOTE_USER'])
-
-            with Site(site):
-                with Interaction(principal):
-                    notify(PublicationBeginsEvent(self, request))
-                    response = removeSecurityProxy(self.publisher.publish(
-                        request, site, handle_errors=True))
-                    notify(PublicationEndsEvent(request, response))
+            with Interaction(principal):
+                notify(PublicationBeginsEvent(self, request))
+                response = removeSecurityProxy(
+                    self.publisher.publish(request, site, handle_errors=True))
+                notify(PublicationEndsEvent(request, response))
 
             return response(environ, start_response)
 
-        return publish(environ, start_response)
+        with Site(site):
+            return publish(environ, start_response)
 
 
 def make_application(model, name):

@@ -3,26 +3,21 @@
 # cklinger@novareto.de
 
 from uvc.api import api
+from uvc.homefolder.interfaces import IHomefolders
 from uvclight.interfaces import IUserLoggedInEvent
-## import uvclight
-import uvcsite
-
+from uvcsite.content.folderinit import createProductFolders
 from uvcsite.extranetmembership.interfaces import IUserManagement
 from zope.component import getUtility
-## from dolmen.authentication.events import IUserLoggedInEvent
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
-from uvcsite.content.folderinit import createProductFolders
-from uvc.homefolder.interfaces import IHomefolders
+import uvcsite
 
 
 @api.subscribe(IUserLoggedInEvent)
 def applyPermissionsForExistentCoUsers(factory):
     principal = factory.principal
     createProductFolders(principal)
-    import pdb; pdb.set_trace()
     homefolders = getUtility(IHomefolders)
     homefolder = homefolders.get(principal.id)
-    #homefolder = IHomeFolder(principal).homeFolder
     if not homefolder:
         return
     um = getUtility(IUserManagement)
