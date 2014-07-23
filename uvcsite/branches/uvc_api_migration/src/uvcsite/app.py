@@ -40,6 +40,8 @@ from .auth.handler import USERS
 # this is to test
 from uvc.themes.dguv import IDGUVRequest
 from zope.interface import alsoProvides
+from zope.component import getUtility
+from uvcsite.extranetmembership.interfaces import IUserManagement
 
 
 uvcsiteRegistry = create_components_registry(
@@ -75,7 +77,38 @@ class UVCSite(BTreeContainer, PossibleSite, Location):
 
 view_lookup = ViewLookup(view_locator(query_view))
 
-    
+
+
+
+class Account(object):
+
+    def __init__(self, user, password):
+        self.user = user
+        self.password = password
+
+
+class UVCSiteUsers(object):
+
+    @property
+    def util(self):
+        return getUtility(IUserManagement)
+
+    def get(self, login, dd):
+        utility = self.util
+        if hasattr(utility, 'changeLogin'):
+            login = utility.changeLogin(login)
+
+        if not utility.checkRule(login):
+            return {}
+
+        user = utility.getUser(login)
+        if not user:
+            return {}
+
+        return Account(user['mnr'], user['passwort'])
+
+USERS = UVCSiteUsers()
+
 class UVCApplication(object):
 
     def __init__(self, environ_key, name):
@@ -89,13 +122,13 @@ class UVCApplication(object):
         request = Request(environ)
         alsoProvides(request, IDGUVRequest)
         uvclight.setRequest(request)
-        
+
         @uvclight.sessionned('session.key')
         @uvclight.auth.secured(USERS, u"Please Login")
         def publish(environ, start_response):
             principal = request.principal = uvclight.Principal(
                 environ['REMOTE_USER'])
-            
+
             with Site(site):
                 with Interaction(principal):
                     notify(PublicationBeginsEvent(self, request))

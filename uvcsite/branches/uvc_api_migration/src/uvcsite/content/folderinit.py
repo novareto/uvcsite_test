@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2011 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import uvclight
 import transaction
@@ -16,7 +16,7 @@ from zope.lifecycleevent import IObjectAddedEvent
 
 
 def createProductFolders(principal=None):
-    request = zope.security.management.getInteraction().participations[0]
+    request = uvclight.getRequest()
     if not principal:
        principal = request.principal
     for name, pr in getAdapters((principal, request), IProductRegistration):

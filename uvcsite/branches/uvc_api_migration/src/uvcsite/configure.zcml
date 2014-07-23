@@ -22,6 +22,7 @@
 
   <include package="uvclight" />
   <include package="uvc.testcontent" />
+  <include package="uvc.homefolder" />
   <include package="uvc.themes.dguv" />
 
   <i18n:registerTranslations directory="locales" />
