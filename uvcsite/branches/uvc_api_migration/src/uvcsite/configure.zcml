@@ -4,6 +4,7 @@
            xmlns:grok="http://namespaces.zope.org/grok">
 
   <include package="zope.security" />
+  <include package="zope.securitypolicy" />
   <include package="zope.component" />
   <include package="zope.generations" file="subscriber.zcml" />
   <include package="z3c.schema2xml" />

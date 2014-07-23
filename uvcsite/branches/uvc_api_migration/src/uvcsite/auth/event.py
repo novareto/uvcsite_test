@@ -19,6 +19,7 @@ def applyPermissionsForExistentCoUsers(factory):
     homefolders = getUtility(IHomefolders)
     homefolder = homefolders.get(principal.id)
     if not homefolder:
+        homefolder = homefolders.assign_homefolder(principal.id)
         return
     um = getUtility(IUserManagement)
     rollen = um.getUser(principal.id)['rollen']
