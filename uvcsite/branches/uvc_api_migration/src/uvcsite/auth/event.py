@@ -18,7 +18,7 @@ def applyPermissionsForExistentCoUsers(factory):
     createProductFolders(principal)
     homefolders = getUtility(IHomefolders)
     homefolder = homefolders.get(principal.id)
-    if not homefolder:
+    if homefolder is None:
         homefolder = homefolders.assign_homefolder(principal.id)
         return
     um = getUtility(IUserManagement)
