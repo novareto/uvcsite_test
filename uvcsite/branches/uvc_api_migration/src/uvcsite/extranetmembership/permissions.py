@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from grokcore.security import name, permissions, Role, Permission
 
 
