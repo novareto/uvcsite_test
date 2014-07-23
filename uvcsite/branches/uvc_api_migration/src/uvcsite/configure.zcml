@@ -24,6 +24,7 @@
   <include package="uvclight" />
   <include package="uvc.testcontent" />
   <include package="uvc.themes.dguv" />
+  <include package="zope.annotation" />
 
   <i18n:registerTranslations directory="locales" />
 
