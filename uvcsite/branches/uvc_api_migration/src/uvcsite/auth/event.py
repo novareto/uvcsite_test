@@ -2,37 +2,33 @@
 # Copyright (c) 2007-2011 NovaReto GmbH
 # cklinger@novareto.de
 
+import uvclight
+import uvcsite
+
 from uvc.api import api
 from uvc.homefolder.interfaces import IHomefolders
-from uvclight.interfaces import IUserLoggedInEvent
 from uvcsite.content.folderinit import createProductFolders
 from uvcsite.extranetmembership.interfaces import IUserManagement
 from zope.component import getUtility
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
-import uvcsite
 
 
-@api.subscribe(IUserLoggedInEvent)
+@api.subscribe(uvclight.IUserLoggedInEvent)
 def applyPermissionsForExistentCoUsers(factory):
-    principal = factory.principal
-    createProductFolders(principal)
+    user = factory.principal
+    createProductFolders(user)
     homefolders = getUtility(IHomefolders)
-    homefolder = homefolders.get(principal.id)
+    homefolder = homefolders.get(user.id)
     if homefolder is None:
-        homefolder = homefolders.assign_homefolder(principal.id)
+        homefolder = homefolders.assign_homefolder(user.id)
         return
     um = getUtility(IUserManagement)
-    rollen = um.getUser(principal.id)['rollen']
-    if homefolder.__name__ != principal.id:
+    rollen = um.getUser(user.id)['rollen']
+    if homefolder.__name__ != user.id:
         for pf in homefolder.keys():
             if pf in rollen:
                 prm = IPrincipalRoleManager(homefolder.get(pf))
-                if prm.getSetting('uvc.Editor', principal.id).getName() == 'Unset':
-                    prm.assignRoleToPrincipal('uvc.Editor', principal.id)
-                    uvcsite.log('Give uvc.Editor to %s in folder %s' % (principal.id, pf))
-
-
-## @uvclight.subscribe(IAuthenticatedPrincipalCreated)
-## def applyGroups(factory):
-##     principal = factory.principal
-##     principal.groups.append('uvc.Member')
+                if prm.getSetting('uvc.Editor', user.id).getName() == 'Unset':
+                    prm.assignRoleToUser('uvc.Editor', user.id)
+                    uvcsite.log(
+                        'Give uvc.Editor to %s in folder %s' % (user.id, pf))

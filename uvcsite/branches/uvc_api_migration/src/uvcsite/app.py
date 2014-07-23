@@ -4,7 +4,6 @@ import uvclight
 from uvclight import publishing
 from uvclight.backends import zodb
 
-from grokcore.component import global_utility
 from grokcore.registries import create_components_registry
 from cromlech.i18n import register_allowed_languages
 from cromlech.webob.request import Request
@@ -15,7 +14,6 @@ from cromlech.zodb.utils import init_db
 from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents
 from zope.event import notify
-from zope.interface import implementer
 from zope.security.management import setSecurityPolicy
 from zope.security.proxy import removeSecurityProxy
 from zope.securitypolicy.zopepolicy import ZopeSecurityPolicy
@@ -32,7 +30,7 @@ uvcsiteRegistry = create_components_registry(
     )
 
 
-global_utility(
+uvclight.global_utility(
     uvcsiteRegistry,
     name="uvcsiteRegistry",
     provides=IComponents,
@@ -40,7 +38,7 @@ global_utility(
     )
 
 
-@implementer(uvclight.IApplication)
+@uvclight.implementer(uvclight.IApplication)
 class UVCSite(zodb.Root):
     uvclight.traversable('members')
 
