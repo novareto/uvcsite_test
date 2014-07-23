@@ -1,0 +1,14 @@
+[uwsgi]
+socket = /tmp/uvcsite.sock
+http = 0.0.0.0:9999
+processes = 1
+master = true
+http-websockets = true
+pythonpath = ${buildout:directory}/eggs/*.egg
+pythonpath = ${buildout:directory}/src/*/src
+pythonpath = ${buildout:directory}/src/*
+pythonpath = ${buildout:directory}/src/
+mypaste = ${deploy_ini:output}
+paste = config:%(mypaste)
+paste-logger = %(mypaste)
+gevent = 20
