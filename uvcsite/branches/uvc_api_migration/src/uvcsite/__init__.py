@@ -9,5 +9,6 @@ uvcsiteMF = MessageFactory('uvcsite')
 import logging
 logger = logging.getLogger('uvcsite')
 
+
 def log(message, summary='', severity=logging.INFO):
     logger.log(severity, '%s %s', summary, message)

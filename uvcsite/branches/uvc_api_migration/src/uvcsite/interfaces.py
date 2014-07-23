@@ -3,11 +3,7 @@
 from cromlech.container.interfaces import IContainer
 from uvcsite.content import IUVCApplication, IFolderColumnTable
 from zope.interface import Interface
-
-
-class IUVCSite(IUVCApplication):
-    """Marker Interface for UVC-Site Site
-    """
+from uvclight import IApplication as IUVCSite
 
 
 class IMyHomeFolder(IContainer, IFolderColumnTable):

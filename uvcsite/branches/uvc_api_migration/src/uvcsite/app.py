@@ -1,54 +1,35 @@
 # -*- coding: utf-8 -*-
 
 import uvclight
-import transaction
+from uvclight import publishing
+from uvclight.backends import zodb
 
-from .interfaces import IUVCSite
 from grokcore.component import global_utility
 from grokcore.registries import create_components_registry
-
-from cromlech.browser import IPublicationRoot
-from cromlech.browser import PublicationBeginsEvent, PublicationEndsEvent
-from cromlech.configuration.utils import load_zcml
-from cromlech.dawnlight import DawnlightPublisher
-from cromlech.dawnlight import ViewLookup
-from cromlech.dawnlight import view_locator, query_view
-from cromlech.dawnlight.directives import traversable
 from cromlech.i18n import register_allowed_languages
-from cromlech.security import Interaction
 from cromlech.webob.request import Request
-from cromlech.zodb import Site, PossibleSite, get_site
-from cromlech.zodb.components import LocalSiteManager
+from cromlech.zodb import Site, get_site
+
 from cromlech.zodb.middleware import ZODBApp
 from cromlech.zodb.utils import init_db
-from dolmen.container.components import BTreeContainer
-from transaction import manager as transaction_manager
 from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents
-from zope.component.interfaces import ISite, IPossibleSite
 from zope.event import notify
 from zope.interface import implementer
-from zope.location import Location
-from zope.security.proxy import removeSecurityProxy
-from uvclight import sessionned
-from uvclight import events
-from uvclight.auth import Principal
-from .auth.handler import USERS
-from zope.securitypolicy.zopepolicy import ZopeSecurityPolicy
 from zope.security.management import setSecurityPolicy
-from cromlech.wsgistate import WsgistateSession
+from zope.security.proxy import removeSecurityProxy
+from zope.securitypolicy.zopepolicy import ZopeSecurityPolicy
 
 # this is to test
+from .auth.handler import USERS
 from uvc.themes.dguv import IDGUVRequest
 from zope.interface import alsoProvides
-from zope.securitypolicy.zopepolicy import ZopeSecurityPolicy
-from zope.security.management import setSecurityPolicy
 
 
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
     bases=tuple(),
-)
+    )
 
 
 global_utility(
@@ -59,9 +40,9 @@ global_utility(
     )
 
 
-@implementer(IPublicationRoot, IUVCSite)
-class UVCSite(BTreeContainer, PossibleSite, Location):
-    traversable('members')
+@implementer(uvclight.IApplication)
+class UVCSite(zodb.Root):
+    uvclight.traversable('members')
 
     def getSiteManager(self):
         current = super(UVCSite, self).getSiteManager()
@@ -76,15 +57,12 @@ class UVCSite(BTreeContainer, PossibleSite, Location):
         return current
 
 
-view_lookup = ViewLookup(view_locator(query_view))
-
-
 class UVCApplication(object):
 
     def __init__(self, environ_key, name, session_key):
         self.environ_key = environ_key
         self.name = name
-        self.publisher = DawnlightPublisher(view_lookup=view_lookup)
+        self.publisher = publishing.create_base_publisher()
         self.session_key = session_key
 
     def __call__(self, environ, start_response):
@@ -95,13 +73,12 @@ class UVCApplication(object):
         @uvclight.sessionned(self.session_key)
         @uvclight.auth.secured(USERS, u"Please Login")
         def publish(environ, start_response):
-            principal = request.principal = uvclight.Principal(
-                environ['REMOTE_USER'])
-            with Interaction(principal):
-                notify(PublicationBeginsEvent(self, request))
+            request.principal = uvclight.Principal(environ['REMOTE_USER'])
+            with uvclight.Interaction(request.principal):
+                notify(uvclight.PublicationBeginsEvent(self, request))
                 response = removeSecurityProxy(
                     self.publisher.publish(request, site, handle_errors=True))
-                notify(PublicationEndsEvent(request, response))
+                notify(uvclight.PublicationEndsEvent(request, response))
                 return response(environ, start_response)
 
         conn = environ[self.environ_key]
@@ -110,29 +87,10 @@ class UVCApplication(object):
             return publish(environ, start_response)
 
 
-def make_application(model, name):
-    def create_app(db):
-        conn = db.open()
-        try:
-            root = conn.root()
-            if not name in root:
-                with transaction_manager:
-                    application = root[name] = model()
-                    if (not ISite.providedBy(application) and
-                        IPossibleSite.providedBy(application)):
-                        LocalSiteManager(application)
-                    notify(events.ApplicationInitializedEvent(application))
-
-        finally:
-            conn.close()
-    return create_app
-
-
 def uvcsite(gconf, configuration, zcml_file, session_key, env_key, app_key):
     setSecurityPolicy(ZopeSecurityPolicy)
-    load_zcml(zcml_file)
+    uvclight.load_zcml(zcml_file)
     register_allowed_languages(['de', 'de-de'])
-    setSecurityPolicy(ZopeSecurityPolicy)
-    db = init_db(configuration, make_application(UVCSite, app_key))
+    db = init_db(configuration, zodb.make_application(app_key, UVCSite))
     app = UVCApplication(env_key, app_key, session_key)
     return ZODBApp(app, db, key=env_key)
