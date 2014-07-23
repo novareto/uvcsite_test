@@ -13,9 +13,3 @@ def log(message, summary='', severity=logging.INFO):
     logger.log(severity, '%s %s', summary, message)
 
 
-from zope.securitypolicy.zopepolicy import ZopeSecurityPolicy
-
-from zope.security.management import setSecurityPolicy
-
-setSecurityPolicy(ZopeSecurityPolicy)
-print "SET SECURITY POLICY"

@@ -42,6 +42,8 @@ from uvc.themes.dguv import IDGUVRequest
 from zope.interface import alsoProvides
 from zope.component import getUtility
 from uvcsite.extranetmembership.interfaces import IUserManagement
+from zope.securitypolicy.zopepolicy import ZopeSecurityPolicy
+from zope.security.management import setSecurityPolicy
 
 
 uvcsiteRegistry = create_components_registry(
@@ -159,6 +161,8 @@ def make_application(model, name):
 
 
 def uvcsite(global_conf, configuration, zcml_file, env_key, app_key):
+    setSecurityPolicy(ZopeSecurityPolicy)
+    print "SET SECURITY POLICY"
     load_zcml(zcml_file)
     register_allowed_languages(['de', 'de-de'])
     db = init_db(configuration, make_application(UVCSite, app_key))
