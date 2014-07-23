@@ -73,28 +73,63 @@
 # cklinger@novareto.de
 
 
-from zope.location import LocationProxy, locate
+## from zope.location import LocationProxy, locate
 
 
-class User(object):
+## class User(object):
 
-    def __init__(self, id, pwd):
-        self.password = pwd
-        self.username = id
-
-
-class Users(dict):
-
-    def add(self, username, email, password, real_name, role):
-        pass
-
-    def delete(self, user):
-        pass
-
-    def getRoles(self, login):
-        return []
+##     def __init__(self, id, pwd):
+##         self.password = pwd
+##         self.username = id
 
 
-USERS = Users({
-    'admin': User('admin', 'admin'),
-    })
+## class Users(dict):
+
+##     def add(self, username, email, password, real_name, role):
+##         pass
+
+##     def delete(self, user):
+##         pass
+
+##     def getRoles(self, login):
+##         return []
+
+
+## USERS = Users({
+##     'admin': User('admin', 'admin'),
+##     })
+
+
+from uvcsite.extranetmembership.interfaces import IUserManagement
+from zope.component import getUtility
+
+
+class Account(object):
+
+    def __init__(self, user, password):
+        self.user = user
+        self.password = password
+
+
+class UVCSiteUsers(object):
+
+    @property
+    def util(self):
+        return getUtility(IUserManagement)
+
+    def get(self, login, dd):
+        utility = self.util
+        if hasattr(utility, 'changeLogin'):
+            login = utility.changeLogin(login)
+
+        if not utility.checkRule(login):
+            return {}
+
+        user = utility.getUser(login)
+        if not user:
+            return {}
+
+        return Account(user['mnr'], user['passwort'])
+
+
+USERS = UVCSiteUsers()

@@ -12,6 +12,8 @@
   <include package="grokcore.component" file="meta.zcml" />
   <include package="megrok.z3ctable" file="meta.zcml" />
 
+  <include package="cromlech.dawnlight" file="consumers.zcml" />
+
   <include package="dolmen.beaker" />
   <include package="dolmen.forms.base" />
   <include package="dolmen.forms.composed" />

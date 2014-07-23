@@ -7,7 +7,7 @@ host = ${:host}
 port = ${:port}
 
 [pipeline:main]
-pipeline = gzip fanstatic uvcsite
+pipeline = gzip session fanstatic uvcsite
 
 [filter:gzip]
 use = egg:Paste#gzip
@@ -28,9 +28,9 @@ session_cache = ${settings:session_cache}
 
 [app:uvcsite]
 use = egg:uvcsite#app
-filter-with = session
 env_key = zodb.connection
 app_key = uvcsite
+session_key = session.key
 zcml_file = ${site_zcml:output}
 configuration =
   <zodb>
