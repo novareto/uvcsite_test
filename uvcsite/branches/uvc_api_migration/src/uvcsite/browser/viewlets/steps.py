@@ -11,9 +11,15 @@ from uvc.design.canvas import IAboveContent
 from zope.interface import Interface
 
 
+from cromlech.browser import IView
+class IWizard(IView):
+    # temporary, until we have a wizard component
+    pass
+
+
 class StepsProgressBar(uvclight.Viewlet):
     uvclight.context(Interface)
-    uvclight.view(uvclight.Wizard)
+    uvclight.view(IWizard)
     uvclight.viewletmanager(IAboveContent)
     uvclight.order(10000)
 

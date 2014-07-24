@@ -2,9 +2,6 @@
 # Copyright (c) 2007-2008 NovaReto GmbH
 # cklinger@novareto.de
 
-
-## from dolmen.forms.base import Fields, set_fields_data, apply_data_event
-
 ## from zope.interface import Interface
 ## from uvcsite import uvcsiteMF as _
 ## from uvc.layout import interfaces
@@ -15,20 +12,21 @@
 ## from uvcsite import IGetHomeFolderUrl
 ## from dolmen.content import schema
 ## from dolmen import menu
-## from zeam.form import base
-## from uvc.layout import TablePage
 ## from dolmen.app.layout.viewlets import ContextualActions
 ## from zeam.form.base.interfaces import ISimpleForm
-## from megrok.pagetemplate import PageTemplate
-## from zope.pagetemplate.interfaces import IPageTemplate
 
 
 import uvclight
 import uvcsite
+from cromlech.browser import ITemplate
 from dolmen.forms import base
+from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 from uvc.content import IContent
 from uvcsite.interfaces import IFolderListingTable
 from .interfaces import IProductFolder
+from zope.component import getMultiAdapter
+from uvc.design.canvas.managers import ITabs
+from zope.interface import Interface
 
 
 class WhatAmI(uvclight.View):
@@ -52,7 +50,7 @@ class Display(uvclight.Form):
     def fields(self):
         content_object = self.context
         schemas = uvclight.schema.bind().get(content_object)
-        return base.Fields(*schemas)
+        return Fields(*schemas)
      
 
 class Index(uvclight.TablePage):
@@ -101,53 +99,58 @@ class Index(uvclight.TablePage):
         #~ FIXME
         return []
 
-     
 
+class AddMenuViewlet(uvclight.Viewlet):
+    uvclight.view(Index)
+    uvclight.order(30)
+    uvclight.context(IProductFolder)
+    uvclight.viewletmanager(ITabs)
+
+    @property
+    def template(self):
+        return getMultiAdapter((self, self.request), ITemplate)
+
+
+
+@uvclight.adapter(AddMenuViewlet, Interface)
+@uvclight.implementer(ITemplate)
+def add_menu(context, request):
+    return uvclight.get_template('addmenu.cpt', __file__)
+
+
+
+class Add(uvclight.AddForm):
+    uvclight.context(IProductFolder)
+    uvclight.require('uvc.AddContent')
+
+    @property
+    def label(self):
+        return self.context.__class__.__name__
+
+    description = u"Bitte füllen Sie die Eingabeform."
+
+    @property
+    def fields(self):
+        content_object = self.context.getContentType()
+        schemas = uvclight.schema.bind().get(content_object)
+        return base.Fields(*schemas)
+
+    def create(self, data):
+        content = self.context.getContentType()()
+        set_fields_data(self.fields, content, data)
+        return content
+
+    def add(self, content):
+        self.context.add(content)
+
+    def nextURL(self):
+        self.flash(_('Added Content'))
+        return self.url(self.context)
+
+
+
+    
 ## uvclight.templatedir('templates')
-
-
-## class Index(TablePage):
-##     uvclight.title(u'Übersicht')
-##     uvclight.name('index')
-##     uvclight.implements(IFolderListingTable)
-##     uvclight.context(IProductFolder)
-##     #uvcsite.sectionmenu(uvcsite.IExtraViews)
-
-##     description = u"Hier finden Sie alle Dokumente dazu."
-
-##     cssClasses = {'table': 'tablesorter table table-striped table-bordered table-condensed'}
-##     cssClassEven = u'even'
-##     cssClassOdd = u'odd'
-
-##     sortOnId = "table-modified-5"
-##     sortOn = "table-modified-5" 
-##     #sortOrder = "down"
-
-##     @property
-##     def title(self):
-##         return self.context.getContentName()
-
-##     def update(self):
-##         items = self.request.form.get('table-checkBox-0-selectedItems')
-##         if items and self.request.has_key('form.button.delete'):
-##             if isinstance(items, (str, unicode)):
-##                 items = [items,]
-##             for key in items:
-##                 if self.context.has_key(key):
-##                     self.executeDelete(self.context[key])
-##         TablePage.update(self)
-
-##     def executeDelete(self, item):
-##         self.flash(_(u'Ihre Dokumente wurden entfernt'))
-##         del item.__parent__[item.__name__]
-
-##     def getAddLinkUrl(self):
-##         adapter = getMultiAdapter(
-##             (self.request.principal, self.request), IGetHomeFolderUrl)
-##         return adapter.getAddURL(self.context.getContentType())
-
-##     def getAddTitle(self):
-##         return self.context.getContentName()
 
 
 ## class ExtraViewsViewlet(ContextualActions):
@@ -183,48 +186,9 @@ class Index(uvclight.TablePage):
 ##                 }
 
 
-## class AddMenuViewlet(uvclight.Viewlet):
-##     uvclight.view(Index)
-##     uvclight.order(30)
-##     uvclight.context(IProductFolder)
-##     uvclight.viewletmanager(interfaces.ITabs)
-
-##     def render(self):
-##         template = getMultiAdapter((self, self.request), IPageTemplate)
-##         return template()
 
 
-## class AddMenu(PageTemplate):
-##     uvclight.view(AddMenuViewlet)
 
-
-## class Add(uvcsite.AddForm):
-##     uvclight.context(IProductFolder)
-##     uvclight.require('uvc.AddContent')
-
-##     @property
-##     def label(self):
-##         return self.context.getContentName()
-
-##     description = u"Bitte füllen Sie die Eingabeform."
-
-##     @property
-##     def fields(self):
-##         content_object = self.context.getContentType()
-##         schemas = schema.bind().get(content_object)
-##         return Fields(*schemas)
-
-##     def create(self, data):
-##         content = self.context.getContentType()()
-##         set_fields_data(self.fields, content, data)
-##         return content
-
-##     def add(self, content):
-##         self.context.add(content)
-
-##     def nextURL(self):
-##         self.flash(_('Added Content'))
-##         return self.url(self.context)
 
 
 ## class Edit(uvcsite.Form):
