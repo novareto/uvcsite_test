@@ -16,12 +16,12 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 @api.subscribe(uvclight.IUserLoggedInEvent)
 def applyPermissionsForExistentCoUsers(factory):
     user = factory.principal
-    createProductFolders(user)
     homefolders = getUtility(IHomefolders)
     homefolder = homefolders.get(user.id)
     if homefolder is None:
         homefolder = homefolders.assign_homefolder(user.id)
         return
+    createProductFolders(user)
     um = getUtility(IUserManagement)
     rollen = um.getUser(user.id)['rollen']
     if homefolder.__name__ != user.id:

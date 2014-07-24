@@ -13,6 +13,7 @@ from uvcsite.content.directive import productfolder
 from zope.dottedname.resolve import resolve
 from zope.component import getMultiAdapter, getAdapters, getUtility
 from uvcsite.content.meta import default_name
+from uvcsite.utils.shorties import getHomeFolder
 
 
 ## def getAllProductRegistrations():
@@ -89,10 +90,10 @@ class ProductRegistration(uvclight.MultiAdapter):
         return self.available()
 
     def createInProductFolder(self):
-        homefolder = IHomeFolder(self.principal).homeFolder
-        if not homefolder:
-            utility = getUtility(IHomeFolderManager)
-            utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
+        homefolder = getHomeFolder(self.request)
+        #if homefolder is None:
+        #    utility = getUtility(IHomeFolderManager)
+        #    utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
         if self.folderURI and not self.folderURI in homefolder.keys():
             pf = self.productfolder
             homefolder[self.folderURI] = pf()
