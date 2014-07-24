@@ -7,7 +7,7 @@ import uvcsite
 import zope.security
 
 from zope.security.interfaces import IPrincipal
-from zope.publisher.interfaces.http import IHTTPRequest
+from cromlech.browser import IRequest
 from uvcsite.content.interfaces import IProductRegistration
 from uvcsite.content.directive import productfolder
 from zope.dottedname.resolve import resolve
@@ -32,7 +32,7 @@ def getProductRegistrations():
 
 
 class ProductRegistration(uvclight.MultiAdapter):
-    uvclight.adapts(IPrincipal, IHTTPRequest)
+    uvclight.adapts(IPrincipal, IRequest)
     uvclight.implements(IProductRegistration)
     uvclight.baseclass()
     icon = None
@@ -77,7 +77,8 @@ class ProductRegistration(uvclight.MultiAdapter):
         return True
 
     def action(self):
-        return "%s/%s/@@add" % (uvcsite.getHomeFolderUrl(self.request), self.folderURI)
+        from uvcsite.utils.shorties import getHomeFolder, getHomeFolderUrl
+        return "%s/%s/@@add" % (getHomeFolderUrl(self.request), self.folderURI)
 
     @property
     def inNav(self):

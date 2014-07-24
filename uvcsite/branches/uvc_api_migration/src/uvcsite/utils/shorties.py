@@ -8,19 +8,27 @@ import uvcsite
 import zope.security
 
 from datetime import datetime, date
-from uvc.homefolder.interfaces import IHomefolder
+from uvc.homefolder.interfaces import IHomefolders
 from cromlech.security.interfaces import IUnauthenticatedPrincipal
+from zope.component import getUtility
+from dolmen.location.resolvers import get_absolute_url
 
+def getHomeFolderById(id):
+    homefolders = getUtility(IHomefolders)
+    homefolder = homefolders.get(id)
+    return homefolder
 
 def getHomeFolder(request):
     principal = request.principal
     if IUnauthenticatedPrincipal.providedBy(principal):
         return
-    return IHomefolder(principal)
+    return getHomeFolderById(principal.id)
 
 
 def getHomeFolderUrl(request, suffix=""):
-    url = uvcsite.IGetHomeFolderUrl(request).getURL(type=suffix)
+    hf = getHomeFolder(request)
+    url = get_absolute_url(hf, request)
+    url += suffix
     if url:
         url = urllib.unquote(url)
     return url

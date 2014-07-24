@@ -9,15 +9,17 @@ from megrok.z3ctable import Values
 from uvcsite import uvcsiteMF as _
 
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
+from uvc.homefolder.interfaces import IHomefolder, IHomefolders
 from zope.component import getMultiAdapter
 from zope.interface import Interface
+from zope.security.management import getInteraction
 #from uvcsite.content.productregistration import getAllProductRegistrations
 #from uvcsite.homefolder.homefolder import Members
 
 
 class Index(uvclight.TablePage):
     uvclight.title(u'Mein Ordner')
-    uvclight.context(IMyHomeFolder)
+    uvclight.context(IHomefolder)
     uvclight.implements(IFolderListingTable)
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
@@ -40,7 +42,7 @@ class Index(uvclight.TablePage):
     description = _(u"Hier werden Ihre Dokumente abgelegt")
 
     def getContentTypes(self):
-        interaction = self.request.interaction
+        interaction = getInteraction()
         for key, value in self.context.items():
             if (interaction.checkPermission('uvc.ViewContent', value) and
                 not getattr(value, 'excludeFromNav', False)):
@@ -88,33 +90,33 @@ class Index(uvclight.TablePage):
 ##     uvclight.view(DirectAccessViewlet)
 
 
-## class HomeFolderValues(Values):
-##     """This Adapter returns IContent Objects
-##        form child folders
-##     """
-##     uvclight.adapts(IMyHomeFolder, None, Index)
+class HomeFolderValues(Values):
+    """This Adapter returns IContent Objects
+      form child folders
+    """
+    uvclight.adapts(IHomefolder, None, Index)
 
-##     @property
-##     def values(self):
-##         results = []
-##         interaction = self.request.interaction
-##         for productfolder in self.context.values():
-##             if interaction.checkPermission('uvc.ViewContent', productfolder):
-##                 results.extend(productfolder.values())
-##         return results
+    @property
+    def values(self):
+        results = []
+        interaction = getInteraction()
+        for productfolder in self.context.values():
+            if interaction.checkPermission('uvc.ViewContent', productfolder):
+                results.extend(productfolder.values())
+        return results
 
 
-## class RedirectIndexMembers(uvclight.View):
-##     uvclight.context(Members)
-##     uvclight.name('index')
+class RedirectIndexMembers(uvclight.View):
+    uvclight.context(IHomefolders)
+    uvclight.name('index')
 
-##     def render(self):
-##         url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
-##         self.redirect(url)
+    def render(self):
+        url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
+        self.redirect(url)
 
-## class RestHomeFolderTraverser(uvclight.Traverser):
-##     uvclight.context(Members)
-##     uvclight.layer(IRESTLayer)
-
-##     def traverse(self, name):
-##         return uvcsite.getHomeFolder(self.request).get(name)
+#class RestHomeFolderTraverser(uvclight.Traverser):
+#    uvclight.context(Members)
+#    uvclight.layer(IRESTLayer)
+#
+#    def traverse(self, name):
+#        return uvcsite.getHomeFolder(self.request).get(name)
