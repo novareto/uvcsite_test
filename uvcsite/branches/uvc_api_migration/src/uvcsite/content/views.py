@@ -2,8 +2,7 @@
 # Copyright (c) 2007-2008 NovaReto GmbH
 # cklinger@novareto.de
 
-## import uvclight
-## import uvcsite
+
 ## from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 
 ## from zope.interface import Interface
@@ -23,6 +22,86 @@
 ## from megrok.pagetemplate import PageTemplate
 ## from zope.pagetemplate.interfaces import IPageTemplate
 
+
+import uvclight
+import uvcsite
+from dolmen.forms import base
+from uvc.content import IContent
+from uvcsite.interfaces import IFolderListingTable
+from .interfaces import IProductFolder
+
+
+class WhatAmI(uvclight.View):
+
+    def render(self):
+        from cgi import escape
+        from zope.interface import providedBy
+        return '<pre>%s</pre>' % '\n'.join(
+            [escape(str(iface)) for iface in providedBy(self.context)])
+
+
+class Display(uvclight.Form):
+    uvclight.context(IContent)
+    uvclight.name('index')
+    uvclight.require('uvc.ViewContent')
+
+    mode = base.DISPLAY
+    ignoreContent = False
+
+    @property
+    def fields(self):
+        content_object = self.context
+        schemas = uvclight.schema.bind().get(content_object)
+        return base.Fields(*schemas)
+     
+
+class Index(uvclight.TablePage):
+    uvclight.title(u'Übersicht')
+    uvclight.name('index')
+    uvclight.implements(IFolderListingTable)
+    uvclight.context(IProductFolder)
+
+    description = u"Hier finden Sie alle Dokumente dazu."
+
+    cssClassEven = u'even'
+    cssClassOdd = u'odd'
+
+    sortOnId = "table-modified-5"
+    sortOn = "table-modified-5" 
+    #sortOrder = "down"
+
+    @property
+    def title(self):
+        return self.context.getContentName()
+
+    def update(self):
+        items = self.request.form.get('table-checkBox-0-selectedItems')
+        if items and self.request.has_key('form.button.delete'):
+            if isinstance(items, (str, unicode)):
+                items = [items,]
+            for key in items:
+                if self.context.has_key(key):
+                    self.executeDelete(self.context[key])
+        uvclight.TablePage.update(self)
+
+    def executeDelete(self, item):
+        self.flash(_(u'Ihre Dokumente wurden entfernt'))
+        del item.__parent__[item.__name__]
+
+    def getAddLinkUrl(self):
+        adapter = getMultiAdapter(
+            (self.request.principal, self.request), IGetHomeFolderUrl)
+        return adapter.getAddURL(self.context.getContentType())
+
+    def getAddTitle(self):
+        return self.context.getContentName()
+
+    @property
+    def values(self):
+        #~ FIXME
+        return []
+
+     
 
 ## uvclight.templatedir('templates')
 
@@ -172,18 +251,4 @@
 ##         else:
 ##             self.flash('Kein Änderung', type="info")
 
-
-## class Display(uvcsite.Form):
-##     uvclight.context(IContent)
-##     uvclight.name('index')
-##     uvclight.require('uvc.ViewContent')
-
-##     mode = base.DISPLAY
-##     ignoreContent = False
-
-##     @property
-##     def fields(self):
-##         content_object = self.context
-##         schemas = schema.bind().get(content_object)
-##         return Fields(*schemas)
 

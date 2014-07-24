@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from zope.schema import TextLine
-from dolmen.content import IContent
+from uvc.content import IContent
 from zope.interface import Interface
 from cromlech.container.interfaces import IContainer
 
@@ -12,7 +12,7 @@ class IUVCApplication(Interface):
     """
 
 
-class IProductFolder(IContainer):
+class IProductFolder(IContent):
     """MARKER
     """
 

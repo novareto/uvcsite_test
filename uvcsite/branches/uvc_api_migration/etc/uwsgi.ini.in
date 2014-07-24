@@ -1,6 +1,6 @@
 [uwsgi]
 socket = /tmp/uvcsite.sock
-http = 0.0.0.0:9999
+http = 0.0.0.0:6789
 processes = 1
 master = true
 http-websockets = true
