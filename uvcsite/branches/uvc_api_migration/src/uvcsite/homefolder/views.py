@@ -111,7 +111,8 @@ class RedirectIndexMembers(uvclight.View):
     uvclight.name('index')
 
     def render(self):
-        url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
+        from uvcsite.utils.shorties import getHomeFolderUrl
+        url = getHomeFolderUrl(self.request)
         self.redirect(url)
 
 #class RestHomeFolderTraverser(uvclight.Traverser):
