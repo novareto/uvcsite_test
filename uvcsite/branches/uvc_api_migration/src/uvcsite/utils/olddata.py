@@ -38,8 +38,9 @@ class Title(uvclight.Column):
     weight = 10
 
     def renderCell(self, item):
-        url = "%s/@@pdf?id=%s" % (self.table.url(), item['id'])
-        link = '<a href="%s"> %s </a>' % (url, item['title'])
+        #url = "%s/@@pdf?id=%s" % (self.table.url(self.context), item['id'])
+        #link = '<a href="%s"> %s </a>' % (url, item['title'])
+        link = "google.fr"
         return link
 
 
@@ -78,7 +79,8 @@ class Datum(uvclight.Column):
     def renderCell(self, item):
         datumString = item['ModificationDate']
         datumFmt = "%Y-%m-%d %H:%M:%S"
-        datum = datetime.datetime.fromtimestamp(time.mktime(time.strptime(datumString, datumFmt)))
+        datum = datetime.datetime.fromtimestamp(
+            time.mktime(time.strptime(datumString, datumFmt)))
         datum = datum.strftime("%d.%m.%Y %H:%M:%S")
         return datum
 

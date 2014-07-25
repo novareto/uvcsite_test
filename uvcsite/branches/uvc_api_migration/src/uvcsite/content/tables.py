@@ -13,7 +13,7 @@ from uvcsite.homefolder.views import Index
 from uvcsite.interfaces import IFolderColumnTable, IFolderListingTable
 from uvcsite.workflow.basic_workflow import titleForState
 from zope.dublincore.interfaces import IZopeDublinCore
-from zope.traversing.browser import absoluteURL
+from dolmen.location import get_absolute_url
 
 
 class CheckBox(uvclight.CheckBoxColumn):
@@ -50,7 +50,7 @@ class Link(uvclight.LinkColumn):
             state = titleForState(state)
         if self.linkName is not None and state == "Entwurf":
             return '%s/%s' % (absoluteURL(item, self.request), self.linkName)
-        return absoluteURL(item, self.request)
+        return get_absolute_url(item, self.request)
 
     def getLinkContent(self, item):
         return item.title

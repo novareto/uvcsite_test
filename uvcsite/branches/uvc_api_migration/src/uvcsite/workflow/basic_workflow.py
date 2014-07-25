@@ -4,7 +4,7 @@
 
 import uvclight
 
-from dolmen.content import IContent
+from uvc.content import IContent
 from datetime import datetime
 from zope.lifecycleevent import IObjectAddedEvent
 from grokcore.component import subscribe, global_utility
