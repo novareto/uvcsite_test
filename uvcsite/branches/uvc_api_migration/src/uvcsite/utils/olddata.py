@@ -8,7 +8,7 @@ import time
 import datetime
 import uvcsite
 import xmlrpclib
-from megrok.z3ctable import Column, table
+from megrok.z3ctable import table
 from uvcsite.content import IProductFolder
 
 
@@ -29,7 +29,7 @@ class Altdaten(uvclight.TablePage):
         raise NotImplementedError
 
 
-class Title(Column):
+class Title(uvclight.Column):
     """ """
     uvclight.name('title')
     table(Altdaten)
@@ -43,7 +43,7 @@ class Title(Column):
         return link
 
 
-class Autor(Column):
+class Autor(uvclight.Column):
     """ """
     uvclight.name('autor')
     table(Altdaten)
@@ -55,7 +55,7 @@ class Autor(Column):
         return item['Creator']
 
 
-class Status(Column):
+class Status(uvclight.Column):
     """ """
     uvclight.name('status')
     table(Altdaten)
@@ -67,7 +67,7 @@ class Status(Column):
         return item['review_state']
 
 
-class Datum(Column):
+class Datum(uvclight.Column):
     """ """
     uvclight.name('datum')
     table(Altdaten)

@@ -51,10 +51,6 @@ class ProductFolder(BTreeContainer):
     def excludeFromNav(self):
         return False
 
-    @property
-    def values(self):
-        return self.values()
-
 
 class Content(uvclight.backends.zodb.Content):
 

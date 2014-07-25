@@ -5,20 +5,18 @@
 import uvclight
 import uvcsite
 
-from uvcsite import uvcsiteMF as _
-from megrok.z3ctable import (table,
-    Column, GetAttrColumn, CheckBoxColumn, LinkColumn, ModifiedColumn)
-
-from hurry.workflow.interfaces import IWorkflowState
-from zope.dublincore.interfaces import IZopeDublinCore
-from uvcsite.workflow.basic_workflow import titleForState
-from uvcsite.interfaces import IFolderColumnTable, IFolderListingTable
-from zope.traversing.browser import absoluteURL
-from uvcsite.homefolder.views import Index
 from datetime import timedelta
+from hurry.workflow.interfaces import IWorkflowState
+from megrok.z3ctable import table
+from uvcsite import uvcsiteMF as _
+from uvcsite.homefolder.views import Index
+from uvcsite.interfaces import IFolderColumnTable, IFolderListingTable
+from uvcsite.workflow.basic_workflow import titleForState
+from zope.dublincore.interfaces import IZopeDublinCore
+from zope.traversing.browser import absoluteURL
 
 
-class CheckBox(CheckBoxColumn):
+class CheckBox(uvclight.CheckBoxColumn):
     uvclight.name('checkBox')
     uvclight.context(IFolderColumnTable)
     table(IFolderListingTable)
@@ -36,7 +34,7 @@ class CheckBox(CheckBoxColumn):
         return ''    
 
 
-class Link(LinkColumn):
+class Link(uvclight.LinkColumn):
     uvclight.name('link')
     uvclight.context(IFolderColumnTable)
     table(IFolderListingTable)
@@ -58,7 +56,7 @@ class Link(LinkColumn):
         return item.title
 
 
-class MetaTypeColumn(GetAttrColumn):
+class MetaTypeColumn(uvclight.GetAttrColumn):
     uvclight.name('meta_type')
     uvclight.context(IFolderColumnTable)
     header = _(u'Objekt')
@@ -67,7 +65,7 @@ class MetaTypeColumn(GetAttrColumn):
     table(IFolderListingTable)
 
 
-class CreatorColumn(Column):
+class CreatorColumn(uvclight.Column):
     uvclight.name('creator')
     uvclight.context(IFolderColumnTable)
     table(IFolderListingTable)
@@ -79,7 +77,7 @@ class CreatorColumn(Column):
         return ', '.join(IZopeDublinCore(item).creators)
 
 
-class ModifiedColumn(Column):
+class ModifiedColumn(uvclight.Column):
     uvclight.name('modified')
     uvclight.context(IFolderColumnTable)
     table(IFolderListingTable)
@@ -94,7 +92,7 @@ class ModifiedColumn(Column):
         return uvcsite.fmtDateTime(item.modtime)
 
 
-class StateColumn(GetAttrColumn):
+class StateColumn(uvclight.GetAttrColumn):
     uvclight.name('state')
     uvclight.context(IFolderColumnTable)
     table(IFolderListingTable)
