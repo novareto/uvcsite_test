@@ -8,8 +8,17 @@ from dolmen.container.components import BTreeContainer
 from cromlech.container.interfaces import INameChooser
 from grokcore.component import directive
 from uvcsite.content.directive import contenttype
-from uvcsite.content.interfaces import IContent, IProductFolder, IFolderColumnTable
+from uvcsite.content.interfaces import IContent
+from uvcsite.content.interfaces import IProductFolder, IFolderColumnTable
 from zope.schema import TextLine
+
+
+class Content(uvclight.backends.zodb.Content):
+    uvclight.implements(IContent)
+
+
+class Container(uvclight.backends.zodb.Container):
+    uvclight.implements(IContent)
 
 
 class ProductFolder(BTreeContainer):
@@ -34,17 +43,20 @@ class ProductFolder(BTreeContainer):
         return self.getContentType().__content_type__
 
     def add(self, content):
-        name = INameChooser(self).chooseName(content.__name__ or '', content)
+        name = INameChooser(self).chooseName(
+            content.__class__.__name__ or '', content)
         self[name] = content
 
     @property
     def excludeFromNav(self):
         return False
 
+    @property
+    def values(self):
+        return self.values()
 
-class Content(dolmen.content.Content):
-    uvclight.implements(IContent)
-    uvclight.baseclass()
+
+class Content(uvclight.backends.zodb.Content):
 
     @property
     def meta_type(self):
@@ -60,7 +72,7 @@ class Content(dolmen.content.Content):
         if len(dc.creators) > 0:
             pid = dc.creators[0]
             return Principal(pid, pid)
-        return zope.security.management.getInteraction().participations[0].principal
+        return uvclight.current_principal()
 
     @property
     def modtime(self):

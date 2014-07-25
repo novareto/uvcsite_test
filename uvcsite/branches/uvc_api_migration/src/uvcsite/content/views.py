@@ -3,7 +3,7 @@
 # cklinger@novareto.de
 
 ## from zope.interface import Interface
-## from uvcsite import uvcsiteMF as _
+
 ## from uvc.layout import interfaces
 ## from uvc.layout.slots import menus
 ## from uvcsite.content import IContent, IProductFolder
@@ -18,14 +18,15 @@
 
 import uvclight
 import uvcsite
+from .interfaces import IProductFolder
 from cromlech.browser import ITemplate
 from dolmen.forms import base
 from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 from uvc.content import IContent
-from uvcsite.interfaces import IFolderListingTable
-from .interfaces import IProductFolder
-from zope.component import getMultiAdapter
 from uvc.design.canvas.managers import ITabs
+from uvcsite import uvcsiteMF as _
+from uvcsite.interfaces import IFolderListingTable
+from zope.component import getMultiAdapter
 from zope.interface import Interface
 
 
@@ -93,11 +94,6 @@ class Index(uvclight.TablePage):
 
     def getAddTitle(self):
         return self.context.getContentName()
-
-    @property
-    def values(self):
-        #~ FIXME
-        return []
 
 
 class AddMenuViewlet(uvclight.Viewlet):
