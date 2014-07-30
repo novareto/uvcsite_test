@@ -13,8 +13,7 @@ from uvcsite.content.directive import productfolder
 from zope.dottedname.resolve import resolve
 from zope.component import getMultiAdapter, getAdapters, getUtility
 from uvcsite.content.meta import default_name
-from uvcsite.utils.shorties import getHomeFolder
-
+from uvcsite.utils.shorties import getHomeFolder, getHomeFolderUrl
 
 ## def getAllProductRegistrations():
 ##     request = zope.security.management.getInteraction().participations[0]
@@ -49,7 +48,8 @@ class ProductRegistration(uvclight.MultiAdapter):
     def folderURI(self):
         if not self.productfolder:
             return
-        pfn = uvclight.name.bind(get_default=default_name).get(self.productfolder)
+        pfn = uvclight.name.bind(get_default=default_name).get(
+            self.productfolder)
         return pfn.capitalize()
 
     @property
@@ -78,8 +78,11 @@ class ProductRegistration(uvclight.MultiAdapter):
         return True
 
     def action(self):
-        from uvcsite.utils.shorties import getHomeFolder, getHomeFolderUrl
-        return "%s/%s/@@add" % (getHomeFolderUrl(self.request), self.folderURI)
+        try:
+            home_url = getHomeFolderUrl(self.request)
+            return "%s/%s/@@add" % (home_url, self.folderURI)
+        except:
+            return u''
 
     @property
     def inNav(self):

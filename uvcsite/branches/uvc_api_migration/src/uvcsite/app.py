@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import uvclight
-from uvclight import publishing
+from uvclight import publishing, auth
 from uvclight.backends import zodb
 
 from grokcore.registries import create_components_registry
@@ -11,6 +11,7 @@ from cromlech.zodb import Site, get_site
 
 from cromlech.zodb.middleware import ZODBApp
 from cromlech.zodb.utils import init_db
+from cromlech.security import unauthenticated_principal
 from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents
 from zope.event import notify
@@ -60,7 +61,7 @@ class UVCApplication(object):
     def __init__(self, environ_key, name, session_key):
         self.environ_key = environ_key
         self.name = name
-        self.publisher = publishing.create_base_publisher()
+        self.publisher = publishing.create_base_publisher(secure=True)
         self.session_key = session_key
 
     def __call__(self, environ, start_response):
@@ -69,9 +70,12 @@ class UVCApplication(object):
         uvclight.setRequest(request)
 
         @uvclight.sessionned(self.session_key)
-        @uvclight.auth.secured(USERS, u"Please Login")
         def publish(environ, start_response):
-            request.principal = uvclight.Principal(environ['REMOTE_USER'])
+            user = environ.get('REMOTE_USER')
+            if user is not None:
+                request.principal = uvclight.Principal(user)
+            else:
+                request.principal = unauthenticated_principal
             with uvclight.Interaction(request.principal):
                 notify(uvclight.PublicationBeginsEvent(self, request))
                 response = removeSecurityProxy(
@@ -86,7 +90,7 @@ class UVCApplication(object):
 
 
 def uvcsite(gconf, configuration, zcml_file, session_key, env_key, app_key):
-    setSecurityPolicy(ZopeSecurityPolicy)
+    setSecurityPolicy(auth.SimpleSecurityPolicy)
     uvclight.load_zcml(zcml_file)
     register_allowed_languages(['de', 'de-de'])
     db = init_db(configuration, zodb.make_application(app_key, UVCSite))
