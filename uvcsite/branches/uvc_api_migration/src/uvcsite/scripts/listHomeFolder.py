@@ -4,8 +4,8 @@
 
 from sys import exit
 from zope import component
-from zope.app import homefolder
 from pprint import pprint
+from uvc.homefolder.interfaces import IHomefolders
 
 
 def table_print(data, title_row):
@@ -40,8 +40,8 @@ USERNAME = "0101010001"
 def listHomeFolder():
     uvcsite = root[APPNAME]
     component.hooks.setSite(uvcsite)
-    hfm = component.getUtility(homefolder.interfaces.IHomeFolderManager)
-    for id, productfolder in hfm.homeFolderBase.get(USERNAME).items():
+    hfm = component.getUtility(IHomefolders)
+    for id, productfolder in hfm.get(USERNAME).items():
         print
         print
         print 
