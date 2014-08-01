@@ -32,7 +32,8 @@ env_key = zodb.connection
 app_key = uvcsite
 session_key = session.key
 zcml_file = ${site_zcml:output}
-configuration =
+conf_file = ${buildout:directory}/etc/config.ini
+zodb_conf =
   <zodb>
     <blobstorage>
       blob-dir ${buildout:directory}/var/blob

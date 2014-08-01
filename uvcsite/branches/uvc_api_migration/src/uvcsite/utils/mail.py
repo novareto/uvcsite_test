@@ -4,10 +4,7 @@
 
 import uvclight
 import zope.component
-import zope.sendmail.delivery
-import zope.sendmail.interfaces
-import zope.sendmail.mailer
-import zope.sendmail.queue
+import zope.sendmail
 import email.MIMEText
 import email.Header
 
