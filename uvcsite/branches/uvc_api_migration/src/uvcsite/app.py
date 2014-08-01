@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import uvclight
+import ConfigParser, os
 from uvclight import publishing, auth
 from uvclight.backends import zodb
 
@@ -21,6 +22,7 @@ from zope.securitypolicy.zopepolicy import ZopeSecurityPolicy
 
 # this is to test
 from .auth.handler import USERS
+from .utils.mail import configure_mail
 from uvc.themes.dguv import IDGUVRequest
 from zope.interface import alsoProvides
 
@@ -89,10 +91,24 @@ class UVCApplication(object):
             return publish(environ, start_response)
 
 
-def uvcsite(gconf, configuration, zcml_file, session_key, env_key, app_key):
+def configure(config_file, app):
+    with open(config_file, 'r') as fd:
+        config = ConfigParser.ConfigParser()
+        config.readfp(fd)
+
+    if config.has_section('mail'):
+        items = dict(config.items('mail'))
+        
+        
+def uvcsite(gconf, zodb_conf, zcml_file, session_key, env_key, app_key, **kws):
     setSecurityPolicy(auth.SimpleSecurityPolicy)
     uvclight.load_zcml(zcml_file)
     register_allowed_languages(['de', 'de-de'])
-    db = init_db(configuration, zodb.make_application(app_key, UVCSite))
+    db = init_db(zodb_conf, zodb.make_application(app_key, UVCSite))
     app = UVCApplication(env_key, app_key, session_key)
+    
+    config_file = kws.get('conf_file')
+    if config_file is not None:
+        configure(config_file, app)
+
     return ZODBApp(app, db, key=env_key)
