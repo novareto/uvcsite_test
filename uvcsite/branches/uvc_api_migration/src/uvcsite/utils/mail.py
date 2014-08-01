@@ -4,7 +4,10 @@
 
 import uvclight
 import zope.component
-import zope.sendmail
+import zope.sendmail.delivery
+import zope.sendmail.interfaces
+import zope.sendmail.mailer
+import zope.sendmail.queue
 import email.MIMEText
 import email.Header
 
@@ -67,17 +70,17 @@ def configure_mail(config, app):
     mailer_object = zope.sendmail.mailer.SMTPMailer(
         hostname, port, username, password, force_tls=False)
 
-    uvclight.global_utility(
+    gsm = zope.component.getGlobalSiteManager()
+    
+    gsm.registerUtility(
         mailer_object,
-        provides=zope.sendmail.interfaces.IMailer,
-        name='uvcsite.smtpmailer',
-        direct=True)
+        zope.sendmail.interfaces.IMailer,
+        'uvcsite.smtpmailer')
 
-    uvclight.global_utility(
+    gsm.registerUtility(
         zope.sendmail.delivery.QueuedMailDelivery(queue_path),
         zope.sendmail.interfaces.IMailDelivery,
-        name='uvcsite.maildelivery',
-        direct=True)
+        'uvcsite.maildelivery',)
 
     start_processor_thread(mailer_object, queue_path)
     log('Emailer thread started.')

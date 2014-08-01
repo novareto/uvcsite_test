@@ -21,6 +21,7 @@ from zope.security.proxy import removeSecurityProxy
 from zope.securitypolicy.zopepolicy import ZopeSecurityPolicy
 
 # this is to test
+from . import log
 from .auth.handler import USERS
 from .utils.mail import configure_mail
 from uvc.themes.dguv import IDGUVRequest
@@ -96,9 +97,17 @@ def configure(config_file, app):
         config = ConfigParser.ConfigParser()
         config.readfp(fd)
 
-    if config.has_section('mail'):
-        items = dict(config.items('mail'))
-        
+    for section in config.sections():
+        items = dict(config.items(section))
+        loader = items.pop('use')
+        if loader is not None:
+            func = uvclight.eval_loader(loader)
+            func(items, app)
+            log(u'Loaded configuration for %r.' % section)
+        else:
+            log(u'Unable to load configuration for %r, `use` is missing.'
+                % section)
+
         
 def uvcsite(gconf, zodb_conf, zcml_file, session_key, env_key, app_key, **kws):
     setSecurityPolicy(auth.SimpleSecurityPolicy)
