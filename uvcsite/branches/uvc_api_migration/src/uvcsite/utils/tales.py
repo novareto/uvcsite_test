@@ -3,15 +3,6 @@
 # cklinger@novareto.de 
 
 
-## import grok
-## import uvcsite
-
-## from zope.interface import Interface
-## from zope.publisher.interfaces import IRequest
-## from zope.traversing.interfaces import IPathAdapter
-## from zope.app.pagetemplate.talesapi import ZopeTalesAPI
-
-
 ## class UVCSiteTalesAdapter(grok.Adapter, ZopeTalesAPI):
 ##     """extend the zope implementation by providing additional dublin core """
 ##     grok.provides(IPathAdapter)
