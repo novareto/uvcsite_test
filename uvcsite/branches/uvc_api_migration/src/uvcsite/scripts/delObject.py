@@ -5,17 +5,18 @@
 import transaction
 from sys import exit
 from zope import component
-from zope.app import homefolder
+from uvc.homefolder.interfaces import IHomefolders
 
 APPNAME = "app"
 USERNAME = "0101010001"
 OBJID = 'Entgeltnachweise'
 
+
 def delObject():
     uvcsite = root[APPNAME]
     component.hooks.setSite(uvcsite)
-    hfm = component.getUtility(homefolder.interfaces.IHomeFolderManager)
-    for pid, productfolder in hfm.homeFolderBase.get(USERNAME).items():
+    hfm = component.getUtility(IHomefolders)
+    for pid, productfolder in hfm.get(USERNAME).items():
         if pid == OBJID:
             del productfolder.__parent__[OBJID]
             print "Löschen des ProductFolders --> %s" % OBJID
