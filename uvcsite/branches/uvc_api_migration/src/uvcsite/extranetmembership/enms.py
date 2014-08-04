@@ -8,21 +8,19 @@ import uvcsite
 from dolmen.forms import base
 from dolmen.forms.base import Fields
 from dolmen.menu import menuentry
-from uvc.design.canvas import IPersonalPreferences, IPersonalMenu
 from uvc.homefolder import IHomefolder
+from uvc.design.canvas import IPersonalPreferences, IPersonalMenu
 from uvcsite import uvcsiteMF as _
-from uvcsite.interfaces import IUVCSite
 from zope.component import getUtility
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
-from ..interfaces import IMyHomeFolder
 from .interfaces import IUserManagement, IExtranetMember
 from .vocabulary import vocab_berechtigungen
 
 
 class ENMS(uvclight.Page):
     uvclight.title('Mitbenutzerverwaltung')
-    uvclight.context(IMyHomeFolder)
+    uvclight.context(IHomefolder)
     uvclight.require('uvc.ManageCoUsers')
 
     template = uvclight.get_template('enms.cpt', __file__)
@@ -46,7 +44,7 @@ class ENMS(uvclight.Page):
 
 class ENMSCreateUser(uvclight.Form):
     """ Simple Form which displays values from a Dict"""
-    uvclight.context(IMyHomeFolder)
+    uvclight.context(IHomefolder)
     uvclight.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer anlegen"
@@ -100,7 +98,7 @@ class ENMSCreateUser(uvclight.Form):
 
 class ENMSUpdateUser(uvclight.Form):
     """ A Form for updating a User in ENMS"""
-    uvclight.context(IMyHomeFolder)
+    uvclight.context(IHomefolder)
     uvclight.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer verwalten"
@@ -184,7 +182,7 @@ class ChangePasswordMenu(uvclight.MenuItem):
 class ChangePassword(uvclight.Form):
     """ A Form for updating a User in ENMS"""
     uvclight.title(u'Passwort ändern')
-    uvclight.context(IMyHomeFolder)
+    uvclight.context(IHomefolder)
     label = _(u'Passwort ändern')
     description = _(u'Hier können Sie Ihr Passwort ändern')
     #uvcsite.menu(uvcsite.PersonalMenu)

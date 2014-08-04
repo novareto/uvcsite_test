@@ -9,7 +9,6 @@
 ## from uvcsite.content import IContent, IProductFolder
 ## from uvcsite.interfaces import IFolderListingTable
 ## from zope.component import getMultiAdapter
-## from uvcsite import IGetHomeFolderUrl
 ## from dolmen.content import schema
 ## from dolmen import menu
 ## from dolmen.app.layout.viewlets import ContextualActions
@@ -18,6 +17,7 @@
 
 import uvclight
 import uvcsite
+from cromlech.browser import IURL
 from .interfaces import IProductFolder
 from cromlech.browser import ITemplate
 from dolmen.forms import base
@@ -89,7 +89,7 @@ class Index(uvclight.TablePage):
 
     def getAddLinkUrl(self):
         adapter = getMultiAdapter(
-            (self.request.principal, self.request), IGetHomeFolderUrl)
+            (self.request.principal, self.request), IURL, name="homefolder")
         return adapter.getAddURL(self.context.getContentType())
 
     def getAddTitle(self):

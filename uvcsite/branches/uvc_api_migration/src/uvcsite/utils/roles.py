@@ -4,7 +4,7 @@
 
 import uvclight
 import uvcsite
-from uvcsite.interfaces import IMyRoles
+from uvcsite.interfaces import IRoles
 from uvcsite.auth.interfaces import IMasterUser
 from uvc.homefolder.interfaces import IHomefolder
 from zope.securitypolicy.interfaces import IPrincipalRoleMap, Allow
@@ -13,7 +13,7 @@ from zope.security.interfaces import IPrincipal
 
 class MyRoles(uvclight.Adapter):
     uvclight.context(IPrincipal)
-    uvclight.implements(IMyRoles)
+    uvclight.implements(IRoles)
 
     def __init__(self, principal):
         self.principal = principal

@@ -9,13 +9,12 @@ from ZODB.interfaces import IBroken
 from hurry.workflow.interfaces import IWorkflowState
 from uvc.homefolder import IHomefolder
 from uvc.design.canvas import IFooterMenu
-from uvcsite.interfaces import IUVCSite
 from zope.component import getUtility
 from zope.interface import Interface
 
 
 class StatistikMenu(uvclight.MenuItem):
-    uvclight.context(IUVCSite)
+    uvclight.context(uvclight.IApplication)
     uvclight.title('Statistik')
     uvclight.require('zope.ManageSite')
     uvclight.menu(IFooterMenu)
@@ -29,7 +28,7 @@ class StatistikView(uvclight.Page):
     uvclight.name('statistik')
     uvclight.title('Statistik')
     uvclight.require('zope.ManageSite')
-    uvclight.context(IUVCSite)
+    uvclight.context(uvclight.IApplication)
 
     template = uvclight.get_template('statistikview.cpt', __file__)
 

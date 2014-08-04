@@ -8,7 +8,7 @@ import uvcsite
 from megrok.z3ctable import Values
 from uvcsite import uvcsiteMF as _
 
-from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
+from uvcsite.interfaces import IFolderListingTable
 from uvc.homefolder.interfaces import IHomefolder, IHomefolders
 from zope.component import getMultiAdapter
 from zope.interface import Interface
