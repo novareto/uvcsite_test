@@ -2,16 +2,18 @@
 
 import uvclight
 import ConfigParser, os
+
 from uvclight import publishing, auth
+from uvclight.context import ContextualRequest
 from uvclight.backends import zodb
 
 from grokcore.registries import create_components_registry
 from cromlech.i18n import register_allowed_languages
 from cromlech.webob.request import Request
 from cromlech.zodb import Site, get_site
-
 from cromlech.zodb.middleware import ZODBApp
 from cromlech.zodb.utils import init_db
+from cromlech.browser import getSession
 from cromlech.security import unauthenticated_principal
 from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents
@@ -45,6 +47,7 @@ uvclight.global_utility(
 @uvclight.implementer(uvclight.IApplication)
 class UVCSite(zodb.Root):
     uvclight.traversable('members')
+    credentials = ['simple']
 
     def getSiteManager(self):
         current = super(UVCSite, self).getSiteManager()
@@ -64,32 +67,30 @@ class UVCApplication(object):
     def __init__(self, environ_key, name, session_key):
         self.environ_key = environ_key
         self.name = name
-        self.publisher = publishing.create_base_publisher(secure=True)
+        self.publish = publishing.create_base_publisher(secure=True).publish
         self.session_key = session_key
 
     def __call__(self, environ, start_response):
-        request = Request(environ)
-        alsoProvides(request, IDGUVRequest)
-        uvclight.setRequest(request)
 
         @uvclight.sessionned(self.session_key)
         def publish(environ, start_response):
-            user = environ.get('REMOTE_USER')
-            if user is not None:
-                request.principal = uvclight.Principal(user)
-            else:
-                request.principal = unauthenticated_principal
-            with uvclight.Interaction(request.principal):
-                notify(uvclight.PublicationBeginsEvent(self, request))
-                response = removeSecurityProxy(
-                    self.publisher.publish(request, site, handle_errors=True))
-                notify(uvclight.PublicationEndsEvent(request, response))
-                return response(environ, start_response)
+            with ContextualRequest(environ, layers=[IDGUVRequest]) as request:
+                session = getSession()
+                user = environ.get('REMOTE_USER') or session.get('username')
+                if user:
+                    request.principal = uvclight.Principal(user)
+                else:
+                    request.principal = unauthenticated_principal
 
-        conn = environ[self.environ_key]
-        site = get_site(conn, self.name)
-        with Site(site):
-            return publish(environ, start_response)
+                conn = environ[self.environ_key]
+                site = get_site(conn, self.name)
+                with Site(site):
+                    with uvclight.Interaction(request.principal):
+                        response = self.publish(request, site)
+                        response = removeSecurityProxy(response)
+                        return response(environ, start_response)
+
+        return publish(environ, start_response)
 
 
 def configure(config_file, app):
