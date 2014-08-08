@@ -15,10 +15,13 @@ from uvcsite.content.interfaces import IProductFolder, IContent
 @subscribe(IContent, IModelFoundEvent)
 def managePermissions(obj, event):
     permissions = []
+    import pdb
+    pdb.set_trace()
     while obj is not None:
         print obj
-        prm = IPrincipalRoleManager(obj)
-        permissions += [r for r, s in prm.getRolesForPrincipal(event.request.principal.id) if s is Allow]
+        prm = IPrincipalRoleManager(obj)        
+        permissions += [r for r, s in prm.getRolesForPrincipal(
+            event.request.principal.id) if s is Allow]
         if IHomefolder.providedBy(obj):
             obj = None
         else:

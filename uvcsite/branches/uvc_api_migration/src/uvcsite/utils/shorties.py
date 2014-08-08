@@ -13,10 +13,12 @@ from cromlech.security.interfaces import IUnauthenticatedPrincipal
 from zope.component import getUtility
 from dolmen.location.resolvers import get_absolute_url
 
+
 def getHomeFolderById(id):
     homefolders = getUtility(IHomefolders)
     homefolder = homefolders.get(id)
     return homefolder
+
 
 def getHomeFolder(request):
     principal = request.principal

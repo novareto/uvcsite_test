@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import uvclight
-from dolmen.forms.base import FAILURE, SuccessMarker
-from cromlech.browser import exceptions
-from zope.interface import Interface
-from zope.component.hooks import getSite
-from zope.component import getUtility
 from ..interfaces import ILoginForm, ICredentials
+from cromlech.browser import exceptions
 from cromlech.browser import getSession
+from dolmen.forms.base import FAILURE, SuccessMarker
+from zope.component import getUtility
+from zope.component.hooks import getSite
+from zope.interface import Interface
+from zope.event import notify
 
 
 class Login(uvclight.Form):
@@ -44,6 +45,8 @@ class Login(uvclight.Form):
                 session = getSession()
                 session['username'] = data['username']
                 self.flash(u"Login successful.")
+                principal = uvclight.auth.Principal(data['username'])
+                notify(uvclight.UserLoggedInEvent(principal))
                 return SuccessMarker(
                     'Login successful', True, url=self.url(self.context),
                     code=302)

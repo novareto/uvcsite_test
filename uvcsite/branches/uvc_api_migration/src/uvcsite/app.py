@@ -49,7 +49,6 @@ uvclight.global_utility(
 @uvclight.implementer(IAttributeAnnotatable)
 @uvclight.implementer(uvclight.IApplication)
 class UVCSite(zodb.Root):
-    uvclight.traversable('members')
     credentials = ['simple']
 
     def getSiteManager(self):
@@ -81,9 +80,7 @@ class UVCApplication(object):
                 session = getSession()
                 user = environ.get('REMOTE_USER') or session.get('username')
                 if user:
-
                     request.principal = uvclight.auth.Principal(user)
-                    print request.principal
                 else:
                     request.principal = unauthenticated_principal
 
