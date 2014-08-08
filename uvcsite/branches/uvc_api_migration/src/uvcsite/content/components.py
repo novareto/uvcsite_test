@@ -11,18 +11,19 @@ from uvcsite.content.directive import contenttype
 from uvcsite.content.interfaces import IContent
 from uvcsite.content.interfaces import IProductFolder, IFolderColumnTable
 from zope.schema import TextLine
+from zope.annotation.interfaces import IAttributeAnnotatable
 
 
 class Content(uvclight.backends.zodb.Content):
-    uvclight.implements(IContent)
+    uvclight.implements(IContent, IAttributeAnnotatable)
 
 
 class Container(uvclight.backends.zodb.Container):
-    uvclight.implements(IContent)
+    uvclight.implements(IContent, IAttributeAnnotatable)
 
 
 class ProductFolder(BTreeContainer):
-    uvclight.implements(IProductFolder, IFolderColumnTable)
+    uvclight.implements(IProductFolder, IFolderColumnTable, IAttributeAnnotatable)
 
     @property
     def name(self):

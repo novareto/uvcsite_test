@@ -52,7 +52,7 @@ class Display(uvclight.Form):
         content_object = self.context
         schemas = uvclight.schema.bind().get(content_object)
         return Fields(*schemas)
-     
+
 
 class Index(uvclight.TablePage):
     uvclight.title(u'Übersicht')
@@ -66,8 +66,12 @@ class Index(uvclight.TablePage):
     cssClassOdd = u'odd'
 
     sortOnId = "table-modified-5"
-    sortOn = "table-modified-5" 
+    sortOn = "table-modified-5"
     #sortOrder = "down"
+
+    @property
+    def values(self):
+        return self.context.values()
 
     @property
     def title(self):
@@ -145,7 +149,7 @@ class Add(uvclight.AddForm):
 
 
 
-    
+
 ## uvclight.templatedir('templates')
 
 

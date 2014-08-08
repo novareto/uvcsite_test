@@ -21,6 +21,8 @@ from zope.event import notify
 from zope.security.management import setSecurityPolicy
 from zope.security.proxy import removeSecurityProxy
 from zope.securitypolicy.zopepolicy import ZopeSecurityPolicy
+from zope.annotation.interfaces import IAttributeAnnotatable
+
 
 # this is to test
 from . import log
@@ -44,6 +46,7 @@ uvclight.global_utility(
     )
 
 
+@uvclight.implementer(IAttributeAnnotatable)
 @uvclight.implementer(uvclight.IApplication)
 class UVCSite(zodb.Root):
     uvclight.traversable('members')
@@ -78,7 +81,9 @@ class UVCApplication(object):
                 session = getSession()
                 user = environ.get('REMOTE_USER') or session.get('username')
                 if user:
-                    request.principal = uvclight.Principal(user)
+
+                    request.principal = uvclight.auth.Principal(user)
+                    print request.principal
                 else:
                     request.principal = unauthenticated_principal
 
@@ -109,14 +114,14 @@ def configure(config_file, app):
             log(u'Unable to load configuration for %r, `use` is missing.'
                 % section)
 
-        
+
 def uvcsite(gconf, zodb_conf, zcml_file, session_key, env_key, app_key, **kws):
     setSecurityPolicy(auth.SimpleSecurityPolicy)
     uvclight.load_zcml(zcml_file)
     register_allowed_languages(['de', 'de-de'])
     db = init_db(zodb_conf, zodb.make_application(app_key, UVCSite))
     app = UVCApplication(env_key, app_key, session_key)
-    
+
     config_file = kws.get('conf_file')
     if config_file is not None:
         configure(config_file, app)
