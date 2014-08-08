@@ -46,6 +46,7 @@ class Login(uvclight.Form):
                 session['username'] = data['username']
                 self.flash(u"Login successful.")
                 principal = uvclight.auth.Principal(data['username'])
+                self.request.principal = principal
                 notify(uvclight.UserLoggedInEvent(principal))
                 return SuccessMarker(
                     'Login successful', True, url=self.url(self.context),

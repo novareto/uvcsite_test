@@ -6,14 +6,15 @@ import uvclight
 import uvcsite
 import zope.security
 
-from zope.security.interfaces import IPrincipal
 from cromlech.browser import IRequest
-from uvcsite.content.interfaces import IProductRegistration
 from uvcsite.content.directive import productfolder
-from zope.dottedname.resolve import resolve
-from zope.component import getMultiAdapter, getAdapters, getUtility
+from uvcsite.content.interfaces import IProductRegistration
 from uvcsite.content.meta import default_name
 from uvcsite.utils.shorties import getHomeFolder, getHomeFolderUrl
+from uvc.homefolder import IHomefolders
+from zope.component import getMultiAdapter, getAdapters, getUtility
+from zope.dottedname.resolve import resolve
+from zope.security.interfaces import IPrincipal
 
 ## def getAllProductRegistrations():
 ##     request = zope.security.management.getInteraction().participations[0]
@@ -93,10 +94,12 @@ class ProductRegistration(uvclight.MultiAdapter):
         return self.available()
 
     def createInProductFolder(self):
-        homefolder = getHomeFolder(self.request)
-        #if homefolder is None:
-        #    utility = getUtility(IHomeFolderManager)
-        #    utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
+        homefolders = getUtility(IHomefolders)
+        homefolder = homefolders.get(self.principal.id)
+        if homefolder is None:
+            homefolder = homefolders.assign_homefolder(self.principal.id)
+            #utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
+
         if self.folderURI and not self.folderURI in homefolder.keys():
             pf = self.productfolder
             homefolder[self.folderURI] = pf()
