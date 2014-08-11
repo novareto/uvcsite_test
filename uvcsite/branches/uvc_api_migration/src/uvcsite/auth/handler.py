@@ -21,7 +21,7 @@
 ## from zope.pluggableauth.interfaces import ICredentialsPlugin
 ## from zope.pluggableauth.plugins.session import SessionCredentialsPlugin
 
-## from interfaces import IUVCAuth, IMasterUser
+from interfaces import IMasterUser
 ## from uvcsite.extranetmembership.interfaces import IUserManagement
 
 ## from dolmen.authentication import UserLoginEvent
@@ -31,9 +31,11 @@
 
 import uvclight
 from zope.security.interfaces import IPrincipal
+from zope.interface import implementer
+from zope.component import adapter
 
-@grok.adapter(IPrincipal)
-@grok.implementer(IMasterUser)
+@adapter(IPrincipal)
+@implementer(IMasterUser)
 def masteruser(self):
     """Return always the Master User"""
     if not "-" in self.id:
