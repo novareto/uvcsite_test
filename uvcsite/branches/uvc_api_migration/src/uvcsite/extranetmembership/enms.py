@@ -24,7 +24,7 @@ class ENMS(uvclight.Page):
     uvclight.require('uvc.ManageCoUsers')
 
     template = uvclight.get_template('enms.cpt', __file__)
-    
+
     def getUserGroup(self):
         principal = self.request.principal.id
         um = getUtility(IUserManagement)
@@ -109,9 +109,9 @@ class ENMSUpdateUser(uvclight.Form):
 
     def getDefaultData(self):
         principal = self.request.principal.title
-        id = "%s-%s" % (self.request.principal.title, self.request.get('cn'))
+        id = "%s-%s" % (self.request.principal.id, self.request.form.get('cn'))
         user = {}
-        if self.request.get('cn'):
+        if self.request.form.get('cn'):
             um = getUtility(IUserManagement)
             user = um.getUser(id)
             user['mnr'] = id

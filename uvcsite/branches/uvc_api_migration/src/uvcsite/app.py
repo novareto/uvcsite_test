@@ -80,7 +80,7 @@ class UVCApplication(object):
                 session = getSession()
                 user = environ.get('REMOTE_USER') or session.get('username')
                 if user:
-                    request.principal = uvclight.auth.Principal(user, permissions=('zope.View',))
+                    request.principal = uvclight.auth.Principal(user, permissions=set(('zope.View',)))
                 else:
                     request.principal = unauthenticated_principal
 
