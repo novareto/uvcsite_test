@@ -29,15 +29,17 @@
 
 ## USER_SESSION_KEY = "uvcsite.authentication"
 
+import uvclight
+from zope.security.interfaces import IPrincipal
 
-## @grok.adapter(IPrincipal)
-## @grok.implementer(IMasterUser)
-## def masteruser(self):
-##     """Return always the Master User"""
-##     if not "-" in self.id:
-##         return self
-##     master_id = self.id.split('-')[0]
-##     return Principal(master_id)
+@grok.adapter(IPrincipal)
+@grok.implementer(IMasterUser)
+def masteruser(self):
+    """Return always the Master User"""
+    if not "-" in self.id:
+        return self
+    master_id = self.id.split('-')[0]
+    return Principal(master_id)
 
 
 ## class CheckRemote(grok.XMLRPC):
@@ -61,7 +63,7 @@
 ##     def getRemoteDashboard(self, user):
 ##        return (u"<ul><li><a href='%(url)s/link1'>Uvcsite link1</a></li>" +
 ##                u"<li><a href='%(url)s/link2'>Uvcsite link2</a></li></ul>")
-        
+
 ##     def getRoles(self, user):
 ##         manager = IPrincipalRoleManager(self.context)
 ##         setting = manager.getRolesForPrincipal(user)

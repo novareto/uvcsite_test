@@ -98,7 +98,7 @@ class ProductRegistration(uvclight.MultiAdapter):
         homefolder = homefolders.get(self.principal.id)
         if homefolder is None:
             homefolder = homefolders.assign_homefolder(self.principal.id)
-            #utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
+            utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
 
         if self.folderURI and not self.folderURI in homefolder.keys():
             pf = self.productfolder
