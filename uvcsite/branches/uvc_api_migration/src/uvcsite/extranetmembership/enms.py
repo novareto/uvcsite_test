@@ -16,6 +16,7 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
 from .interfaces import IUserManagement, IExtranetMember
 from .vocabulary import vocab_berechtigungen
+from grokcore.chameleon.components import ChameleonPageTemplateFile
 
 
 class ENMS(uvclight.Page):
@@ -122,7 +123,7 @@ class ENMSUpdateUser(uvclight.Form):
         data = self.getDefaultData()
         self.setContentData(base.DictDataManager(data))
 
-    def updateForm(self):
+    def updaiteForm(self):
         super(ENMSUpdateUser, self).updateForm()
         mnr = self.fieldWidgets.get('form.field.mnr')
         pw = self.fieldWidgets.get('form.field.passwort')
