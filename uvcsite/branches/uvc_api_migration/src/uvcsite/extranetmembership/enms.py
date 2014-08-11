@@ -108,6 +108,12 @@ class ENMSUpdateUser(uvclight.Form):
     fields = Fields(IExtranetMember)
     ignoreContent = False
 
+    templates = {
+        "mnr": uvclight.get_template('mnr.cpt', __file__),
+        "pw": uvclight.get_template('password.cpt', __file__),
+        "confirm": uvclight.get_template('password.cpt', __file__),
+        }
+    
     def getDefaultData(self):
         principal = self.request.principal.title
         id = "%s-%s" % (self.request.principal.id, self.request.form.get('cn'))
@@ -129,9 +135,9 @@ class ENMSUpdateUser(uvclight.Form):
         pw = self.fieldWidgets.get('form.field.passwort')
         confirm = self.fieldWidgets.get('form.field.confirm')
 
-        mnr.template = ChameleonPageTemplateFile('templates/mnr.cpt')
-        pw.template = ChameleonPageTemplateFile('templates/password.cpt')
-        confirm.template = ChameleonPageTemplateFile('templates/password.cpt')
+        mnr.template = self.templates.get('mnr')
+        pw.template = self.templates.get('pw')
+        confirm.template = self.templates.get('confirm')
 
     @base.action(_(u"Bearbeiten"))
     def anlegen(self):

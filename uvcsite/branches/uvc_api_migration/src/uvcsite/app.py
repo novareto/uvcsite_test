@@ -46,8 +46,7 @@ uvclight.global_utility(
     )
 
 
-@uvclight.implementer(IAttributeAnnotatable)
-@uvclight.implementer(uvclight.IApplication)
+@uvclight.implementer(uvclight.IApplication, IAttributeAnnotatable)
 class UVCSite(zodb.Root):
     credentials = ['simple']
 
