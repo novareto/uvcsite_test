@@ -54,10 +54,11 @@ class ENMSCreateUser(uvclight.Form):
     ignoreContent = False
 
     fields = Fields(IExtranetMember)
-
+    mnr_template = uvclight.get_template('mnr.cpt', __file__)
+    
     def updateForm(self):
         super(ENMSCreateUser, self).updateForm()
-        self.fieldWidgets.get('form.field.mnr').template = uvclight.get_template('mnr.cpt', __file__)
+        self.fieldWidgets.get('form.field.mnr').template = self.mnr_template
 
     def getNextNumber(self, groups):
         all_azs = []
@@ -115,8 +116,8 @@ class ENMSUpdateUser(uvclight.Form):
         }
     
     def getDefaultData(self):
-        principal = self.request.principal.title
-        id = "%s-%s" % (self.request.principal.id, self.request.form.get('cn'))
+        principal = self.request.principal
+        id = "%s-%s" % (principal.id, self.request.form.get('cn'))
         user = {}
         if self.request.form.get('cn'):
             um = getUtility(IUserManagement)
