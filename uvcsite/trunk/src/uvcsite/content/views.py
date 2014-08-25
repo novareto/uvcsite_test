@@ -33,6 +33,7 @@ class Index(TablePage):
     grok.name('index')
     grok.implements(IFolderListingTable)
     grok.context(IProductFolder)
+    grok.require('uvc.ViewContent')
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     description = u"Hier finden Sie alle Dokumente dazu."
@@ -42,7 +43,7 @@ class Index(TablePage):
     cssClassOdd = u'odd'
 
     sortOnId = "table-modified-5"
-    sortOn = "table-modified-5" 
+    sortOn = "table-modified-5"
     #sortOrder = "down"
 
     @property

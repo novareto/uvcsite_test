@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2007-2013 NovaReto GmbH
+# cklinger@novareto.de
 
 import grok
 import uvcsite
-import zope.component
 import grokcore.component
 
 from uvcsite.auth.handler import UVCAuthenticator
@@ -23,7 +24,6 @@ from zope.component.interfaces import IComponents
 from zope.i18n.format import DateTimeParseError
 from zope.i18n.interfaces import IUserPreferredLanguages
 from zope.interface import Interface, implementer
-from zope.interface.registry import Components
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
@@ -62,10 +62,11 @@ grok.global_utility(
     direct=True)
 
 
+
 @implementer(uvcsite.IUVCSite, IApplication)  # this can be reduced
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site """
-    
+
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
 
