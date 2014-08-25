@@ -104,8 +104,7 @@ def handle_save(obj, event):
     sp = transaction.savepoint()
     try:
         pdf = zope.component.getMultiAdapter((obj, event.request), name=u"pdf")
-        pdf.create(fn="/tmp/kk/%s.pdf" % (obj.__name__))
-        1 / 0
+        pdf.create(fn="/Users/christian/work/community/tmp/mm/%s.pdf" % (obj.__name__))
         IWorkflowInfo(obj).fireTransition('publish')
     except StandardError, e:
         sp.rollback()

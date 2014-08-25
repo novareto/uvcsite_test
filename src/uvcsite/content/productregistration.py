@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2011 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import grok
 import uvcsite
+import logging
 import zope.security
 
 from zope.security.interfaces import IPrincipal
@@ -18,18 +19,18 @@ from zope.app.homefolder.interfaces import IHomeFolder
 
 
 def getAllProductRegistrations():
-    request = zope.security.management.getInteraction().participations[0] 
+    request = zope.security.management.getInteraction().participations[0]
     principal = request.principal
     return sorted(getAdapters((principal, request), IProductRegistration), key=lambda k: grok.order.bind().get(k[0][0]))
 
 
 def getProductRegistrations():
-    request = zope.security.management.getInteraction().participations[0] 
+    request = zope.security.management.getInteraction().participations[0]
     principal = request.principal
     rc = []
     for key, value in getAdapters((principal, request), IProductRegistration):
         if value.available():
-            rc.append((key, value)) 
+            rc.append((key, value))
     return sorted(rc, key=lambda k: grok.order.bind().get(k[1]))
 
 
@@ -96,10 +97,10 @@ class ProductRegistration(grok.MultiAdapter):
             utility.assignHomeFolder(uvcsite.IMasterUser(self.principal).id)
         if self.folderURI and not self.folderURI in homefolder.keys():
             pf = self.productfolder
-            homefolder[self.folderURI] = pf() 
-            uvcsite.log('Add Productfolders %s to Homefolder: %s' % (self.folderURI, self.principal.id))
+            homefolder[self.folderURI] = pf()
+            uvcsite.log('Add Productfolders %s to Homefolder: %s' % (self.folderURI, self.principal.id), severity=logging.DEBUG)
         else:
-            uvcsite.log('No need for adding Folder %s to %s' % (self.folderURI, self.principal.id))
+            uvcsite.log('No need for adding Folder %s to %s' % (self.folderURI, self.principal.id), severity=logging.DEBUG)
 
 
 class ProductMenuItem(uvcsite.MenuItem):

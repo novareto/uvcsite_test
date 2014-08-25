@@ -50,7 +50,7 @@ Show the viewlets:
 
    >>> manager.update()
    >>> len(manager.viewlets)
-   0
+   1
  
 
 PersonalPreferences

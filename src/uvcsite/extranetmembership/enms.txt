@@ -198,7 +198,12 @@ Changing the Password
 
 We still have form for changing the users password!
 
-   >>> browser.open('http://localhost/app/members/uvc.user/changepassword')
+   >>> browser.open('http://localhost/app')
+   >>> #browser.addHeader('Authorization', 'Basic 0101010001:user')
+   >>> browser.addHeader('Authorization', 'Basic user:user')
+   >>> browser.open('http://localhost/app/')
+   >>> browser.open('http://localhost/app/members/uvc.user1')
+   >>> browser.open('http://localhost/app/members/uvc.user1/changepassword')
    >>> print browser.headers['Status'].upper()
    200 OK
 
