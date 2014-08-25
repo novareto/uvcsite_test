@@ -5,6 +5,7 @@
 import grok
 import uvcsite
 import grokcore.component
+import zope.component
 
 from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
@@ -51,7 +52,7 @@ class Icons(grok.DirectoryResource):
 
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
-    bases=tuple(),
+    bases=(zope.component.globalSiteManager, ),
 )
 
 

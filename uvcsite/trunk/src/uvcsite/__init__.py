@@ -8,12 +8,13 @@ import grok
 from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
     IContent, Content, schema, name, productfolder)
 from uvcsite.interfaces import *
+from megrok.layout import Page
+from megrok.z3ctable import TablePage
 from uvcsite.utils.help import HelpPage
 from uvc.layout.slots.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
 from uvcsite.utils.dataviews import BasePDF, BaseXML, BaseDataView, WatermarkPDF
 from uvc.layout.forms import AddForm, SubForm, GroupForm, Wizard, Step
-from megrok.z3ctable import TablePage
 from uvc.layout.forms import (Form, AddForm, SubForm, GroupForm, Wizard, Step)
 from uvc.layout import *
 #from uvc.api import *
