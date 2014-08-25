@@ -13,7 +13,10 @@ from uvc.layout.slots.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
 from uvcsite.utils.dataviews import BasePDF, BaseXML, BaseDataView, WatermarkPDF
 from uvc.layout.forms import AddForm, SubForm, GroupForm, Wizard, Step
-from uvc.api import *
+from megrok.z3ctable import TablePage
+from uvc.layout.forms import (Form, AddForm, SubForm, GroupForm, Wizard, Step)
+from uvc.layout import *
+#from uvc.api import *
 
 from uvc.layout.forms.event import IAfterSaveEvent
 
