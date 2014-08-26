@@ -165,22 +165,13 @@ An Invalid uaz_xml file!
   ...    </Unfallanzeige>'''
   >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz',
   ... uaz_xml_with_error, AUTHORIZATION=auth_header)
-
-  >>> result = response.getBody()
-  >>> expected_result = '''
-  ... <failure>
-  ...   <error field="age" message="Inappropriate argument value (of correct type)."><age>twenty nine</age>
-  ...   </error>
-  ...  <error field="name" message="Value is too long"><name>Christian Klinger Junior</name>
-  ...     </error>
-  ... </failure>'''
-
-  >>> from lxml import etree
-  >>> from formencode.doctest_xml_compare import xml_compare
-  >>> tree1 = etree.fromstring(result.strip())
-  >>> tree2 = etree.fromstring(expected_result.strip())
-  >>> assert xml_compare(tree1, tree2) is False  # identical.
-
+  >>> print response.getBody()
+  <failure>
+    <error field="name" message="Value is too long"><name>Christian Klinger Junior</name>
+       </error>
+    <error field="age" message="Inappropriate argument value (of correct type)."><age>twenty nine</age>
+     </error>
+  </failure>
 
 An invariant uaz_xml file
 

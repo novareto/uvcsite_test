@@ -16,7 +16,7 @@ def default_name(factory, module=None, **data):
 
 class ProductFolderGrokker(martian.ClassGrokker):
     martian.component(ProductFolder)
-    martian.directive(contenttype, get_default=default_name)
+    martian.directive(contenttype)
     martian.directive(grokcore.component.name, get_default=default_name)
 
     def execute(self, factory, config, contenttype, name):

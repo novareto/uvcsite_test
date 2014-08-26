@@ -4,15 +4,13 @@
 
 import grok
 import tempfile
-import transaction
-import zope.app.appsetup.product
 
 from reportlab.pdfgen import canvas
-from zope.interface import Interface
 from repoze.filesafe import create_file
+from zope.interface import Interface
 from repoze.filesafe import _local, _remove_manager
 from repoze.filesafe.manager import FileSafeDataManager
-
+import zope.app.appsetup.product
 
 TMPDIR = None
 config = zope.app.appsetup.product.getProductConfiguration('tempdir')
@@ -23,15 +21,14 @@ def _get_manager():
     manager = getattr(_local, 'manager', None)
     if manager is not None:
         return manager
-
-    manager = _local.manager = FileSafeDataManager(tempdir='/Users/christian/work/community/tmp/mm')
+    manager = _local.manager = FileSafeDataManager(tempdir=TMPDIR)
     tx = transaction.get()
     tx.join(manager)
     tx.addAfterCommitHook(_remove_manager)
     return manager
 
 
-def cireate_file(path, mode='w'):
+def create_file(path, mode='w'):
     mgr = _get_manager()
     return mgr.createFile(path, mode)
 

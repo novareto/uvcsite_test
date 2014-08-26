@@ -18,7 +18,7 @@ from uvcsite import IGetHomeFolderUrl
 from dolmen.content import schema
 from dolmen import menu
 from zeam.form import base
-from uvc.layout import TablePage
+from megrok.z3ctable import TablePage
 from dolmen.app.layout.viewlets import ContextualActions
 from zeam.form.base.interfaces import ISimpleForm
 from megrok.pagetemplate import PageTemplate

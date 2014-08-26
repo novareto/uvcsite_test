@@ -91,7 +91,6 @@ Now log on as a user and look if we get the index page
    >>> "Herzlich Willkommen" in browser.contents
    True
 
-
 Not Found View
 --------------
 

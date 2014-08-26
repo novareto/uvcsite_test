@@ -1,11 +1,8 @@
 <configure xmlns="http://namespaces.zope.org/zope"
-	   xmlns:browser="http://namespaces.zope.org/browser"
            i18n_domain="uvcsite">
-
   <include package="uvcsite" />
   <include package="uvcsite.tests" />
-  <include package="bgetem.bsskin" />
-
+  <include package="uvc.tbskin" />
   <include package="uvc.staticcontent" />
 
       <principal id="zope.manager"
@@ -17,6 +14,4 @@
 
       <grant role="zope.Manager"
              principal="zope.manager" />
-
-  <browser:defaultSkin name="bgetem" />
 </configure>
