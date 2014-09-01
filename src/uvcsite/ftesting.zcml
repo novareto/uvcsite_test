@@ -42,6 +42,13 @@
       password="uaz"
       />
 
+  <principal
+    id="uvc.user2"
+    title="0101010001-01"
+    login="0101010001-01"
+    password="user"
+    />
+
   <grant role="zope.Manager" principal="zope.mgr" />
   <grant role="uvc.Editor" principal="uvc.uaz" />
   <include package="uvc.tbskin" />

@@ -110,7 +110,7 @@ def handle_save(obj, event):
     except StandardError, e:
         sp.rollback()
         IWorkflowInfo(obj).fireTransition('progress')
-        uvcsite.logger.exception("FUCK OFF")
+        uvcsite.logger.exception("ES IST EIN FEHLER AUFGETRETEN")
         uvcsite.log('simpleaddon', e.__doc__)
     print "AfterSaveEvent"
 

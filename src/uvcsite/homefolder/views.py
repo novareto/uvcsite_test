@@ -27,7 +27,8 @@ class Index(TablePage):
     grok.title(u'Mein Ordner')
     grok.context(IMyHomeFolder)
     grok.implements(IFolderListingTable)
-    grok.require('uvc.ViewContent')
+    #grok.require('uvc.ViewContent')
+    grok.require('uvc.AccessHomeFolder')
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     cssClasses = {'table': 'tablesorter table table-striped table-bordered table-condensed'}

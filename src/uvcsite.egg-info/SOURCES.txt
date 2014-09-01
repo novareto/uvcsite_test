@@ -37,6 +37,7 @@ src/uvcsite/auth/forms.txt
 src/uvcsite/auth/group.txt
 src/uvcsite/auth/handler.py
 src/uvcsite/auth/handler.txt
+src/uvcsite/auth/hotfix.py
 src/uvcsite/auth/interfaces.py
 src/uvcsite/auth/masteruser.txt
 src/uvcsite/auth/permissions.py
