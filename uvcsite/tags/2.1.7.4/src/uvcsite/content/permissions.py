@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2011 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import grok
 
@@ -16,7 +16,7 @@ class User(grok.Role):
 
 class Editor(grok.Role):
     grok.name('uvc.Editor')
-    grok.permissions('uvc.AddContent', 'uvc.ViewContent', 'uvc.EditContent')
+    grok.permissions('uvc.AddContent', 'uvc.ViewContent', 'uvc.EditContent', 'uvc.AccessHomeFolder')
 
 
 class View(grok.Permission):

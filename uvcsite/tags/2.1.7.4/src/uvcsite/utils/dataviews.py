@@ -4,9 +4,9 @@
 
 import grok
 import tempfile
+import transaction
 
 from reportlab.pdfgen import canvas
-from repoze.filesafe import create_file
 from zope.interface import Interface
 from repoze.filesafe import _local, _remove_manager
 from repoze.filesafe.manager import FileSafeDataManager
@@ -16,6 +16,7 @@ TMPDIR = None
 config = zope.app.appsetup.product.getProductConfiguration('tempdir')
 if config:
     TMPDIR = config.get('path')
+
 
 def _get_manager():
     manager = getattr(_local, 'manager', None)
@@ -64,7 +65,8 @@ class BaseDataView(grok.View):
 
     def generate(self):
         """Methode muss von jedem Konsumenten ausprogrammiert werden,
-           weil diese Methode beim Aufruf von der Methode update aufgerufen wird."""
+           weil diese Methode beim Aufruf von der
+           Methode update aufgerufen wird."""
         raise NotImplementedError
 
     def render(self):
@@ -73,7 +75,9 @@ class BaseDataView(grok.View):
         RESPONSE = self.request.response
         RESPONSE.setHeader('content-type', self.content_type)
         RESPONSE.setHeader('content-length', currentfile)
-        RESPONSE.setHeader('content-disposition', 'attachment; filename=%s' %self.filename)
+        RESPONSE.setHeader(
+            'content-disposition', 'attachment; filename=%s' % self.filename
+        )
         return currentfile
 
 
