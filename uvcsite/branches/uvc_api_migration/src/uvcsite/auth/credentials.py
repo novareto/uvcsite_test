@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import uvclight
-from zope.component import getUtility
 from uvcsite.extranetmembership.interfaces import IUserManagement
-from ..interfaces import ICredentials
+from uvclight.login import ICredentials
+from zope.component import getUtility
 
 
 class SimpleCredentials(uvclight.GlobalUtility):
