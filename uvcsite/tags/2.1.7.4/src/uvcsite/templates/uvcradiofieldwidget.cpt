@@ -1,7 +1,7 @@
 <tal:widget tal:define="value widget.inputValue();
                         radio_class widget.htmlClass()">
   <tal:radio tal:repeat="choice widget.renderableChoices()">
-  <label class="checkbox" tal:attributes="for choice.id">
+  <label class="radio" tal:attributes="for choice.id">
     <input type="radio" id="#" name="#" value="#" checked="#" class="#" tal:attributes="name widget.identifier; value choice.token; id choice.id; class radio_class; checked choice.checked;"> </input>
     <span tal:replace="choice.title"> </span>
   </label>
