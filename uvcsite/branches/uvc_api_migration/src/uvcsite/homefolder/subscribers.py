@@ -2,7 +2,7 @@
 
 from uvc.homefolder.components import Homefolders
 from uvc.homefolder.interfaces import IHomefolders
-from uvclight.events import subscribe, IApplicationInitializedEvent
+from uvclight import subscribe, IApplicationInitializedEvent
 from zope.component.interfaces import ISite
 from zope.interface import Interface
 from ..app import UVCSite

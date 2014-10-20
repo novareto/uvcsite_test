@@ -3,8 +3,7 @@
 import uvclight
 import ConfigParser, os
 
-from uvclight import publishing, auth
-from uvclight.context import ContextualRequest
+from uvclight import auth
 from uvclight.backends import zodb
 
 from grokcore.registries import create_components_registry
@@ -63,35 +62,15 @@ class UVCSite(zodb.Root):
         return current
 
 
-class UVCApplication(object):
+class UVCApplication(zodb.ZODBPublication, auth.SecurePublication):
 
-    def __init__(self, environ_key, name, session_key):
-        self.environ_key = environ_key
-        self.name = name
-        self.publish = publishing.create_base_publisher(secure=True).publish
-        self.session_key = session_key
+    layers = [IDGUVRequest]
 
-    def __call__(self, environ, start_response):
+    def principal_factory(self, username):
+        if username:
+            return auth.Principal(user, permissions=set(('zope.View',)))
+        return unauthenticated_principal
 
-        @uvclight.sessionned(self.session_key)
-        def publish(environ, start_response):
-            with ContextualRequest(environ, layers=[IDGUVRequest]) as request:
-                session = getSession()
-                user = environ.get('REMOTE_USER') or session.get('username')
-                if user:
-                    request.principal = uvclight.auth.Principal(user, permissions=set(('zope.View',)))
-                else:
-                    request.principal = unauthenticated_principal
-
-                conn = environ[self.environ_key]
-                site = get_site(conn, self.name)
-                with Site(site):
-                    with uvclight.Interaction(request.principal):
-                        response = self.publish(request, site)
-                        response = removeSecurityProxy(response)
-                        return response(environ, start_response)
-
-        return publish(environ, start_response)
 
 
 def configure(config_file, app):
@@ -112,7 +91,7 @@ def configure(config_file, app):
 
 
 def uvcsite(gconf, zodb_conf, zcml_file, session_key, env_key, app_key, **kws):
-    setSecurityPolicy(auth.SimpleSecurityPolicy)
+    setSecurityPolicy(auth.GenericSecurityPolicy)
     uvclight.load_zcml(zcml_file)
     register_allowed_languages(['de', 'de-de'])
     db = init_db(zodb_conf, zodb.make_application(app_key, UVCSite))

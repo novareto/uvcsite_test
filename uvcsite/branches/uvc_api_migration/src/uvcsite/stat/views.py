@@ -16,7 +16,7 @@ from zope.interface import Interface
 class StatistikMenu(uvclight.MenuItem):
     uvclight.context(uvclight.IApplication)
     uvclight.title('Statistik')
-    uvclight.require('zope.ManageSite')
+    uvclight.auth.require('zope.ManageSite')
     uvclight.menu(IFooterMenu)
 
     @property
@@ -27,7 +27,7 @@ class StatistikMenu(uvclight.MenuItem):
 class StatistikView(uvclight.Page):
     uvclight.name('statistik')
     uvclight.title('Statistik')
-    uvclight.require('zope.ManageSite')
+    uvclight.auth.require('zope.ManageSite')
     uvclight.context(uvclight.IApplication)
 
     template = uvclight.get_template('statistikview.cpt', __file__)

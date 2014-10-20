@@ -22,7 +22,7 @@ from grokcore.chameleon.components import ChameleonPageTemplateFile
 class ENMS(uvclight.Page):
     uvclight.title('Mitbenutzerverwaltung')
     uvclight.context(IHomefolder)
-    uvclight.require('uvc.ManageCoUsers')
+    uvclight.auth.require('uvc.ManageCoUsers')
 
     template = uvclight.get_template('enms.cpt', __file__)
 
@@ -46,7 +46,7 @@ class ENMS(uvclight.Page):
 class ENMSCreateUser(uvclight.Form):
     """ Simple Form which displays values from a Dict"""
     uvclight.context(IHomefolder)
-    uvclight.require('uvc.ManageCoUsers')
+    uvclight.auth.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer anlegen"
     description = u"Nutzen Sie diese Form um einen neuen Mitbenutzer anzulegen"
@@ -101,7 +101,7 @@ class ENMSCreateUser(uvclight.Form):
 class ENMSUpdateUser(uvclight.Form):
     """ A Form for updating a User in ENMS"""
     uvclight.context(IHomefolder)
-    uvclight.require('uvc.ManageCoUsers')
+    uvclight.auth.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer verwalten"
     description = u"Nutzen Sie diese Form um die Daten eines Mitbenutzers zu pflegen."
@@ -178,7 +178,7 @@ class ENMSUpdateUser(uvclight.Form):
 
 class ChangePasswordMenu(uvclight.MenuItem):
     uvclight.title(u'Passwort ändern')
-    uvclight.require('zope.View')
+    uvclight.auth.require('zope.View')
     uvclight.menu(IPersonalMenu)
 
     @property
@@ -194,7 +194,7 @@ class ChangePassword(uvclight.Form):
     label = _(u'Passwort ändern')
     description = _(u'Hier können Sie Ihr Passwort ändern')
     #uvcsite.menu(uvcsite.PersonalMenu)
-    uvclight.require('zope.View')
+    uvclight.auth.require('zope.View')
 
     fields = Fields(IExtranetMember).select('passwort', 'confirm')
     ignoreContext = True

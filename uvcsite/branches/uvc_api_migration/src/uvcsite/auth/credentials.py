@@ -2,7 +2,7 @@
 
 import uvclight
 from uvcsite.extranetmembership.interfaces import IUserManagement
-from uvclight.login import ICredentials
+from uvclight.auth import ICredentials
 from zope.component import getUtility
 
 

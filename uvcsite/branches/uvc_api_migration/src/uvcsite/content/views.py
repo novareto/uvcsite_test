@@ -42,7 +42,7 @@ class WhatAmI(uvclight.View):
 class Display(uvclight.Form):
     uvclight.context(IContent)
     uvclight.name('index')
-    uvclight.require('uvc.ViewContent')
+    uvclight.auth.require('uvc.ViewContent')
 
     mode = base.DISPLAY
     ignoreContent = False
@@ -121,7 +121,7 @@ def add_menu(context, request):
 
 class Add(uvclight.AddForm):
     uvclight.context(IProductFolder)
-    uvclight.require('uvc.AddContent')
+    uvclight.auth.require('uvc.AddContent')
 
     @property
     def label(self):
@@ -159,7 +159,7 @@ class Add(uvclight.AddForm):
 ##     uvclight.view(Interface)
 ##     uvclight.name('extra-views')
 ##     uvclight.viewletmanager(interfaces.IAboveContent)
-##     uvclight.require("zope.Public")
+##     uvclight.auth.require("zope.Public")
 
 ##     #menu_factory = menus.ExtraViews
 ##     menu_factory = object()
@@ -193,7 +193,7 @@ class Add(uvclight.AddForm):
 
 ## class Edit(uvcsite.Form):
 ##     uvclight.context(IContent)
-##     uvclight.require('uvc.EditContent')
+##     uvclight.auth.require('uvc.EditContent')
 ##     ignoreContent = False
 
 ##     @property

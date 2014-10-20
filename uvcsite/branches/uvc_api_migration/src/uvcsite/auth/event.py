@@ -13,7 +13,7 @@ from zope.component import getUtility
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
 
-@api.subscribe(uvclight.IUserLoggedInEvent)
+@api.subscribe(uvclight.auth.IUserLoggedInEvent)
 def applyPermissionsForExistentCoUsers(event):
     user = event.principal
     homefolders = getUtility(IHomefolders)

@@ -5,5 +5,5 @@
 import uvclight
 
 
-class UVCAllow(uvclight.Permission):
+class UVCAllow(uvclight.auth.Permission):
     uvclight.name('uvc.Allow')

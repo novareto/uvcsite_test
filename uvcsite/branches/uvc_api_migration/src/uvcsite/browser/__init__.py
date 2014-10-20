@@ -5,7 +5,7 @@ import uvclight
 
 class HAProxyCheck(uvclight.View):
     uvclight.context(uvclight.IApplication)
-    uvclight.require('zope.Public')
+    uvclight.auth.require('zope.Public')
 
     def render(self):
         return "OK"

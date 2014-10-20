@@ -7,7 +7,6 @@ from GenericCache.GenericCache import GenericCache, default_marshaller
 from GenericCache.GenericCache import cached
 from grokcore.component import subscribe
 from uvc.homefolder.interfaces import IHomefolder
-from uvclight.publishing import IModelFoundEvent
 from uvcsite.content.interfaces import IProductFolder, IContent
 from zope.securitypolicy.interfaces import IPrincipalRoleManager, Allow
 
@@ -23,9 +22,9 @@ def prm_marshaller(func, node, event):
 
 
 @cached(permission_cache, marshaller=prm_marshaller)
-@subscribe(IHomefolder, IModelFoundEvent)
-@subscribe(IProductFolder, IModelFoundEvent)
-@subscribe(IContent, IModelFoundEvent)
+@subscribe(IHomefolder, uvclight.IModelFoundEvent)
+@subscribe(IProductFolder, uvclight.IModelFoundEvent)
+@subscribe(IContent, uvclight.IModelFoundEvent)
 def managePermissions(obj, event):
     userid = event.request.principal.id
     for item in uvclight.utils.get_lineage(obj):

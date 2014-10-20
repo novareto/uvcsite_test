@@ -9,7 +9,7 @@ class Favicon(uvclight.View):
     """
     uvclight.context(Interface)
     uvclight.name('favicon.ico')
-    uvclight.require('zope.Public')
+    uvclight.auth.require('zope.Public')
 
     def render(self):
         return "BLA"
