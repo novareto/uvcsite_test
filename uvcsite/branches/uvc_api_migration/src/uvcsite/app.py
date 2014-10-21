@@ -92,13 +92,18 @@ def configure(config_file, app):
 
 def uvcsite(gconf, zodb_conf, zcml_file, session_key, env_key, app_key, **kws):
     setSecurityPolicy(auth.GenericSecurityPolicy)
-    uvclight.load_zcml(zcml_file)
-    register_allowed_languages(['de', 'de-de'])
-    db = init_db(zodb_conf, zodb.make_application(app_key, UVCSite))
-    app = UVCApplication(env_key, app_key, session_key)
+    app = UVCApplication.create(
+        gconf,
+        session_key=session_key,
+        environ_key=env_key,
+        conf=zodb_conf,
+        zcml_file=zcml_file,
+        name=app_key,
+        root=UVCSite,
+        **kws)
 
     config_file = kws.get('conf_file')
     if config_file is not None:
         configure(config_file, app)
 
-    return ZODBApp(app, db, key=env_key)
+    return app
