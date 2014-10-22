@@ -68,7 +68,7 @@ class UVCApplication(zodb.ZODBPublication, auth.SecurePublication):
 
     def principal_factory(self, username):
         if username:
-            return auth.Principal(user, permissions=set(('zope.View',)))
+            return auth.Principal(id=username, permissions=set(('zope.View',)))
         return unauthenticated_principal
 
 
