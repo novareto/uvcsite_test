@@ -27,6 +27,7 @@ from zope.annotation.interfaces import IAttributeAnnotatable
 from . import log
 from .auth.handler import USERS
 from .utils.mail import configure_mail
+#from uvc.themes.siguv import ISIGUVRequest
 from uvc.themes.dguv import IDGUVRequest
 from zope.interface import alsoProvides
 
@@ -70,7 +71,6 @@ class UVCApplication(zodb.ZODBPublication, auth.SecurePublication):
         if username:
             return auth.Principal(id=username, permissions=set(('zope.View',)))
         return unauthenticated_principal
-
 
 
 def configure(config_file, app):

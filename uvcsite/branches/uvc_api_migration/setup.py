@@ -79,7 +79,9 @@ setup(name='uvcsite',
           'uvc.homefolder',
           'uvc.staticcontent',
           'uvc.testcontent',
+          #'uvc.themes.siguv',  # this is to test
           'uvc.themes.dguv',  # this is to test
+          'uvc.api', # API TEST
           'uvc.validation',
           'uvc.widgets',
           'uvckickstart',
@@ -107,5 +109,8 @@ setup(name='uvcsite',
 
       [paste.filter_app_factory]
       registries = uvcsite.registries:provide_registries
+
+      [pytest11]
+      uvcsite_fixtures = uvcsite.tests.fixtures
       """,
       )
