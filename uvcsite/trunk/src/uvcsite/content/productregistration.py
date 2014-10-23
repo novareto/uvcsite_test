@@ -99,8 +99,6 @@ class ProductRegistration(grok.MultiAdapter):
             pf = self.productfolder
             homefolder[self.folderURI] = pf()
             uvcsite.log('Add Productfolders %s to Homefolder: %s' % (self.folderURI, self.principal.id), severity=logging.DEBUG)
-        else:
-            uvcsite.log('No need for adding Folder %s to %s' % (self.folderURI, self.principal.id), severity=logging.DEBUG)
 
 
 class ProductMenuItem(uvcsite.MenuItem):

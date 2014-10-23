@@ -26,7 +26,7 @@ class Index(TablePage):
     grok.title(u'Mein Ordner')
     grok.context(IMyHomeFolder)
     grok.implements(IFolderListingTable)
-    grok.require('uvc.ViewContent')
+    grok.require('uvc.AccessHomeFolder')
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     cssClasses = {'table': 'tablesorter table table-striped table-bordered table-condensed'}
@@ -48,8 +48,8 @@ class Index(TablePage):
         interaction = self.request.interaction
         for key, value in self.context.items():
             if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
-                yield dict(href = absoluteURL(value, self.request),
-                           name = key)
+                yield dict(href=absoluteURL(value, self.request),
+                           name=key)
 
     def executeDelete(self, item):
         self.flash(_(u'Ihre Dokumente wurden entfernt'))
@@ -59,7 +59,7 @@ class Index(TablePage):
         items = self.request.form.get('table-checkBox-0-selectedItems')
         if items and self.request.has_key('form.button.delete'):
             if isinstance(items, (str, unicode)):
-                items = [items,]
+                items = [items, ]
             for key in items:
                 for pf in self.context.values():
                     if pf.has_key(key):
@@ -80,8 +80,8 @@ class DirectAccessViewlet(grok.Viewlet):
             if getattr(value, 'inNav', True):
                 pf = hf[value.folderURI]
                 if interaction.checkPermission('uvc.ViewContent', pf):
-                    yield dict(href = absoluteURL(pf, self.request),
-                               name = value.title)
+                    yield dict(href=absoluteURL(pf, self.request),
+                               name=value.title)
 
     def render(self):
         template = getMultiAdapter((self, self.request), IPageTemplate)
@@ -115,6 +115,7 @@ class RedirectIndexMembers(grok.View):
     def render(self):
         url = uvcsite.IGetHomeFolderUrl(self.request).getURL()
         self.redirect(url)
+
 
 class RestHomeFolderTraverser(grok.Traverser):
     grok.context(Members)
