@@ -32,6 +32,7 @@ def test_suite():
         'utils/beaker.txt', 'utils/roles.txt', 'utils/tales.txt',
         'stat/stat.txt', 'auth/group.txt', 'utils/pdf.txt',
         'utils/xml.txt', 'utils/shorties.txt', 'content/productregistration.txt',
+        'content/securityviews.txt',
         package="uvcsite",
         globs={'__name__': 'uvcsite'},
         optionflags=doctest.ELLIPSIS |
