@@ -4,25 +4,19 @@
 
 import grok
 import uvcsite
+import xmlrpclib
 import zope.security
 import xmlrpclib
-from grokcore import message
-from persistent import Persistent
 from zope.component import getUtility
-from zope.interface import implements, Interface
-from zope.schema import ASCIILine
 from zope.session.interfaces import ISession
-from zope.location.interfaces import ILocation
 from zope.security.interfaces import IPrincipal
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.securitypolicy.settings import Allow
 
 from zope.pluggableauth.factories import PrincipalInfo, Principal
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
-from zope.pluggableauth.interfaces import ICredentialsPlugin
-from zope.pluggableauth.plugins.session import SessionCredentialsPlugin
 
-from interfaces import IUVCAuth, IMasterUser
+from interfaces import IMasterUser
 from uvcsite.extranetmembership.interfaces import IUserManagement
 
 from dolmen.authentication import UserLoginEvent
@@ -80,10 +74,10 @@ class UVCAuthenticator(grok.Model):
                     return
             user_id = login
             authenticated = session[USER_SESSION_KEY] = dict(
-                id = user_id,
-                title = login,
-                description = login,
-                login = login)
+                id=user_id,
+                title=login,
+                description=login,
+                login=login)
         return PrincipalInfo(**authenticated)
 
     def principalInfo(self, id):
@@ -100,7 +94,6 @@ class CheckRemote(grok.XMLRPC):
             user = unicode(user.data)
         if isinstance(password, xmlrpclib.Binary):
             password = unicode(password.data)
-
         plugin = getUtility(IAuthenticatorPlugin, 'principals')
         principal = plugin.authenticateCredentials(dict(
             login=user,
@@ -113,7 +106,7 @@ class CheckRemote(grok.XMLRPC):
     def getRemoteDashboard(self, user):
        return (u"<ul><li><a href='%(url)s/link1'>Uvcsite link1</a></li>" +
                u"<li><a href='%(url)s/link2'>Uvcsite link2</a></li></ul>")
-        
+
     def getRoles(self, user):
         manager = IPrincipalRoleManager(self.context)
         setting = manager.getRolesForPrincipal(user)

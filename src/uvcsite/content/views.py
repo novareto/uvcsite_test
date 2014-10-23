@@ -34,7 +34,6 @@ class Index(TablePage):
     grok.implements(IFolderListingTable)
     grok.context(IProductFolder)
     grok.require('uvc.ViewContent')
-    #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     description = u"Hier finden Sie alle Dokumente dazu."
 

@@ -85,13 +85,13 @@ class Uvcsite(grok.Application, grok.Container):
         if uvcsiteRegistry not in current.__bases__:
             uvcsiteRegistry.__bases__ = tuple(
                 [x for x in uvcsiteRegistry.__bases__
-                    if x._hash_() != globalSiteManager._hash_()])
+                    if hasattr(x, '_hash_') and x._hash_() != globalSiteManager._hash_()])
             current.__bases__ = (uvcsiteRegistry,) + current.__bases__
         elif current.__bases__[0] is not uvcsiteRegistry:
             current.__bases__ = (uvcsiteRegistry,) + tuple((
                 b for b in current.__bases__ if b != uvcsiteRegistry))
         return current
-    
+
 
 class NotFound(uvcsite.Page, grok.components.NotFoundView):
     """Not Found Error View
