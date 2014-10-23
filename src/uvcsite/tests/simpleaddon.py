@@ -104,12 +104,13 @@ def handle_save(obj, event):
     sp = transaction.savepoint()
     try:
         pdf = zope.component.getMultiAdapter((obj, event.request), name=u"pdf")
-        pdf.create(fn="/Users/christian/work/community/tmp/mm/%s.pdf" % (obj.__name__))
+        pdf.create(fn="/tmp/kk/%s.pdf" % (obj.__name__))
+        1 / 0
         IWorkflowInfo(obj).fireTransition('publish')
     except StandardError, e:
         sp.rollback()
         IWorkflowInfo(obj).fireTransition('progress')
-        uvcsite.logger.exception("FUCK OFF")
+        uvcsite.logger.exception("ES IST EIN FEHLER AUFGETRETEN")
         uvcsite.log('simpleaddon', e.__doc__)
     print "AfterSaveEvent"
 
