@@ -50,7 +50,7 @@ We have a subscriber for the AfterSaveEvent for uvcsite which prints "AfterSaveE
   >>> save.click()
   ES IST EIN FEHLER AUFGETRETEN
   Traceback (most recent call last):
-    File "/Users/christian/work/community/uvcsite/src/uvcsite/tests/simpleaddon.py", line 108, in handle_save
+    File ".../uvcsite/tests/simpleaddon.py", line 108, in handle_save
       1 / 0
   ZeroDivisionError: integer division or modulo by zero
   AfterSaveEvent
@@ -94,7 +94,7 @@ Mitbentzer 0101010001-02 -> keine Rolle Adressbook
   >>> browserOR.url
   'http://127.0.0.1/app/members/0101010001'
 
-  >>> '<a href="" class="dropdown-trigger">0101010001-02</a>' in browserOR.contents
+  >>> '<span>0101010001-02</span>' in browserOR.contents
   True
 
 Der Link zum Contakt object ist *nicht* vorhanden.
