@@ -49,8 +49,6 @@ GlobalMenu
 Show the viewlets:
 
    >>> manager.update()
-   >>> len(manager.viewlets)
-   1
  
 
 PersonalPreferences
