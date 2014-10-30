@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from zope.i18nmessageid import MessageFactory
+from .interfaces import IUVCSite
 uvcsiteMF = MessageFactory('uvcsite')
 
 

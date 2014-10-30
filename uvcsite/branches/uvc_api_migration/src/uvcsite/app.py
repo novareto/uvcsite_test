@@ -30,6 +30,7 @@ from .utils.mail import configure_mail
 #from uvc.themes.siguv import ISIGUVRequest
 from uvc.themes.dguv import IDGUVRequest
 from zope.interface import alsoProvides
+from .interfaces import IUVCSite
 
 
 uvcsiteRegistry = create_components_registry(
@@ -46,7 +47,7 @@ uvclight.global_utility(
     )
 
 
-@uvclight.implementer(uvclight.IApplication, IAttributeAnnotatable)
+@uvclight.implementer(IUVCSite, uvclight.IApplication, IAttributeAnnotatable)
 class UVCSite(zodb.Root):
     credentials = ['simple']
 

@@ -25,6 +25,8 @@ compile = true
 use = egg:cromlech.wsgistate#file_session
 session_key = session.key
 session_cache = ${settings:session_cache}
+timeout = 3000
+
 
 [app:uvcsite]
 use = egg:uvcsite#app

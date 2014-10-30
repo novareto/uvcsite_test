@@ -25,6 +25,7 @@
 
   <include package="uvclight" />
   <include package="uvc.testcontent" />
+  <include package="uvc.staticcontent" />
   <include package="uvc.themes.dguv" />
   <include package="zope.annotation" />
 

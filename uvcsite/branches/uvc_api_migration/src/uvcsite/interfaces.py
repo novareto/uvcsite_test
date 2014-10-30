@@ -2,6 +2,9 @@
 
 from zope.interface import Interface
 
+class IUVCSite(Interface):
+    """ """
+
 
 class IFolderListingTable(Interface):
     pass

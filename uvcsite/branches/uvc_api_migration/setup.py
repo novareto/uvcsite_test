@@ -79,7 +79,6 @@ setup(name='uvcsite',
           'uvc.homefolder',
           'uvc.staticcontent',
           'uvc.testcontent',
-          #'uvc.themes.siguv',  # this is to test
           'uvc.themes.dguv',  # this is to test
           'uvc.api', # API TEST
           'uvc.validation',
