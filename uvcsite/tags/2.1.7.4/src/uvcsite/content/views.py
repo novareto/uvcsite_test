@@ -18,7 +18,6 @@ from uvcsite import IGetHomeFolderUrl
 from dolmen.content import schema
 from dolmen import menu
 from zeam.form import base
-from megrok.z3ctable import TablePage
 from dolmen.app.layout.viewlets import ContextualActions
 from zeam.form.base.interfaces import ISimpleForm
 from megrok.pagetemplate import PageTemplate
@@ -28,7 +27,7 @@ from zope.pagetemplate.interfaces import IPageTemplate
 grok.templatedir('templates')
 
 
-class Index(TablePage):
+class Index(uvcsite.TablePage):
     grok.title(u'Übersicht')
     grok.name('index')
     grok.implements(IFolderListingTable)
