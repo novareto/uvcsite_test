@@ -18,6 +18,13 @@ from uvcsite.utils.dataviews import BasePDF, BaseXML, BaseDataView, WatermarkPDF
 from uvc.layout.forms import (Form, AddForm,
     SubForm, GroupForm, Wizard, Step)
 from uvc.layout import *
+
+from grok.components import ViewSupportMixin
+
+class TablePage(TablePage, ViewSupportMixin):
+    grok.baseclass()
+    pass
+
 #from uvc.layout.event import IAfterSaveEvent
 
 # Mobile

@@ -8,7 +8,6 @@ import uvcsite
 from zope.interface import Interface
 from uvcsite import uvcsiteMF as _
 from megrok.z3ctable import Values
-from megrok.z3ctable import TablePage
 from zope.traversing.browser import absoluteURL
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from uvc.layout import interfaces
@@ -23,7 +22,7 @@ from grokcore.rest.interfaces import IRESTLayer
 grok.templatedir('templates')
 
 
-class Index(TablePage):
+class Index(uvcsite.TablePage):
     grok.title(u'Mein Ordner')
     grok.context(IMyHomeFolder)
     grok.implements(IFolderListingTable)
