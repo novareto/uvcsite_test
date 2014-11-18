@@ -168,15 +168,11 @@ class MyForm(uvcsite.Form):
     def update(self):
         self.setContentData(uvcsite.DictDataManager(dict(name="Klaus")))
         double.need()
-        #DatePickerCSS.need()
-        #DatePicker.need()
         masked_input.need()
 
     @uvcsite.action(u'Abschicken')
     def handleButton(self):
-        import pdb; pdb.set_trace()
         data, errors = self.extractData()
-        print data
         if errors or self.errors:
             self.flash(u"FEHLER", type="error")
             return
