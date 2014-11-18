@@ -64,6 +64,14 @@ class AdressBook(uvcsite.ProductFolder):
         return False
 
 
+#class StatMenu(uvcsite.MenuItem):
+#    grok.context(AdressBook)
+#    grok.viewletmanager(uvcsite.IExtraViews)
+#    grok.title('Statistik')
+#
+#    action = "stat"
+#
+
 
 class ADMenu(grok.Viewlet):
     grok.viewletmanager(uvcsite.IAboveContent)

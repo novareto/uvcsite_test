@@ -174,6 +174,24 @@ class Edit(uvcsite.Form):
             self.flash('Kein Änderung', type="info")
 
 
+class EditSite(Edit):
+    grok.name('edit')
+    grok.context(uvcsite.IUVCSite)
+    ignoreContent = False
+    fields = Fields(uvcsite.IUVCSite)
+            
+    @base.action(u'Speichern')
+    def handle_apply(self):
+        data, errors = self.extractData()
+        if errors:
+            self.flash('Es sind Fehler aufgetreten', type="error")
+            return
+
+        self.context.logo = data['logo']
+        self.flash(u'Ihre Daten wurden erfolgreich gendert', type="info")
+        return
+
+
 class Display(uvcsite.Form):
     grok.context(IContent)
     grok.name('index')

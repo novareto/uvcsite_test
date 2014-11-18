@@ -9,6 +9,7 @@ import zope.component
 
 from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
+from dolmen.file import FileProperty
 
 from grokcore.registries import create_components_registry
 from grokcore.site import IApplication
@@ -80,6 +81,8 @@ class Uvcsite(grok.Application, grok.Container):
                        public=True,
                        setup=setup_pau)
 
+    logo = FileProperty(uvcsite.IUVCSite['logo'])
+    
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
         if uvcsiteRegistry not in current.__bases__:
