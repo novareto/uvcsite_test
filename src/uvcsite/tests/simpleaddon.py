@@ -64,13 +64,6 @@ class AdressBook(uvcsite.ProductFolder):
         return False
 
 
-class StatMenu(uvcsite.MenuItem):
-    grok.context(AdressBook)
-    grok.viewletmanager(uvcsite.IExtraViews)
-    grok.title('Statistik')
-
-    action = "stat"
-
 
 class ADMenu(grok.Viewlet):
     grok.viewletmanager(uvcsite.IAboveContent)
@@ -83,7 +76,7 @@ class ADMenu(grok.Viewlet):
 
     def render(self):
         return """
-<ul class='nav nav-tabs'>
+<ul class='nav nav-tabs pull-right'>
   <li class='%s'><a href='%s'>Alte Dokumente</a></li>
 </ul>""" % (self.active and 'active' or 'inactive', self.url)
 

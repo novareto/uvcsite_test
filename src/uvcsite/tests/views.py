@@ -16,7 +16,7 @@ from grokcore.chameleon.components import ChameleonPageTemplateFile
 class PDF(uvcsite.MenuItem):
     grok.viewletmanager(IDocumentActions)
     grok.name('pdf')
-    icon = "/@@/uvc-icons/icon_pdf.gif"
+    icon = "glyphicon glyphicon-paperclip"
     action = "/index"
 
 
