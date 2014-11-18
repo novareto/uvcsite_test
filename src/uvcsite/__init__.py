@@ -5,11 +5,12 @@ from zope.i18nmessageid import MessageFactory
 uvcsiteMF = MessageFactory('uvcsite')
 
 import grok
-from uvcsite.content import (ProductFolder, IProductFolder, contenttype,
-    IContent, Content, schema, name, productfolder)
+from uvcsite.content import ProductFolder, IProductFolder, contenttype
+from uvcsite.content import IContent, Content, schema, name, productfolder
 from uvcsite.interfaces import *
 from grokcore.layout import Page
 from megrok.z3ctable import TablePage
+
 from uvcsite.utils.help import HelpPage
 from uvc.layout.slots.menus import  (Footer, GlobalMenu,
     PersonalMenu, PersonalPreferences, DocumentActionsMenu)
