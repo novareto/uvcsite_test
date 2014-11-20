@@ -3,15 +3,11 @@
 from grok.interfaces import IContainer
 from uvcsite.content import IUVCApplication, IFolderColumnTable
 from uvc.layout.interfaces import *
-from dolmen.file import FileField
 
 
 class IUVCSite(IUVCApplication):
     """UVC-Site site object
     """
-    logo = FileField(
-        title=u"File",
-        required=False)
 
 
 class IMyHomeFolder(IContainer, IFolderColumnTable):
