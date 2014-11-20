@@ -4,7 +4,6 @@
 
   <include package="uvcsite" />
   <include package="uvcsite.tests" />
-  <include package="bgetem.bsskin" />
 
   <include package="uvc.staticcontent" />
 
@@ -18,5 +17,4 @@
       <grant role="zope.Manager"
              principal="zope.manager" />
 
-  <browser:defaultSkin name="bgetem" />
 </configure>
