@@ -9,31 +9,13 @@ import zope.app.appsetup.product
 
 from reportlab.pdfgen import canvas
 from zope.interface import Interface
-from repoze.filesafe import _local, _remove_manager
-from repoze.filesafe.manager import FileSafeDataManager
+from repoze.filesafe import create_file
 
 
 TMPDIR = None
 config = zope.app.appsetup.product.getProductConfiguration('tempdir')
 if config:
     TMPDIR = config.get('path')
-
-
-def _get_manager():
-    manager = getattr(_local, 'manager', None)
-    if manager is not None:
-        return manager
-
-    manager = _local.manager = FileSafeDataManager(tempdir=TMPDIR)
-    tx = transaction.get()
-    tx.join(manager)
-    tx.addAfterCommitHook(_remove_manager)
-    return manager
-
-
-def create_file(path, mode='w'):
-    mgr = _get_manager()
-    return mgr.createFile(path, mode)
 
 
 class BaseDataView(grok.View):
@@ -46,7 +28,7 @@ class BaseDataView(grok.View):
 
     def getFile(self, fn):
         if fn:
-            return create_file(fn, 'w+b')
+            return create_file(fn, 'w+b', TMPDIR)
         return tempfile.TemporaryFile()
 
     @property

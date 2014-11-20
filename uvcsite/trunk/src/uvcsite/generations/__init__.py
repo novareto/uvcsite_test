@@ -9,7 +9,7 @@ from zope.generations.interfaces import ISchemaManager
 
 UVCSchemaManager = SchemaManager(
     minimum_generation = 1,
-    generation = 1,
+    generation = 2,
     package_name = __name__
 )
 

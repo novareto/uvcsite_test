@@ -179,7 +179,7 @@ class EditSite(Edit):
     grok.context(uvcsite.IUVCSite)
     ignoreContent = False
     fields = Fields(uvcsite.IUVCSite)
-            
+
     @base.action(u'Speichern')
     def handle_apply(self):
         data, errors = self.extractData()

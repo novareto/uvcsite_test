@@ -23,7 +23,9 @@ Login mit MasterUser 0101010001
 
   >>> from zope.testbrowser.testing import Browser
   >>> browser = Browser()
+  >>> browser.handleErrors = True 
   >>> browser.open('http://127.0.0.1/app/')
+
   >>> browser.getControl(name="login").value = "0101010001"
   >>> browser.getControl(name="password").value = "passwort"
   >>> save = browser.getControl(name="action.log-in")
@@ -50,7 +52,7 @@ We have a subscriber for the AfterSaveEvent for uvcsite which prints "AfterSaveE
   >>> save.click()
   ES IST EIN FEHLER AUFGETRETEN
   Traceback (most recent call last):
-    File ".../uvcsite/tests/simpleaddon.py", line 108, in handle_save
+  ...
       1 / 0
   ZeroDivisionError: integer division or modulo by zero
   AfterSaveEvent
