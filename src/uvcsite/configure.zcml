@@ -41,9 +41,6 @@
   <include package="dolmen.app.security" />
   <include package="dolmen.app.authentication" />
   <include package="dolmen.app.breadcrumbs" />
-  <include package="dolmen.file" />
-  <include package="dolmen.widget.file" />
-
 
   <browser:defaultView name="index.html" />
 

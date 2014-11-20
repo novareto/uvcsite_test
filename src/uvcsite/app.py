@@ -81,8 +81,6 @@ class Uvcsite(grok.Application, grok.Container):
                        public=True,
                        setup=setup_pau)
 
-    logo = FileProperty(uvcsite.IUVCSite['logo'])
-    
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
         if uvcsiteRegistry not in current.__bases__:
