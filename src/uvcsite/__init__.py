@@ -50,5 +50,5 @@ from uvcsite.content.productregistration import (ProductRegistration,
 import logging
 logger = logging.getLogger('uvcsite')
 
-def log(message, summary='', severity=logging.INFO):
-    logger.log(severity, '%s %s', summary, message)
+def log(message, summary='', severity=logging.INFO, extra_data=None):
+    logger.log(severity, '%s %s', summary, message, extra=extra_data)

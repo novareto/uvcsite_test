@@ -9,7 +9,6 @@ import zope.component
 
 from uvcsite.auth.handler import UVCAuthenticator
 from uvcsite.homefolder.homefolder import PortalMembership
-from dolmen.file import FileProperty
 
 from grokcore.registries import create_components_registry
 from grokcore.site import IApplication
