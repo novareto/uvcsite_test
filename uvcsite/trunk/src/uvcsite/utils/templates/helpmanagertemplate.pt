@@ -15,11 +15,11 @@
     </div>
   </div>
 </div>
-    <a class="btn help-button" tal:attributes="href string:#modal-${viewlet/__class__/__name__}"
+    <a class="btn" tal:attributes="href string:#modal-${viewlet/__class__/__name__}"
       data-toggle="modal" class="btn" 
       tal:content="viewlet/name|string:Hilfe" > </a> 
 </tal:help>
 <tal:loop repeat="viewlet viewletmanager/getViewlets">
-  <span tal:content="python: viewlet.render()" />
+  <span tal:content="structure python: viewlet.render()" />
 </tal:loop>
 </div>
