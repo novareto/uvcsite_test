@@ -1,7 +1,6 @@
 import errno
 import os
 import signal
-from functools import wraps
 
 
 class Timeout(Exception):
@@ -26,6 +25,6 @@ def timeout(seconds=10, err_type=Timeout, err_msg=os.strerror(errno.ETIME)):
                 signal.alarm(0)
             return result
 
-        return wraps(func)(wrapper)
+        return wrapper
 
     return decorator
