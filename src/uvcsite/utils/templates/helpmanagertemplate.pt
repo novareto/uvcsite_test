@@ -1,4 +1,5 @@
-<tal:help repeat="viewlet viewletmanager/viewlets">
+<div class="pull-right" id="help">
+<tal:help repeat="viewlet viewletmanager/getHelpPages">
 <div class="modal fade" tal:attributes="id string:modal-${viewlet/__class__/__name__}">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -18,3 +19,7 @@
       data-toggle="modal" class="btn" 
       tal:content="viewlet/name|string:Hilfe" > </a> 
 </tal:help>
+<tal:loop repeat="viewlet viewletmanager/getViewlets">
+  <span tal:content="python: viewlet.render()" />
+</tal:loop>
+</div>
