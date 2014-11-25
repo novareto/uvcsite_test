@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2010 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import grok
 import uvcsite
@@ -11,8 +11,10 @@ class AuskunftEntry(uvcsite.MenuItem):
         Achtung in der Zeile layout.menus.category
         dropdown=False
     """
-    grok.title('Auskunft')
+    grok.title('Home')
     grok.viewletmanager(uvcsite.IGlobalMenu)
     grok.order(20000)
 
-    action = "http://www.google.de"
+    @property
+    def action(self):
+        return self.view.url(self.view)
