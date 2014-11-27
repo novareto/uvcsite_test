@@ -17,4 +17,4 @@ class AuskunftEntry(uvcsite.MenuItem):
 
     @property
     def action(self):
-        return self.view.url(self.view)
+        return self.view.url(self.context)
