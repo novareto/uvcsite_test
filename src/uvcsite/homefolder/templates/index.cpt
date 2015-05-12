@@ -5,7 +5,7 @@
     <div class="batch pagination" tal:content="structure view.renderBatch()"> </div>
     <form action="." method="post" tal:attributes="action view.url(context)">
       <div tal:replace="structure view.renderTable()"> </div>
-      <input type="submit" value="Entfernen" name="form.button.delete" />
+      <input class="btn btn-primary" type="submit" value="Entfernen" name="form.button.delete" />
     </form>
   </div>
 </div>
