@@ -76,7 +76,7 @@ class Index(TablePage):
         cssClass = self.getCSSSortClass(column, cssClass)
         cssClass = self.getCSSClass('td', cssClass)
         colspanStr = colspan and ' colspan="%s"' % colspan or ''
-        dt = ' data-title="%s" ' % column.id
+        dt = ' data-title="%s" ' % column.header
         return u'\n      <td%s%s%s>%s</td>' % (cssClass, colspanStr, dt,
             column.renderCell(item))
 

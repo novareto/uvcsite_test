@@ -71,6 +71,21 @@ class Index(TablePage):
     def getAddTitle(self):
         return self.context.getContentName()
 
+    def renderCell(self, item, column, colspan=0):
+        from z3c.table import interfaces
+        if interfaces.INoneCell.providedBy(column):
+            return u''
+        cssClass = column.cssClasses.get('td')
+        cssClass = self.getCSSHighlightClass(column, item, cssClass)
+        cssClass = self.getCSSSortClass(column, cssClass)
+        cssClass = self.getCSSClass('td', cssClass)
+        colspanStr = colspan and ' colspan="%s"' % colspan or ''
+        dt = ' data-title="%s" ' % column.header
+        return u'\n      <td%s%s%s>%s</td>' % (cssClass, colspanStr, dt,
+            column.renderCell(item))
+
+
+
 
 class ExtraViewsViewlet(ContextualActions):
     grok.order(20)
