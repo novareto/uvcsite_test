@@ -4,7 +4,7 @@
       <tal:index define="idx repeat['step'].index">
 	<li tal:condition="view.step > idx" class="past">
 	  
-	  <a tal:attributes="href '%s/edit?jump_step=%s' % (view.url(), idx)">
+	  <a tal:attributes="href '%s/edit?form.field.step=%s' % (view.url(), idx)">
 	    <span class="badge badge-info"
 		  tal:content="repeat['step'].number" />
 	  </a>
