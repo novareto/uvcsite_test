@@ -77,7 +77,7 @@ Anmelden als Mitbenutzer 0101010001-01
 
 Wir können das Objekt von 0101010001 sehen...
 
-  >>> '<td><a href="http://127.0.0.1/app/members/0101010001/Adressbook/Contact">Titel</a></td>' in  browser.contents
+  >>> '<td data-title="Titel" ><a href="http://127.0.0.1/app/members/0101010001/Adressbook/Contact">Titel</a></td>' in  browser.contents
   True
 
 

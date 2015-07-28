@@ -68,7 +68,7 @@ Now we can render the Index Page of the Homefolder:
     <tbody>
     </tbody>
   </table>
-        <input type="submit" value="Entfernen" name="form.button.delete" />
+        <input class="btn btn-primary" type="submit" value="Entfernen" name="form.button.delete" />
       </form>
     </div>
   </div> 
@@ -151,20 +151,19 @@ Let's check again if we now get **contenttypes** in our homefolder:
     </thead>
     <tbody>
       <tr class="even">
-        <td><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="hans"  /></td>
-        <td><a href="http://127.0.0.1/app/members/lars/personcontainer/hans/edit"></a></td>
-        <td>Person</td>
-        <td>Entwurf</td>
-        <td>lars</td>
-        <td class="sorted-on ascending">...</td>
+        <td data-title="" ><input type="checkbox" class="checkbox-widget" name="table-checkBox-0-selectedItems" value="hans"  /></td>
+        <td data-title="Titel" ><a href="http://127.0.0.1/app/members/lars/personcontainer/hans/edit"></a></td>
+        <td data-title="Objekt" >Person</td>
+        <td data-title="Status" >Entwurf</td>
+        <td data-title="Autor" >lars</td>
+        <td class="sorted-on ascending" data-title="Datum" >...</td>
       </tr>
     </tbody>
   </table>
-        <input type="submit" value="Entfernen" name="form.button.delete" />
+        <input class="btn btn-primary" type="submit" value="Entfernen" name="form.button.delete" />
       </form>
     </div>
   </div>
-
 
 Delete Item Form
 ----------------

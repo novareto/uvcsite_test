@@ -19,6 +19,9 @@ class PDF(uvcsite.MenuItem):
     icon = "glyphicon glyphicon-paperclip"
     action = "/index"
 
+    def update(self):
+        self.view.flash(u'I am a Message', type="success")
+
 
 class Auskunftsdienste(uvcsite.SubMenu):
     grok.context(Interface)
