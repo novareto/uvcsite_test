@@ -1,0 +1,56 @@
+Functional Doctest
+==================
+
+First we have to setup a Site...
+
+  >>> import grok
+  >>> import uvcsite
+  >>> root = getRootFolder()
+  >>> root['context'] = app = uvcsite.app.Uvcsite()
+
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> request = TestRequest()
+
+  >>> view = getMultiAdapter((app, request), name="index")
+
+The basic is done, let's define a simple HelpPage
+
+  >>> class MyHelpPage(uvcsite.HelpPage):
+  ...     grok.context(uvcsite.IUVCSite)
+  ...
+  ...     def render(self):
+  ...         return "BLA BLA"
+
+We grok this page.
+
+  >>> from grok.testing import grok_component
+  >>> grok_component('MyHelpPage', MyHelpPage)
+  True
+
+Now the viewletmanager should find the page:
+
+  >>> from uvcsite.utils.help import HelpManager
+  >>> manager = HelpManager(app, request, view)
+  >>> manager
+  <uvcsite.utils.help.HelpManager object at ...>
+
+Let's check the attributes & methods of the help-page
+
+  >>> manager.update()
+
+  >>> help_page = manager.viewlets[0]
+  >>> help_page.update()
+
+These two checks are needed for ReST:
+
+  >>> help_page.response
+  <zope.publisher.browser.BrowserResponse object at ...>
+
+  >>> help_page.namespace()
+  {'settings_overrides': {'input_encoding': 'utf-8', 'stylesheet': '', 'embed_stylesheet': 0, 'output_encoding': 'unicode', 'stylesheet_path': None}}
+
+Finallay we can render the page:
+
+  >>> help_page.render()
+  'BLA BLA'

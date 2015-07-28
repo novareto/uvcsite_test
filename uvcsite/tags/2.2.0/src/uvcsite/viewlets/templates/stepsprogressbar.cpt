@@ -1,0 +1,25 @@
+<div class="wizard">
+  <ul class="steps">
+    <tal:steps tal:repeat="step view._getAvailableSubForms()">
+      <tal:index define="idx repeat['step'].index">
+	<li tal:condition="view.step > idx" class="past">
+	  
+	  <a tal:attributes="href '%s/edit?form.field.step=%s' % (view.url(), idx)">
+	    <span class="badge badge-info"
+		  tal:content="repeat['step'].number" />
+	  </a>
+	  <span class="chevron"></span>
+	</li>
+	<li tal:condition="view.step == idx" class="active">
+	  <span class="badge badge-info" tal:content="repeat['step'].number" />
+	  <a><span tal:content="step.label" /></a>
+	  <span class="chevron"></span>
+	</li>
+	<li tal:condition="view.step < idx" class="future">
+	  <span class="badge badge-info" tal:content="repeat['step'].number" />
+	  <span class="chevron"></span>
+	</li>
+      </tal:index>
+    </tal:steps>
+  </ul>
+</div>
