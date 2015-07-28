@@ -42,7 +42,7 @@ ViewletManagers and their Viewlets
 GlobalMenu
 ----------
 
-   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"uvc-headers")
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"headers")
    >>> manager 
    <uvc.layout.slots.managers.Headers object ...>
 
