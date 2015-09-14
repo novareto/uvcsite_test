@@ -28,3 +28,6 @@ class IFolderListingTable(Interface):
 class IMyRoles(Interface):
     """Return all allowed Roles in various forms
     """
+
+class IStammdaten(Interface):
+    """Marker Interface for Stammdaten"""
