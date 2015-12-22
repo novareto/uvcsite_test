@@ -40,7 +40,7 @@ class Index(TablePage):
     @property
     def title(self):
         name = self.request.principal.title
-        return _(u"Ordner von %s", name)
+        return u"Ordner von %s" % name
 
     description = _(u"Hier werden Ihre Dokumente abgelegt")
 

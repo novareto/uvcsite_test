@@ -10,7 +10,7 @@ class UserManagement(grok.GlobalUtility):
     """ Utility for Usermanagement """
     grok.implements(IUserManagement)
     users = (
-        {'mnr':'0101010001', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
+        {'mnr':'0101010001', 'az': '00', 'passwort':'passwort', 'email':'ck@test.de', 'rollen':['Adressbook']},
         {'mnr':'0202020002', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':[]},
         {'mnr':'0101010001-q', 'az': '-q', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
         {'mnr':'0101010001', 'az': '01', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
@@ -41,6 +41,13 @@ class UserManagement(grok.GlobalUtility):
         from copy import deepcopy
         for user in deepcopy(self.users):
             if user.get('mnr') == mnr and user.get('az') == az:
+                return user
+        return None
+
+    def getUserByEMail(self, mail):
+        from copy import deepcopy
+        for user in deepcopy(self.users):
+            if user.get('email') == mail:
                 return user
         return None
 

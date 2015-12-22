@@ -61,8 +61,10 @@ class UVCAuthenticator(grok.Model):
 
             if not utility.checkRule(login):
                 return
-
-            user = utility.getUser(login)
+            if '@' in login:
+                user = utility.getUserByEMail(login)
+            else:
+                user = utility.getUser(login)
             if not user:
                 return
 
@@ -72,7 +74,10 @@ class UVCAuthenticator(grok.Model):
             else:
                 if password != user.get('passwort'):
                     return
-            user_id = login
+            user_id = user['mnr']
+            if user['az'] != '00':
+                user_id = "%s-%s" % (user['mnr'], user['az'])
+
             authenticated = session[USER_SESSION_KEY] = dict(
                 id=user_id,
                 title=login,
