@@ -11,7 +11,6 @@ import zope.component
 import zope.security
 
 from StringIO import StringIO
-from elementtree.SimpleXMLWriter import XMLWriter
 from hurry.workflow.interfaces import IWorkflowInfo
 from uvc.validation import validation
 from uvcsite.content.directive import productfolder
@@ -158,12 +157,12 @@ class KontaktXML(uvcsite.BaseXML):
 
     def generate(self):
         io = StringIO()
-        w = XMLWriter(io, encoding="utf-8")
-        kon = w.start('kontakt')
-        w.start('basis')
-        w.element('creator', self.request.principal.id)
-        w.element('name', self.context.name)
-        w.end()
-        w.close(kon)
-        io.seek(0)
+        #w = XMLWriter(io, encoding="utf-8")
+        #kon = w.start('kontakt')
+        #w.start('basis')
+        #w.element('creator', self.request.principal.id)
+        #w.element('name', self.context.name)
+        #w.end()
+        #w.close(kon)
+        #io.seek(0)
         self.xml_file.write(parseString(io.read()).toprettyxml(indent="  "))
