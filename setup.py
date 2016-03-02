@@ -67,7 +67,6 @@ setup(name='uvcsite',
           'zope.pluggableauth',
           'zope.principalannotation',
           'zope.sendmail',
-          'uvc.authomaticx',
           'zope.testbrowser [zope-functional-testing]',
           ],
       entry_points = """

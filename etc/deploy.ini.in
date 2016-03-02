@@ -24,6 +24,7 @@ rollup = true
 recompute_hashes = true 
 compile = true
 
+
 # Logging configuration
 
 [loggers]
