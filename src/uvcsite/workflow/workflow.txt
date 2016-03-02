@@ -33,6 +33,12 @@ workflow setup. Let´s check if we get the both...
    >>> wu.getTransitionById('progress')
    <hurry.workflow.workflow.Transition object at ...>
 
+   >>> wu.getTransitionById('review')
+   <hurry.workflow.workflow.Transition object at ...>
+
+   >>> wu.getTransitionById('fix')
+   <hurry.workflow.workflow.Transition object at ...>
+
 What happens if we ask for an non existing transition
 
    >>> wu.getTransitionById('noexist')
@@ -87,3 +93,21 @@ Can we set the Object in State Progress and move it then forwart to progress Pub
    >>> IWorkflowInfo(lars).fireTransition('fix')
    >>> wf.getState()
    1
+
+Can we set the State of a new Object to Review and Publish it from there
+------------------------------------------------------------------------
+
+   >>> root['app']['egon'] = egon = Person() 
+
+   >>> wf = IWorkflowState(egon)
+   >>> wf.getState()
+   0
+
+   >>> IWorkflowInfo(egon).fireTransition('review')
+   >>> wf.getState()
+   3
+
+   >>> IWorkflowInfo(egon).fireTransition('review_to_publish')
+   >>> wf.getState()
+   1 
+

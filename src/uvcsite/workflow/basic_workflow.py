@@ -3,7 +3,9 @@
 # cklinger@novareto.de
 
 import grok
+import uvcsite
 
+from zope import interface
 from uvcsite import IContent
 from datetime import datetime
 
@@ -15,11 +17,12 @@ from hurry.workflow.interfaces import (
 CREATED = 0
 PUBLISHED = 1
 PROGRESS = 2
+REVIEW = 3
 
 
 def titleForState(state):
     """ Reverse Mapping of workflow States """
-    mapping = {0: 'Entwurf', 1: 'gesendet', 2: 'in Verarbeitung'}
+    mapping = {0: 'Entwurf', 1: 'gesendet', 2: 'in Verarbeitung', 3: 'Review'}
     return mapping.get(state, 'unbekannt')
 
 
@@ -43,15 +46,29 @@ def create_workflow():
         source=CREATED,
         destination=PROGRESS)
 
-    fix_transition = workflow.Transition( 
+    fix_transition = workflow.Transition(
         transition_id='fix',
         title='fix',
         source=PROGRESS,
         destination=PUBLISHED)
 
+    review = workflow.Transition(
+        transition_id='review',
+        title='publish_to_review',
+        source=CREATED,
+        destination=REVIEW)
+
+    review_to_publish = workflow.Transition(
+        transition_id='review_to_publish',
+        title='review to publish',
+        source=REVIEW,
+        destination=PUBLISHED)
+
     return workflow.Workflow([create_transition,
                               progress_transition,
                               fix_transition,
+                              review,
+                              review_to_publish,
                               publish_transition])
 
 grok.global_utility(create_workflow, provides=IWorkflow)
@@ -63,14 +80,15 @@ class WorkflowState(workflow.WorkflowState, grok.Adapter):
     grok.context(IContent)
     grok.provides(IWorkflowState)
 
+
 # Workflow Info
 
 class WorkflowInfo(workflow.WorkflowInfo, grok.Adapter):
     grok.context(IContent)
     grok.provides(IWorkflowInfo)
 
-# Events
 
+# Events
 
 @grok.subscribe(IContent, grok.IObjectAddedEvent)
 def initializeWorkflow(content, event):
@@ -80,3 +98,23 @@ def initializeWorkflow(content, event):
 @grok.subscribe(IWorkflowTransitionEvent)
 def set_publish_action(event):
     event.object.published = datetime.now()
+
+
+class ReviewViewlet(grok.Viewlet):
+    grok.viewletmanager(uvcsite.IAboveContent)
+    grok.context(interface.Interface)
+    grok.baseclass()
+
+    @property
+    def values(self):
+        results = []
+        homefolder = uvcsite.getHomeFolder(self.request)
+        if homefolder:
+            interaction = self.request.interaction
+            for productfolder in homefolder.values():
+                if interaction.checkPermission('uvc.ViewContent', productfolder):
+                    results = [x for x in productfolder.values() if IWorkflowState(x).getState() == REVIEW]
+        return results
+
+    def render(self):
+        return u"<p class='alert'> Sie haben (%s) Dokumente in Ihrer ReviewList. </p>" % (len(self.values))

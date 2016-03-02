@@ -102,14 +102,19 @@ class Stat(uvcsite.Page):
 @grok.subscribe(Contact, uvcsite.IAfterSaveEvent)
 def handle_save(obj, event):
     sp = transaction.savepoint()
+    wf = IWorkflowInfo(obj)
     try:
-        pdf = zope.component.getMultiAdapter((obj, event.request), name=u"pdf")
-        pdf.create(fn="/tmp/kk/%s.pdf" % (obj.__name__))
         1 / 0
-        IWorkflowInfo(obj).fireTransition('publish')
+        if True:
+            wf.fireTransition('review')
+            uvcsite.log('add Document in state review')
+        else:
+            pdf = zope.component.getMultiAdapter((obj, event.request), name=u"pdf")
+            pdf.create(fn="/tmp/kk/%s.pdf" % (obj.__name__))
+            wf.fireTransition('publish')
     except StandardError, e:
         sp.rollback()
-        IWorkflowInfo(obj).fireTransition('progress')
+        wf.fireTransition('progress')
         uvcsite.logger.exception("ES IST EIN FEHLER AUFGETRETEN")
         uvcsite.log('simpleaddon', e.__doc__)
     print "AfterSaveEvent"
