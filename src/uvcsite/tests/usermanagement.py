@@ -10,7 +10,7 @@ class UserManagement(grok.GlobalUtility):
     """ Utility for Usermanagement """
     grok.implements(IUserManagement)
     users = (
-        {'mnr':'0101010001', 'az': '00', 'passwort':'passwort', 'email':'ck@test.de', 'rollen':['Adressbook']},
+        {'mnr':'0101010001', 'az': '00', 'passwort':'passwort', 'email':'ck@novareto.de', 'rollen':['Adressbook']},
         {'mnr':'0202020002', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':[]},
         {'mnr':'0101010001-q', 'az': '-q', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
         {'mnr':'0101010001', 'az': '01', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
@@ -101,3 +101,25 @@ class ViewPermission(grok.View):
 #from grokcore.component import global_adapter
 #global_adapter(QuickUserRoleManager, (IAdressBook,), IPrincipalRoleMap)
 #global_adapter(QuickUserRoleManager, (IAdressBook,), IPrincipalRoleManager)
+
+from zope.pluggableauth.factories import Principal, AuthenticatedPrincipalFactory
+from uvc.tbskin.skin import ITBSkinLayer
+from zope.pluggableauth.interfaces import IPrincipalInfo, AuthenticatedPrincipalCreated
+
+
+class UVCPrincipal(Principal):
+
+    foo = u"bar"
+
+
+class MyOwnPrincpalFactory(AuthenticatedPrincipalFactory, grok.MultiAdapter):
+    grok.adapts(IPrincipalInfo, ITBSkinLayer)
+
+    def __call__(self, authentication):
+        principal = UVCPrincipal(authentication.prefix + self.info.id,
+                              self.info.title,
+                              self.info.description)
+        grok.notify(AuthenticatedPrincipalCreated(
+            authentication, principal, self.info, self.request))
+        return principal
+
