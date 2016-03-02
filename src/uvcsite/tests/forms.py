@@ -8,7 +8,7 @@ import uvcsite
 from zope import interface
 from zope import schema
 
-from uvc.widgets import DatePicker, DatePickerCSS, double, masked_input
+from uvc.widgets import double, masked_input
 from zeam.form.base.widgets import getWidgetExtractor
 from uvc.widgets.fields import OptionalChoice
 from zope.i18n import translate
