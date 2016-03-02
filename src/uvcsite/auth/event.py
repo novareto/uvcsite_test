@@ -13,6 +13,8 @@ from zope.component import getUtility
 from dolmen.authentication.events import IUserLoggedInEvent
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from uvcsite.content.folderinit import createProductFolders
+from uvcsite.auth.interfaces import ICOUser
+from zope.interface import alsoProvides
 
 
 @grok.subscribe(IUserLoggedInEvent)
@@ -37,3 +39,4 @@ def applyPermissionsForExistentCoUsers(factory):
 def applyGroups(factory):
     principal = factory.principal
     principal.groups.append('uvc.Member')
+    alsoProvides(principal, ICOUser)

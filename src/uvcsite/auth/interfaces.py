@@ -1,5 +1,6 @@
 from zope.schema import TextLine
 from zope.interface import Interface
+from zope.security.interfaces import IPrincipal
 
 
 class IUVCAuth(Interface):
@@ -14,3 +15,7 @@ class IUVCAuth(Interface):
 
 class IMasterUser(Interface):
     """ Marker Interface for MasterUser"""
+
+
+class ICOUser(IPrincipal):
+    """ Marker Interface for Co Users"""
