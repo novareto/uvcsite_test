@@ -79,6 +79,7 @@ def handle_save(obj, event):
     sp = transaction.savepoint()
     wf = IWorkflowInfo(obj)
     try:
+        1 / 0
         if True:
             wf.fireTransition('review')
             uvcsite.log('add Document in state review')

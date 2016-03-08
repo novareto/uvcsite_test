@@ -171,5 +171,16 @@ Delete Item Form
   >>> 'hans' in homefolder['personcontainer']
   True
 
+Elements starting with __ are managment objects and they get not displayed
+
+  >>> homefolder['__hans__'] = PersonContainer() 
+  >>> '__hans__' in homefolder
+  True
+
+  >>> len(homefolder)
+  3 
+
+  >>> len(index.values)
+  1
   >>> endInteraction()
 
