@@ -63,31 +63,6 @@ class AdressBook(uvcsite.ProductFolder):
         return False
 
 
-#class StatMenu(uvcsite.MenuItem):
-#    grok.context(AdressBook)
-#    grok.viewletmanager(uvcsite.IExtraViews)
-#    grok.title('Statistik')
-#
-#    action = "stat"
-#
-
-
-class ADMenu(grok.Viewlet):
-    grok.viewletmanager(uvcsite.IAboveContent)
-    grok.context(AdressBook)
-    grok.order(40)
-
-    def update(self):
-        self.url = self.view.url(self.context, 'stat')
-        self.active = str(self.request.URL).startswith(self.url)
-
-    def render(self):
-        return """
-<ul class='nav nav-tabs pull-right'>
-  <li class='%s'><a href='%s'>Alte Dokumente</a></li>
-</ul>""" % (self.active and 'active' or 'inactive', self.url)
-
-
 class Stat(uvcsite.Page):
     grok.name('stat')
     grok.title('Statistik LONG LONG LONG')
@@ -104,7 +79,6 @@ def handle_save(obj, event):
     sp = transaction.savepoint()
     wf = IWorkflowInfo(obj)
     try:
-        1 / 0
         if True:
             wf.fireTransition('review')
             uvcsite.log('add Document in state review')

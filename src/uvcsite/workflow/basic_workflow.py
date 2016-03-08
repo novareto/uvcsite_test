@@ -100,6 +100,20 @@ def set_publish_action(event):
     event.object.published = datetime.now()
 
 
+#@grok.subscribe(IWorkflowTransitionEvent)
+def change_permissions(event):
+    if event.destination == PUBLISHED:
+        obj = event.object
+        principal = obj.principal
+        from uvcsite.auth.interfaces import ICOUser
+        from zope.securitypolicy import interfaces
+        if not ICOUser.providedBy(uvcsite.getPrincipal()):
+            prinper  = interfaces.IPrincipalPermissionManager(obj)
+            roleper  = interfaces.IRolePermissionManager(obj)
+            roleper.denyPermissionToRole('uvc.ViewContent', 'uvc.Editor')
+            prinper.grantPermissionToPrincipal('uvc.ViewContent', principal.id)
+
+
 class ReviewViewlet(grok.Viewlet):
     grok.viewletmanager(uvcsite.IAboveContent)
     grok.context(interface.Interface)

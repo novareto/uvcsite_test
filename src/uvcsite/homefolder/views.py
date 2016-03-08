@@ -119,7 +119,10 @@ class HomeFolderValues(Values):
         interaction = self.request.interaction
         for productfolder in self.context.values():
             if interaction.checkPermission('uvc.ViewContent', productfolder):
-                results.extend(productfolder.values())
+                if not productfolder.__name__.startswith('__'):
+                    for obj in productfolder.values():
+                        if interaction.checkPermission('uvc.ViewContent', obj):
+                            results.append(obj)
         return results
 
 
