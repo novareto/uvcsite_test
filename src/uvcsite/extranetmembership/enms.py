@@ -4,32 +4,136 @@
 
 import grok
 import uvcsite
-from grokcore.chameleon.components import ChameleonPageTemplateFile
 
-from zeam.form import base
-from dolmen.menu import menuentry
-from uvcsite import uvcsiteMF as _
 from dolmen.forms.base import Fields
-from zope.component import getUtility
-from uvcsite.interfaces import IUVCSite
-from zope.app.homefolder.interfaces import IHomeFolder
-from zope.securitypolicy.interfaces import IPrincipalRoleManager
-from uvcsite.interfaces import IMyHomeFolder, IPersonalPreferences, IPersonalMenu
+from grokcore.chameleon.components import ChameleonPageTemplateFile
+from uvcsite import uvcsiteMF as _
 from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
 from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
+from uvcsite.interfaces import IMyHomeFolder
+from zeam.form import base
+from zope.interface import Interface, directlyProvides
+from zope.app.homefolder.interfaces import IHomeFolder
+from zope.component import getUtility
+from zope.securitypolicy.interfaces import IPrincipalRoleManager
+from zope.location import Location, LocationProxy
+from zope.traversing.interfaces import ITraversable
 
 
 grok.templatedir('templates')
 
-class ENMS(uvcsite.Page):
-    grok.title('Mitbenutzerverwaltung')
+
+class IOnTheFlyUser(Interface):
+    pass
+
+
+class ENMSLister(Location):
+
+    def __init__(self, parent, name):
+        self.__parent__ = parent
+        self.__name__ = "++%s++" % name
+        self.um = getUtility(IUserManagement)
+        self.mnr, self.az = self.um.zerlegUser(parent.__name__)
+        self.user_schema = Fields(self.um.UserInterface)
+
+    def delete(self, az):
+        cn = '%s-%s' % (self.mnr, az)
+        self.um.deleteUser(cn)
+        for role in self.__parent__.values():
+            principal_roles = IPrincipalRoleManager(role)
+            principal_roles.removeRoleFromPrincipal('uvc.Editor', cn)
+
+    def update(self, **data):
+        cn = '%s-%s' % (self.mnr, data.get('az'))
+        self.um.updUser(**data)
+        for role in self.__parent__.values():
+            principal_roles = IPrincipalRoleManager(role)
+            principal_roles.removeRoleFromPrincipal('uvc.Editor', cn)
+        for role in data.get('rollen'):
+            principal_roles = IPrincipalRoleManager(self.__parent__[role])
+            principal_roles.assignRoleToPrincipal('uvc.Editor', cn)
+
+    def get_users(self):
+        for user in self.um.getUsersByMnr(self.mnr):
+            directlyProvides(user, IOnTheFlyUser)
+            yield LocationProxy(user, self, user['az'])
+
+    def __iter__(self):
+        return self.get_users()
+
+    def __getitem__(self, az):
+        user = None
+        cn = '%s-%s' % (self.mnr, az)
+        if self.um.getUser(cn):
+            user = LocationProxy(self.um.getUser(cn), self, az)
+            directlyProvides(user, IOnTheFlyUser)
+        return user
+
+    def get(self, az, default=None):
+        return self[az] or default
+
+
+class ENMSHomeFolderTraverser(grok.MultiAdapter):
     grok.context(IMyHomeFolder)
+    grok.name('enms')
+    grok.provides(ITraversable)
+    grok.adapts(IMyHomeFolder, Interface)
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def traverse(self, name, ignore):
+        lister = ENMSLister(self.context, 'enms')
+        if not name:
+            return lister
+        return lister.get(name)
+
+
+class IndexRedirector(grok.View):
+    grok.context(ENMSHomeFolderTraverser)
+    grok.name('index.html')
+
+    def render(self):
+        self.redirect(self.url(self.context.context, '++enms++'))
+
+
+class ENMSListerTraverser(grok.Traverser):
+    grok.context(ENMSLister)
+
+    def traverse(self, name):
+        return self.context.get(name)
+
+
+class ENMS(uvcsite.Page):
+    grok.name('index.html')
+    grok.title('Mitbenutzerverwaltung')
+    grok.context(ENMSLister)
     grok.require('uvc.ManageCoUsers')
 
-    def getUserGroup(self):
-        principal = self.request.principal.id
-        um = getUtility(IUserManagement)
-        return um.getUserGroups(principal)
+    uniqueid = 'mnr'
+
+    def user_fields(self, user):
+        for field in self.fields:
+            fieldname = field.identifier
+            multi = False
+            link = None
+            if fieldname == 'rollen':
+                value = user.get(fieldname, '')
+                value = self.displayRoles(value)
+            elif fieldname == self.uniqueid:
+                value = '%s-%s' % (user['mnr'], user['az'])
+                link = self.url(user)
+            else:
+                value = user.get(fieldname, '')
+            if hasattr(value, '__iter__'):
+                multi = True
+            yield {'value': value, 'multi': multi, 'link': link}
+
+    def update(self):
+        self.fields = Fields(self.context.user_schema).omit(
+            'passwort', 'confirm')
+        self.users = iter(self.context)
 
     def displayRoles(self, roles):
         rc = []
@@ -45,7 +149,7 @@ class ENMS(uvcsite.Page):
 
 class ENMSCreateUser(uvcsite.Form):
     """ Simple Form which displays values from a Dict"""
-    grok.context(IMyHomeFolder)
+    grok.context(ENMSLister)
     grok.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer anlegen"
@@ -53,7 +157,9 @@ class ENMSCreateUser(uvcsite.Form):
 
     ignoreContent = False
 
-    fields = Fields(IExtranetMember)
+    @property
+    def fields(self):
+        return Fields(self.context.user_schema)
 
     def updateForm(self):
         super(ENMSCreateUser, self).updateForm()
@@ -72,7 +178,7 @@ class ENMSCreateUser(uvcsite.Form):
         um = getUtility(IUserManagement)
         all_users = self.getNextNumber(um.getUserGroups(principal))
         user = principal + '-' + str(all_users).zfill(2)
-        rollen = self.context.keys()
+        rollen = self.context.__parent__.keys()
         return {'mnr': user, 'rollen': rollen}
 
     def update(self):
@@ -89,46 +195,37 @@ class ENMSCreateUser(uvcsite.Form):
         um.addUser(**data)
         # Setting Home Folder Rights
         for role in data.get('rollen'):
-            principal_roles = IPrincipalRoleManager(self.context[role])
+            principal_roles = IPrincipalRoleManager(self.context.__parent__[role])
             principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         principal = self.request.principal
         homeFolder = IHomeFolder(principal).homeFolder
-        self.redirect(self.url(homeFolder, 'enms'))
+        self.redirect(self.url(homeFolder, '++enms++'))
 
 
 class ENMSUpdateUser(uvcsite.Form):
     """ A Form for updating a User in ENMS"""
-    grok.context(IMyHomeFolder)
+    grok.name('index.html')
+    grok.context(IOnTheFlyUser)
     grok.require('uvc.ManageCoUsers')
 
     label = u"Mitbenutzer verwalten"
     description = u"Nutzen Sie diese Form um die Daten eines Mitbenutzers zu pflegen."
 
-    fields = Fields(IExtranetMember)
     ignoreContent = False
 
-    def getDefaultData(self):
-        principal = self.request.principal.title
-        id = "%s-%s" % (self.request.principal.title, self.request.get('cn'))
-        user = {}
-        if self.request.get('cn'):
-            um = getUtility(IUserManagement)
-            user = um.getUser(id)
-            user['mnr'] = id
-            user['confirm'] = user['passwort']
-        return user
+    @property
+    def fields(self):
+        return Fields(self.context.__parent__.user_schema)
 
     def update(self):
-        data = self.getDefaultData()
-        self.setContentData(base.DictDataManager(data))
+        self.setContentData(base.DictDataManager(self.context))
 
     def updateForm(self):
         super(ENMSUpdateUser, self).updateForm()
         mnr = self.fieldWidgets.get('form.field.mnr')
         pw = self.fieldWidgets.get('form.field.passwort')
         confirm = self.fieldWidgets.get('form.field.confirm')
-
         mnr.template = ChameleonPageTemplateFile('templates/mnr.cpt')
         pw.template = ChameleonPageTemplateFile('templates/password.cpt')
         confirm.template = ChameleonPageTemplateFile('templates/password.cpt')
@@ -139,34 +236,17 @@ class ENMSUpdateUser(uvcsite.Form):
         if errors:
             self.flash('Es sind Fehler aufgetreten', type='error')
             return
-        um = getUtility(IUserManagement)
-        um.updUser(**data)
-        for role in self.context.values():
-            principal_roles = IPrincipalRoleManager(role)
-            principal_roles.removeRoleFromPrincipal('uvc.Editor',
-                                                    data.get('mnr'))
-        for role in data.get('rollen'):
-            principal_roles = IPrincipalRoleManager(self.context[role])
-            principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
+        data['az'] = self.context['az']
+        self.context.__parent__.update(**data)
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
-        principal = self.request.principal
-        homeFolder = IHomeFolder(principal).homeFolder
-        self.redirect(self.url(homeFolder, 'enms'))
+        self.redirect(self.url(self.context.__parent__))
 
     @base.action(_(u"Entfernen"))
     def entfernen(self):
         data, errors = self.extractData()
-        um = getUtility(IUserManagement)
-        key = data.get('mnr')
-        um.deleteUser(key)
-        for role in self.context.values():
-            principal_roles = IPrincipalRoleManager(role)
-            principal_roles.removeRoleFromPrincipal('uvc.Editor',
-                            data.get('mnr'))
+        self.context.__parent__.delete(self.context['az'])
         self.flash(_(u'Der Mitbenutzer wurde entfernt.'))
-        principal = self.request.principal
-        homeFolder = IHomeFolder(principal).homeFolder
-        self.redirect(self.url(homeFolder, 'enms'))
+        self.redirect(self.url(self.context.__parent__))
 
 
 class ChangePasswordMenu(uvcsite.MenuItem):
@@ -176,7 +256,7 @@ class ChangePasswordMenu(uvcsite.MenuItem):
 
     @property
     def action(self):
-       return self.view.url(IHomeFolder(self.request.principal).homeFolder, 'changepassword')
+        return self.view.url(IHomeFolder(self.request.principal).homeFolder, 'changepassword')
 
 
 class ChangePassword(uvcsite.Form):
@@ -187,10 +267,9 @@ class ChangePassword(uvcsite.Form):
     description = _(u'Hier können Sie Ihr Passwort ändern')
     #uvcsite.menu(uvcsite.PersonalMenu)
     grok.require('zope.View')
-
-    fields = Fields(IExtranetMember).select('passwort', 'confirm')
     ignoreContext = True
 
+    fields = Fields(IExtranetMember).select('passwort', 'confirm')
 
     @base.action(_(u"Bearbeiten"))
     def changePasswort(self):

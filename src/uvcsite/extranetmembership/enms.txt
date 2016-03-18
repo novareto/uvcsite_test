@@ -72,7 +72,7 @@ At 'Meine Einstellungen' we should get a Link to 'Benutzerverwaltung'
 
    >>> neuerUser = browser.getLink('Mitbenutzer erstellen')
    >>> neuerUser
-   <Link text='Mitbenutzer erstellen' url='http://localhost/app/members/uvc.user1/enmscreateuser'>
+   <Link text='Mitbenutzer erstellen' url='http://localhost/app/members/uvc.user1/++enms++/enmscreateuser'>
 
 After clicking on Benutzerverwaltung we can go to the "add a new User"
 
@@ -111,19 +111,21 @@ Again we have to navigate to 'Benutzerverwaltung'
 Here we click on the user we want to modify!
 
    >>> benutzerverwaltung.click()
-   >>> "<span> 0101010001-01</span>" in browser.contents
+
+   >>> "<span>uvc.user1-04</span>" in browser.contents
    True
 
-   >>> update = browser.getLink('0101010001-01')
+   >>> update = browser.getLink('uvc.user1-04')
+
    >>> update
-   <Link text='0101010001-01' url='http://localhost/app/members/uvc.user1/enmsupdateuser?cn=01'>
+   <Link text='uvc.user1-04' url='http://localhost/app/members/uvc.user1/++enms++/04'>
    >>> update.click()
 
 Here we have the input form we check if we have the right value for passwort!
 
    >>> form = browser.getForm()
    >>> print form.getControl(name='form.field.passwort').value
-   passwort 
+   geheim
 
 So let's check here if we check correctly the password and confirm:
 
@@ -172,12 +174,12 @@ Here we click on the user we want to modify!
 
    >>> benutzerverwaltung.click()
 
-   >>> "<span> 0101010001-01</span>" in browser.contents
+   >>> "<span>uvc.user1-04</span>" in browser.contents
    True
 
-   >>> delete = browser.getLink('0101010001-01')
+   >>> delete = browser.getLink('uvc.user1-04')
    >>> delete 
-   <Link text='0101010001-01' url='http://localhost/app/members/uvc.user1/enmsupdateuser?cn=01'>
+   <Link text='uvc.user1-04' url='http://localhost/app/members/uvc.user1/++enms++/04'>
    >>> delete.click()
 
 Here we have the input form!

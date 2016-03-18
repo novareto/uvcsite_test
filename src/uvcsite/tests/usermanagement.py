@@ -3,31 +3,72 @@
 
 import grok
 import uvcsite
-from uvcsite.extranetmembership.interfaces import IUserManagement
+from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
+from zope.schema import Choice
+
+
+class User(dict):
+    pass
+
+
+USERS = [
+    User(**{
+        'mnr':'0101010001', 'az': '00', 'passwort':'passwort',
+        'email':'ck@novareto.de', 'rollen':['Adressbook']}),
+    User(**{
+        'mnr':'0202020002', 'az': '00', 'passwort':'passwort',
+        'email':'test@test.de', 'rollen':[]}),
+    User(**{
+        'mnr':'0101010001-q', 'az': '-q', 'passwort':'passwort',
+        'email':'test@test.de', 'rollen':['Adressbook']}),
+    User(**{
+        'mnr':'0101010001', 'az': '01', 'passwort':'passwort',
+        'email':'ck1@novareto.de', 'rollen':['Adressbook']}),
+    User(**{
+        'mnr':'0101010001', 'az': '02', 'passwort':'passwort',
+        'email':'test@test.de', 'rollen':[]}),
+    User(**{
+        'mnr':'0101010002', 'az': '02', 'passwort':'passwort',
+        'email':'test@test.de'}),
+    User(**{
+        'mnr':'0101010002', 'az': '03', 'passwort':'passwort',
+        'email':'test@test.de'}),
+    User(**{
+        'mnr':'lars', 'az': '00', 'passwort':'passwort',
+        'email':'test@test.de', 'rollen':[]}),
+]
+
+
+class HierarchyUser(IExtranetMember):
+    department = Choice(
+        title=u'Department',
+        required=True,
+        values=['IT', 'Human resources'],
+        )
 
 
 class UserManagement(grok.GlobalUtility):
     """ Utility for Usermanagement """
     grok.implements(IUserManagement)
-    users = (
-        {'mnr':'0101010001', 'az': '00', 'passwort':'passwort', 'email':'ck@novareto.de', 'rollen':['Adressbook']},
-        {'mnr':'0202020002', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':[]},
-        {'mnr':'0101010001-q', 'az': '-q', 'passwort':'passwort', 'email':'test@test.de', 'rollen':['Adressbook']},
-        {'mnr':'0101010001', 'az': '01', 'passwort':'passwort', 'email':'ck1@novareto.de', 'rollen':['Adressbook']},
-        {'mnr':'0101010001', 'az': '02', 'passwort':'passwort', 'email':'test@test.de', 'rollen':[]},
-        {'mnr':'0101010002', 'az': '02', 'passwort':'passwort', 'email':'test@test.de'},
-        {'mnr':'0101010002', 'az': '03', 'passwort':'passwort', 'email':'test@test.de'},
-        {'mnr':'lars', 'az': '00', 'passwort':'passwort', 'email':'test@test.de', 'rollen':[]},
-        )
+
+    UserInterface = HierarchyUser
 
     def updUser(self, **kwargs):
         """Updates a User"""
+        cn = '%s-%s' % (kwargs['mnr'], kwargs['az'])
+        user = self.getUser(cn)
+        user.update(**kwargs)
 
-    def deleteUser(self, mnr):
-        """Delete the User"""
+    def deleteUser(self, cn):
+        user = self.getUser(cn)
+        USERS.remove(user)
 
     def addUser(self, **kwargs):
         """Adds a User"""
+        mnr, az = kwargs['mnr'].split('-')
+        USERS.append(
+            User(mnr=mnr, az=az, roles=kwargs['rollen'], passwort=kwargs.get('passwort'))
+        )
 
     def zerlegUser(self, mnr):
         ll = mnr.split('-')
@@ -38,15 +79,18 @@ class UserManagement(grok.GlobalUtility):
     def getUser(self, mnr):
         """Return a User"""
         mnr, az = self.zerlegUser(mnr)
-        from copy import deepcopy
-        for user in deepcopy(self.users):
+        for user in USERS:
             if user.get('mnr') == mnr and user.get('az') == az:
                 return user
         return None
 
+    def getUsersByMnr(self, mnr):
+        for user in USERS:
+            if user['mnr'] == mnr:
+                yield user
+    
     def getUserByEMail(self, mail):
-        from copy import deepcopy
-        for user in deepcopy(self.users):
+        for user in USERS:
             if user.get('email') == mail:
                 return user
         return None
@@ -54,8 +98,7 @@ class UserManagement(grok.GlobalUtility):
     def getUserGroups(self, mnr):
         """Return a group of Users"""
         ret = []
-        from copy import deepcopy
-        for x in deepcopy(self.users):
+        for x in USERS:
             usr = "%s-%s" % (x['mnr'], x['az'])
             ret.append(dict(cn=usr, mnr=usr, rollen=x.get('rollen', []), az=x.get('az')))
         return ret
