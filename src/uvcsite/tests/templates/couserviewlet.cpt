@@ -1,0 +1,11 @@
+<div class="well row">
+  <ul class="list-inline pull-right">
+    <li tal:repeat="principal viewlet.allowed_principals">
+      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+      <span tal:content="principal"> </span>
+    </li>
+    <li>
+      <a href="" class="btn btn-primary btn-group-sm"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  Neuen Benutzer Anlegen </a>
+    </li>
+  </ul>
+</div>

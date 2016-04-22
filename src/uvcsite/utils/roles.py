@@ -29,12 +29,13 @@ class MyRoles(grok.Adapter):
                 masteruser = True
                 ret.append('ENMS')
         for name, productfolder in self.homefolder.items():
-            if masteruser:
-                ret.append(name)
-            else:
-                prm = IPrincipalRoleMap(productfolder)
-                for rolesetting in prm.getRolesForPrincipal(self.principal.id):
-                    role, setting = rolesetting
-                    if 'uvc.Editor' == role and setting is Allow:
-                        ret.append(name)
+            if not name.startswith('__'):
+                if masteruser:
+                    ret.append(name)
+                else:
+                    prm = IPrincipalRoleMap(productfolder)
+                    for rolesetting in prm.getRolesForPrincipal(self.principal.id):
+                        role, setting = rolesetting
+                        if 'uvc.Editor' == role and setting is Allow:
+                            ret.append(name)
         return ret

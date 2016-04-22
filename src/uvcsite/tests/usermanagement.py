@@ -166,3 +166,19 @@ class MyOwnPrincpalFactory(AuthenticatedPrincipalFactory, grok.MultiAdapter):
             authentication, principal, self.info, self.request))
         return principal
 
+
+from uvcsite.content.interfaces import IProductFolder
+from uvc.layout.interfaces import IAboveContent
+from zope.securitypolicy.interfaces import IPrincipalRoleManager, Allow
+grok.templatedir('templates')
+
+
+class CoUserViewlet(grok.Viewlet):
+    grok.context(IProductFolder)
+    grok.viewletmanager(IAboveContent)
+    grok.order(500)
+
+    def update(self):
+        prm = IPrincipalRoleManager(self.context)
+        principals = prm.getPrincipalsForRole('uvc.Editor')
+        self.allowed_principals = [x[0] for x in principals if x[1] is Allow]

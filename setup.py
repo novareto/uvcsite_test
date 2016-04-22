@@ -54,8 +54,10 @@ setup(name='uvcsite',
           'uvc.tbskin',
           'uvc.validation',
           'uvc.widgets',
+          'uvc.api',
           'uvckickstart',
           'z3c.schema2xml',
+          'z3c.schema2json',
           'zeam.form.layout',
           'zeam.form.table',
           'zeam.form.viewlet',
@@ -74,5 +76,7 @@ setup(name='uvcsite',
       main = grokcore.startup:application_factory
       [paste.filter_app_factory]
       registries = uvcsite.registries:provide_registries
+      [fanstatic.libraries]
+      uvcsite = uvcsite.app:library
       """,
       )

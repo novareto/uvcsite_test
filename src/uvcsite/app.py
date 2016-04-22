@@ -31,6 +31,7 @@ from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
 from zope.site.site import SiteManagerContainer
+from fanstatic import Library, Resource, Group
 
 
 grok.templatedir('templates')
@@ -43,12 +44,7 @@ def setup_pau(PAU):
                               "No Challenge if Authenticated",)
 
 
-class Icons(grok.DirectoryResource):
-    """Directory Resource for Icons like pdf.png
-    """
-    grok.name('uvc-icons')
-    grok.path('icons')
-
+library = Library('uvcsite', 'static')
 
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
