@@ -39,4 +39,5 @@ def applyPermissionsForExistentCoUsers(factory):
 def applyGroups(factory):
     principal = factory.principal
     principal.groups.append('uvc.Member')
-    alsoProvides(principal, ICOUser)
+    if principal.id.count('-') >= 1:
+        alsoProvides(principal, ICOUser)
