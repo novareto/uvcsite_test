@@ -9,20 +9,19 @@ from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 from zope.interface import Interface
 from uvcsite import uvcsiteMF as _
 from uvc.layout import interfaces
-from uvc.layout.slots import menus
 from dolmen.app.layout import MenuViewlet
 from uvcsite.content import IContent, IProductFolder
 from uvcsite.interfaces import IFolderListingTable
 from zope.component import getMultiAdapter
 from uvcsite import IGetHomeFolderUrl
 from dolmen.content import schema
-from dolmen import menu
 from zeam.form import base
 from uvc.layout import TablePage
 from dolmen.app.layout.viewlets import ContextualActions
 from zeam.form.base.interfaces import ISimpleForm
 from megrok.pagetemplate import PageTemplate
 from zope.pagetemplate.interfaces import IPageTemplate
+from megrok.z3ctable import Values
 
 
 grok.templatedir('templates')
@@ -43,7 +42,6 @@ class Index(TablePage):
 
     sortOnId = "table-modified-5"
     sortOn = "table-modified-5"
-    #sortOrder = "down"
 
     @property
     def title(self):
@@ -85,6 +83,20 @@ class Index(TablePage):
             column.renderCell(item))
 
 
+class ProductFolderValues(Values):
+    """This Adapter returns IContent Objects
+       form child folders
+    """
+    grok.adapts(IProductFolder, None, Index)
+
+    @property
+    def values(self):
+        results = []
+        interaction = self.request.interaction
+        for value in self.context.values():
+            if interaction.checkPermission('uvc.ViewContent', value):
+                results.append(value)
+        return results
 
 
 class ExtraViewsViewlet(ContextualActions):
@@ -202,4 +214,3 @@ class Display(uvcsite.Form):
         content_object = self.context
         schemas = schema.bind().get(content_object)
         return Fields(*schemas)
-

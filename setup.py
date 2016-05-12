@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '2.5.1.dev0'
+version = '2.5.2.dev0'
 
 setup(name='uvcsite',
       version=version,
@@ -57,7 +57,7 @@ setup(name='uvcsite',
           'uvc.api',
           'uvckickstart',
           'z3c.schema2xml',
-          'z3c.schema2json',
+          # 'z3c.schema2json',
           'zeam.form.layout',
           'zeam.form.table',
           'zeam.form.viewlet',

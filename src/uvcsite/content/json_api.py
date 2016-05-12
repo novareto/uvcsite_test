@@ -9,7 +9,8 @@ from dolmen.content import IContent
 from uvcsite.content import IProductFolder
 from zope.interface import Invalid, Interface
 from hurry.workflow.interfaces import IWorkflowState
-from z3c.schema2json import serialize, deserialize
+#from z3c.schema2json import serialize
+#from z3c.schema2json.tools import deserialize
 from uvcsite.workflow.basic_workflow import titleForState
 from uvc.layout.forms.event import AfterSaveEvent
 
