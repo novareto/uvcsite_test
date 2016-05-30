@@ -155,3 +155,12 @@ class UAA(uvcsite.Altdaten):
     @property
     def values(self):
         return []
+
+
+from uvc.api import api
+
+class MyTT(api.Page):
+    api.context(uvcsite.IUVCSite)
+    import pdb; pdb.set_trace() 
+    template = api.get_template('test.cpt', __file__)
+

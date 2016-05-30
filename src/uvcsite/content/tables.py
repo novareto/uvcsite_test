@@ -55,6 +55,9 @@ class Link(LinkColumn):
     def getLinkContent(self, item):
         return item.title
 
+    def getSortKey(self, item):
+        return item.title
+
 
 class MetaTypeColumn(GetAttrColumn):
     grok.name('meta_type')
