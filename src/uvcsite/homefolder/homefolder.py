@@ -22,6 +22,9 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 class HomeFolder(grok.Container):
     grok.implements(IMyHomeFolder)
 
+    def values(self):
+        return [x for x in super(HomeFolder, self).values() if not x.__name__.startswith('__')]
+
 
 class Members(grok.Container):
     pass

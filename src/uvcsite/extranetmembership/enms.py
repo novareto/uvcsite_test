@@ -54,7 +54,7 @@ class ENMSLister(Location):
             principal_roles.assignRoleToPrincipal('uvc.Editor', cn)
 
     def get_users(self):
-        for user in self.um.getUsersByMnr(self.mnr):
+        for user in self.um.getUserGroups(self.mnr):
             directlyProvides(user, IOnTheFlyUser)
             yield LocationProxy(user, self, user['az'])
 
