@@ -78,7 +78,7 @@ One item in the container!
       "items": [
           {
               "author": "uvc.uaz",
-              "datum": "20.04.2016",
+              "datum": "...",
               "id": "christian",
               "meta_type": "Unfallanzeige",
               "status": "Entwurf",

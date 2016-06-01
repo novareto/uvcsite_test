@@ -100,7 +100,7 @@ class UserManagement(grok.GlobalUtility):
         ret = []
         for x in USERS:
             usr = "%s-%s" % (x['mnr'], x['az'])
-            ret.append(dict(cn=usr, mnr=usr, rollen=x.get('rollen', []), az=x.get('az')))
+            ret.append(User(cn=usr, mnr=x['mnr'], rollen=x.get('rollen', []), az=x.get('az')))
         return ret
 
     def updatePasswort(self, **kwargs):

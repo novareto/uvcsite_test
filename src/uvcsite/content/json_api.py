@@ -46,7 +46,6 @@ class ProductFolderRest(grok.REST):
         errors = []
         content = self.context.getContentType()()
         interface = content.schema[0]
-        import pdb; pdb.set_trace()
         serializer = IJSONSerializer(content)
         serializer.work(self.body, interface, errors)
 
@@ -96,7 +95,6 @@ class DefaultSerializer(grok.Adapter):
 
     def work(self, payload, interface, errors):
         try:
-            import pdb; pdb.set_trace()
             deserialize(payload, interface, self.context)
         except Exception, e:  # Here should be a DeserializeError
             for field, (exception, element) in e.field_errors.items():
