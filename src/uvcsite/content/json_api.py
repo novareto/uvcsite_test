@@ -31,14 +31,13 @@ class ProductFolderRest(grok.REST):
         for id, obj in self.context.items():
             state = titleForState(IWorkflowState(obj).getState())
             container['items'].append(
-                dict(
-                    meta_type = obj.meta_type,
-                    id=obj.__name__,
-                    titel=obj.title,
-                    author=obj.principal.id,
-                    datum=obj.modtime.strftime('%d.%m.%Y'),
-                    status=state
-                )
+                    {'meta_type': obj.meta_type,
+                        '@url': 'http://www.google.de',
+                        'id': obj.__name__,
+                        'titel': obj.title,
+                        'author': obj.principal.id,
+                        'datum': obj.modtime.strftime('%d.%m.%Y'),
+                        'status': state}
             )
         return json.dumps(container)
 

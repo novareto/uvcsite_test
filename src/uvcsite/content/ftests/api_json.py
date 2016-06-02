@@ -77,6 +77,7 @@ One item in the container!
       "id": "uaz",
       "items": [
           {
+              "@url": "http://www.google.de",
               "author": "uvc.uaz",
               "datum": "...",
               "id": "christian",
@@ -109,6 +110,7 @@ More items in the container!
       "id": "uaz", 
       "items": [
           {
+              "@url": "http://www.google.de", 
               "author": "uvc.uaz", 
               "datum": "...", 
               "id": "christian", 
@@ -117,6 +119,7 @@ More items in the container!
               "titel": "Mein Unfall" 
           },
           {
+              "@url": "http://www.google.de", 
               "author": "uvc.uaz", 
               "datum": "...", 
               "id": "lars", 
@@ -142,6 +145,7 @@ A Valid uaz_xml file!
   ...      }
   ...    '''
   >>> response = http_call('PUT', 'http://localhost/++rest++jsonapi/uaz', uaz_xml, AUTHORIZATION=auth_header)
+  CALLED: After Save Event
 
   >>> print format(response)
   {
