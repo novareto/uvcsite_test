@@ -112,23 +112,3 @@ def change_permissions(event):
             roleper  = interfaces.IRolePermissionManager(obj)
             roleper.denyPermissionToRole('uvc.ViewContent', 'uvc.Editor')
             prinper.grantPermissionToPrincipal('uvc.ViewContent', principal.id)
-
-
-class ReviewViewlet(grok.Viewlet):
-    grok.viewletmanager(uvcsite.IAboveContent)
-    grok.context(interface.Interface)
-    grok.baseclass()
-
-    @property
-    def values(self):
-        results = []
-        homefolder = uvcsite.getHomeFolder(self.request)
-        if homefolder:
-            interaction = self.request.interaction
-            for productfolder in homefolder.values():
-                if interaction.checkPermission('uvc.ViewContent', productfolder):
-                    results = [x for x in productfolder.values() if IWorkflowState(x).getState() == REVIEW]
-        return results
-
-    def render(self):
-        return u"<p class='alert'> Sie haben (%s) Dokumente in Ihrer ReviewList. </p>" % (len(self.values))
