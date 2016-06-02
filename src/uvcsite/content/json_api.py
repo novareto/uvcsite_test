@@ -9,8 +9,8 @@ from dolmen.content import IContent
 from uvcsite.content import IProductFolder
 from zope.interface import Invalid, Interface
 from hurry.workflow.interfaces import IWorkflowState
-#from z3c.schema2json import serialize
-#from z3c.schema2json.tools import deserialize
+from z3c.schema2json import serialize
+from z3c.schema2json.tools import deserialize
 from uvcsite.workflow.basic_workflow import titleForState
 from uvc.layout.forms.event import AfterSaveEvent
 
@@ -46,10 +46,8 @@ class ProductFolderRest(grok.REST):
         errors = []
         content = self.context.getContentType()()
         interface = content.schema[0]
-        import pdb; pdb.set_trace()
         serializer = IJSONSerializer(content)
         serializer.work(self.body, interface, errors)
-
         if not errors:
             self.context.add(content)
             result = dict(
@@ -59,9 +57,7 @@ class ProductFolderRest(grok.REST):
             )
             grok.notify(AfterSaveEvent(content, self.request))
         else:
-            result = dict(
-                result='error',
-            ) 
+            result = errors
         return json.dumps(result) 
 
 
@@ -96,7 +92,6 @@ class DefaultSerializer(grok.Adapter):
 
     def work(self, payload, interface, errors):
         try:
-            import pdb; pdb.set_trace()
             deserialize(payload, interface, self.context)
         except Exception, e:  # Here should be a DeserializeError
             for field, (exception, element) in e.field_errors.items():

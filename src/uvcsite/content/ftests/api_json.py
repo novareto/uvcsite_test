@@ -78,7 +78,7 @@ One item in the container!
       "items": [
           {
               "author": "uvc.uaz",
-              "datum": "20.04.2016",
+              "datum": "...",
               "id": "christian",
               "meta_type": "Unfallanzeige",
               "status": "Entwurf",
@@ -106,23 +106,23 @@ More items in the container!
   ... AUTHORIZATION=auth_header)
   >>> print format(response)
   {
-      "id": "uaz",
+      "id": "uaz", 
       "items": [
           {
-              "author": "uvc.uaz",
-              "datum": "20.04.2016",
-              "id": "christian",
-              "meta_type": "Unfallanzeige",
-              "status": "Entwurf",
-              "titel": "Mein Unfall"
+              "author": "uvc.uaz", 
+              "datum": "...", 
+              "id": "christian", 
+              "meta_type": "Unfallanzeige", 
+              "status": "Entwurf", 
+              "titel": "Mein Unfall" 
           },
           {
-              "author": "uvc.uaz",
-              "datum": "20.04.2016",
-              "id": "lars",
-              "meta_type": "Unfallanzeige",
-              "status": "Entwurf",
-              "titel": "Unfall von Lars"
+              "author": "uvc.uaz", 
+              "datum": "...", 
+              "id": "lars", 
+              "meta_type": "Unfallanzeige", 
+              "status": "Entwurf", 
+              "titel": "Unfall von Lars" 
           }
       ]
   }
@@ -167,50 +167,40 @@ We should now have 3 objects in our container!
   >>> len(root['uaz'])
   3
 
-A##n Invalid uaz_xml file!
-#
-#  >>> uaz_xml_with_error = '''
-#  ...    <Unfallanzeige id="christian">
- # ...      <title>Mein Unfall</title>
- # ...      <name>Christian Klinger Junior</name>
-#  ...      <age>twenty nine</age>
-#  ...    </Unfallanzeige>'''
-#  >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz',
-#  ... uaz_xml_with_error, AUTHORIZATION=auth_header)
-#
-#  >>> result = response.getBody()
- # >>> expected_result = '''
-#  ... <failure>
-#  ...   <error field="age" message="Inappropriate argument value (of correct type)."><age>twenty nine</age>
-#  ...   </error>
-#  ...  <error field="name" message="Value is too long"><name>Christian Klinger Junior</name>
-#  ...     </error>
-#  ... </failure>'''
-#
-#  >>> from lxml import etree
-#  >>> from formencode.doctest_xml_compare import xml_compare
-#  >>> tree1 = etree.fromstring(result.strip())
-#  >>> tree2 = etree.fromstring(expected_result.strip())
-#  >>> assert xml_compare(tree1, tree2) is False  # identical.
-#
-#
-#An invariant uaz_xml file
-#
-#  >>> uaz_xml_with_invariant = '''
-#  ...    <Unfallanzeige id="christian">
-#  ...      <title>Mein Unfall</title>
-#  ...      <name>hans</name>
-#  ...      <age>10</age>
-#  ...    </Unfallanzeige>'''
-#  >>> response = http_call('PUT', 'http://localhost/++rest++api/uaz',
-#  ...  uaz_xml_with_invariant, AUTHORIZATION=auth_header)
-#  >>> print response.getBody()
-#  <failure>
-#    <error text="Invariant: This combination of name and age is not valid"/>
-#  </failure>
-#
-#"""
-#
+Invalid uaz_xml file!
+
+  >>> uaz_json_with_error = '''
+  ... {
+  ...       "title": "Unfallanzeige",
+  ...       "name": "CK",
+  ...       "age": "thirty"
+  ... }
+  ... '''
+  >>> response = http_call('PUT', 'http://localhost/++rest++jsonapi/uaz',
+  ... uaz_json_with_error, AUTHORIZATION=auth_header)
+
+  >>> result = response.getBody()
+  >>> print result
+  [{"field": "age", "message": "Object is of wrong type."}]
+
+
+An invariant uaz_xml file
+
+  >>> uaz_json_with_invariant = '''
+  ... {
+  ...       "title": "Mein Unfall",
+  ...       "name": "hans",
+  ...       "age": 10
+  ... }
+  ... '''
+  >>> response = http_call('PUT', 'http://localhost/++rest++jsonapi/uaz',
+  ...  uaz_json_with_invariant, AUTHORIZATION=auth_header)
+  >>> print response.getBody()
+  [{"text": "Invariant: This combination of name and age is not valid"}]
+
+"""
+
+
 import grok
 import uvcsite.tests
 from uvcsite.content import ProductFolder, IContent, Content, schema, name, contenttype
