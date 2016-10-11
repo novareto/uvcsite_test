@@ -25,14 +25,20 @@ def applyPermissionsForExistentCoUsers(factory):
     if not homefolder:
         return
     um = getUtility(IUserManagement)
-    rollen = um.getUser(principal.id)['rollen']
-    if homefolder.__name__ != principal.id:
+    user = um.getUser(principal.id)
+    rollen = user['rollen']
+    if user['az'] != '00':
+        pid = "%s-%s" % (user['mnr'], user['az'])
+    else:
+        pid = user['mnr']
+    print pid
+    if homefolder.__name__ != pid:
         for pf in homefolder.keys():
             if pf in rollen:
                 prm = IPrincipalRoleManager(homefolder.get(pf))
-                if prm.getSetting('uvc.Editor', principal.id).getName() == 'Unset':
-                    prm.assignRoleToPrincipal('uvc.Editor', principal.id)
-                    uvcsite.log('Give uvc.Editor to %s in folder %s' % (principal.id, pf))
+                if prm.getSetting('uvc.Editor', pid).getName() == 'Unset':
+                    prm.assignRoleToPrincipal('uvc.Editor', pid)
+                    uvcsite.log('Give uvc.Editor to %s in folder %s' % (pid, pf))
 
 
 @grok.subscribe(IAuthenticatedPrincipalCreated)

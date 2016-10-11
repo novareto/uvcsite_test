@@ -77,7 +77,7 @@ class UVCAuthenticator(grok.Model):
             user_id = user['mnr']
             if user['az'] != '00':
                 user_id = "%s-%s" % (user['mnr'], user['az'])
-
+            print "USER_ID", user_id
             authenticated = session[USER_SESSION_KEY] = dict(
                 id=user_id,
                 title=login,
@@ -104,7 +104,7 @@ class CheckRemote(grok.XMLRPC):
             login=user,
             password=password))
         if principal:
-            notify(UserLoginEvent(Principal(user)))
+            notify(UserLoginEvent(Principal(principal.id)))
             return 1
         return 0
 
