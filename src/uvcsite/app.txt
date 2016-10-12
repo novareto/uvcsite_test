@@ -1,4 +1,4 @@
-Do a functional doctest test on the app.
+iDo a functional doctest test on the app.
 ========================================
 
 :doctest:
