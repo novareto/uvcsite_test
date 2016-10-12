@@ -31,7 +31,6 @@ def applyPermissionsForExistentCoUsers(factory):
         pid = "%s-%s" % (user['mnr'], user['az'])
     else:
         pid = user['mnr']
-    print pid
     if homefolder.__name__ != pid:
         for pf in homefolder.keys():
             if pf in rollen:
