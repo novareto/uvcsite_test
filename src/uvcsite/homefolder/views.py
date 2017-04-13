@@ -138,6 +138,7 @@ class RedirectIndexMembers(grok.View):
 class RestHomeFolderTraverser(grok.Traverser):
     grok.context(Members)
     grok.layer(IRESTLayer)
+    #grok.baseclass()
 
     def traverse(self, name):
         return uvcsite.getHomeFolder(self.request).get(name)

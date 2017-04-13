@@ -37,6 +37,7 @@ class IContact(uvcsite.IContent):
     )
 
 
+
 class IAdressBook(uvcsite.IProductFolder):
     """ Marker Interface """
 

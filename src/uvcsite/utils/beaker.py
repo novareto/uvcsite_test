@@ -19,6 +19,7 @@ if config:
         invalidate_corrupt=True,
         key=config.get('session.key', 'uvcsite.session.id'),
         log_file=None,
+        cookie_domain=config.get('session.cookie_domain'),
         secret=config.get('session.secret', 'DolmenRocks'),
         timeout=config.get('session.timeout', 600,),
         type=config.get('session.type', 'cookie'),

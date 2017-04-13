@@ -20,7 +20,7 @@ class PDF(uvcsite.MenuItem):
     action = "/index"
 
     def update(self):
-        self.view.flash(u'I am a Message', type="success")
+        self.view.flash(u'I am a Message', "success")
 
 
 class Auskunftsdienste(uvcsite.SubMenu):
@@ -74,7 +74,7 @@ class Index(uvcsite.Page):
     grok.require('zope.View')
 
     def update(self):
-        self.flash('Fehlermeldung...', 'error')
+        self.flash('Fehlermeldung KLAUSi ERNST', 'error')
         self.flash('Warnung...', 'warning')
 
 

@@ -39,6 +39,7 @@ class ProductFolderRest(grok.REST):
                         'datum': obj.modtime.strftime('%d.%m.%Y'),
                         'status': state}
             )
+        self.request.response.setHeader('Access-Control-Allow-Origin', '*')
         return json.dumps(container)
 
     def PUT(self):
