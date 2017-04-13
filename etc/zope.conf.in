@@ -56,5 +56,4 @@ devmode on
   session.key             beaker.session
   session.secret          secret
   session.validatekey     fdjaksfj
-  session.cookie_domain    
 </product-config>
