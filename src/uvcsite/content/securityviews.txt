@@ -68,7 +68,7 @@ Anmelden als Mitbenutzer 0101010001-01
   >>> browser.getControl(name="password").value = "passwort"
   >>> save = browser.getControl(name="action.log-in")
   >>> save.click()
-  >>> '0101010001-01.' in browser.contents
+  >>> '0101010001-01' in browser.contents
   True
 
   >>> browser.getLink('Mein Ordner').click()
@@ -114,7 +114,7 @@ Wir versuchen hier mit dem Benutzer 0202020002-02 auf den Container von
   >>> browser2.getControl(name="password").value = "passwort"
   >>> save = browser2.getControl(name="action.log-in")
   >>> save.click()
-  >>> '0202020002.' in browser2.contents
+  >>> '0202020002' in browser2.contents
   True
 
   >>> browser2.getLink('Mein Ordner').click()
