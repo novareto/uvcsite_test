@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import dolmen.content
 from zope.schema import TextLine
-from dolmen.content import IContent
 from zope.interface import Interface
 from grok.interfaces import IContainer
 
@@ -22,7 +22,7 @@ class IFolderColumnTable(Interface):
     """
 
 
-class IContent(IContent):
+class IContent(dolmen.content.IContent):
 
     title = TextLine(
         title = u"Titel",

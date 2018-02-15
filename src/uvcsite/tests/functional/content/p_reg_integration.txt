@@ -1,0 +1,93 @@
+Functional Doctest
+==================
+
+:Test-Layer: functional
+
+  >>> import grok
+  >>> import uvcsite
+  >>> from uvcsite.app import Uvcsite
+  >>> from zope.pluggableauth.factories import Principal
+  >>> from zope.publisher.browser import TestRequest
+  >>> from zope.component import getUtility, getMultiAdapter, queryMultiAdapter, getAdapters
+  >>> from uvcsite.content.interfaces import IProductRegistration
+  >>> from uvcsite.content.directive import productfolder
+  >>> from uvcsite.content.productregistration import ProductRegistration
+  >>> from grokcore.component.testing import grok_component
+  >>> from zope.app.homefolder.interfaces import IHomeFolderManager
+  >>> from zope.component.hooks import setSite
+  >>> import zope.security.management
+
+  >>> root = getRootFolder()
+  >>> root['app'] = app = Uvcsite()
+  >>> setSite(app)
+
+  >>> root['app']
+  <uvcsite.app.Uvcsite object at ...>
+
+  >>> utility = getUtility(IHomeFolderManager)
+  >>> christian = Principal('christian', 'christian')
+  >>> christian
+  Principal('christian')
+
+  >>> request = TestRequest()
+  >>> request.setPrincipal(christian)
+  >>> zope.security.management.newInteraction(request)
+
+  >>> class Addressbook(ProductRegistration):
+  ...     grok.name('adressbook')
+  ...     grok.title('Adressbuch')
+  ...     grok.description('Beschreibung Entgeltnachweis')
+  ...     productfolder('uvcsite.tests.fixtures.simpleaddon.AdressBook')
+
+  >>> grok_component('Addressbook', Addressbook)
+  True
+
+  >>> class AdrBookWithoutRole(Addressbook):
+  ...     grok.name('adrbookwithoutrole')
+  ...     asRole = False
+
+  >>> grok_component('AdrBookWithoutRole', AdrBookWithoutRole)
+  True
+
+  >>> utility.assignHomeFolder('christian')
+
+  >>> regs = dict([x for x in getAdapters((christian, request), IProductRegistration)])
+  >>> adr = regs['adressbook']
+  >>> adr
+  <Addressbook object at ...>
+
+  >>> adrwr = regs['adrbookwithoutrole']
+  >>> adrwr 
+  <AdrBookWithoutRole object at ...>
+
+  >>> from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
+
+  >>> vb = [x.title for x in vocab_berechtigungen(None)][0]
+  >>> vb
+  'Adressbuch'
+
+  >>> vb is adr.title
+  True
+
+  >>> hf = uvcsite.getHomeFolder(request)
+  >>> hf
+  <uvcsite.homefolder.homefolder.HomeFolder object at 0...>
+
+  >>> from pprint import pprint
+  >>> from zope.securitypolicy.interfaces import IPrincipalRoleManager
+  >>> hfm = IPrincipalRoleManager(hf)
+  >>> roles = hfm.getRolesForPrincipal('christian')
+  >>> pprint(roles)
+  [(u'uvc.MasterUser', PermissionSetting: Allow),
+   (u'uvc.Editor', PermissionSetting: Allow),
+   (u'uvc.User', PermissionSetting: Allow)]
+
+  >>> hfm.unsetRoleForPrincipal('uvc.Editor', 'christian' )
+  >>> pprint(hfm.getRolesForPrincipal('christian'))
+  [(u'uvc.MasterUser', PermissionSetting: Allow),
+   (u'uvc.User', PermissionSetting: Allow)]
+
+  >>> len(vocab_berechtigungen(None))
+  0
+
+  >>> zope.security.management.endInteraction()

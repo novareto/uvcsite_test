@@ -1,0 +1,43 @@
+Content
+=======
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Setup
+-----
+First start with makeing an instance of the Content 
+
+  >>> from uvcsite.tests.fixtures.simpleaddon import Contact
+
+  >>> contact = Contact() 
+  >>> contact 
+  <uvcsite.tests.fixtures.simpleaddon.Contact object at ...> 
+
+Attributes
+----------
+There should be the two attributes from our IContent Schema
+
+  >>> contact.name
+
+  >>> contact.alter
+
+
+Schema
+------
+
+  >>> contact.schema
+  [<InterfaceClass uvcsite.tests.fixtures.simpleaddon.IContact>] 
+
+
+BaseClasses
+-----------
+
+  >>> from uvcsite.content.components import Content, ProductFolder
+
+  >>> content = Content()
+  >>> content.schema
+  <object object at ...>
+
+  >>> print content.meta_type
+  Content

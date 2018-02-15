@@ -142,7 +142,6 @@ class ENMS(uvcsite.Page):
             try:
                 rc.append(vb.getTerm(role).title)
             except:
-                print role
                 pass
         return rc
 

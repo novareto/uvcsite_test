@@ -1,0 +1,135 @@
+Check the dynamic table elements in the view of the productfolder
+=================================================================
+
+:doctest:
+:layer: uvcsite.tests.FunctionalLayer
+
+Setup
+-----
+
+  >>> from uvcsite.app import Uvcsite
+  >>> root = getRootFolder()
+  >>> from zope.site.hooks import setSite
+  >>> root['app'] = app = Uvcsite()
+  >>> setSite(app)
+
+  >>> import uvcsite
+  >>> import logging
+  >>> import sys
+  >>> logger = uvcsite.logger
+  >>> logger.root.addHandler(logging.StreamHandler(sys.stdout))
+
+Login mit MasterUser 0101010001
+
+  >>> from zope.testbrowser.wsgi import Browser
+  >>> browser = Browser()
+  >>> browser.handleErrors = True 
+  >>> browser.open('http://127.0.0.1/app/')
+
+  >>> browser.getControl(name="login").value = "0101010001"
+  >>> browser.getControl(name="password").value = "passwort"
+  >>> save = browser.getControl(name="action.log-in")
+  >>> save.click()
+
+  >>> browser.getLink('Mein Ordner').click()
+  >>> "<span>Adressbuch</span>" in browser.contents
+  True
+
+Erstellen eines Objecttypes 'Contact'
+
+  >>> browser.open('http://127.0.0.1/app/members/0101010001/Adressbook/@@add')
+
+  >>> browser.getControl(name="form.field.title").value = "Titel"
+  >>> browser.getControl(name="form.field.name").value = "christian"
+  >>> browser.getControl(name="form.field.alter").value = "30"
+
+  >>> save = browser.getControl(name="form.action.uvcsite.add")
+  >>> save
+  <SubmitControl name='form.action.uvcsite.add' type='submit'>
+
+We have a subscriber for the AfterSaveEvent for uvcsite which prints "AfterSaveEvent".
+
+  >>> save.click()
+  ES IST EIN FEHLER AUFGETRETEN
+  Traceback (most recent call last):
+  ...
+      1 / 0
+  ZeroDivisionError: integer division or modulo by zero
+  AfterSaveEvent
+
+  >>> "Added Content" in browser.contents
+  True
+
+Anmelden als Mitbenutzer 0101010001-01
+
+  >>> browser = Browser()
+  >>> browser.open('http://127.0.0.1/app/')
+  >>> browser.getControl(name="login").value = "0101010001-01"
+  >>> browser.getControl(name="password").value = "passwort"
+  >>> save = browser.getControl(name="action.log-in")
+  >>> save.click()
+  >>> '0101010001-01' in browser.contents
+  True
+
+  >>> browser.getLink('Mein Ordner').click()
+  >>> browser.url
+  'http://127.0.0.1/app/members/0101010001'
+
+Wir können das Objekt von 0101010001 sehen...
+
+  >>> '<td data-title="Titel" ><a href="http://127.0.0.1/app/members/0101010001/Adressbook/Contact">Titel</a></td>' in  browser.contents
+  True
+
+
+Mitbentzer 0101010001-02 -> keine Rolle Adressbook
+
+  >>> browserOR = Browser()
+  >>> browserOR.open('http://127.0.0.1/app/')
+  >>> browserOR.getControl(name="login").value = "0101010001-02"
+  >>> browserOR.getControl(name="password").value = "passwort"
+  >>> save = browserOR.getControl(name="action.log-in")
+  >>> save.click()
+  >>> '0101010001-02' in browserOR.contents
+  True
+
+  >>> browserOR.getLink('Mein Ordner').click()
+  >>> browserOR.url
+  'http://127.0.0.1/app/members/0101010001'
+
+  >>> '<span>0101010001-02</span>' in browserOR.contents
+  True
+
+Der Link zum Contakt object ist *nicht* vorhanden.
+
+  >>> '<td><a href="http://127.0.0.1/app/members/0101010001/Adressbook/Contact">Titel</a></td>' not in  browserOR.contents
+  True
+
+
+Wir versuchen hier mit dem Benutzer 0202020002-02 auf den Container von
+0101010001 zuzugreifen
+
+  >>> browser2 = Browser()
+  >>> browser2.open('http://127.0.0.1/app/')
+  >>> browser2.getControl(name="login").value = "0202020002"
+  >>> browser2.getControl(name="password").value = "passwort"
+  >>> save = browser2.getControl(name="action.log-in")
+  >>> save.click()
+  >>> '0202020002' in browser2.contents
+  True
+
+  >>> browser2.getLink('Mein Ordner').click()
+  >>> browser2.url
+  'http://127.0.0.1/app/members/0202020002'
+
+  >>> browser.url
+  'http://127.0.0.1/app/members/0101010001'
+
+
+  >>> browser2.open(browser.url)
+  >>> from urllib import unquote as uq
+  >>> uq(browser2.url) == 'http://127.0.0.1/app/@@login?camefrom=http://127.0.0.1/app/members/0101010001/@@index'
+  True
+
+  >>> browser2.open(browser.url + '/Adressbook')
+  >>> uq(browser2.url) == 'http://127.0.0.1/app/@@login?camefrom=http://127.0.0.1/app/members/0101010001/Adressbook/@@index'
+  True

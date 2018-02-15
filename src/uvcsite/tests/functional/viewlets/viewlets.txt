@@ -1,0 +1,146 @@
+Functional Doctest For Viewlets
+===============================
+
+:Test-Layer: functional
+
+Setup
+-----
+
+We have to setup view and context to get our ViewletManager!
+
+   >>> from zope.component import getMultiAdapter
+   >>> from zope.publisher.browser import TestRequest
+   >>> from zope.contentprovider.interfaces import IContentProvider
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> from zope.component.hooks import setSite
+   >>> from zope.securitypolicy.interfaces import IPrincipalRoleManager
+   >>> root['app'] = uvcsite = Uvcsite()
+   >>> setSite(uvcsite)
+
+Context
+
+   >>> context = root['app']
+   >>> context
+   <uvcsite.app.Uvcsite object at ...>
+   >>> prm = IPrincipalRoleManager(context)
+   >>> prm.assignRoleToPrincipal('uvc.User', 'uvc.someuser')
+   >>> prm.assignRoleToPrincipal('uvc.ManageUsers', 'uvc.someuser')
+   >>> from uvcsite.tests import startInteraction, endInteraction
+   >>> request = startInteraction('uvc.someuser')
+   >>> #zope.security.management.newInteraction(request)
+
+View
+
+   >>> view = getMultiAdapter((context, request), name=u"index")
+   >>> view   
+   <uvcsite.examples.browser.views.Index object at ...>
+
+
+ViewletManagers and their Viewlets
+----------------------------------
+
+
+GlobalMenu
+----------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"headers")
+   >>> manager 
+   <uvc.layout.slots.managers.Headers object ...>
+
+Show the viewlets:
+
+   >>> manager.update()
+ 
+
+PersonalPreferences
+-------------------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"personalpreferences")
+   >>> manager 
+   <uvc.layout.slots.menus.PersonalPreferences object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <uvcsite.examples.browser.views.LogoutMenu object at 0...>
+   <uvc.staticcontent.staticmenuentries.UserName object at 0...>
+   <uvc.staticcontent.staticmenuentries.MeinOrdner object at 0...>
+   <uvc.staticcontent.staticmenuentries.PersonalPanelEntry object at 0...>
+
+We render the individual viewlets:
+
+  >>> [x for x in manager.viewlets]
+  [<uvcsite.examples.browser.views.LogoutMenu object at 0...>, 
+   <uvc.staticcontent.staticmenuentries.UserName object at 0...>, 
+   <uvc.staticcontent.staticmenuentries.MeinOrdner object at 0...>, 
+   <uvc.staticcontent.staticmenuentries.PersonalPanelEntry object at 0...>]
+  >>> logout, username, meinordner, prefs  = manager.viewlets
+
+Username:
+
+  >>> username.title
+  'uvc.someuser' 
+
+
+MeinOrdner:
+
+  >>> meinordner.title
+  ''
+
+
+Footer
+------
+
+   >>> manager = getMultiAdapter((context, request, view), IContentProvider, name=u"footermenu")
+   >>> manager 
+   <uvc.layout.slots.menus.Footer object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> len(manager.viewlets)
+   2 
+
+   >>> for x in manager.viewlets:
+   ...     print x
+   <uvcsite.tests.fixtures.menustuff.KontaktMenu object at 0...>
+   <uvcsite.tests.fixtures.menustuff.MenuImpressum object at 0...>
+
+
+PersonalMenu
+------------
+
+   >>> manager = getMultiAdapter(
+   ...     (context, request, view), IContentProvider, name=u"personalmenu")
+   >>> manager 
+   <uvc.layout.slots.menus.PersonalMenu object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> for x in manager.viewlets:
+   ...     print x
+   <uvcsite.extranetmembership.enms.ChangePasswordMenu object at ...>
+
+
+GlobalMenu
+----------
+   >>> import uvcsite
+   >>> uvcsite.getHomeFolder(request)
+   <uvcsite.homefolder.homefolder.HomeFolder object at 0...> 
+
+   >>> manager = getMultiAdapter(
+   ...     (context, request, view), IContentProvider, name=u"globalmenu")
+   >>> manager 
+   <uvc.layout.slots.menus.GlobalMenu object ...>
+
+Show the Viewlets:
+
+   >>> manager.update()
+   >>> len(manager.viewlets)
+   5 
+
+   >>> endInteraction()

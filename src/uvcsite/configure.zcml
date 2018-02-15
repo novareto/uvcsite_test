@@ -48,6 +48,6 @@
   <i18n:registerTranslations directory="locales" />
 
   <include package="uvcsite" file="principals.zcml"/>
-  <grok:grok package="." />
+  <grok:grok package="." exclude="examples" />
 
 </configure>

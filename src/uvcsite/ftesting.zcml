@@ -1,12 +1,17 @@
 <configure
-   xmlns="http://namespaces.zope.org/zope"
-   i18n_domain="uvcsite"
-   package="uvcsite"
-   xmlns:grok="http://namespaces.zope.org/grok"
-   >
+    i18n_domain="uvcsite"
+    package="uvcsite"
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:grok="http://namespaces.zope.org/grok">
 
   <include package="uvcsite" />
+  <include package="uvc.tbskin" />
+  <include package="uvc.staticcontent" />
 
+  <grok:grok package=".tests.fixtures" />
+  <grok:grok package=".examples" />
+  
   <principal
       id="zope.mgr"
       title="Manager"
@@ -51,6 +56,6 @@
 
   <grant role="zope.Manager" principal="zope.mgr" />
   <grant role="uvc.Editor" principal="uvc.uaz" />
-  <include package="uvc.tbskin" />
-  <include package="uvc.staticcontent" />
+  <browser:defaultSkin name="tbskin" />
+
 </configure>

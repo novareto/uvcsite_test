@@ -1,0 +1,72 @@
+Functional Doctest
+==================
+
+Setup
+
+  >>> import grok
+  >>> import uvcsite
+  >>> from zope.component import getMultiAdapter
+  >>> from zope.publisher.browser import TestRequest
+  >>> from grokcore.component.testing import grok_component
+  
+  >>> root = getRootFolder()
+  >>> root['context'] = app = uvcsite.app.Uvcsite()
+  >>> app.title = u"Novareto"
+
+Erstellen eines einfachen XML's
+
+  >>> class SimpleXML(uvcsite.BaseDataView):
+  ...     grok.name('simplexml')
+  ...     grok.title('enw.xml')
+  ...     grok.context(uvcsite.IUVCSite)
+  ...     
+  ...     def generate(self):
+  ...         print "I am called"
+
+  >>> grok_component('SimpleXML', SimpleXML)
+  True
+
+  >>> request = TestRequest()
+
+  >>> view = getMultiAdapter((app, request), name="simplexml")
+  >>> view
+  <SimpleXML object at ...>
+
+  >>> view.update()
+  I am called
+
+  >>> view.base_file
+  <open file '<fdopen>', mode 'w+b' at ...>
+
+  >>> view.filename
+  'enw.xml'
+
+  >>> view.update(filename='/tmp/example.xml')
+  I am called
+
+  >>> view.base_file
+  <open file '<fdopen>', mode 'w+b' at ...>
+
+  >>> view.render()
+  <open file '<fdopen>', mode 'w+b' at ...>
+
+  >>> class SimpleXML(uvcsite.BaseDataView):
+  ...     grok.name('simplexml')
+  ...     grok.title('enw.xml')
+  ...     grok.context(uvcsite.IUVCSite)
+  ...
+  ...     contenttype = "text/xml"     
+  ...
+  ...     def generate(self):
+  ...         print "I am called"
+
+  >>> grok_component('SimpleXML', SimpleXML)
+  True
+  >>> request = TestRequest()
+  >>> view = getMultiAdapter((app, request), name="simplexml")
+  >>> view.contenttype
+  'text/xml'
+  >>> view.update()
+  I am called
+  >>> view.render()
+  <open file '<fdopen>', mode 'w+b' at ...>
