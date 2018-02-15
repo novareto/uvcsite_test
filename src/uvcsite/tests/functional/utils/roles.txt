@@ -12,6 +12,7 @@ Erstellen einer Site
   >>> from uvcsite.app import Uvcsite
   >>> from zope.component.hooks import setSite
   >>> import zope.security.interfaces
+  >>> from zope.interface import implementer
 
   >>> root = getRootFolder()
   >>> root['app'] = app = Uvcsite()
@@ -20,16 +21,16 @@ Erstellen einer Site
   >>> from uvcsite.tests import startInteraction, endInteraction
   >>> request = startInteraction('christian')
 
-  >>> class Christian(object):
-  ...     grok.implements(zope.security.interfaces.IPrincipal)
+  >>> @grok.implementer(zope.security.interfaces.IPrincipal)
+  ... class Christian(object):
   ...
   ...     id = "christian"
   ...     title = "Christian Klinger"
   ...     description = "The User Christian"
 
 
-  >>> class ChristianUU(object):
-  ...     grok.implements(zope.security.interfaces.IPrincipal)
+  >>> @grok.implementer(zope.security.interfaces.IPrincipal)
+  ... class ChristianUU(object):
   ...
   ...     id = "christian-01"
   ...     title = "Christian 01"
@@ -46,6 +47,9 @@ Erstellen einer Site
 
   >>> christian = Christian()
   >>> homefolder = IHomeFolder(christian).homeFolder
+
+  >>> IHomeFolder(christian)
+  <uvcsite.homefolder.homefolder.HomeFolderForPrincipal object at 0...>
 
   >>> len(homefolder)
   1

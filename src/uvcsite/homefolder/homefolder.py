@@ -62,8 +62,7 @@ class PortalMembership(HomeFolderManager):
         return grok.getSite()['members']
 
 
-class HomeFolderForPrincipal(grok.Adapter,
-                             zope.app.homefolder.homefolder.HomeFolder):
+class HomeFolderForPrincipal(zope.app.homefolder.homefolder.HomeFolder, grok.Adapter):
     grok.context(IPrincipal)
 
     def __init__(self, principal):

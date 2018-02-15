@@ -3,7 +3,10 @@
            i18n_domain="uvcsite">
 
   <include package="uvcsite" />
+  <include package="uvcsite.examples" />
+<!--
   <include package="uvcsite.tests" />
+-->
 
   <include package="uvc.staticcontent" />
 

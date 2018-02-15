@@ -63,6 +63,7 @@ Functional Doctest
 
   >>> [x for x in homefolder.keys()]
   [u'Adressbook']
+  >>> list(getAdapters((christian, request), IProductRegistration))
 
   >>> len(list(getAdapters((christian, request), IProductRegistration)))
   2
@@ -117,7 +118,7 @@ CUSTOM GROUP
 
 import grok
 from zope.interface import Interface
-from uvcsite.content.directive import productfolder 
+from uvcsite.content.directive import productfolder
 from uvcsite.content.productregistration import ProductRegistration
 from zope.publisher.interfaces.http import IHTTPRequest
 
