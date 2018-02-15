@@ -10,7 +10,7 @@
   <include package="uvc.staticcontent" />
 
   <grok:grok package=".tests.fixtures" />
-  <grok:grok package=".examples" />
+  <include  package=".examples" />
   
   <principal
       id="zope.mgr"

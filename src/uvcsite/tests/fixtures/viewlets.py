@@ -5,5 +5,6 @@
 from uvc.tbskin.resources import TBSkinViewlet
 
 
-class TBSkinViewlet(TBSkinViewlet):
-    pass
+#class TBSkinViewlet(TBSkinViewlet):
+#    grok.baseclass()
+#    pass
