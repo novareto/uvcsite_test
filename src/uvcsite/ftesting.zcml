@@ -6,11 +6,9 @@
     xmlns:grok="http://namespaces.zope.org/grok">
 
   <include package="uvcsite" />
-  <include package="uvc.tbskin" />
   <include package="uvc.staticcontent" />
-
   <grok:grok package=".tests.fixtures" />
-  <include  package=".examples" />
+  <include package=".examples" />
   
   <principal
       id="zope.mgr"
@@ -56,6 +54,5 @@
 
   <grant role="zope.Manager" principal="zope.mgr" />
   <grant role="uvc.Editor" principal="uvc.uaz" />
-  <browser:defaultSkin name="tbskin" />
 
 </configure>

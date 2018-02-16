@@ -56,7 +56,7 @@ Erstellen einer Site
 
   >>> adrbook = homefolder.get('Adressbook')
   >>> adrbook
-  <uvcsite.tests.fixtures.simpleaddon.AdressBook object at ...>
+  <uvcsite.examples.simpleaddon.AdressBook object at ...>
 
 Checking the 'DefaultSecurity'
 

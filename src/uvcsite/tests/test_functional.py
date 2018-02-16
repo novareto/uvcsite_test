@@ -131,9 +131,8 @@ def suiteFromPackage(name):
                 optionflags=optionflags,
                 globs=globs)
         if test is not None:
-            #test.layer = layer
+            test.layer = layer
             suite.addTest(test)
-    suite.layer = layer
     return suite
 
 

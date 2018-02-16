@@ -9,4 +9,4 @@ First start with makeing an instance of the Container/Folder
   >>> from zope.component import getUtilitiesFor
   >>> from uvcsite.content import IProductFolder
   >>> list(getUtilitiesFor(IProductFolder))
-  [(u'Adressbook', <class 'uvcsite.tests.fixtures.simpleaddon.AdressBook'>)]
+  [(u'Adressbook', <class 'uvcsite.examples.simpleaddon.AdressBook'>)]

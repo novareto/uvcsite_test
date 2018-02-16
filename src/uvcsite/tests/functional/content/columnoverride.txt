@@ -10,7 +10,7 @@ Setup
 
   >>> import grok
   >>> from grok.testing import grok_component
-  >>> from uvcsite.tests.fixtures.simpleaddon import AdressBook
+  >>> from uvcsite.examples.simpleaddon import AdressBook
   >>> from megrok.z3ctable import LinkColumn
 
   >>> class OverrideTitleColumn(LinkColumn):
@@ -25,7 +25,7 @@ Setup
   >>> r = getRootFolder()
   >>> r['folder'] = folder = AdressBook()
   >>> folder
-  <uvcsite.tests.fixtures.simpleaddon.AdressBook object at ...>
+  <uvcsite.examples.simpleaddon.AdressBook object at ...>
 
 
   >>> import zope.interface

@@ -8,11 +8,11 @@ Setup
 -----
 First start with makeing an instance of the Content 
 
-  >>> from uvcsite.tests.fixtures.simpleaddon import Contact
+  >>> from uvcsite.examples.simpleaddon import Contact
 
   >>> contact = Contact() 
   >>> contact 
-  <uvcsite.tests.fixtures.simpleaddon.Contact object at ...> 
+  <uvcsite.examples.simpleaddon.Contact object at ...> 
 
 Attributes
 ----------
@@ -27,7 +27,7 @@ Schema
 ------
 
   >>> contact.schema
-  [<InterfaceClass uvcsite.tests.fixtures.simpleaddon.IContact>] 
+  [<InterfaceClass uvcsite.examples.simpleaddon.IContact>] 
 
 
 BaseClasses

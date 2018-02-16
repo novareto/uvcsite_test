@@ -17,13 +17,13 @@ Let's first create an instance of Uvcsite at the top level:
   >>> from zope.component.hooks import setSite
   >>> setSite(root)
 
-  >>> from uvcsite.tests.fixtures.simpleaddon import Contact, AdressBook
+  >>> from uvcsite.examples.simpleaddon import Contact, AdressBook
   >>> adr_buch = AdressBook()
   >>> root['adr'] = adr_buch
   >>> adr_buch['christian'] = christian = Contact(name=u"Christian", alter=u"2")
   >>> adr_buch['lars'] = lars = Contact(name=u"Lars", alter=u"2")
   >>> adr_buch
-  <uvcsite.tests.fixtures.simpleaddon.AdressBook object at ...>
+  <uvcsite.examples.simpleaddon.AdressBook object at ...>
 
   >>> len(adr_buch)
   2 

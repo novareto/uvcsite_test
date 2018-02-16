@@ -111,7 +111,7 @@ class Addressbook(ProductRegistration):
     grok.name('adressbook')
     grok.title('Adressbuch')
     grok.description('Beschreibung Entgeltnachweis')
-    productfolder('uvcsite.tests.fixtures.simpleaddon.AdressBook')
+    productfolder('uvcsite.examples.simpleaddon.AdressBook')
 
 
 def kopf(c):

@@ -53,7 +53,7 @@ Functional Doctest
   'Adressbuch'
 
   >>> adr.productfolder
-  <class 'uvcsite.tests.fixtures.simpleaddon.AdressBook'>
+  <class 'uvcsite.examples.simpleaddon.AdressBook'>
 
   >>> homefolder = uvcsite.getHomeFolder(request)
   >>> [x for x in homefolder.keys()]
@@ -63,7 +63,10 @@ Functional Doctest
 
   >>> [x for x in homefolder.keys()]
   [u'Adressbook']
+
   >>> list(getAdapters((christian, request), IProductRegistration))
+  [(u'adressbook', <uvcsite.tests.functional.content.productregistration.Addressbook object at ...>),
+   (u'Unfallanzeige', <uvcsite.tests.functional.content.productregistration.UAZRegistration object at ...>)]
 
   >>> len(list(getAdapters((christian, request), IProductRegistration)))
   2
@@ -131,7 +134,7 @@ class Addressbook(ProductRegistration):
     grok.name('adressbook')
     grok.title('Adressbuch')
     grok.description('Beschreibung Entgeltnachweis')
-    productfolder('uvcsite.tests.fixtures.simpleaddon.AdressBook')
+    productfolder('uvcsite.examples.simpleaddon.AdressBook')
 
 
 class UAZRegistration(ProductRegistration):

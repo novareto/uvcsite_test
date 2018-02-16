@@ -10,11 +10,11 @@ The Good Way
 
 First start with makeing an instance of the Container/Folder
 
-  >>> from uvcsite.tests.fixtures.simpleaddon import AdressBook
+  >>> from uvcsite.examples.simpleaddon import AdressBook
 
   >>> adressbook = AdressBook()
   >>> adressbook 
-  <uvcsite.tests.fixtures.simpleaddon.AdressBook object at ...>
+  <uvcsite.examples.simpleaddon.AdressBook object at ...>
 
 We should now get properties for name, title and description
 
@@ -36,14 +36,14 @@ description
 And we should get back our class with the get ContentType method
 
   >>> adressbook.getContentType()
-  <class 'uvcsite.tests.fixtures.simpleaddon.Contact'>
+  <class 'uvcsite.examples.simpleaddon.Contact'>
 
 
 The not so Good Way
 -------------------
 
    >>> from uvcsite import ProductFolder, contenttype
-   >>> from uvcsite.tests.fixtures.simpleaddon import Contact
+   >>> from uvcsite.examples.simpleaddon import Contact
 
    >>> class UnfallanzeigeContainer1(ProductFolder):
    ...     contenttype(Contact)

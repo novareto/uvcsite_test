@@ -52,4 +52,4 @@ class HomeFolderTest(zope.app.testing.functional.FunctionalTestCase):
         adapter = IGetHomeFolderUrl(self.request)
         self.assertEquals(
             'http://127.0.0.1/app/members/klaus/adressbook/@@add',
-            adapter.getAddURL(uvcsite.tests.fixtures.simpleaddon.Contact))
+            adapter.getAddURL(uvcsite.examples.simpleaddon.Contact))

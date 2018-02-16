@@ -12,10 +12,10 @@ First start with makeing an instance of the Container/Folder
 
   >>> root = getRootFolder()
 
-  >>> from uvcsite.tests.fixtures.simpleaddon import AdressBook
+  >>> from uvcsite.examples.simpleaddon import AdressBook
   >>> adrbook = AdressBook()
   >>> adrbook 
-  <uvcsite.tests.fixtures.simpleaddon.AdressBook object at ...>
+  <uvcsite.examples.simpleaddon.AdressBook object at ...>
 
   >>> import grok
   >>> class MyView(grok.View):
