@@ -106,10 +106,14 @@ class SystemError(uvcsite.Page, grok.components.ExceptionView):
         super(SystemError, self).__init__(context, request)
         self.context = grok.getSite()
         self.origin_context = context
+        RESPONSE = self.request.response
+        RESPONSE.setHeader('content-type', 'text/html')
 
     def update(self):
         super(SystemError, self).update()
         uvcsite.logger.error(self.origin_context)
+        RESPONSE = self.request.response
+        RESPONSE.setHeader('content-type', 'text/html')
 
 
 class UVCDateWidgetExtractor(DateWidgetExtractor):
