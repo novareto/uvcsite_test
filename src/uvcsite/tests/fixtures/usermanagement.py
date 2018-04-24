@@ -132,36 +132,3 @@ class ViewPermission(grok.View):
         print settingsForObject(context)
 
 
-#from uvcsite.tests.simpleaddon import IAdressBook
-#class QuickUserRoleManager(ExtraRoleMap):
-#    grok.implements(IPrincipalRoleManager, IPrincipalRoleMap)
-#
-#    def _compute_extra_data(self):
-#        extra_map = SecurityMap()
-#        extra_map.addCell('uvc.Editor', self.context.__parent__.__name__ + '-q', Allow)
-#        return extra_map
-#
-#from grokcore.component import global_adapter
-#global_adapter(QuickUserRoleManager, (IAdressBook,), IPrincipalRoleMap)
-#global_adapter(QuickUserRoleManager, (IAdressBook,), IPrincipalRoleManager)
-
-from zope.pluggableauth.factories import Principal, AuthenticatedPrincipalFactory
-from uvc.tbskin.skin import ITBSkinLayer
-from zope.pluggableauth.interfaces import IPrincipalInfo, AuthenticatedPrincipalCreated
-
-
-class UVCPrincipal(Principal):
-
-    foo = u"bar"
-
-
-class MyOwnPrincpalFactory(AuthenticatedPrincipalFactory, grok.MultiAdapter):
-    grok.adapts(IPrincipalInfo, ITBSkinLayer)
-
-    def __call__(self, authentication):
-        principal = UVCPrincipal(authentication.prefix + self.info.id,
-                              self.info.title,
-                              self.info.description)
-        grok.notify(AuthenticatedPrincipalCreated(
-            authentication, principal, self.info, self.request))
-        return principal
