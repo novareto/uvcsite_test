@@ -4,25 +4,22 @@ Functional Doctest
 
 :Test-Layer: functional
 
-  >>> import grok
-  >>> grok.grok('uvcsite.tests.functional.content.productregistration')
-
   >>> import uvcsite
   >>> from uvcsite.app import Uvcsite
   >>> from zope.pluggableauth.factories import Principal
   >>> from zope.publisher.browser import TestRequest
   >>> from zope.component import getUtility, getMultiAdapter, queryMultiAdapter, getAdapters
   >>> from uvcsite.content.interfaces import IProductRegistration
-  >>> from uvcsite.content.directive import productfolder 
-  >>> from uvcsite.content.productregistration import ProductRegistration
   >>> from zope.app.homefolder.interfaces import IHomeFolderManager
   >>> from zope.component.hooks import setSite
   >>> import zope.security.management
 
-
   >>> root = getRootFolder()
   >>> root['app'] = app = Uvcsite()
   >>> setSite(app)
+
+  >>> import grok
+  >>> grok.grok('uvcsite.tests.functional.content.productregistration')
 
   >>> root['app']
   <uvcsite.app.Uvcsite object at ...>
@@ -38,7 +35,8 @@ Functional Doctest
 
   >>> utility.assignHomeFolder('christian')
 
-  >>> regs = dict([x for x in getAdapters((christian, request), IProductRegistration)])
+  >>> regs = dict([
+  ...     x for x in getAdapters((christian, request), IProductRegistration)])
   >>> adr = regs['adressbook']
   >>> adr 
   <...Addressbook object at ...>
@@ -64,9 +62,8 @@ Functional Doctest
   >>> [x for x in homefolder.keys()]
   [u'Adressbook']
 
-  >>> list(getAdapters((christian, request), IProductRegistration))
-  [(u'adressbook', <uvcsite.tests.functional.content.productregistration.Addressbook object at ...>),
-   (u'Unfallanzeige', <uvcsite.tests.functional.content.productregistration.UAZRegistration object at ...>)]
+  >>> regs
+  {u'adressbook': <uvcsite.tests.functional.content.productregistration.Addressbook object at ...>, u'Unfallanzeige': <uvcsite.tests.functional.content.productregistration.UAZRegistration object at ...>}
 
   >>> len(list(getAdapters((christian, request), IProductRegistration)))
   2

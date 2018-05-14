@@ -139,9 +139,9 @@ def suiteFromPackage(name):
 def test_suite():
     suite = unittest.TestSuite()
     for name in [
+            "content",
             "auth",
             "base",
-            "content",
             "extranetmembership",
             "homefolder",
             "stat",
