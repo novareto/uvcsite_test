@@ -1,0 +1,61 @@
+Doctest for the Principal Baseclass
+===================================
+
+:Test-Layer: functional
+
+
+Instanciation
+-------------
+
+   >>> from uvcsite.principal import Principal
+   >>> from zope.security.interfaces import IPrincipal
+   >>> principal = Principal('0101010001')
+   >>> IPrincipal.providedBy(principal)
+   True
+
+
+Homefolder
+----------
+
+   >>> from uvcsite.tests import startInteraction, endInteraction
+   >>> request = startInteraction('0101010001')
+
+   >>> principal.homefolder
+   <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+
+   >>> principal.homefolder_url
+   <uvcsite.homefolder.homefolder.HomeFolderUrl object at ...>
+
+   >>> endInteraction()
+
+
+IMasterUser Adapter
+-------------------
+
+   >>> from uvcsite.auth.interfaces import IMasterUser
+   >>> masteruser = IMasterUser(principal)
+   >>> masteruser is principal
+   True
+
+   >>> IPrincipal.providedBy(masteruser)
+   True
+
+   >>> print masteruser.id
+   0101010001
+
+
+Co-User
+-------
+
+FIXME
+
+   >>> principal = Principal('0101010001-01')
+   >>> IPrincipal.providedBy(principal)
+   True
+
+   >>> co_user = IMasterUser(principal)
+   >>> co_user is not principal
+   True
+
+   >>> print co_user.id
+   0101010001
