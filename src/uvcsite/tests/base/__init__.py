@@ -13,7 +13,7 @@ import zope.security
 
 from StringIO import StringIO
 from uvcsite.app import Uvcsite
-from zope.site.hooks import setSite
+from zope.component.hooks import setSite
 from zope.app.testing.functional import ZCMLLayer
 from zope.publisher.browser import TestRequest
 from zope.pluggableauth.factories import Principal
