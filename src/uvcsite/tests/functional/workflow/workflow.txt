@@ -55,7 +55,8 @@ Second create a person object
 
    >>> from uvcsite import Content
    >>> class Person(Content):
-   ...    """ """ 
+   ...    pass
+
    >>> klaus = Person()
    >>> root['app']['klaus'] = klaus
 

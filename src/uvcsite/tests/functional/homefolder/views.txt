@@ -82,8 +82,11 @@ Setting up a Container for Person Objects
 
   >>> import grok
   >>> from grok.interfaces import IContainer
-  >>> class PersonContainer(grok.Container):
-  ...     grok.implements(IContainer)   
+  >>> from zope.interface import implementer
+
+  >>> @implementer(IContainer)
+  ... class PersonContainer(grok.Container):
+  ...     grok.implements(IContainer)
 
   >>> IContainer.implementedBy(PersonContainer)
   True

@@ -20,11 +20,17 @@ Homefolder
    >>> from uvcsite.tests import startInteraction, endInteraction
    >>> request = startInteraction('0101010001')
 
-   >>> principal.homefolder
-   <uvcsite.homefolder.homefolder.HomeFolder object at ...>
+By default, there's no homefolder, it needs to be assigned.
+Look in functionals/utils/roles.txt for an example of a working
+assignation:
+
+   >>> print principal.homefolder
+   None
+
+The homefolder has still a potential URL:
 
    >>> principal.homefolder_url
-   <uvcsite.homefolder.homefolder.HomeFolderUrl object at ...>
+   <uvcsite.homefolder.homefolder.HomeFolderUrl_deprecated object at ...>
 
    >>> endInteraction()
 

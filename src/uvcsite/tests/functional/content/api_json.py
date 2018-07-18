@@ -232,4 +232,5 @@ class UAZFolder(ProductFolder):
 
 @grok.subscribe(Unfallanzeige, uvcsite.IAfterSaveEvent)
 def handle_save_print(event, obj):
-    print "CALLED: After Save Event"
+    # print "CALLED: After Save Event"  # to avoid failing tests
+    pass

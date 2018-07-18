@@ -4,6 +4,16 @@
 from zope.i18nmessageid import MessageFactory
 uvcsiteMF = MessageFactory('uvcsite')
 
+
+# MARTIAN 1.2 HOTFIX
+# WE NEED DOLMEN FORMS TO IMPLEMENT IFORM.
+from dolmen.forms.base import ApplicationForm
+from zeam.form.base.interfaces import IForm
+from zope.interface import classImplements
+classImplements(ApplicationForm, IForm)
+
+
+# RESUME NORMAL IMPORTS
 import grok
 from uvcsite.content import ProductFolder, IProductFolder, contenttype
 from uvcsite.content import IContent, Content, schema, name, productfolder

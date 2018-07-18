@@ -9,6 +9,7 @@ Functional Doctest
   >>> from zope.pluggableauth.factories import Principal
   >>> from zope.publisher.browser import TestRequest
   >>> from zope.component import getUtility, getMultiAdapter, queryMultiAdapter, getAdapters
+  >>> from uvcsite.examples.simpleaddon import Addressbook
   >>> from uvcsite.content.interfaces import IProductRegistration
   >>> from uvcsite.content.directive import productfolder
   >>> from uvcsite.content.productregistration import ProductRegistration
@@ -33,12 +34,6 @@ Functional Doctest
   >>> request.setPrincipal(christian)
   >>> zope.security.management.newInteraction(request)
 
-  >>> class Addressbook(ProductRegistration):
-  ...     grok.name('adressbook')
-  ...     grok.title('Adressbuch')
-  ...     grok.description('Beschreibung Entgeltnachweis')
-  ...     productfolder('uvcsite.examples.simpleaddon.AdressBook')
-
   >>> grok_component('Addressbook', Addressbook)
   True
 
@@ -54,7 +49,7 @@ Functional Doctest
   >>> regs = dict([x for x in getAdapters((christian, request), IProductRegistration)])
   >>> adr = regs['adressbook']
   >>> adr
-  <Addressbook object at ...>
+  <uvcsite.examples.simpleaddon.Addressbook object at ...>
 
   >>> adrwr = regs['adrbookwithoutrole']
   >>> adrwr 

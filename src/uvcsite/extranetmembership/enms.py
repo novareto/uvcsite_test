@@ -259,9 +259,11 @@ class ChangePasswordMenu(uvcsite.MenuItem):
 
 
 class ChangePassword(uvcsite.Form):
-    """ A Form for updating a User in ENMS"""
+    """A Form for updating a User in ENMS.
+    """
     grok.title(u'Passwort ändern')
     grok.context(IMyHomeFolder)
+
     label = _(u'Passwort ändern')
     description = _(u'Hier können Sie Ihr Passwort ändern')
     #uvcsite.menu(uvcsite.PersonalMenu)

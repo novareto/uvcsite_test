@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from zope.component import queryMultiAdapter
 from zope.pluggableauth import factories
 from zope.app.homefolder.interfaces import IHomeFolder
 from uvcsite import IGetHomeFolderUrl
@@ -18,7 +19,8 @@ class Principal(factories.Principal):
     @property
     def homefolder_url(self):
         request = shorties.getRequest()
-        return IGetHomeFolderUrl(request, None)
+        return queryMultiAdapter(
+            (self, request), IGetHomeFolderUrl)
     
     def getCoUsers(self):
         return None

@@ -1,13 +1,20 @@
+import os
 from setuptools import setup, find_packages
 
-version = '2.7.0.2.dev0'
+version = '2.7.1.dev0'
+
+
+docs = os.path.join(os.path.dirname(__file__), 'docs')
+
+desc = ""
+with open(os.path.join(docs, 'CHANGES.txt'), 'r') as changes:
+    desc += changes.read()
+
 
 setup(name='uvcsite',
       version=version,
-      description="",
-      long_description="""\
-""",
-      # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+      description="Grok-Based CMS",
+      long_description=desc,
       classifiers=[],
       keywords="",
       author="UVC-WebCommnunity",
