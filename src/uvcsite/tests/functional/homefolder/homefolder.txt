@@ -30,7 +30,7 @@ Do we get the correct object ?
 
 Do we get a utility with our IHomeFolderManager
 
-   >>> from zope.app.homefolder.interfaces import IHomeFolderManager
+   >>> from uvcsite.homefolder.interfaces import IHomeFolderManager
    >>> utility = getUtility(IHomeFolderManager)
    >>> utility
    <uvcsite.homefolder.homefolder.PortalMembership object at ...>

@@ -9,8 +9,8 @@ import uvcsite
 import zope.security
 
 from datetime import datetime, date
-from zope.app.homefolder.interfaces import IHomeFolder
-from zope.app.security.interfaces import IUnauthenticatedPrincipal
+from uvcsite.homefolder.interfaces import IHomeFolder
+from zope.authentication.interfaces import IUnauthenticatedPrincipal
 
 
 def getHomeFolder(request):

@@ -8,7 +8,7 @@ import uvcsite
 
 from uvcsite.extranetmembership.interfaces import IUserManagement
 from zope.pluggableauth.interfaces import IAuthenticatedPrincipalCreated
-from zope.app.homefolder.interfaces import IHomeFolder
+from uvcsite.homefolder.interfaces import IHomeFolder
 from zope.component import getUtility
 from dolmen.authentication.events import IUserLoggedInEvent
 from zope.securitypolicy.interfaces import IPrincipalRoleManager

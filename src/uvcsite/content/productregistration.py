@@ -13,9 +13,9 @@ from uvcsite.content.interfaces import IProductRegistration
 from uvcsite.content.directive import productfolder
 from zope.dottedname.resolve import resolve
 from zope.component import getMultiAdapter, getAdapters, getUtility
-from zope.app.homefolder.interfaces import IHomeFolderManager
+from uvcsite.homefolder.interfaces import IHomeFolderManager
 from uvcsite.content.meta import default_name
-from zope.app.homefolder.interfaces import IHomeFolder
+from uvcsite.homefolder.interfaces import IHomeFolder
 
 
 def getAllProductRegistrations():

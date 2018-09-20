@@ -10,7 +10,7 @@ import zope.app.appsetup.interfaces
 from zope.site.hooks import getSite, setSite
 from zope.component import getUtility
 from zope.app.publication.zopepublication import ZopePublication
-from zope.app.homefolder.interfaces import IHomeFolderManager
+from uvcsite.homefolder.interfaces import IHomeFolderManager
 
 from zope.component import getUtilitiesFor
 from uvcsite.content import IProductFolder, IUVCApplication

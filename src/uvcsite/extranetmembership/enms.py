@@ -13,7 +13,7 @@ from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
 from uvcsite.interfaces import IMyHomeFolder
 from zeam.form import base
 from zope.interface import Interface, directlyProvides
-from zope.app.homefolder.interfaces import IHomeFolder
+from uvcsite.homefolder.interfaces import IHomeFolder
 from zope.component import getUtility
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.location import Location, LocationProxy

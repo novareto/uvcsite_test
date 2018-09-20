@@ -3,20 +3,23 @@
 import grok
 import uvcsite
 
+from zope import component
 from uvcsite.content import IProductFolder
 from uvcsite.interfaces import IMyHomeFolder, IGetHomeFolderUrl
 from uvcsite.auth.interfaces import IMasterUser
 
-from zope.app.homefolder.homefolder import HomeFolderManager
-from zope.app.homefolder.interfaces import IHomeFolderManager
-import zope.app.homefolder.homefolder
+from uvcsite.homefolder.interfaces import IHomeFolderManager
+import uvcsite.homefolder.homefolder
 from zope.component import getUtilitiesFor
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.dottedname.resolve import resolve
 from zope.security.interfaces import IPrincipal
-from zope.app.security.interfaces import IUnauthenticatedPrincipal
-from zope.app.homefolder.interfaces import IHomeFolder
+from zope.authentication.interfaces import IUnauthenticatedPrincipal
+from uvcsite.homefolder.interfaces import IHomeFolder
 from zope.publisher.interfaces.browser import IBrowserRequest
+from persistent import Persistent
+from zope.container.contained import Contained
+from BTrees.OOBTree import OOBTree
 
 
 class HomeFolder(grok.Container):
@@ -30,14 +33,19 @@ class Members(grok.Container):
     pass
 
 
-class PortalMembership(HomeFolderManager):
+class PortalMembership(Persistent, Contained):
     """
     """
     grok.implements(IHomeFolderManager)
 
+    homeFolderBase = None
+    createHomeFolder = True
     autoCreateAssignment = True
     homeFolderRole = [u'uvc.User', u'uvc.Editor', u'uvc.MasterUser']
     containerObject = 'uvcsite.homefolder.homefolder.HomeFolder'
+
+    def __init__(self):
+        self.assignments = OOBTree()
 
     def assignHomeFolder(self, principalId, folderName=None, create=None):
         """See IHomeFolderManager"""
@@ -60,12 +68,43 @@ class PortalMembership(HomeFolderManager):
     def homeFolderBase(self):
         return grok.getSite()['members']
 
+    def unassignHomeFolder(self, principalId, delete=False):
+        """See IHomeFolderManager"""
+        folderName = self.assignments[principalId]
+        if delete is True:
+            del self.homeFolderBase[folderName]
+        del self.assignments[principalId]
 
-class HomeFolderForPrincipal(zope.app.homefolder.homefolder.HomeFolder, grok.Adapter):
+
+    def getHomeFolder(self, principalId):
+        """See IHomeFolderManager"""
+        if principalId not in self.assignments:
+            if self.autoCreateAssignment:
+                self.assignHomeFolder(principalId, create=True)
+            else:
+                return None
+
+        return self.homeFolderBase.get(self.assignments[principalId], None)
+
+class HomeFolderForPrincipal(grok.Adapter):
     grok.context(IPrincipal)
+    grok.implements(IHomeFolder)
 
     def __init__(self, principal):
         self.principal = IMasterUser(principal)
+
+    homeFolder = property(lambda self: getHomeFolder(self.principal))
+
+
+def getHomeFolder(principal):
+    """Get the home folder instance of the principal."""
+    principalId = principal.id
+    for name, manager in component.getUtilitiesFor(IHomeFolderManager):
+        folder = manager.getHomeFolder(principalId)
+        if folder is not None:
+            return folder
+
+    return None
 
 
 class HomeFolderUrl_deprecated(grok.MultiAdapter):

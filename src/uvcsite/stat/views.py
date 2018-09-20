@@ -9,7 +9,7 @@ from hurry.workflow.interfaces import IWorkflowState
 
 from zope.interface import Interface
 from zope.component import getUtility
-from zope.app.homefolder.interfaces import IHomeFolderManager
+from uvcsite.homefolder.interfaces import IHomeFolderManager
 from ZODB.interfaces import IBroken
 
 
