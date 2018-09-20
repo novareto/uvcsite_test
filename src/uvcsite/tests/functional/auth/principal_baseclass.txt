@@ -13,7 +13,6 @@ Instanciation
    >>> from zope.component.hooks import setSite
    >>> setSite(site)
 
-
    >>> from uvcsite.principal import Principal
    >>> from zope.security.interfaces import IPrincipal
    >>> principal = Principal('0303030003')
@@ -32,7 +31,7 @@ Look in functionals/utils/roles.txt for an example of a working
 assignation:
 
    >>> print principal.homefolder
-   None
+   <uvcsite.homefolder.homefolder.HomeFolder object at ...>
 
 The homefolder has still a potential URL:
 
