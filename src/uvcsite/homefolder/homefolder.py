@@ -46,7 +46,6 @@ class PortalMembership(HomeFolderManager):
         name = folderName or principalId
         # Make the assignment.
         self.assignments[principalId] = name
-
         # Create a home folder instance, if the correct flags are set.
         if (create is True) or (create is None and self.createHomeFolder):
             if name not in self.homeFolderBase:

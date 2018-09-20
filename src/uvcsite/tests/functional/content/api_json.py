@@ -206,7 +206,7 @@ Clean up
   >>> from uvcsite.content import IProductFolder
   >>> gsm = getSiteManager()
   >>> gsm.unregisterUtility(provided=IProductFolder, name='Uazfolder')
-  True
+  False 
 
 """
 

@@ -5,8 +5,9 @@
            xmlns:grok="http://namespaces.zope.org/grok">
 
   <include package="grok" />
-   <include package="uvc.tbskin" />
+  <include package="uvc.tbskin" />
   <grok:grok package="." />
+  <grok:grok package="uvcsite.tests.fixtures.usermanagement" />
   <browser:defaultSkin name="tbskin" />
 
 </configure>
