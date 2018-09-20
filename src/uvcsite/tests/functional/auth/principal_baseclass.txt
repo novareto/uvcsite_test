@@ -7,9 +7,16 @@ Doctest for the Principal Baseclass
 Instanciation
 -------------
 
+   >>> root = getRootFolder()
+   >>> from uvcsite.app import Uvcsite
+   >>> root['app'] = site = Uvcsite()
+   >>> from zope.component.hooks import setSite
+   >>> setSite(site)
+
+
    >>> from uvcsite.principal import Principal
    >>> from zope.security.interfaces import IPrincipal
-   >>> principal = Principal('0101010001')
+   >>> principal = Principal('0303030003')
    >>> IPrincipal.providedBy(principal)
    True
 
@@ -18,7 +25,7 @@ Homefolder
 ----------
 
    >>> from uvcsite.tests import startInteraction, endInteraction
-   >>> request = startInteraction('0101010001')
+   >>> request = startInteraction('0303030003')
 
 By default, there's no homefolder, it needs to be assigned.
 Look in functionals/utils/roles.txt for an example of a working
@@ -47,7 +54,7 @@ IMasterUser Adapter
    True
 
    >>> print masteruser.id
-   0101010001
+   0303030003
 
 
 Co-User
