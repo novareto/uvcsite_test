@@ -6,13 +6,13 @@ import grok
 import uvcsite
 
 from dolmen.content import IContent
-from uvcsite.content import IProductFolder
-from zope.interface import Invalid, Interface
 from hurry.workflow.interfaces import IWorkflowState
+from uvc.layout.forms.event import AfterSaveEvent
+from uvcsite.content import IProductFolder
+from uvcsite.workflow.basic_workflow import titleForState
 from z3c.schema2json import serialize
 from z3c.schema2json.tools import deserialize
-from uvcsite.workflow.basic_workflow import titleForState
-from uvc.layout.forms.event import AfterSaveEvent
+from zope.interface import Invalid, Interface, implementer
 
 
 class JSONRestLayer(grok.IRESTLayer):
@@ -83,12 +83,11 @@ class IJSONSerializer(Interface):
         """
 
 
+@implementer(IJSONSerializer)
 class DefaultSerializer(grok.Adapter):
     """ Default Serializer for IContent
     """
-
     grok.context(IContent)
-    grok.implements(IJSONSerializer)
 
     def work(self, payload, interface, errors):
         try:

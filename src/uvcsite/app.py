@@ -4,7 +4,6 @@
 
 import grok
 import uvcsite
-import grokcore.component
 import zope.component
 
 from uvcsite.auth.handler import UVCAuthenticator
@@ -12,7 +11,6 @@ from uvcsite.homefolder.homefolder import PortalMembership
 
 from grokcore.registries import create_components_registry
 from grokcore.site import IApplication
-from grokcore.site.components import BaseSite
 from zeam.form.base import NO_VALUE
 from zeam.form.ztk import customize
 from zeam.form.ztk.widgets.choice import RadioFieldWidget
@@ -25,13 +23,11 @@ from zope.component.interfaces import IComponents
 from zope.i18n.format import DateTimeParseError
 from zope.i18n.interfaces import IUserPreferredLanguages
 from zope.interface import Interface, implementer
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
-from zope.site.site import SiteManagerContainer
-from fanstatic import Library, Resource, Group
+from fanstatic import Library
 
 
 grok.templatedir('templates')
@@ -59,10 +55,10 @@ grok.global_utility(
     direct=True)
 
 
-
 @implementer(uvcsite.IUVCSite, IApplication)  # this can be reduced
 class Uvcsite(grok.Application, grok.Container):
-    """Application Object for uvc.site """
+    """Application Object for uvc.site
+    """
 
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
@@ -81,7 +77,8 @@ class Uvcsite(grok.Application, grok.Container):
         if uvcsiteRegistry not in current.__bases__:
             uvcsiteRegistry.__bases__ = tuple(
                 [x for x in uvcsiteRegistry.__bases__
-                    if hasattr(x, '_hash_') and x._hash_() != globalSiteManager._hash_()])
+                    if (hasattr(x, '_hash_') and
+                        x._hash_() != globalSiteManager._hash_())])
             current.__bases__ = (uvcsiteRegistry,) + current.__bases__
         elif current.__bases__[0] is not uvcsiteRegistry:
             current.__bases__ = (uvcsiteRegistry,) + tuple((
@@ -147,9 +144,9 @@ class Favicon(grok.View):
         return "BLA"
 
 
+@implementer(IUserPreferredLanguages)
 class GermanBrowserLangugage(grok.Adapter):
     grok.context(IHTTPRequest)
-    grok.implements(IUserPreferredLanguages)
 
     def getPreferredLanguages(self):
         return ['de', 'de-de']

@@ -14,7 +14,7 @@ from uvcsite.content.productregistration import getAllProductRegistrations
 from uvcsite.homefolder.homefolder import Members
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from zope.component import getMultiAdapter
-from zope.interface import Interface
+from zope.interface import Interface, implementer
 from zope.pagetemplate.interfaces import IPageTemplate
 from zope.traversing.browser import absoluteURL
 
@@ -22,17 +22,18 @@ from zope.traversing.browser import absoluteURL
 grok.templatedir('templates')
 
 
+@implementer(IFolderListingTable)
 class Index(TablePage):
     grok.title(u'Mein Ordner')
     grok.context(IMyHomeFolder)
-    grok.implements(IFolderListingTable)
     grok.require('uvc.AccessHomeFolder')
     #uvcsite.sectionmenu(uvcsite.IExtraViews)
 
-    cssClasses = {'table': 'tablesorter table table-striped table-bordered table-condensed'}
+    cssClasses = {
+        'table': ('tablesorter table table-striped '
+                  + 'table-bordered table-condensed')}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
-
     startBachtAt = 15
     bachtSize = 15
     sortOn = "table-modified-5"
@@ -47,7 +48,8 @@ class Index(TablePage):
     def getContentTypes(self):
         interaction = self.request.interaction
         for key, value in self.context.items():
-            if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
+            if (interaction.checkPermission('uvc.ViewContent', value)
+                and not getattr(value, 'excludeFromNav', False)):
                 yield dict(href=absoluteURL(value, self.request),
                            name=key)
 
@@ -66,7 +68,6 @@ class Index(TablePage):
                         self.executeDelete(pf[key])
         super(Index, self).update()
 
-
     def renderCell(self, item, column, colspan=0):
         from z3c.table import interfaces
         if interfaces.INoneCell.providedBy(column):
@@ -79,7 +80,6 @@ class Index(TablePage):
         dt = ' data-title="%s" ' % column.header
         return u'\n      <td%s%s%s>%s</td>' % (cssClass, colspanStr, dt,
             column.renderCell(item))
-
 
 
 class DirectAccessViewlet(grok.Viewlet):

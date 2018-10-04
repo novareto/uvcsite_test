@@ -4,39 +4,39 @@
 
 import grok
 import uvcsite
-from dolmen.forms.base import Fields, set_fields_data, apply_data_event
 
-from zope.interface import Interface
-from uvcsite import uvcsiteMF as _
-from uvc.layout import interfaces
 from dolmen.app.layout import MenuViewlet
+from dolmen.app.layout.viewlets import ContextualActions
+from dolmen.content import schema
+from dolmen.forms.base import Fields, set_fields_data, apply_data_event
+from megrok.pagetemplate import PageTemplate
+from megrok.z3ctable import Values
+from uvc.layout import TablePage
+from uvc.layout import interfaces
+from uvcsite import IGetHomeFolderUrl
+from uvcsite import uvcsiteMF as _
 from uvcsite.content import IContent, IProductFolder
 from uvcsite.interfaces import IFolderListingTable
-from zope.component import getMultiAdapter
-from uvcsite import IGetHomeFolderUrl
-from dolmen.content import schema
 from zeam.form import base
-from uvc.layout import TablePage
-from dolmen.app.layout.viewlets import ContextualActions
 from zeam.form.base.interfaces import ISimpleForm
-from megrok.pagetemplate import PageTemplate
+from zope.component import getMultiAdapter
+from zope.interface import Interface, implementer
 from zope.pagetemplate.interfaces import IPageTemplate
-from megrok.z3ctable import Values
 
 
 grok.templatedir('templates')
 
 
+@implementer(IFolderListingTable)
 class Index(TablePage):
     grok.title(u'Übersicht')
     grok.name('index')
-    grok.implements(IFolderListingTable)
     grok.context(IProductFolder)
     grok.require('uvc.ViewContent')
 
     description = u"Hier finden Sie alle Dokumente dazu."
-
-    cssClasses = {'table': 'tablesorter table table-striped table-bordered table-condensed'}
+    cssClasses = {'table': ('tablesorter table table-striped '
+                            + 'table-bordered table-condensed')}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
 
@@ -121,7 +121,7 @@ class ExtraViewsViewlet(ContextualActions):
         for action in viewlets:
             selected = action.viewName == self.view.__name__
             context_url = self.menu.view.url(self.menu.context)
-            url = not selected and "%s/%s" % (context_url, action.viewName) or None
+            url = selected and None or "%s/%s" % (context_url, action.viewName)
             yield {
                 'id': action.__name__,
                 'url': url,

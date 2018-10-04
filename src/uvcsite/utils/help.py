@@ -57,11 +57,14 @@ class Help(grok.Viewlet):
 
 
 class IHelpPage(interface.Interface):
-    """ """
+    pass
 
+
+@interface.implementer(IHelpPage)
 class HelpPage(grok.Viewlet):
     grok.viewletmanager(HelpManager)
-    grok.implements(IHelpPage)
+
+    
     grok.baseclass()
 
     def update(self):

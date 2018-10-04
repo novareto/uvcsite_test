@@ -4,9 +4,10 @@
 
 import grok
 import uvcsite
-from zope import interface
+from zope.interface import Interface
 
+
+@grok.implementer(uvcsite.IExtraInfo)
 class ExtraInfo(grok.ViewletManager):
-    grok.implements(uvcsite.IExtraInfo)
     grok.name('uvc.layout.extrainfo')
-    grok.context(interface.Interface)
+    grok.context(Interface)

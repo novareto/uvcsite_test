@@ -4,8 +4,12 @@
 
 from zope.interface import Interface
 
+
 class IHomeFolderManager(Interface):
-    """ """
+    """FIX ME
+    """
+
 
 class IHomeFolder(Interface):
-    """ """
+    """FIXME
+    """

@@ -7,20 +7,20 @@ import uvcsite
 import xmlrpclib
 import zope.security
 import xmlrpclib
+
+from dolmen.authentication import UserLoginEvent
 from zope.component import getUtility
-from zope.session.interfaces import ISession
+from zope.event import notify
+from zope.pluggableauth.factories import PrincipalInfo, Principal
+from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.security.interfaces import IPrincipal
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.securitypolicy.settings import Allow
+from zope.session.interfaces import ISession
 
-from zope.pluggableauth.factories import PrincipalInfo, Principal
-from zope.pluggableauth.interfaces import IAuthenticatorPlugin
-
-from interfaces import IMasterUser
+from uvcsite.auth.interfaces import IMasterUser
 from uvcsite.extranetmembership.interfaces import IUserManagement
 
-from dolmen.authentication import UserLoginEvent
-from zope.event import notify
 
 USER_SESSION_KEY = "uvcsite.authentication"
 
@@ -29,15 +29,15 @@ USER_SESSION_KEY = "uvcsite.authentication"
 @grok.implementer(IMasterUser)
 def masteruser(self):
     """Return always the Master User"""
-    if not "-" in self.id:
+    if "-" not in self.id:
         return self
     master_id = self.id.split('-')[0]
     return Principal(master_id)
 
 
+@grok.implementer(IAuthenticatorPlugin)
 class UVCAuthenticator(grok.Model):
     """ Custom Authenticator for UVC-Site"""
-    grok.implements(IAuthenticatorPlugin)
     prefix = 'contact.principals.'
 
     def authenticateCredentials(self, credentials):
@@ -108,8 +108,8 @@ class CheckRemote(grok.XMLRPC):
         return 0
 
     def getRemoteDashboard(self, user):
-       return (u"<ul><li><a href='%(url)s/link1'>Uvcsite link1</a></li>" +
-               u"<li><a href='%(url)s/link2'>Uvcsite link2</a></li></ul>")
+        return (u"<ul><li><a href='%(url)s/link1'>Uvcsite link1</a></li>" +
+                u"<li><a href='%(url)s/link2'>Uvcsite link2</a></li></ul>")
 
     def getRoles(self, user):
         manager = IPrincipalRoleManager(self.context)

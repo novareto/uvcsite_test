@@ -2,7 +2,8 @@
 
 from grok.interfaces import IContainer
 from uvcsite.content import IUVCApplication, IFolderColumnTable
-from uvc.layout.interfaces import *
+from uvc.layout.interfaces import *  # BBB Exposing interfaces
+from zope.interface import Interface
 
 
 class IUVCSite(IUVCApplication):

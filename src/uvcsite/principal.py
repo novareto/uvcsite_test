@@ -21,7 +21,7 @@ class Principal(factories.Principal):
         request = shorties.getRequest()
         return queryMultiAdapter(
             (self, request), IGetHomeFolderUrl)
-    
+
     def getCoUsers(self):
         return None
 
