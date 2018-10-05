@@ -9,16 +9,16 @@ from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 
 def vocabulary(terms):
-    """ """
+    """FIX ME
+    """
     return SimpleVocabulary(
         [SimpleTerm(value, token, title) for value, token, title in terms])
 
 
 @grok.provider(IContextSourceBinder)
 def vocab_berechtigungen(context):
-    rc = []
-    for d in getProductRegistrations():
-        id, reg = d
-        if reg.asRole == True:
-            rc.append(SimpleTerm(reg.folderURI, reg.folderURI, reg.linkname))
-    return SimpleVocabulary(rc)
+    return SimpleVocabulary([
+        SimpleTerm(reg.folderURI, reg.folderURI, reg.linkname)
+        for id, reg in getProductRegistrations()
+        if reg.asRole is True
+    ])

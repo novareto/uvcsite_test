@@ -46,7 +46,8 @@ def fmtDate(p_date):
     if isinstance(p_date, int):
         p_date = str(p_date)
     if isinstance(p_date, str):
-        p_date = datetime(int(p_date[0:4]), int(p_date[4:6]), int(p_date[6:8]), tzinfo=tz)
+        p_date = datetime(
+            int(p_date[0:4]), int(p_date[4:6]), int(p_date[6:8]), tzinfo=tz)
     return fmtDateTime(p_date, fmt='%d.%m.%Y')
 
 

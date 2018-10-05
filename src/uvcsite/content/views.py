@@ -49,11 +49,11 @@ class Index(TablePage):
 
     def update(self):
         items = self.request.form.get('table-checkBox-0-selectedItems')
-        if items and self.request.has_key('form.button.delete'):
+        if items and 'form.button.delete' in self.request:
             if isinstance(items, (str, unicode)):
-                items = [items,]
+                items = [items]
             for key in items:
-                if self.context.has_key(key):
+                if key in self.context:
                     self.executeDelete(self.context[key])
         TablePage.update(self)
 
@@ -79,8 +79,8 @@ class Index(TablePage):
         cssClass = self.getCSSClass('td', cssClass)
         colspanStr = colspan and ' colspan="%s"' % colspan or ''
         dt = ' data-title="%s" ' % column.header
-        return u'\n      <td%s%s%s>%s</td>' % (cssClass, colspanStr, dt,
-            column.renderCell(item))
+        return u'\n      <td%s%s%s>%s</td>' % (
+            cssClass, colspanStr, dt, column.renderCell(item))
 
 
 class ProductFolderValues(Values):
@@ -107,7 +107,7 @@ class ExtraViewsViewlet(ContextualActions):
     grok.viewletmanager(interfaces.IAboveContent)
     grok.require("zope.Public")
 
-    #menu_factory = menus.ExtraViews
+    # menu_factory = menus.ExtraViews
     menu_factory = object()
 
     def update(self):

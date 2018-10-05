@@ -25,13 +25,13 @@ class IFolderColumnTable(Interface):
 class IContent(dolmen.content.IContent):
 
     title = TextLine(
-        title = u"Titel",
-        description = u"Bitte geben Sie einen Titel für das Dokument an. Dieses Dokument erscheint dann unter dem Titel in Mein Ordner.",
-        required = True)
+        title=u"Titel",
+        description=(
+            u"Bitte geben Sie einen Titel für das Dokument an. " +
+            u"Dieses Dokument erscheint dann unter dem Titel in Mein Ordner."),
+        required=True)
 
 
 class IProductRegistration(Interface):
-    """ Registry for uvcsite.Content objects
+    """Registry for uvcsite.Content objects
     """
-
-

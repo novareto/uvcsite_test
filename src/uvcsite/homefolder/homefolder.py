@@ -7,9 +7,8 @@ import grok
 import uvcsite
 from uvcsite.auth.interfaces import IMasterUser
 from uvcsite.content import IProductFolder
-from uvcsite.interfaces import IHomeFolder
-from uvcsite.interfaces import IHomeFolderManager
-from uvcsite.interfaces import IMyHomeFolder, IGetHomeFolderUrl
+from uvcsite.interfaces import IHomeFolder, IHomeFolderManager
+from uvcsite.interfaces import IGetHomeFolderUrl
 
 from zope import component
 from zope.authentication.interfaces import IUnauthenticatedPrincipal
@@ -74,7 +73,6 @@ class PortalMembership(Persistent, Contained):
         if delete is True:
             del self.homeFolderBase[folderName]
         del self.assignments[principalId]
-
 
     def getHomeFolder(self, principalId):
         """See IHomeFolderManager"""
@@ -157,6 +155,7 @@ def add_members_folder(object, event):
 
 #     def getRolesForPrincipal(self, principal_id):
 #         ''' See the interface IPrincipalRoleMap '''
-#         roles = super(PrincipalRoleManager, self).getRolesForPrincipal(principal_id)
+#         roles = super(PrincipalRoleManager, self).getRolesForPrincipal(
+#              principal_id)
 #         roles.append(('zope.Manager', zope.securitypolicy.interfaces.Allow))
 #         return roles

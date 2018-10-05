@@ -6,7 +6,6 @@ import grok
 import uvcsite
 import xmlrpclib
 import zope.security
-import xmlrpclib
 
 from dolmen.authentication import UserLoginEvent
 from zope.component import getUtility

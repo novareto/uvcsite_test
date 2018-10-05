@@ -1,16 +1,16 @@
+# -*- coding: utf-8 -*-
+
 import grok
 import dolmen.content
-import zope.security
 
-from zope.schema import TextLine
+from grokcore.component import directive
+from uvcsite.content.directive import contenttype
 from uvcsite.content.interfaces import (
     IContent, IProductFolder, IFolderColumnTable)
-from zope.interface import implementer
-from uvcsite.content.directive import contenttype
 from uvcsite.utils.shorties import getPrincipal
-from grokcore.component import directive
 from zope.container.interfaces import INameChooser
 from zope.dublincore.interfaces import IZopeDublinCore
+from zope.interface import implementer
 from zope.pluggableauth.factories import Principal
 
 

@@ -27,7 +27,7 @@ class Index(TablePage):
     grok.title(u'Mein Ordner')
     grok.context(IMyHomeFolder)
     grok.require('uvc.AccessHomeFolder')
-    #uvcsite.sectionmenu(uvcsite.IExtraViews)
+    # uvcsite.sectionmenu(uvcsite.IExtraViews)
 
     cssClasses = {
         'table': ('tablesorter table table-striped '
@@ -50,8 +50,8 @@ class Index(TablePage):
         for key, value in self.context.items():
             if (interaction.checkPermission('uvc.ViewContent', value)
                 and not getattr(value, 'excludeFromNav', False)):
-                yield dict(href=absoluteURL(value, self.request),
-                           name=key)
+                yield dict(
+                    href=absoluteURL(value, self.request), name=key)
 
     def executeDelete(self, item):
         self.flash(_(u'Ihre Dokumente wurden entfernt'))
@@ -59,12 +59,12 @@ class Index(TablePage):
 
     def update(self):
         items = self.request.form.get('table-checkBox-0-selectedItems')
-        if items and self.request.has_key('form.button.delete'):
+        if items and 'form.button.delete' in self.request:
             if isinstance(items, (str, unicode)):
-                items = [items, ]
+                items = [items]
             for key in items:
                 for pf in self.context.values():
-                    if pf.has_key(key):
+                    if key in pf:
                         self.executeDelete(pf[key])
         super(Index, self).update()
 
@@ -78,8 +78,8 @@ class Index(TablePage):
         cssClass = self.getCSSClass('td', cssClass)
         colspanStr = colspan and ' colspan="%s"' % colspan or ''
         dt = ' data-title="%s" ' % column.header
-        return u'\n      <td%s%s%s>%s</td>' % (cssClass, colspanStr, dt,
-            column.renderCell(item))
+        return u'\n      <td%s%s%s>%s</td>' % (
+            cssClass, colspanStr, dt, column.renderCell(item))
 
 
 class DirectAccessViewlet(grok.Viewlet):
@@ -108,8 +108,7 @@ class DirectAccess(PageTemplate):
 
 
 class HomeFolderValues(Values):
-    """This Adapter returns IContent Objects
-       form child folders
+    """This Adapter returns IContent Objects form child folders.
     """
     grok.adapts(IMyHomeFolder, None, Index)
 
@@ -138,7 +137,7 @@ class RedirectIndexMembers(grok.View):
 class RestHomeFolderTraverser(grok.Traverser):
     grok.context(Members)
     grok.layer(IRESTLayer)
-    #grok.baseclass()
+    # grok.baseclass()
 
     def traverse(self, name):
         return uvcsite.getHomeFolder(self.request).get(name)

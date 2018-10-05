@@ -6,16 +6,14 @@ import grok
 import uvcsite
 
 from uvcsite import uvcsiteMF as _
-from megrok.z3ctable import (table,
-    Column, GetAttrColumn, CheckBoxColumn, LinkColumn, ModifiedColumn)
+from megrok.z3ctable import (
+    table, Column, GetAttrColumn, CheckBoxColumn, LinkColumn)
 
 from hurry.workflow.interfaces import IWorkflowState
 from zope.dublincore.interfaces import IZopeDublinCore
 from uvcsite.workflow.basic_workflow import titleForState
 from uvcsite.interfaces import IFolderColumnTable, IFolderListingTable
 from zope.traversing.browser import absoluteURL
-from uvcsite.homefolder.views import Index
-from datetime import timedelta
 
 
 class CheckBox(CheckBoxColumn):
@@ -28,11 +26,11 @@ class CheckBox(CheckBoxColumn):
 
     def renderCell(self, item):
         state = IWorkflowState(item).getState()
-        if state != None:
+        if state is not None:
             state = titleForState(state)
         if state == "Entwurf":
             return CheckBoxColumn.renderCell(self, item)
-        return ''    
+        return ''
 
 
 class Link(LinkColumn):
@@ -46,7 +44,7 @@ class Link(LinkColumn):
     def getLinkURL(self, item):
         """Setup link url."""
         state = IWorkflowState(item).getState()
-        if state != None:
+        if state is not None:
             state = titleForState(state)
         if self.linkName is not None and state == "Entwurf":
             return '%s/%s' % (absoluteURL(item, self.request), self.linkName)
@@ -103,6 +101,6 @@ class StateColumn(GetAttrColumn):
 
     def getValue(self, obj):
         state = IWorkflowState(obj).getState()
-        if state != None:
+        if state is not None:
             return titleForState(state)
         return self.defaultValue

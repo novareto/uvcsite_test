@@ -1,10 +1,6 @@
-"""PAS plugins related to secure tokens
-"""
-__docformat__ = "reStructuredText"
+# PAS plugins related to secure tokens
 
-import grok
-import base64
-from zope.interface import implementer, Interface
+from zope.interface import implementer
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.pluggableauth import interfaces
 
@@ -19,7 +15,8 @@ class TokensCredentialsPlugin(object):
         # this is an access token in the URL  ?access_token=...
         if not hasattr(request, 'form'):
             return None
-        access_token = request.form.get('access_token', None) or request.form.get('form.field.access_token', None)
+        access_token = (request.form.get('access_token', None) or
+                        request.form.get('form.field.access_token', None))
         if access_token is not None:
             return {'access_token': access_token}
         return None
