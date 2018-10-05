@@ -9,7 +9,7 @@ from dolmen.authentication.events import IUserLoggedInEvent
 from uvcsite.auth.interfaces import ICOUser
 from uvcsite.content.folderinit import createProductFolders
 from uvcsite.extranetmembership.interfaces import IUserManagement
-from uvcsite.homefolder.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolder
 from zope.component import getUtility
 from zope.interface import alsoProvides
 from zope.pluggableauth.interfaces import IAuthenticatedPrincipalCreated

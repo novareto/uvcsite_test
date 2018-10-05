@@ -10,7 +10,7 @@ Functional Doctest
   >>> from zope.publisher.browser import TestRequest
   >>> from zope.component import getUtility, getMultiAdapter, queryMultiAdapter, getAdapters
   >>> from uvcsite.content.interfaces import IProductRegistration
-  >>> from uvcsite.homefolder.interfaces import IHomeFolderManager
+  >>> from uvcsite.interfaces import IHomeFolderManager
   >>> from zope.component.hooks import setSite
   >>> import zope.security.management
 

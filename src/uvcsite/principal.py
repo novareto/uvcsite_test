@@ -2,7 +2,7 @@
 
 from zope.component import queryMultiAdapter
 from zope.pluggableauth import factories
-from uvcsite.homefolder.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolder
 from uvcsite import IGetHomeFolderUrl
 from uvcsite.utils import shorties
 

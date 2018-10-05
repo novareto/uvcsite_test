@@ -9,7 +9,7 @@ import uvcsite
 import zope.security
 
 from datetime import datetime, date
-from uvcsite.homefolder.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolder
 from zope.authentication.interfaces import IUnauthenticatedPrincipal
 
 

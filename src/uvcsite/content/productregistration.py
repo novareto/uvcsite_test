@@ -10,8 +10,8 @@ import zope.security
 from uvcsite.content.directive import productfolder
 from uvcsite.content.interfaces import IProductRegistration
 from uvcsite.content.meta import default_name
-from uvcsite.homefolder.interfaces import IHomeFolder
-from uvcsite.homefolder.interfaces import IHomeFolderManager
+from uvcsite.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolderManager
 from zope.component import getMultiAdapter, getAdapters, getUtility
 from zope.dottedname.resolve import resolve
 from zope.interface import implementer

@@ -16,7 +16,7 @@ from zeam.form.ztk import customize
 from zeam.form.ztk.widgets.choice import RadioFieldWidget
 from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
 from zeam.form.ztk.widgets.date import DateWidgetExtractor
-from uvcsite.homefolder.interfaces import IHomeFolderManager
+from uvcsite.interfaces import IHomeFolderManager
 from zope.authentication.interfaces import IAuthentication
 from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents

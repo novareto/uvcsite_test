@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
 from grok.interfaces import IContainer
-from uvcsite.content import IUVCApplication, IFolderColumnTable
 from uvc.layout.interfaces import *  # BBB Exposing interfaces
 from zope.interface import Interface
 
 
-class IUVCSite(IUVCApplication):
-    """UVC-Site site object
-    """
 
 
-class IMyHomeFolder(IContainer, IFolderColumnTable):
-    """Marker Interface for HomeFolder
+
+
+class IHomeFolderManager(Interface):
+    """FIX ME
     """
 
 
@@ -34,3 +32,20 @@ class IMyRoles(Interface):
 
 class IStammdaten(Interface):
     """Marker Interface for Stammdaten"""
+
+
+from uvcsite.content.interfaces import IUVCApplication, IFolderColumnTable
+
+class IUVCSite(IUVCApplication):
+    """UVC-Site site object
+    """
+
+
+class IMyHomeFolder(IContainer, IFolderColumnTable):
+    """Marker Interface for HomeFolder
+    """
+
+
+class IHomeFolder(IMyHomeFolder):
+    """FIXME
+    """

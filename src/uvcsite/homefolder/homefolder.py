@@ -7,8 +7,8 @@ import grok
 import uvcsite
 from uvcsite.auth.interfaces import IMasterUser
 from uvcsite.content import IProductFolder
-from uvcsite.homefolder.interfaces import IHomeFolder
-from uvcsite.homefolder.interfaces import IHomeFolderManager
+from uvcsite.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolderManager
 from uvcsite.interfaces import IMyHomeFolder, IGetHomeFolderUrl
 
 from zope import component
@@ -22,7 +22,7 @@ from zope.security.interfaces import IPrincipal
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
 
-@implementer(IMyHomeFolder)
+@implementer(IHomeFolder)
 class HomeFolder(grok.Container):
 
     def values(self):

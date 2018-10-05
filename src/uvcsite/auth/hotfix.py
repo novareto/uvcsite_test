@@ -5,7 +5,7 @@
 import grok
 
 from uvcsite import log
-from uvcsite.homefolder.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolder
 from dolmen.authentication.events import IUserLoggedInEvent
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 

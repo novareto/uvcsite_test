@@ -25,7 +25,7 @@ Setup
    >>> request = startInteraction('uvc.user')
 
 
-   >>> from uvcsite.homefolder.interfaces import IHomeFolderManager
+   >>> from uvcsite.interfaces import IHomeFolderManager
    >>> utility = getUtility(IHomeFolderManager)
    >>> utility
    <uvcsite.homefolder.homefolder.PortalMembership object at ...>

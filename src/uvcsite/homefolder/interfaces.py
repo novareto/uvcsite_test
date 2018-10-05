@@ -3,13 +3,8 @@
 # # cklinger@novareto.de 
 
 from zope.interface import Interface
+from uvcsite.interfaces import IHomeFolder
 
 
-class IHomeFolderManager(Interface):
-    """FIX ME
-    """
 
 
-class IHomeFolder(Interface):
-    """FIXME
-    """

@@ -8,7 +8,7 @@ import uvcsite
 from zope.interface import implementer
 from zope.security.interfaces import IPrincipal
 from uvcsite.auth.interfaces import IMasterUser
-from uvcsite.homefolder.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleMap, Allow
 
 
