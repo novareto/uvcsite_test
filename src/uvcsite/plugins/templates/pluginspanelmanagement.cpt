@@ -1,0 +1,10 @@
+<div>
+  <h1>Plugins</h1>
+  <ul id="plugins">
+    <li tal:repeat="plugin view.plugins()">
+      <a href="" tal:attributes="plugin['url']">
+        <span tal:content="plugin['title']" />
+      </a>
+    </li>
+  </ul>
+</div>

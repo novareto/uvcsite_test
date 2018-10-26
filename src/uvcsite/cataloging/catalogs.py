@@ -2,6 +2,7 @@ import grok
 import zope.interface
 import uvcsite.content
 import hurry.workflow
+from uvcsite import IUVCSite
 from zope.component.interfaces import ObjectEvent, IObjectEvent
 
 
@@ -9,7 +10,7 @@ class ICatalogDeployment(IObjectEvent):
     pass
 
 
-@implementer(ICatalogDeployment)
+@zope.interface.implementer(ICatalogDeployment)
 class CatalogDeployment(ObjectEvent):
     pass
 
@@ -22,7 +23,7 @@ class IApplicationContent(zope.interface.Interface):
 
 @zope.interface.implementer(IApplicationContent)
 class ApplicationContent(grok.Adapter):
-    grok.adapts(uvcsite.content.interfaces.IContent)
+    grok.context(uvcsite.content.interfaces.IContent)
 
     @property
     def type(self):
@@ -37,7 +38,7 @@ class ApplicationContent(grok.Adapter):
 class WorkflowCatalog(grok.Indexes):
     grok.context(IApplicationContent)
     grok.name('workflow_catalog')
-    grok.site(ith.interfaces.IIth)
+    grok.site(IUVCSite)
     grok.install_on(grok.IApplicationAddedEvent)
 
     type = grok.index.Field()
