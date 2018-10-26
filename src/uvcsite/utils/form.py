@@ -20,7 +20,8 @@ def set_fields_data(fields, content, data):
 
     for identifier, value in data.items():
         field = fields.get(identifier, default=None)
-        if field is None or value is NO_VALUE or value is NO_CHANGE or field.isEmpty(value):
+        if (field is None or value is NO_VALUE or
+            value is NO_CHANGE or field.isEmpty(value)):
             continue
 
         content.set(identifier, value)

@@ -5,7 +5,7 @@
 import grok
 
 from uvcsite import log
-from zope.app.homefolder.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolder
 from dolmen.authentication.events import IUserLoggedInEvent
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
@@ -27,6 +27,8 @@ def applyViewContentForCoUsers(factory):
         return
     if homefolder.__name__ != principal.id:
         hprm = IPrincipalRoleManager(homefolder)
-        if hprm.getSetting('uvc.HomeFolderUser', principal.id).getName() in ('Deny', 'Unset'):
+        setting = hprm.getSetting('uvc.HomeFolderUser', principal.id).getName()
+        if setting in ('Deny', 'Unset'):
             hprm.assignRoleToPrincipal('uvc.HomeFolderUser', principal.id)
-            log('applying Role uvc.HomeFolderUser for USER %s in HOMEFOLDER %s' % (principal.id, homefolder.__name__))
+            log('applying Role uvc.HomeFolderUser for USER %s in HOMEFOLDER %s'
+                % (principal.id, homefolder.__name__))

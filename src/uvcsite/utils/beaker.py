@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2010 NovaReto GmbH
-# cklinger@novareto.de 
+# cklinger@novareto.de
 
 import grok
-import uvcsite
 import zope.app.appsetup.product
-
 from dolmen.beaker.utilities import ImmutableDict
 from dolmen.beaker.interfaces import ISessionConfig
 

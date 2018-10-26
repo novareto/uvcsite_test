@@ -4,15 +4,15 @@
 import grok
 import uvcsite
 
+from dolmen.content import IContent
+from hurry.workflow.interfaces import IWorkflowState
 from lxml import etree
 from lxml.builder import E
-from dolmen.content import IContent
-from uvcsite.content import IProductFolder
-from zope.interface import Invalid, Interface
-from hurry.workflow.interfaces import IWorkflowState
-from z3c.schema2xml import serialize_to_tree, deserialize
-from uvcsite.workflow.basic_workflow import titleForState
 from uvc.layout.forms.event import AfterSaveEvent
+from uvcsite.content import IProductFolder
+from uvcsite.workflow.basic_workflow import titleForState
+from z3c.schema2xml import serialize_to_tree, deserialize
+from zope.interface import Invalid, Interface, implementer
 
 
 class RestLayer(grok.IRESTLayer):
@@ -38,7 +38,9 @@ class ProductFolderRest(grok.REST):
                     E('datum', obj.modtime.strftime('%d.%m.%Y')),
                     E('status', state))
             )
-        return etree.tostring(container, xml_declaration=True, encoding='utf-8', pretty_print=True)
+        return etree.tostring(
+            container, xml_declaration=True,
+            encoding='utf-8', pretty_print=True)
 
     def PUT(self):
         errors = []
@@ -73,7 +75,9 @@ class ContentRest(grok.REST):
         schema = context.schema[0]
         element = etree.SubElement(object, context.meta_type, id=id)
         serialize_to_tree(element, schema, context)
-        return etree.tostring(object, xml_declaration=True, encoding='UTF-8', pretty_print=True)
+        return etree.tostring(
+            object, xml_declaration=True,
+            encoding='UTF-8', pretty_print=True)
 
 
 class ISerializer(Interface):
@@ -87,12 +91,11 @@ class ISerializer(Interface):
         """
 
 
+@implementer(ISerializer)
 class DefaultSerializer(grok.Adapter):
     """ Default Serializer for IContent
     """
-
     grok.context(IContent)
-    grok.implements(ISerializer)
 
     def work(self, payload, interface, errors):
         try:

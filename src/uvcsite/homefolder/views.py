@@ -14,7 +14,7 @@ from uvcsite.content.productregistration import getAllProductRegistrations
 from uvcsite.homefolder.homefolder import Members
 from uvcsite.interfaces import IMyHomeFolder, IFolderListingTable
 from zope.component import getMultiAdapter
-from zope.interface import Interface
+from zope.interface import Interface, implementer
 from zope.pagetemplate.interfaces import IPageTemplate
 from zope.traversing.browser import absoluteURL
 
@@ -22,17 +22,18 @@ from zope.traversing.browser import absoluteURL
 grok.templatedir('templates')
 
 
+@implementer(IFolderListingTable)
 class Index(TablePage):
     grok.title(u'Mein Ordner')
     grok.context(IMyHomeFolder)
-    grok.implements(IFolderListingTable)
     grok.require('uvc.AccessHomeFolder')
-    #uvcsite.sectionmenu(uvcsite.IExtraViews)
+    # uvcsite.sectionmenu(uvcsite.IExtraViews)
 
-    cssClasses = {'table': 'tablesorter table table-striped table-bordered table-condensed'}
+    cssClasses = {
+        'table': ('tablesorter table table-striped '
+                  + 'table-bordered table-condensed')}
     cssClassEven = u'even'
     cssClassOdd = u'odd'
-
     startBachtAt = 15
     bachtSize = 15
     sortOn = "table-modified-5"
@@ -47,9 +48,10 @@ class Index(TablePage):
     def getContentTypes(self):
         interaction = self.request.interaction
         for key, value in self.context.items():
-            if interaction.checkPermission('uvc.ViewContent', value) and not getattr(value, 'excludeFromNav', False):
-                yield dict(href=absoluteURL(value, self.request),
-                           name=key)
+            if (interaction.checkPermission('uvc.ViewContent', value)
+                and not getattr(value, 'excludeFromNav', False)):
+                yield dict(
+                    href=absoluteURL(value, self.request), name=key)
 
     def executeDelete(self, item):
         self.flash(_(u'Ihre Dokumente wurden entfernt'))
@@ -57,15 +59,14 @@ class Index(TablePage):
 
     def update(self):
         items = self.request.form.get('table-checkBox-0-selectedItems')
-        if items and self.request.has_key('form.button.delete'):
+        if items and 'form.button.delete' in self.request:
             if isinstance(items, (str, unicode)):
-                items = [items, ]
+                items = [items]
             for key in items:
                 for pf in self.context.values():
-                    if pf.has_key(key):
+                    if key in pf:
                         self.executeDelete(pf[key])
         super(Index, self).update()
-
 
     def renderCell(self, item, column, colspan=0):
         from z3c.table import interfaces
@@ -77,9 +78,8 @@ class Index(TablePage):
         cssClass = self.getCSSClass('td', cssClass)
         colspanStr = colspan and ' colspan="%s"' % colspan or ''
         dt = ' data-title="%s" ' % column.header
-        return u'\n      <td%s%s%s>%s</td>' % (cssClass, colspanStr, dt,
-            column.renderCell(item))
-
+        return u'\n      <td%s%s%s>%s</td>' % (
+            cssClass, colspanStr, dt, column.renderCell(item))
 
 
 class DirectAccessViewlet(grok.Viewlet):
@@ -108,8 +108,7 @@ class DirectAccess(PageTemplate):
 
 
 class HomeFolderValues(Values):
-    """This Adapter returns IContent Objects
-       form child folders
+    """This Adapter returns IContent Objects form child folders.
     """
     grok.adapts(IMyHomeFolder, None, Index)
 
@@ -138,7 +137,7 @@ class RedirectIndexMembers(grok.View):
 class RestHomeFolderTraverser(grok.Traverser):
     grok.context(Members)
     grok.layer(IRESTLayer)
-    #grok.baseclass()
+    # grok.baseclass()
 
     def traverse(self, name):
         return uvcsite.getHomeFolder(self.request).get(name)

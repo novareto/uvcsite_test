@@ -5,15 +5,16 @@
 import grok
 import uvcsite
 
+from zope.interface import implementer
 from zope.security.interfaces import IPrincipal
 from uvcsite.auth.interfaces import IMasterUser
-from zope.app.homefolder.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolder
 from zope.securitypolicy.interfaces import IPrincipalRoleMap, Allow
 
 
+@implementer(uvcsite.IMyRoles)
 class MyRoles(grok.Adapter):
     grok.context(IPrincipal)
-    grok.implements(uvcsite.IMyRoles)
 
     def __init__(self, principal):
         self.principal = principal
@@ -34,7 +35,8 @@ class MyRoles(grok.Adapter):
                     ret.append(name)
                 else:
                     prm = IPrincipalRoleMap(productfolder)
-                    for rolesetting in prm.getRolesForPrincipal(self.principal.id):
+                    for rolesetting in prm.getRolesForPrincipal(
+                            self.principal.id):
                         role, setting = rolesetting
                         if 'uvc.Editor' == role and setting is Allow:
                             ret.append(name)

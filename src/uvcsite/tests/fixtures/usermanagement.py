@@ -3,7 +3,8 @@
 
 import grok
 import uvcsite
-from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
+from uvcsite.extranetmembership.interfaces import (
+    IUserManagement, IExtranetMember)
 from zope.schema import Choice
 
 
@@ -47,9 +48,10 @@ class HierarchyUser(IExtranetMember):
         )
 
 
+@grok.implementer(IUserManagement)
 class UserManagement(grok.GlobalUtility):
-    """ Utility for Usermanagement """
-    grok.implements(IUserManagement)
+    """Utility for Usermanagement.
+    """
 
     UserInterface = HierarchyUser
 
@@ -66,9 +68,10 @@ class UserManagement(grok.GlobalUtility):
     def addUser(self, **kwargs):
         """Adds a User"""
         mnr, az = kwargs['mnr'].split('-')
-        USERS.append(
-            User(mnr=mnr, az=az, roles=kwargs['rollen'], passwort=kwargs.get('passwort'))
-        )
+        USERS.append(User(mnr=mnr,
+                          az=az,
+                          roles=kwargs['rollen'],
+                          passwort=kwargs.get('passwort')))
 
     def zerlegUser(self, mnr):
         ll = mnr.split('-')

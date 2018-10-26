@@ -27,12 +27,11 @@ Setup
   >>> folder
   <uvcsite.examples.simpleaddon.AdressBook object at ...>
 
-
   >>> import zope.interface
   >>> import zope.security.interfaces
-  >>> class DummyPrincipal(object):
-  ...     zope.interface.implements(zope.security.interfaces.IPrincipal)
-  ...
+
+  >>> @zope.interface.implementer(zope.security.interfaces.IPrincipal)
+  ... class DummyPrincipal(object):
   ...     id = "someuser" 
   ...     title = "Some User's Name"
   ...     description = "A User"

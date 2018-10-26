@@ -9,8 +9,8 @@ import uvcsite
 import zope.security
 
 from datetime import datetime, date
-from zope.app.homefolder.interfaces import IHomeFolder
-from zope.app.security.interfaces import IUnauthenticatedPrincipal
+from uvcsite.interfaces import IHomeFolder
+from zope.authentication.interfaces import IUnauthenticatedPrincipal
 
 
 def getHomeFolder(request):
@@ -46,7 +46,8 @@ def fmtDate(p_date):
     if isinstance(p_date, int):
         p_date = str(p_date)
     if isinstance(p_date, str):
-        p_date = datetime(int(p_date[0:4]), int(p_date[4:6]), int(p_date[6:8]), tzinfo=tz)
+        p_date = datetime(
+            int(p_date[0:4]), int(p_date[4:6]), int(p_date[6:8]), tzinfo=tz)
     return fmtDateTime(p_date, fmt='%d.%m.%Y')
 
 

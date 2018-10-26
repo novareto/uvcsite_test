@@ -229,8 +229,8 @@ class IUnfallanzeige(IContent):
             raise Invalid("This combination of name and age is not valid")
 
 
+@grok.implementer(IUnfallanzeige)
 class Unfallanzeige(Content):
-    grok.implements(IUnfallanzeige)
     grok.name('Unfallanzeige')
     content.schema(IUnfallanzeige)
 

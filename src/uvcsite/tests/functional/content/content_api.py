@@ -13,7 +13,7 @@ from grok.testing import grok_component
 from zope.component import getMultiAdapter
 from zope.component.hooks import getSite, setSite
 from zope.publisher.browser import TestRequest
-from zope.app.homefolder.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolder
 from zope.pluggableauth.factories import PrincipalInfo, Principal
 
 

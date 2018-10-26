@@ -1,7 +1,7 @@
 import os
 from setuptools import setup, find_packages
 
-version = '2.7.1.dev0'
+version = '2.7.1.dev1'
 
 
 docs = os.path.join(os.path.dirname(__file__), 'docs')
@@ -66,7 +66,7 @@ setup(name='uvcsite',
           'zeam.form.layout',
           'zeam.form.table',
           'zeam.form.viewlet',
-          'zope.app.homefolder',
+          'zope.app.pagetemplate',
           'zope.app.locales',
           'zope.app.renderer',
           'zope.generations',

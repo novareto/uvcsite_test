@@ -21,7 +21,7 @@ Functional Doctest
 
   >>> request = startInteraction('lars')
 
-  >>> from zope.app.homefolder.interfaces import IHomeFolderManager
+  >>> from uvcsite.interfaces import IHomeFolderManager
   >>> utility = getUtility(IHomeFolderManager)
   >>> utility
   <uvcsite.homefolder.homefolder.PortalMembership object at ...>

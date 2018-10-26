@@ -7,21 +7,23 @@ import uvcsite
 import logging
 import zope.security
 
-from zope.security.interfaces import IPrincipal
-from zope.publisher.interfaces.http import IHTTPRequest
-from uvcsite.content.interfaces import IProductRegistration
 from uvcsite.content.directive import productfolder
-from zope.dottedname.resolve import resolve
-from zope.component import getMultiAdapter, getAdapters, getUtility
-from zope.app.homefolder.interfaces import IHomeFolderManager
+from uvcsite.content.interfaces import IProductRegistration
 from uvcsite.content.meta import default_name
-from zope.app.homefolder.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolder
+from uvcsite.interfaces import IHomeFolderManager
+from zope.component import getMultiAdapter, getAdapters, getUtility
+from zope.dottedname.resolve import resolve
+from zope.interface import implementer
+from zope.publisher.interfaces.http import IHTTPRequest
+from zope.security.interfaces import IPrincipal
 
 
 def getAllProductRegistrations():
     request = zope.security.management.getInteraction().participations[0]
     principal = request.principal
-    return sorted(getAdapters((principal, request), IProductRegistration), key=lambda k: grok.order.bind().get(k[0][0]))
+    return sorted(getAdapters((principal, request), IProductRegistration),
+                  key=lambda k: grok.order.bind().get(k[0][0]))
 
 
 def getProductRegistrations():
@@ -34,9 +36,9 @@ def getProductRegistrations():
     return sorted(rc, key=lambda k: grok.order.bind().get(k[1]))
 
 
+@implementer(IProductRegistration)
 class ProductRegistration(grok.MultiAdapter):
     grok.adapts(IPrincipal, IHTTPRequest)
-    grok.implements(IProductRegistration)
     grok.baseclass()
     icon = None
 
@@ -80,7 +82,8 @@ class ProductRegistration(grok.MultiAdapter):
         return True
 
     def action(self):
-        return "%s/%s/@@add" % (uvcsite.getHomeFolderUrl(self.request), self.folderURI)
+        return "%s/%s/@@add" % (
+            uvcsite.getHomeFolderUrl(self.request), self.folderURI)
 
     @property
     def inNav(self):
@@ -98,14 +101,17 @@ class ProductRegistration(grok.MultiAdapter):
         if self.folderURI and not self.folderURI in homefolder.keys():
             pf = self.productfolder
             homefolder[self.folderURI] = pf()
-            uvcsite.log('Add Productfolders %s to Homefolder: %s' % (self.folderURI, self.principal.id), severity=logging.DEBUG)
+            uvcsite.log(
+                'Add Productfolders %s to Homefolder: %s' % (
+                    self.folderURI, self.principal.id), severity=logging.DEBUG)
 
 
 class ProductMenuItem(uvcsite.MenuItem):
     grok.baseclass()
 
     def update(self):
-        self.registration = getMultiAdapter((self.request.principal, self.request),
+        self.registration = getMultiAdapter(
+            (self.request.principal, self.request),
             IProductRegistration, self.reg_name)
 
     def available(self):

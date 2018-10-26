@@ -1,19 +1,21 @@
+# -*- coding: utf-8 -*-
+
 import grok
 import dolmen.content
-import zope.security
 
-from zope.schema import TextLine
-from uvcsite.content.interfaces import IContent, IProductFolder, IFolderColumnTable
-from zope.interface import implements
-from uvcsite.content.directive import contenttype
 from grokcore.component import directive
+from uvcsite.content.directive import contenttype
+from uvcsite.content.interfaces import (
+    IContent, IProductFolder, IFolderColumnTable)
+from uvcsite.utils.shorties import getPrincipal
 from zope.container.interfaces import INameChooser
 from zope.dublincore.interfaces import IZopeDublinCore
+from zope.interface import implementer
 from zope.pluggableauth.factories import Principal
 
 
+@implementer(IProductFolder, IFolderColumnTable)
 class ProductFolder(grok.Container):
-    grok.implements(IProductFolder, IFolderColumnTable)
 
     @property
     def name(self):
@@ -42,8 +44,8 @@ class ProductFolder(grok.Container):
         return False
 
 
+@implementer(IContent)
 class Content(dolmen.content.Content):
-    implements(IContent)
     grok.baseclass()
     dolmen.content.nofactory()
 
@@ -61,7 +63,7 @@ class Content(dolmen.content.Content):
         if len(dc.creators) > 0:
             pid = dc.creators[0]
             return Principal(pid, pid)
-        return zope.security.management.getInteraction().participations[0].principal
+        return getPrincipal()
 
     @property
     def modtime(self):

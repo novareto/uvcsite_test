@@ -4,9 +4,7 @@
 
 import grok
 import tempfile
-import transaction
 import zope.app.appsetup.product
-
 from reportlab.pdfgen import canvas
 from zope.interface import Interface
 from repoze.filesafe import create_file

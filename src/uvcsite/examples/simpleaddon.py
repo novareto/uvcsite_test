@@ -19,7 +19,9 @@ from uvcsite.content.productregistration import ProductRegistration
 from xml.dom.minidom import parseString
 
 
-desc_name = u"""Wie ist Ihr <a rel="tooltip" href="#" data-original-title="Default tooltip">Name</a>"""
+desc_name = (
+    u"""Wie ist Ihr <a rel="tooltip" href="#" """ +
+    u"""data-original-title="Default tooltip">Name</a>""")
 
 
 class IContact(uvcsite.IContent):
@@ -33,23 +35,22 @@ class IContact(uvcsite.IContent):
         title=u"Alter",
         description=u"Wie ist ihr Alter",
         required=False,
-        constraint=validation.validateZahl
+        constraint=validation.validateZahl,
     )
-
 
 
 class IAdressBook(uvcsite.IProductFolder):
     """ Marker Interface """
 
 
+@zope.interface.implementer(IContact)
 class Contact(uvcsite.Content):
-    grok.implements(IContact)
     grok.name(u'Kontakt')
     uvcsite.schema(IContact)
 
 
+@zope.interface.implementer(IAdressBook)
 class AdressBook(uvcsite.ProductFolder):
-    grok.implements(IAdressBook)
     grok.name('adressbook')
     grok.title('Adressbuch')
     grok.description('Adressbuch ...')

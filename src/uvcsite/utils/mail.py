@@ -59,10 +59,10 @@ def send_mail(sender, recipient, subject, body, file=None, filename=None):
     msg["From"] = sender
     msg["To"] = COMMASPACE.join(recipient)  # List to String
     msg["Subject"] = email.Header.Header(subject, 'UTF-8')
-    msg.attach(MIMEText(body.encode('utf-8'),'plain','utf-8'))
+    msg.attach(MIMEText(body.encode('utf-8'), 'plain', 'utf-8'))
 
     # Attachment von Dateien
-    if file != None:
+    if file is not None:
         fn = file.split("/")
         fn = fn[-1]
         part = MIMEBase('application', 'octet-stream')

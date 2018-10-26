@@ -5,7 +5,6 @@
 import grok
 import uvcsite
 
-from zope import interface
 from uvcsite import IContent
 from datetime import datetime
 
@@ -100,7 +99,7 @@ def set_publish_action(event):
     event.object.published = datetime.now()
 
 
-#@grok.subscribe(IWorkflowTransitionEvent)
+# @grok.subscribe(IWorkflowTransitionEvent)
 def change_permissions(event):
     if event.destination == PUBLISHED:
         obj = event.object
@@ -108,7 +107,7 @@ def change_permissions(event):
         from uvcsite.auth.interfaces import ICOUser
         from zope.securitypolicy import interfaces
         if not ICOUser.providedBy(uvcsite.getPrincipal()):
-            prinper  = interfaces.IPrincipalPermissionManager(obj)
-            roleper  = interfaces.IRolePermissionManager(obj)
+            prinper = interfaces.IPrincipalPermissionManager(obj)
+            roleper = interfaces.IRolePermissionManager(obj)
             roleper.denyPermissionToRole('uvc.ViewContent', 'uvc.Editor')
             prinper.grantPermissionToPrincipal('uvc.ViewContent', principal.id)

@@ -8,15 +8,15 @@ import uvcsite
 from dolmen.forms.base import Fields
 from grokcore.chameleon.components import ChameleonPageTemplateFile
 from uvcsite import uvcsiteMF as _
-from uvcsite.extranetmembership.interfaces import IUserManagement, IExtranetMember
+from uvcsite.extranetmembership.interfaces import (
+    IUserManagement, IExtranetMember)
 from uvcsite.extranetmembership.vocabulary import vocab_berechtigungen
-from uvcsite.interfaces import IMyHomeFolder
+from uvcsite.interfaces import IHomeFolder, IMyHomeFolder
 from zeam.form import base
-from zope.interface import Interface, directlyProvides
-from zope.app.homefolder.interfaces import IHomeFolder
 from zope.component import getUtility
-from zope.securitypolicy.interfaces import IPrincipalRoleManager
+from zope.interface import Interface, directlyProvides
 from zope.location import Location, LocationProxy
+from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.traversing.interfaces import ITraversable
 
 
@@ -162,7 +162,8 @@ class ENMSCreateUser(uvcsite.Form):
 
     def updateForm(self):
         super(ENMSCreateUser, self).updateForm()
-        self.fieldWidgets.get('form.field.mnr').template = ChameleonPageTemplateFile('templates/mnr.cpt')
+        self.fieldWidgets.get('form.field.mnr').template = (
+            ChameleonPageTemplateFile('templates/mnr.cpt'))
 
     def getNextNumber(self, groups):
         all_azs = []
@@ -194,8 +195,10 @@ class ENMSCreateUser(uvcsite.Form):
         um.addUser(**data)
         # Setting Home Folder Rights
         for role in data.get('rollen'):
-            principal_roles = IPrincipalRoleManager(self.context.__parent__[role])
-            principal_roles.assignRoleToPrincipal('uvc.Editor', data.get('mnr'))
+            principal_roles = IPrincipalRoleManager(
+                self.context.__parent__[role])
+            principal_roles.assignRoleToPrincipal(
+                'uvc.Editor', data.get('mnr'))
         self.flash(_(u'Der Mitbenutzer wurde gespeichert'))
         principal = self.request.principal
         homeFolder = IHomeFolder(principal).homeFolder
@@ -208,10 +211,10 @@ class ENMSUpdateUser(uvcsite.Form):
     grok.context(IOnTheFlyUser)
     grok.require('uvc.ManageCoUsers')
 
-    label = u"Mitbenutzer verwalten"
-    description = u"Nutzen Sie diese Form um die Daten eines Mitbenutzers zu pflegen."
-
     ignoreContent = False
+    label = u"Mitbenutzer verwalten"
+    description = (u"Nutzen Sie diese Form um die Daten eines " +
+                   u"Mitbenutzers zu pflegen.")
 
     @property
     def fields(self):
@@ -255,7 +258,8 @@ class ChangePasswordMenu(uvcsite.MenuItem):
 
     @property
     def action(self):
-        return self.view.url(IHomeFolder(self.request.principal).homeFolder, 'changepassword')
+        return self.view.url(
+            IHomeFolder(self.request.principal).homeFolder, 'changepassword')
 
 
 class ChangePassword(uvcsite.Form):
@@ -266,7 +270,7 @@ class ChangePassword(uvcsite.Form):
 
     label = _(u'Passwort ändern')
     description = _(u'Hier können Sie Ihr Passwort ändern')
-    #uvcsite.menu(uvcsite.PersonalMenu)
+    # uvcsite.menu(uvcsite.PersonalMenu)
     grok.require('zope.View')
     ignoreContext = True
 

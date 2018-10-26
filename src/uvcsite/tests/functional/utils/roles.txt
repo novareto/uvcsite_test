@@ -38,7 +38,7 @@ Erstellen einer Site
 
 
   >>> from zope.component import getUtility
-  >>> from zope.app.homefolder.interfaces import IHomeFolder, IHomeFolderManager
+  >>> from uvcsite.interfaces import IHomeFolder, IHomeFolderManager
 
   >>> hfm = getUtility(IHomeFolderManager)
   >>> hfm
