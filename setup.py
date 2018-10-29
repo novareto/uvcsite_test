@@ -84,7 +84,5 @@ setup(name='uvcsite',
       main = grokcore.startup:application_factory
       [paste.filter_app_factory]
       registries = uvcsite.registries:provide_registries
-      [fanstatic.libraries]
-      uvcsite = uvcsite.app:library
       """,
       )

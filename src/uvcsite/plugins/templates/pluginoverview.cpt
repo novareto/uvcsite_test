@@ -1,3 +1,47 @@
-<div>
+<form action="." tal:attributes="action request.URL" method="post"
+      enctype="multipart/form-data" tal:omit-tag="not view.actions">
+  <div id="plugin" tal:define="installed context.is_installed">
+    <h1 tal:content="context.title" />
+    <h2 tal:condition="context.description">
+      <small tal:content="context.description" />
+    </h2>
+    
+    <h3 tal:condition="installed" class="installed">
+      <i class="fas fa-check"></i>
+      This plugin is installed
+    </h3>
+    <h3 tal:condition="not installed" class="not-installed">
+      <i class="fas fa-exclamation-circle"></i>
+      This plugin is not installed
+    </h3>
 
-</div>
+    <div id="plugin-doc" tal:condition="view.about">
+      <h4>Plugin documentation</h4>
+      <pre tal:content="view.about" />
+    </div>
+    
+    <div id="plugin-status" tal:condition="view.status">
+      <h4>Plugin status</h4>
+      <dl>
+        <tal:info repeat="info view.status.items()">
+          <dt tal:content="info[0]" />
+          <dd tal:content="info[1]" />
+        </tal:info>
+      </dl>
+    </div>
+
+    <hr />
+
+    <div class="errors" tal:condition="view.errors">
+      <div class="error" tal:repeat="error view.errors">
+        <span tal:content="error.title" />
+      </div>
+    </div>
+    
+    <div class="actions btn-group" tal:condition="view.actionWidgets">
+      <tal:actions repeat="widget view.actionWidgets">
+        <tal:widget tal:content="structure widget.render()" />
+      </tal:actions>
+    </div>
+  </div>
+</form>

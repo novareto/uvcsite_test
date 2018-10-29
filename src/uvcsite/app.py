@@ -6,9 +6,6 @@ import grok
 import uvcsite
 import zope.component
 
-from uvcsite.auth.handler import UVCAuthenticator
-from uvcsite.homefolder.homefolder import PortalMembership
-
 from grokcore.registries import create_components_registry
 from grokcore.site import IApplication
 from zeam.form.base import NO_VALUE
@@ -27,7 +24,11 @@ from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.schema.interfaces import IDate
-from fanstatic import Library
+
+import uvcsite.plugins
+from uvcsite.auth.handler import UVCAuthenticator
+from uvcsite.homefolder.homefolder import PortalMembership
+
 
 
 grok.templatedir('templates')
@@ -39,8 +40,6 @@ def setup_pau(PAU):
                               "Zope Realm Basic-Auth",
                               "No Challenge if Authenticated",)
 
-
-library = Library('uvcsite', 'static')
 
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
@@ -59,7 +58,8 @@ grok.global_utility(
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
     """
-
+    grok.traversable('plugins_panel')
+    
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
 
@@ -71,6 +71,10 @@ class Uvcsite(grok.Application, grok.Container):
                        IAuthentication,
                        public=True,
                        setup=setup_pau)
+
+    @property
+    def plugins_panel(self):
+        return uvcsite.plugins.PluginsPanel('plugins_panel', self)
 
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
