@@ -4,6 +4,7 @@ import grok
 import zope.interface
 import uvcsite.content
 import hurry.workflow
+import zope.dublincore.interfaces
 
 from uvcsite import IUVCSite
 from zope.component.interfaces import ObjectEvent, IObjectEvent
@@ -31,6 +32,10 @@ class ApplicationContent(grok.Adapter):
         wfstate = hurry.workflow.interfaces.IWorkflowState(self.context)
         return wfstate.getState()
 
+    def modification_date(self):
+        dates = zope.dublincore.interfaces.IDCTimes(self.context)
+        return dates.modified
+
 
 class WorkflowCatalog(grok.Indexes):
     grok.context(IApplicationContent)
@@ -40,3 +45,4 @@ class WorkflowCatalog(grok.Indexes):
 
     type = grok.index.Field()
     state = grok.index.Field()
+    modification_date = grok.index.DatetimeIndex('modification_date')

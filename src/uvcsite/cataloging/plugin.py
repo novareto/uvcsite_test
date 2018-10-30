@@ -68,12 +68,17 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
     @uvcsite.plugins.plugin_action(
         'Recatalog', _for=uvcsite.plugins.INSTALLED)
     def recatalog(site):
-        site = grok.getSite()
+        sm = site.getSiteManager()
+        catalog = sm.getUtility(ICatalog, name="workflow_catalog")
+        ids = sm.getUtility(IIntIds)
+
         counter = 0
         for obj in getContentInAllFolders(site['members']):
-            counter += 1
-            grok.notify(ObjectModifiedEvent(obj))
-            print obj.__name__
+            id = ids.queryId(obj)
+            if id is not None:
+                catalog.index_doc(id, obj)
+                counter += 1
+
         return uvcsite.plugins.PluginResult(
             value=u'%s items recataloged !' % counter,
             type=uvcsite.plugins.STATUS_MESSAGE,
