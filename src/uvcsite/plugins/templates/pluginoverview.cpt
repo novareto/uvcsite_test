@@ -1,33 +1,31 @@
 <form action="." tal:attributes="action request.URL" method="post"
       enctype="multipart/form-data" tal:omit-tag="not view.actions">
-  <div id="plugin" tal:define="installed context.is_installed">
+  <div id="plugin">
     <h1 tal:content="context.title" />
     <h2 tal:condition="context.description">
       <small tal:content="context.description" />
     </h2>
-    
-    <h3 tal:condition="installed" class="installed">
+
+    <h3 tal:condition="view.is_installed" class="installed">
       <i class="fas fa-check"></i>
       This plugin is installed
     </h3>
-    <h3 tal:condition="not installed" class="not-installed">
+    <h3 tal:condition="not view.is_installed" class="not-installed">
       <i class="fas fa-exclamation-circle"></i>
       This plugin is not installed
     </h3>
 
-    <div id="plugin-doc" tal:condition="view.about">
-      <h4>Plugin documentation</h4>
-      <pre tal:content="view.about" />
-    </div>
-    
-    <div id="plugin-status" tal:condition="view.status">
-      <h4>Plugin status</h4>
-      <dl>
-        <tal:info repeat="info view.status.items()">
+    <div id="plugin-status" tal:condition="view.result">
+      <h4 tal:content="view.title" />
+      <dl tal:condition="view.content_type == 'struct'">
+        <tal:info repeat="info view.result.items()">
           <dt tal:content="info[0]" />
           <dd tal:content="info[1]" />
         </tal:info>
       </dl>
+      <pre tal:condition="view.content_type == 'text'"
+           tal:content="view.result"
+           />
     </div>
 
     <hr />
