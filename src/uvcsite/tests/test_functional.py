@@ -138,7 +138,7 @@ def suiteFromPackage(name):
 
 def test_suite():
     suite = unittest.TestSuite()
-    for name in [
+    for name in (
             "auth",
             "base",
             "content",
@@ -148,6 +148,7 @@ def test_suite():
             "utils",
             "viewlets",
             "workflow",
-    ]:
+            "cataloging",
+            "plugins"):
         suite.addTest(suiteFromPackage(name))
     return suite

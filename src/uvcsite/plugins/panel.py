@@ -36,17 +36,19 @@ class PluginsPanel(Location):
             yield name, LocationProxy(plugin, self, name)
 
     def __getitem__(self, name):
-        plugin = zope.component.getUtility(IPlugin, name=name)
+        plugin = zope.component.queryUtility(IPlugin, name=name)
+        if plugin is None:
+            raise KeyError(name)
         return LocationProxy(plugin, self, name)
 
     def __contains__(self, name):
         return zope.component.queryUtility(IPlugin, name=name) is not None
 
-    def get(self, name):
+    def get(self, name, default=None):
         plugin = zope.component.queryUtility(IPlugin, name=name)
         if plugin is not None:
             return LocationProxy(plugin, self, name)
-        return None
+        return default
 
 
 class PluginsPanelManagement(uvcsite.Page):
