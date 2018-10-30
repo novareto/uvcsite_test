@@ -3,9 +3,11 @@
 import grok
 import uvcsite.cataloging
 import uvcsite.plugins
+from uvcsite.utils.script_helpers import getContentInAllFolders
 from zope.catalog.interfaces import ICatalog
 from zope.component import queryUtility
 from zope.intid.interfaces import IIntIds
+from zope.lifecycleevent import ObjectModifiedEvent
 
 
 CATALOG_DOC = u"""Write me
@@ -66,8 +68,14 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
     @uvcsite.plugins.plugin_action(
         'Recatalog', _for=uvcsite.plugins.INSTALLED)
     def recatalog(site):
+        site = grok.getSite()
+        counter = 0
+        for obj in getContentInAllFolders(site['members']):
+            counter += 1
+            grok.notify(ObjectModifiedEvent(obj))
+            print obj.__name__
         return uvcsite.plugins.PluginResult(
-            value=u'0 items recataloged !',
+            value=u'%s items recataloged !' % counter,
             type=uvcsite.plugins.STATUS_MESSAGE,
             redirect=True)
 
