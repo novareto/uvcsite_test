@@ -38,7 +38,7 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
             value=CATALOG_DOC,
             type=uvcsite.plugins.RAW,
             redirect=False)
-    
+
     @uvcsite.plugins.plugin_action(
         'Install', _for=uvcsite.plugins.UNINSTALLED)
     def install(site):

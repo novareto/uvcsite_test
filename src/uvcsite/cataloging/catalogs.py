@@ -17,6 +17,7 @@ class IApplicationContent(zope.interface.Interface):
 
     type = zope.interface.Attribute('Content type')
     state = zope.interface.Attribute('Workflow state')
+    modification_date = zope.interface.Attribute('Workflow state')
 
 
 @zope.interface.implementer(IApplicationContent)
@@ -32,6 +33,7 @@ class ApplicationContent(grok.Adapter):
         wfstate = hurry.workflow.interfaces.IWorkflowState(self.context)
         return wfstate.getState()
 
+    @property
     def modification_date(self):
         dates = zope.dublincore.interfaces.IDCTimes(self.context)
         return dates.modified
@@ -45,4 +47,4 @@ class WorkflowCatalog(grok.Indexes):
 
     type = grok.index.Field()
     state = grok.index.Field()
-    modification_date = grok.index.DatetimeIndex('modification_date')
+    modification_date = grok.index.Datetime()
