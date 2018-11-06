@@ -54,6 +54,7 @@ class PluginsPanel(Location):
 class PluginsPanelManagement(uvcsite.Page):
     grok.context(PluginsPanel)
     grok.name('index.html')
+    grok.require('grok.ManageApplications')
 
     needs_fontawesome = True
     
@@ -72,6 +73,7 @@ class PluginsPanelManagement(uvcsite.Page):
 class PluginOverview(uvcsite.Form):
     grok.context(IPlugin)
     grok.name('index.html')
+    grok.require('grok.ManageApplications')
 
     prefix = ""
     fields = uvcsite.Fields()

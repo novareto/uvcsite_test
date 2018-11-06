@@ -29,7 +29,7 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
         catalog = queryUtility(ICatalog, name="workflow_catalog")
         if catalog is not None:
             return uvcsite.plugins.INSTALLED
-        return uvcsite.plugins.UNINSTALLED
+        return uvcsite.plugins.NOT_INSTALLED
 
     @uvcsite.plugins.plugin_action(
         'Documentation', _for=uvcsite.plugins.ANY)
@@ -40,7 +40,7 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
             redirect=False)
 
     @uvcsite.plugins.plugin_action(
-        'Install', _for=uvcsite.plugins.UNINSTALLED)
+        'Install', _for=uvcsite.plugins.NOT_INSTALLED)
     def install(site):
         grok.notify(uvcsite.cataloging.CatalogDeployment(site))
         return uvcsite.plugins.PluginResult(

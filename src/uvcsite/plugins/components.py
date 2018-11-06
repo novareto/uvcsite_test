@@ -75,7 +75,7 @@ class Plugin(grok.GlobalUtility):
 
     title = None
     description = u""
-    status = flags.UNINSTALLED
+    status = flags.NOT_INSTALLED
     actions = None
 
 
