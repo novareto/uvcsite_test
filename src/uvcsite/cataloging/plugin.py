@@ -19,7 +19,8 @@ This is a documentation about...
 class CatalogPlugin(uvcsite.plugins.Plugin):
     grok.name('uvcsite.catalog')
 
-    title = u"UVCSite catalog"
+    fa_icon = 'book'
+    title = u"Generic catalog"
     description=(
         u"Cataloging capabilities for searching "
         + u"and sorting items efficiently")

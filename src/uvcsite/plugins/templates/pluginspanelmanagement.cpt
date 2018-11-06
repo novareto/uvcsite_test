@@ -3,7 +3,7 @@
   <div class="grid row" id="plugins">
     <tal:plugins repeat="plugin view.plugins()">
     <div tal:attributes="id plugin['id']"
-         class="grid-item col-xs-12 col-sm-4 col-md-2">
+         class="grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <a class="grid-item-inner clearfix"
          tal:attributes="href plugin['url']">
         <i tal:attributes="class plugin['icon']"></i>
