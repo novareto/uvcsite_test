@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from grok.interfaces import IContainer
+from grokcore.site import IApplication
 from uvc.layout.interfaces import *  # BBB Exposing interfaces
 from uvcsite.content.interfaces import IUVCApplication, IFolderColumnTable
 from zope.interface import Interface
@@ -32,7 +33,7 @@ class IStammdaten(Interface):
     """
 
 
-class IUVCSite(IUVCApplication):
+class IUVCSite(IApplication, IUVCApplication):
     """UVC-Site site object
     """
 

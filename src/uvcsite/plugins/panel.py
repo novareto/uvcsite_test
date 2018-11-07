@@ -45,15 +45,16 @@ class PluginsPanel(Location):
         return zope.component.queryUtility(IPlugin, name=name) is not None
 
     def get(self, name, default=None):
-        plugin = zope.component.queryUtility(IPlugin, name=name)
-        if plugin is not None:
-            return LocationProxy(plugin, self, name)
-        return default
+        try:
+            item = self.__getitem__(name)
+        except KeyError:
+            return default
+        return item
 
 
 class PluginsPanelManagement(uvcsite.Page):
     grok.context(PluginsPanel)
-    grok.name('index.html')
+    grok.name('index')
     grok.require('grok.ManageApplications')
 
     needs_fontawesome = True
@@ -72,7 +73,7 @@ class PluginsPanelManagement(uvcsite.Page):
 
 class PluginOverview(uvcsite.Form):
     grok.context(IPlugin)
-    grok.name('index.html')
+    grok.name('index')
     grok.require('grok.ManageApplications')
 
     prefix = ""
