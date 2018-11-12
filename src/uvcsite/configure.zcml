@@ -48,6 +48,7 @@
   <include package="uvcsite" file="principals.zcml" />
   <include package="uvcsite.plugins" />
 
+  <browser:defaultView name="index.html" />
   <grok:grok package="." exclude="examples plugins" />
 
 </configure>

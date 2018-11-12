@@ -11,12 +11,16 @@ import unittest
 import zope.app.appsetup
 import zope.app.wsgi.testlayer
 import zope.testbrowser.wsgi
+import zope.i18n
+import zope.i18n.config
 
 from cStringIO import StringIO
 from pkg_resources import resource_listdir
 from zope.testing import renormalizing
 from zope.app.wsgi.testlayer import http
 from grokcore.xmlrpc.ftests.test_grok_functional import XMLRPCTestTransport
+
+
 
 
 class Layer(zope.testbrowser.wsgi.TestBrowserLayer,
@@ -50,6 +54,9 @@ class Layer(zope.testbrowser.wsgi.TestBrowserLayer,
     def setUp(self):
         zope.app.appsetup.product.setProductConfigurations(self.conf)
         zope.app.wsgi.testlayer.BrowserLayer.setUp(self)
+        old_1, old_2 = zope.i18n.negotiate, zope.i18n.config.ALLOWED_LANGUAGES
+        zope.i18n.negotiate = lambda context: 'de'
+        zope.i18n.config.ALLOWED_LANGUAGES = ['de']
 
 
 layer = Layer(uvcsite, allowTearDown=True)

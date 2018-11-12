@@ -205,8 +205,7 @@ Clean up
   >>> from zope.component import getSiteManager
   >>> from uvcsite.content import IProductFolder
   >>> gsm = getSiteManager()
-  >>> gsm.unregisterUtility(provided=IProductFolder, name='Uazfolder')
-  False 
+  >>> assert gsm.unregisterUtility(provided=IProductFolder, name='Uazfolder') 
 
 """
 

@@ -15,11 +15,11 @@ Let's first create an instance of Uvcsite at the top level:
 
 Now, we should be able to traverse to the panel:
 
-   >>> panel = root['app'].plugins_panel
+   >>> panel = root['app'].plugins
    >>> panel
    <uvcsite.plugins.panel.PluginsPanel object at ...>
 
-   >>> assert panel.__name__ == 'plugins_panel'
+   >>> assert panel.__name__ == 'plugins'
    >>> assert panel.__parent__ is root['app']
 
 
