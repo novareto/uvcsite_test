@@ -21,9 +21,12 @@ class MyRoles(grok.Adapter):
         self.homefolder = IHomeFolder(IMasterUser(self.principal)).homeFolder
 
     def getAllRoles(self):
-        hfr = IPrincipalRoleMap(self.homefolder)
-        masteruser = False
         ret = []
+        hfr = IPrincipalRoleMap(self.homefolder, None)
+        if hfr is None:
+            return ret
+
+        masteruser = False
         for rolesetting in hfr.getRolesForPrincipal(self.principal.id):
             role, setting = rolesetting
             if 'uvc.Editor' == role and setting is Allow:
