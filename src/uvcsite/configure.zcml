@@ -42,12 +42,13 @@
   <include package="dolmen.app.security" />
   <include package="dolmen.app.authentication" />
   <include package="dolmen.app.breadcrumbs" />
-
-  <browser:defaultView name="index.html" />
-
+ 
   <i18n:registerTranslations directory="locales" />
 
-  <include package="uvcsite" file="principals.zcml"/>
-  <grok:grok package="." exclude="examples" />
+  <include package="uvcsite" file="principals.zcml" />
+  <include package="uvcsite.plugins" />
+
+  <browser:defaultView name="index.html" />
+  <grok:grok package="." exclude="examples plugins" />
 
 </configure>

@@ -1,0 +1,69 @@
+Plugins panel
+=============
+
+:Test-Layer: functional
+
+Check the presence of the plugins panel
+---------------------------------------
+
+Let's first create an instance of Uvcsite at the top level:
+
+   >>> from uvcsite.app import Uvcsite
+   >>> root = getRootFolder()
+   >>> root['app'] = Uvcsite()
+
+
+Now, we should be able to traverse to the panel:
+
+   >>> panel = root['app'].plugins
+   >>> panel
+   <uvcsite.plugins.panel.PluginsPanel object at ...>
+
+   >>> assert panel.__name__ == 'plugins'
+   >>> assert panel.__parent__ is root['app']
+
+
+The panel behaves like a read-only container and have a title and
+description:
+
+   >>> from zope.container.interfaces import IReadContainer
+   >>> from zope.dublincore.interfaces import IDCDescriptiveProperties
+
+   >>> assert IReadContainer.providedBy(panel)
+   >>> assert IDCDescriptiveProperties.providedBy(panel)
+
+
+It should therefore be iterable. We should have a plugin present :
+the cataloging plugin.
+
+   >>> dict(list(panel))
+   {u'uvcsite.catalog':
+        <uvcsite.cataloging.plugin.CatalogPlugin object at ...>}
+
+
+We also can access if we have the name:
+
+   >>> panel[u'uvcsite.catalog']
+   <uvcsite.cataloging.plugin.CatalogPlugin object at ...>
+
+   >>> panel[u'unknown']
+   Traceback (most recent call last):
+     ...
+   KeyError: u'unknown'
+
+   >>> assert panel.get(u'unknown') is None
+   >>> assert panel.get(u'unknown', False) is False
+
+
+It should be possible to test the presence of a plugin:
+
+   >>> assert u'uvcsite.catalog' in panel
+
+
+Plugins coming out of the panel should be correctly located:
+
+   >>> from zope.location import ILocation
+   >>> plugin = panel[u'uvcsite.catalog']
+   >>> assert ILocation.providedBy(plugin)
+   >>> assert plugin.__parent__ is panel
+   >>> assert plugin.__name__ == u'uvcsite.catalog'

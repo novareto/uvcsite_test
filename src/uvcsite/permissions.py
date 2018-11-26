@@ -9,16 +9,6 @@ from uvcsite.workflow.basic_workflow import PUBLISHED
 from hurry.workflow.interfaces import IWorkflowTransitionEvent
 
 
-class User(grok.Role):
-    grok.name('uvc.User')
-    grok.permissions('zope.View')
-
-
-class Editor(grok.Role):
-    grok.name('uvc.Editor')
-    grok.permissions('uvc.AddContent', 'uvc.ViewContent', 'uvc.EditContent', 'uvc.AccessHomeFolder')
-
-
 class View(grok.Permission):
     grok.name('uvc.ViewContent')
 
@@ -29,6 +19,22 @@ class Add(grok.Permission):
 
 class Edit(grok.Permission):
     grok.name('uvc.EditContent')
+
+    
+class User(grok.Role):
+    grok.name('uvc.User')
+    grok.permissions(
+        'zope.View'
+    )
+
+
+class Editor(grok.Role):
+    grok.name('uvc.Editor')
+    grok.permissions(
+        'uvc.AddContent',
+        'uvc.ViewContent',
+        'uvc.EditContent',
+        'uvc.AccessHomeFolder')
 
 
 @grok.subscribe(IWorkflowTransitionEvent)

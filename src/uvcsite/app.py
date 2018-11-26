@@ -4,33 +4,19 @@
 
 import grok
 import uvcsite
+import uvcsite.plugins
 import zope.component
 
-from uvcsite.auth.handler import UVCAuthenticator
-from uvcsite.homefolder.homefolder import PortalMembership
-
 from grokcore.registries import create_components_registry
-from grokcore.site import IApplication
-from zeam.form.base import NO_VALUE
-from zeam.form.ztk import customize
-from zeam.form.ztk.widgets.choice import RadioFieldWidget
-from zeam.form.ztk.widgets.collection import MultiChoiceFieldWidget
-from zeam.form.ztk.widgets.date import DateWidgetExtractor
 from uvcsite.interfaces import IHomeFolderManager
 from zope.authentication.interfaces import IAuthentication
 from zope.component import globalSiteManager
 from zope.component.interfaces import IComponents
-from zope.i18n.format import DateTimeParseError
-from zope.i18n.interfaces import IUserPreferredLanguages
-from zope.interface import Interface, implementer
+from zope.interface import implementer
 from zope.pluggableauth import PluggableAuthentication
 from zope.pluggableauth.interfaces import IAuthenticatorPlugin
-from zope.publisher.interfaces.http import IHTTPRequest
-from zope.schema.interfaces import IDate
-from fanstatic import Library
-
-
-grok.templatedir('templates')
+from uvcsite.auth.handler import UVCAuthenticator
+from uvcsite.homefolder.homefolder import PortalMembership
 
 
 def setup_pau(PAU):
@@ -39,8 +25,6 @@ def setup_pau(PAU):
                               "Zope Realm Basic-Auth",
                               "No Challenge if Authenticated",)
 
-
-library = Library('uvcsite', 'static')
 
 uvcsiteRegistry = create_components_registry(
     name="uvcsiteRegistry",
@@ -55,11 +39,12 @@ grok.global_utility(
     direct=True)
 
 
-@implementer(uvcsite.IUVCSite, IApplication)  # this can be reduced
+@implementer(uvcsite.IUVCSite) 
 class Uvcsite(grok.Application, grok.Container):
     """Application Object for uvc.site
     """
-
+    grok.traversable('plugins')
+    
     grok.local_utility(PortalMembership,
                        provides=IHomeFolderManager)
 
@@ -71,6 +56,10 @@ class Uvcsite(grok.Application, grok.Container):
                        IAuthentication,
                        public=True,
                        setup=setup_pau)
+
+    @property
+    def plugins(self):
+        return uvcsite.plugins.PluginsPanel('plugins', self)
 
     def getSiteManager(self):
         current = super(Uvcsite, self).getSiteManager()
@@ -84,88 +73,3 @@ class Uvcsite(grok.Application, grok.Container):
             current.__bases__ = (uvcsiteRegistry,) + tuple((
                 b for b in current.__bases__ if b != uvcsiteRegistry))
         return current
-
-
-class NotFound(uvcsite.Page, grok.components.NotFoundView):
-    """Not Found Error View
-    """
-    def update(self):
-        super(NotFound, self).update()
-        uvcsite.logger.error(
-            'NOT FOUND: %s' % self.request.get('PATH_INFO', ''))
-
-
-class SystemError(uvcsite.Page, grok.components.ExceptionView):
-    """Custom System Error for UVCSITE
-    """
-
-    def __init__(self, context, request):
-        super(SystemError, self).__init__(context, request)
-        self.context = grok.getSite()
-        self.origin_context = context
-        RESPONSE = self.request.response
-        RESPONSE.setHeader('content-type', 'text/html')
-
-    def update(self):
-        super(SystemError, self).update()
-        uvcsite.logger.error(self.origin_context)
-        RESPONSE = self.request.response
-        RESPONSE.setHeader('content-type', 'text/html')
-
-
-class UVCDateWidgetExtractor(DateWidgetExtractor):
-
-    def extract(self):
-        value, error = super(DateWidgetExtractor, self).extract()
-        if value is not NO_VALUE:
-            if not len(value):
-                return NO_VALUE, None
-            formatter = self.component.getFormatter(self.form)
-            try:
-                value = formatter.parse(value)
-            except (ValueError, DateTimeParseError), error:
-                return None, u"Bitte überprüfen Sie das Datumsformat."
-        return value, error
-
-
-@customize(origin=IDate)
-def customize_size(field):
-    field.valueLength = 'medium'
-
-
-class Favicon(grok.View):
-    """ Helper for Favicon.ico Errors Request
-    """
-    grok.context(Interface)
-    grok.name('favicon.ico')
-    grok.require('zope.Public')
-
-    def render(self):
-        return "BLA"
-
-
-@implementer(IUserPreferredLanguages)
-class GermanBrowserLangugage(grok.Adapter):
-    grok.context(IHTTPRequest)
-
-    def getPreferredLanguages(self):
-        return ['de', 'de-de']
-
-
-class UvcRadioFieldWidget(RadioFieldWidget):
-    """ Simple Override for removing <br> between choices
-    """
-    pass
-
-
-class UvcMultiChoiceFieldWidget(MultiChoiceFieldWidget):
-    """ Simple Override for removing <br> between choices
-    """
-
-
-class HAProxyCheck(grok.View):
-    grok.context(uvcsite.IUVCSite)
-    grok.require('zope.Public')
-
-    def render(self):
-        return "OK"

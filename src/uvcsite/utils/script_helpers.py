@@ -8,9 +8,9 @@ from hurry.workflow.interfaces import IWorkflowState
 
 
 def getContentInAllFolders(homefolderbase, wf_status=None):
-    for homefolder in homefolderbase.values():
-        for productfolder in homefolder.values():
-            for content in productfolder.values():
+    for homefolder in homefolderbase._SampleContainer__data.itervalues():
+        for productfolder in homefolder._SampleContainer__data.itervalues():
+            for content in productfolder._SampleContainer__data.itervalues():
                 if wf_status is not None:
                     if IWorkflowState(content).getState() == wf_status:
                         yield content

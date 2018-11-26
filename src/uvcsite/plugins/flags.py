@@ -1,0 +1,9 @@
+NOT_INSTALLED = object()
+INSTALLED = object()
+INCONSISTANT = object()
+
+ANY = {INCONSISTANT, NOT_INSTALLED, INSTALLED}
+
+RAW = object()
+STRUCTURE = object()
+STATUS_MESSAGE = object()

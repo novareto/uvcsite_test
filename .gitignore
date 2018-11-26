@@ -36,3 +36,17 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+
+# editors #
+###########
+*~
+\#*\#
+
+
+# buildout #
+############
+.installed.cfg
+.mr.developer.cfg
+pip-selfcheck.json
+*.egg-info

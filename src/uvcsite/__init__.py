@@ -56,6 +56,7 @@ from uvcsite.auth.interfaces import IMasterUser
 from uvcsite.content.productregistration import (ProductRegistration,
     getProductRegistrations, getAllProductRegistrations, ProductMenuItem)
 
+
 ### LOGGING
 import logging
 logger = logging.getLogger('uvcsite')

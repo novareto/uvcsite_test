@@ -4,20 +4,17 @@
 
   <include package="uvcsite" />
   <include package="uvcsite.examples" />
-<!--
-  <include package="uvcsite.tests" />
--->
-
   <include package="uvc.staticcontent" />
+  <include package="uvc.token_auth" />
+  
+  <principal id="zope.manager"
+             title="Manager"
+             login="admin"
+             password_manager="SHA1"
+             password="6d9c28cdd033e22ae348aeb5660fc2140aec35850c4da997"
+             />
 
-      <principal id="zope.manager"
-                 title="Manager"
-                 login="admin"
-                 password_manager="SHA1"
-                 password="6d9c28cdd033e22ae348aeb5660fc2140aec35850c4da997"
-                 />
-
-      <grant role="zope.Manager"
-             principal="zope.manager" />
+  <grant role="zope.Manager"
+         principal="zope.manager" />
 
 </configure>
