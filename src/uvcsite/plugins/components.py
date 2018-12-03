@@ -67,7 +67,7 @@ def plugin_action(title, _for=flags.ANY):
         return method
     return callback
 
-    
+
 @zope.interface.implementer(IDCDescriptiveProperties, IPlugin)
 class Plugin(grok.GlobalUtility):
     grok.baseclass()
