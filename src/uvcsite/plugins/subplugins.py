@@ -1,11 +1,11 @@
 import grok
 from zope.catalog.interfaces import ICatalog
-from zope.component import queryUtility
+from zope.component import queryUtility, getSiteManager
 from zope.intid.interfaces import IIntIds
 from zope.authentication.interfaces import IAuthentication
 from zope.pluggableauth.interfaces import (
     IAuthenticatorPlugin, ICredentialsPlugin)
-from .components import
+import uvcsite.plugins
 
 
 class Cataloger:
@@ -16,18 +16,26 @@ class Cataloger:
 
     @property
     def title(self):
+        catalog_name = grok.name.bind().get(self.catalog)
         return 'Cataloger: %s' % catalog_name
 
     @property
-    def status(self, site):
+    def status(self):
         catalog_name = grok.name.bind().get(self.catalog)
         catalog = queryUtility(ICatalog, name=catalog_name) is not None
+        if catalog:
+            return uvcsite.plugins.Status(
+                state=uvcsite.plugins.States.INSTALLED
+            )
+        return uvcsite.plugins.Status(
+            state=uvcsite.plugins.States.NOT_INSTALLED
+        )
 
     def get(self, site):
         sm = site.getSiteManager()
-        name = grok.name.bind().get(self.component)
-        return sm.queryUtility(self.provides, name=name)
-        
+        name = grok.name.bind().get(self.catalog)
+        return sm.queryUtility(ICatalog, name=name)
+
     def install(self, site):
         grok.notify(self.trigger(site))
 
@@ -44,9 +52,6 @@ class Cataloger:
             raise uvcsite.plugins.PluginErrors(
                 self.title,
                 u'Catalog unregistration was unsuccessful.')
-        raise uvcsite.plugins.PluginErrors(
-            self.title,
-            u'Catalog does not exist.')
 
     def recatalog(self, site, items_iterator):
         sm = site.getSiteManager()
@@ -80,7 +85,7 @@ class PAUComponent:
 
     types = {
         'authenticator': (
-            'authenticatorPlugins', IAuthenticatorPlugin)
+            'authenticatorPlugins', IAuthenticatorPlugin),
         'credentials': (
             'credentialsPlugins', ICredentialsPlugin)
     }
@@ -103,25 +108,29 @@ class PAUComponent:
         pau_available = name in getattr(pau, self.attribute)
 
         if self.local:
-            sm = site.getSiteManager()
+            sm = getSiteManager()
             sm_available = name in sm
         else:
             sm_available = False
 
         if (pau_available and (self.local == sm_available)):
-            return uvcsite.plugins.INSTALLED
+            return uvcsite.plugins.Status(
+                state=uvcsite.plugins.States.INSTALLED)
 
         if (pau_available or (self.local == sm_available)):
-            return uvcsite.plugins.INCONSISTANT
+            return uvcsite.plugins.Status(
+                state=uvcsite.plugins.States.INCONSISTANT)
 
-        return uvcsite.plugins.NOT_INSTALLED
+        return uvcsite.plugins.Status(
+            state=uvcsite.plugins.States.NOT_INSTALLED)
 
     def get(self, site):
         sm = site.getSiteManager()
         name = grok.name.bind().get(self.component)
         return sm.queryUtility(self.provides, name=name)
 
-    def install(self, site):        
+    def install(self, site):
+        sm = site.getSiteManager()
         pau = sm.queryUtility(IAuthentication)
         name = grok.name.bind().get(self.component)
 
@@ -133,24 +142,24 @@ class PAUComponent:
             sm = site.getSiteManager()
             utility = self.component()
             sm[name] = utility
-            if sm.registerUtility(
-                utility, provided=IAuthenticatorPlugin, name=name):
-                del sm[name]
-            raise uvcsite.plugins.PluginErrors(
-                self.title,
-                u'Catalog unregistration was unsuccessful.')
-
+            sm.registerUtility(
+                utility, provided=IAuthenticatorPlugin, name=name)
         return True
 
     def uninstall(self, site):
+        sm = site.getSiteManager()
         pau = sm.queryUtility(IAuthentication)
         name = grok.name.bind().get(self.component)
 
         if self.local and (name in sm):
             sm = site.getSiteManager()
             utility = sm[name]
-            sm.unregisterUtility(
-                utility, provided=IAuthenticatorPlugin, name=name)
+            if not sm.unregisterUtility(
+                utility, provided=IAuthenticatorPlugin, name=name):
+                raise uvcsite.plugins.PluginError(
+                    self.title,
+                    u'Catalog unregistration was unsuccessful.')
+
             del sm[name]
 
         values = getattr(pau, self.attribute)

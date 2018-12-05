@@ -29,32 +29,32 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
     def status(self):
         catalog = queryUtility(ICatalog, name="workflow_catalog")
         if catalog is not None:
-            return uvcsite.plugins.INSTALLED
-        return uvcsite.plugins.NOT_INSTALLED
+            return uvcsite.plugins.Status(
+                state=uvcsite.plugins.States.INSTALLED)
+        return uvcsite.plugins.Status(
+            state=uvcsite.plugins.States.NOT_INSTALLED)
 
-    @uvcsite.plugins.plugin_action(
-        'Documentation', _for=uvcsite.plugins.ANY)
-    def documentation(site):
-        return uvcsite.plugins.PluginResult(
+    @uvcsite.plugins.plugin_action('Documentation')
+    def documentation(self, site):
+        return uvcsite.plugins.Result(
             value=CATALOG_DOC,
-            type=uvcsite.plugins.RAW,
-            redirect=False)
+            type=uvcsite.plugins.ResultTypes.PLAIN)
 
     @uvcsite.plugins.plugin_action(
-        'Install', _for=uvcsite.plugins.NOT_INSTALLED)
-    def install(site):
+        'Install', uvcsite.plugins.States.NOT_INSTALLED)
+    def install(self, site):
         grok.notify(uvcsite.cataloging.CatalogDeployment(site))
-        return uvcsite.plugins.PluginResult(
+        return uvcsite.plugins.Result(
             value=u'Catalog installed with success',
-            type=uvcsite.plugins.STATUS_MESSAGE,
+            type=uvcsite.plugins.ResultTypes.MESSAGE,
             redirect=True)
 
     @uvcsite.plugins.plugin_action(
-        'Diagnostic', _for=uvcsite.plugins.INSTALLED)
-    def diagnose(site):
+        'Diagnostic', uvcsite.plugins.States.INSTALLED)
+    def diagnose(self, site):
         sm = site.getSiteManager()
         catalog = sm.getUtility(ICatalog, name="workflow_catalog")
-        return uvcsite.plugins.PluginResult(
+        return uvcsite.plugins.Result(
             value={
                 'Plugin type': u'Catalog',
                 'Indexes': ', '.join(list(catalog.keys())),
@@ -63,12 +63,11 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
                 'Number of documents': catalog['state'].documentCount(),
                 'Remarks': 'Depends on IntIds.'
             },
-            type=uvcsite.plugins.STRUCTURE,
-            redirect=False)
+            type=uvcsite.plugins.ResultTypes.JSON)
 
     @uvcsite.plugins.plugin_action(
-        'Recatalog', _for=uvcsite.plugins.INSTALLED)
-    def recatalog(site):
+        'Recatalog', uvcsite.plugins.States.INSTALLED)
+    def recatalog(self, site):
         sm = site.getSiteManager()
         catalog = sm.getUtility(ICatalog, name="workflow_catalog")
         ids = sm.getUtility(IIntIds)
@@ -80,14 +79,14 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
                 catalog.index_doc(id, obj)
                 counter += 1
 
-        return uvcsite.plugins.PluginResult(
+        return uvcsite.plugins.Result(
             value=u'%s items recataloged !' % counter,
-            type=uvcsite.plugins.STATUS_MESSAGE,
+            type=uvcsite.plugins.ResultTypes.MESSAGE,
             redirect=True)
 
     @uvcsite.plugins.plugin_action(
-        'Uninstall', _for=uvcsite.plugins.INSTALLED)
-    def uninstall(site):
+        'Uninstall', uvcsite.plugins.States.INSTALLED)
+    def uninstall(self, site):
         sm = site.getSiteManager()
         catalog = sm.queryUtility(ICatalog, name="workflow_catalog")
         if catalog is not None:
@@ -95,13 +94,13 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
             if sm.unregisterUtility(
                     catalog, provided=ICatalog, name="workflow_catalog"):
                 del sm[name_in_container]
-                return uvcsite.plugins.PluginResult(
+                return uvcsite.plugins.Result(
                     value=u'Catalog uninstalled with success',
-                    type=uvcsite.plugins.STATUS_MESSAGE,
+                    type=uvcsite.plugins.ResultTypes.MESSAGE,
                     redirect=True)
-            raise uvcsite.plugins.PluginErrors(
+            raise uvcsite.plugins.PluginError(
                 'Installation error'
                 u'Catalog unregistration was unsuccessful.')
-        raise uvcsite.plugins.PluginErrors(
+        raise uvcsite.plugins.PluginError(
                 'Installation error'
                 u'Catalog does not exist.')

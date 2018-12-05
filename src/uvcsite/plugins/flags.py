@@ -1,9 +1,13 @@
-NOT_INSTALLED = object()
-INSTALLED = object()
-INCONSISTANT = object()
+from enum import Enum
 
-ANY = {INCONSISTANT, NOT_INSTALLED, INSTALLED}
 
-RAW = object()
-STRUCTURE = object()
-STATUS_MESSAGE = object()
+States = Enum(
+    'NOT_INSTALLED',
+    'INSTALLED',
+    'INCONSISTANT')
+
+
+ResultTypes = Enum(
+    'JSON',
+    'PLAIN',
+    'MESSAGE')

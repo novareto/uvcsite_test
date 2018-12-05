@@ -15,18 +15,15 @@
       This plugin is not installed
     </h3>
 
-    <div id="plugin-status" tal:condition="view.result">
-      <h4 tal:content="view.title" />
-      <dl tal:condition="view.content_type == 'struct'">
-        <tal:info repeat="info view.result.items()">
-          <dt tal:content="info[0]" />
-          <dd tal:content="info[1]" />
-        </tal:info>
-      </dl>
-      <pre tal:condition="view.content_type == 'text'"
-           tal:content="view.result"
-           />
-    </div>
+    <ul tal:condition="view.status.infos">
+      <li tal:repeat="info view.status.infos">
+        <span tal:content="infos" />
+      </li>
+    </ul>
+
+    <div id="plugin-status"
+         tal:condition="view.result is not None"
+         tal:content="structure view.result" />
 
     <hr />
 
