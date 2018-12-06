@@ -1,4 +1,4 @@
-from enum34 import Enum
+from enum import Enum
 
 
 class States(Enum):
