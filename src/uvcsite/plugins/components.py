@@ -108,5 +108,7 @@ class Plugin(grok.GlobalUtility):
 
     title = None
     description = u""
-    status = Status(flags.States.NOT_INSTALLED)
+    import pdb
+    pdb.set_trace()
+    status = Status(state=flags.States.NOT_INSTALLED)
     actions = None

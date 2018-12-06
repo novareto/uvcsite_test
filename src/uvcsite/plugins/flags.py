@@ -1,13 +1,13 @@
-from enum import Enum
+from enum34 import Enum
 
 
-States = Enum(
-    'NOT_INSTALLED',
-    'INSTALLED',
-    'INCONSISTANT')
+class States(Enum):
+    NOT_INSTALLED = 'not installed'
+    INSTALLED = 'installed'
+    INCONSISTANT = 'inconsistant'
 
 
-ResultTypes = Enum(
-    'JSON',
-    'PLAIN',
-    'MESSAGE')
+class ResultTypes(Enum):
+    JSON = 'application/json'
+    PLAIN = 'text/plain'
+    MESSAGE = 'message/status'
