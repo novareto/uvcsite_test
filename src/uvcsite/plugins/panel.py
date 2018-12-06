@@ -6,6 +6,7 @@ import zope.interface
 import zope.component
 import uvcsite
 
+import zope.schema
 from zeam.form.base import Errors, Error, FAILURE
 from zope.component import getMultiAdapter
 from zope.location import Location, LocationProxy
@@ -14,7 +15,8 @@ from zope.dublincore.interfaces import IDCDescriptiveProperties
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
 from uvcsite.plugins.flags import States, ResultTypes
-from uvcsite.plugins.components import Result, PluginError, IPlugin
+from uvcsite.plugins.components import (
+    Result, PluginError, IPlugin, IComplexPlugin)
 
 
 grok.templatedir('templates')
@@ -73,7 +75,7 @@ class PluginsPanelManagement(uvcsite.Page):
 
 
 class JSON(grok.MultiAdapter):
-    grok.name('JSON')
+    grok.name('application/json')
     grok.provides(zope.interface.Interface)
     grok.adapts(IPlugin, IDefaultBrowserLayer, Result)
 
@@ -87,8 +89,8 @@ class JSON(grok.MultiAdapter):
             self.result.value, indent=4, sort_keys=True)
 
 
-class PLAIN(grok.MultiAdapter):
-    grok.name('PLAIN')
+class plain(grok.MultiAdapter):
+    grok.name('text/plain')
     grok.provides(zope.interface.Interface)
     grok.adapts(IPlugin, IDefaultBrowserLayer, Result)
 
@@ -112,7 +114,7 @@ class PluginOverview(uvcsite.Form):
 
     @property
     def actions(self):
-        return self.getContent().actions
+        return self.context.actions
 
     def updateForm(self):
         form, action, result = self.updateActions()
@@ -127,7 +129,7 @@ class PluginOverview(uvcsite.Form):
                 else:
                     rendering = getMultiAdapter(
                         (self.context, self.request, result),
-                        name=str(result.type))
+                        name=result.type.value)
                     self.result = rendering()
         self.updateWidgets()
 
@@ -137,3 +139,26 @@ class PluginOverview(uvcsite.Form):
         self.status = self.context.status
         self.is_installed = self.status.state == States.INSTALLED
 
+
+class ComplexPluginOverview(PluginOverview):
+    grok.context(IComplexPlugin)
+    grok.name('index')
+    grok.require('grok.ManageApplications')
+
+    def update(self):
+        PluginOverview.update(self)
+        self.subplugins = self.context.subplugins
+
+
+class PluginInfo(grok.ContentProvider):
+    grok.name('plugin_info')
+    grok.template('plugin_info')
+    grok.view(PluginOverview)
+    grok.context(IPlugin)
+
+
+class PluginSubplugins(grok.ContentProvider):
+    grok.name('plugin_info')
+    grok.template('plugin_subplugins')
+    grok.view(PluginOverview)
+    grok.context(IComplexPlugin)

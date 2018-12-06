@@ -24,10 +24,10 @@ class Status:
         self.infos = infos
 
     def __str__(self):
-        return str(self.id)
+        return str(self.state.value)
 
     def __repr__(self):
-        '<Status %s>' % self.state
+        '<Status %s>' % self.state.value
 
 
 class Result:
@@ -39,10 +39,10 @@ class Result:
         self.redirect = redirect
         
     def __str__(self):
-        return str(self.id)
+        return str(self.type.value)
 
     def __repr__(self):
-        '<Result %s>' % self.type
+        '<Result %s>' % self.type.value
 
 
 class PluginError(Exception):
@@ -58,6 +58,11 @@ class IPlugin(zope.interface.Interface):
     description = zope.interface.Attribute('Description')
     actions = zope.interface.Attribute('Actions')
     status = zope.interface.Attribute('Plugin status')
+
+
+class IComplexPlugin(IPlugin):
+
+    subplugins = zope.interface.Attribute('Subplugins')
 
 
 class PluginAction(Action):
@@ -110,3 +115,49 @@ class Plugin(grok.GlobalUtility):
     description = u""
     status = Status(state=flags.States.NOT_INSTALLED)
     actions = None
+
+
+@zope.interface.implementer(IComplexPlugin)
+class ComplexPlugin(Plugin):
+    grok.baseclass()
+
+    subplugins = None  # dict
+
+    def dispatch(self, action, site):
+        errors = []
+        for sp in self.subplugins.values():
+            try:
+                method = getattr(sp, action, None)
+                if method is not None:
+                    result = method(site)
+            except uvcsite.plugins.PluginError as exc:
+                errors.extend(exc.messages)
+
+        if errors:
+            raise uvcsite.plugins.PluginError(
+                u'`%s` encountered errors.' % action, *errors)
+
+        return uvcsite.plugins.Result(
+            value=u'`%s` was successful.' % action,
+            type=uvcsite.plugins.ResultTypes.MESSAGE,
+            redirect=True)
+
+    @property
+    def status(self):
+        statuses = [sp.status for sp in self.subplugins.values()]
+        states = set((s.state for s in statuses))
+        if len(states) > 1:
+            status = uvcsite.plugins.Status(
+                state=flags.States.INCONSISTANT)
+        elif flags.States.INSTALLED in states:
+            status = uvcsite.plugins.Status(
+                state=flags.States.INSTALLED)
+        else:
+            status = uvcsite.plugins.Status(
+                state=flags.States.NOT_INSTALLED)
+
+        for s in statuses:
+            if s.infos:
+                status.infos.extend(s.infos)
+
+        return status
