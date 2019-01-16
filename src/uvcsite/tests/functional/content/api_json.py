@@ -199,14 +199,6 @@ An invariant uaz_xml file
   >>> print response.getBody()
   [{"text": "Invariant: This combination of name and age is not valid"}]
 
-
-Clean up
-
-  >>> from zope.component import getSiteManager
-  >>> from uvcsite.content import IProductFolder
-  >>> gsm = getSiteManager()
-  >>> assert gsm.unregisterUtility(provided=IProductFolder, name='Uazfolder') 
-
 """
 
 
