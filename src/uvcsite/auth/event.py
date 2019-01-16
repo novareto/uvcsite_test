@@ -25,6 +25,8 @@ def applyPermissionsForExistentCoUsers(factory):
         return
     um = getUtility(IUserManagement)
     user = um.getUser(principal.id)
+    if not user:
+        return
     rollen = user['rollen']
     if user['az'] != '00':
         pid = "%s-%s" % (user['mnr'], user['az'])

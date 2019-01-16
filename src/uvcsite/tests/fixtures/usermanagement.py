@@ -3,9 +3,20 @@
 
 import grok
 import uvcsite
+
+from dolmen.security.policies.principalrole import ExtraRoleMap
+from zope import interface
+from zope.interface import implementer
+from zope.schema import Choice
+from zope.securitypolicy.interfaces import Allow
+from zope.securitypolicy.securitymap import SecurityMap
+from zope.securitypolicy.zopepolicy import settingsForObject
+from zope.securitypolicy.interfaces import (
+     IPrincipalRoleManager, IPrincipalRoleMap, IRolePermissionMap)
+
+from uvcsite.interfaces import IMyHomeFolder
 from uvcsite.extranetmembership.interfaces import (
     IUserManagement, IExtranetMember)
-from zope.schema import Choice
 
 
 class User(dict):
@@ -48,7 +59,7 @@ class HierarchyUser(IExtranetMember):
         )
 
 
-@grok.implementer(IUserManagement)
+@implementer(IUserManagement)
 class UserManagement(grok.GlobalUtility):
     """Utility for Usermanagement.
     """
@@ -114,24 +125,9 @@ class UserManagement(grok.GlobalUtility):
         return True
 
 
-
-from uvcsite.interfaces import IMyHomeFolder
-from zope import interface
-from zope.securitypolicy.interfaces import Allow
-from dolmen.security.policies.principalrole import ExtraRoleMap
-from zope.securitypolicy.zopepolicy import settingsForObject
-from zope.securitypolicy.securitymap import SecurityMap
-from zope.securitypolicy.interfaces import (
-     IPrincipalRoleManager, IPrincipalRoleMap, IRolePermissionMap)
-
-
-
-
 class ViewPermission(grok.View):
     grok.context(interface.Interface)
 
     def render(self):
         context = self.context
         print settingsForObject(context)
-
-
