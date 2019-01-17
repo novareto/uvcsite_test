@@ -40,15 +40,15 @@ class ApplicationContent(grok.Adapter):
         dates = zope.dublincore.interfaces.IDCTimes(self.context)
         return dates.modified
 
-     @property
-     def creation_date(self):
-         dates = zope.dublincore.interfaces.IDCTimes(self.context)
-         return dates.created
+    @property
+    def creation_date(self):
+        dates = zope.dublincore.interfaces.IDCTimes(self.context)
+        return dates.created
 
-     @property
-     def creator(self):
-         info = zope.dublincore.interfaces.IDCExtended(self.context)
-         return info.creators[0]
+    @property
+    def creator(self):
+        info = zope.dublincore.interfaces.IDCExtended(self.context)
+        return info.creators[0]
 
 
 class WorkflowCatalog(grok.Indexes):
