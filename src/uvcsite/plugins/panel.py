@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 
 import grok
+import json
 import zope.interface
 import zope.component
 import uvcsite
 
-from zeam.form.base import Errors, Error
+import zope.schema
+from zeam.form.base import Errors, Error, FAILURE
+from zope.component import getMultiAdapter
 from zope.location import Location, LocationProxy
-from zope.publisher.interfaces import browser
 from zope.container.interfaces import IReadContainer
-from zope.traversing.interfaces import ITraversable
 from zope.dublincore.interfaces import IDCDescriptiveProperties
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
-from uvcsite.plugins import INSTALLED, STATUS_MESSAGE, RAW, STRUCTURE
-from uvcsite.plugins.components import PluginErrors, IPlugin
+from uvcsite.plugins.flags import States, ResultTypes
+from uvcsite.plugins.components import (
+    Result, PluginError, IPlugin, IComplexPlugin)
 
 
 grok.templatedir('templates')
@@ -71,6 +74,35 @@ class PluginsPanelManagement(uvcsite.Page):
                 }
 
 
+class JSON(grok.MultiAdapter):
+    grok.name('application/json')
+    grok.provides(zope.interface.Interface)
+    grok.adapts(IPlugin, IDefaultBrowserLayer, Result)
+
+    def __init__(self, plugin, request, result):
+        self.plugin = plugin
+        self.request = request
+        self.result = result
+    
+    def __call__(self):
+        return u'<pre>%s</pre>' % json.dumps(
+            self.result.value, indent=4, sort_keys=True)
+
+
+class plain(grok.MultiAdapter):
+    grok.name('text/plain')
+    grok.provides(zope.interface.Interface)
+    grok.adapts(IPlugin, IDefaultBrowserLayer, Result)
+
+    def __init__(self, plugin, request, result):
+        self.plugin = plugin
+        self.request = request
+        self.result = result
+    
+    def __call__(self):
+        return u'<pre>%s</pre>' % self.result.value
+
+    
 class PluginOverview(uvcsite.Form):
     grok.context(IPlugin)
     grok.name('index')
@@ -82,27 +114,51 @@ class PluginOverview(uvcsite.Form):
 
     @property
     def actions(self):
-        return self.getContent().actions
-        
+        return self.context.actions
+
     def updateForm(self):
         form, action, result = self.updateActions()
         if action is not None:
             self.title = action.title
-            if result.type is STATUS_MESSAGE:
-                self.flash(result.value)
-                if result.redirect:
-                    return self.redirect(self.url(self.context))
-            elif result.type is RAW:
-                self.result = result.value
-                self.content_type = 'text'
-            elif result.type is STRUCTURE:
-                self.result = result.value
-                self.content_type = 'struct'
-
+            if result is not FAILURE:
+                assert isinstance(result, Result)
+                if result.type is ResultTypes.MESSAGE:
+                    self.flash(result.value)
+                    if result.redirect:
+                        return self.redirect(self.url(self.context))
+                else:
+                    rendering = getMultiAdapter(
+                        (self.context, self.request, result),
+                        name=result.type.value)
+                    self.result = rendering()
         self.updateWidgets()
 
     def update(self):
         self.title = None
         self.result = None
-        self.content_type = None
-        self.is_installed = self.context.status == INSTALLED
+        self.status = self.context.status
+        self.is_installed = self.status.state == States.INSTALLED
+
+
+class ComplexPluginOverview(PluginOverview):
+    grok.context(IComplexPlugin)
+    grok.name('index')
+    grok.require('grok.ManageApplications')
+
+    def update(self):
+        PluginOverview.update(self)
+        self.subplugins = self.context.subplugins
+
+
+class PluginInfo(grok.ContentProvider):
+    grok.name('plugin_info')
+    grok.template('plugin_info')
+    grok.view(PluginOverview)
+    grok.context(IPlugin)
+
+
+class PluginSubplugins(grok.ContentProvider):
+    grok.name('plugin_info')
+    grok.template('plugin_subplugins')
+    grok.view(PluginOverview)
+    grok.context(IComplexPlugin)

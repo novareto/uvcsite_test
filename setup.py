@@ -11,6 +11,12 @@ with open(os.path.join(docs, 'CHANGES.txt'), 'r') as changes:
     desc += changes.read()
 
 
+tests_require = [
+    'zope.testbrowser',
+    'zope.app.testing',
+]
+
+
 setup(name='uvcsite',
       version=version,
       description="Grok-Based CMS",
@@ -35,6 +41,7 @@ setup(name='uvcsite',
           'dolmen.forms.crud',
           'dolmen.forms.wizard',
           'dolmen.security.policies',
+          'enum34',
           'formencode',
           'grok',
           'grokcore.chameleon',
@@ -71,14 +78,14 @@ setup(name='uvcsite',
           'zope.app.locales',
           'zope.app.pagetemplate',
           'zope.app.renderer',
-          'zope.app.testing',
+          'zope.cachedescriptors',
           'zope.generations',
           'zope.i18n [compile]',
           'zope.pluggableauth',
           'zope.principalannotation',
           'zope.sendmail',
-          'zope.testbrowser',
           ],
+      extras_require={'test': tests_require},
       entry_points = """
       [paste.app_factory]
       main = grokcore.startup:application_factory

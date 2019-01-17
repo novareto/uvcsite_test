@@ -18,6 +18,8 @@ class IApplicationContent(zope.interface.Interface):
     type = zope.interface.Attribute('Content type')
     state = zope.interface.Attribute('Workflow state')
     modification_date = zope.interface.Attribute('Workflow state')
+    creation_date = zope.interface.Attribute('Creation date')
+    creator = zope.interface.Attribute('Creator')
 
 
 @zope.interface.implementer(IApplicationContent)
@@ -38,6 +40,16 @@ class ApplicationContent(grok.Adapter):
         dates = zope.dublincore.interfaces.IDCTimes(self.context)
         return dates.modified
 
+     @property
+     def creation_date(self):
+         dates = zope.dublincore.interfaces.IDCTimes(self.context)
+         return dates.created
+
+     @property
+     def creator(self):
+         info = zope.dublincore.interfaces.IDCExtended(self.context)
+         return info.creators[0]
+
 
 class WorkflowCatalog(grok.Indexes):
     grok.context(IApplicationContent)
@@ -47,4 +59,6 @@ class WorkflowCatalog(grok.Indexes):
 
     type = grok.index.Field()
     state = grok.index.Field()
+    creator = grok.index.Field()
     modification_date = grok.index.Datetime()
+    creation_date = grok.index.Datetime()
