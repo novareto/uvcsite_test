@@ -18,6 +18,9 @@ from zope.interface import Interface, directlyProvides
 from zope.location import Location, LocationProxy
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.traversing.interfaces import ITraversable
+from zope.interface import implementer
+from zope.dublincore.interfaces import IDCDescriptiveProperties
+
 
 
 grok.templatedir('templates')
@@ -27,7 +30,10 @@ class IOnTheFlyUser(Interface):
     pass
 
 
+@implementer(IDCDescriptiveProperties)
 class ENMSLister(Location):
+
+    title = u"Mitbenutzerverwaltung"
 
     def __init__(self, parent, name):
         self.__parent__ = parent
