@@ -1,7 +1,7 @@
 import os
 from setuptools import setup, find_packages
 
-version = '2.7.1.dev1'
+version = '2.8.1.dev0'
 
 
 docs = os.path.join(os.path.dirname(__file__), 'docs')

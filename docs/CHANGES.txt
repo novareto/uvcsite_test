@@ -2,7 +2,13 @@ CHANGES
 =======
 
 
-2.7.1 (unreleased)
+2.8.1 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
+2.8.0 (2019-02-15)
 ------------------
 
   * Upgraded to martian1.2 and python3-grokcore. UVCSite is still py2.7 only.
