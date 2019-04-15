@@ -42,7 +42,7 @@ class Cataloger:
             grok.notify(self.trigger(site))
         except:
             # should log
-            pass
+            raise
         if self.get(site) is None:
             raise uvcsite.plugins.PluginError(
                 self.title,

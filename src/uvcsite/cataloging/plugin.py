@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import grok
+import uvcsite
 import uvcsite.cataloging
 import uvcsite.plugins
-from uvcsite.utils.script_helpers import getContentInAllFolders
-from zope.catalog.interfaces import ICatalog
-from zope.component import queryUtility
-from zope.intid.interfaces import IIntIds
-from zope.lifecycleevent import ObjectModifiedEvent
+
+from collections import defaultdict
+from zope.component.hooks import getSite
 
 
 CATALOG_DOC = u"""Write me
@@ -16,7 +15,7 @@ This is a documentation about...
 """
 
 
-class CatalogPlugin(uvcsite.plugins.Plugin):
+class CatalogPlugin(uvcsite.plugins.Cataloger, uvcsite.plugins.Plugin):
     grok.name('uvcsite.catalog')
 
     fa_icon = 'book'
@@ -25,14 +24,9 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
         u"Cataloging capabilities for searching "
         + u"and sorting items efficiently")
 
-    @property
-    def status(self):
-        catalog = queryUtility(ICatalog, name="workflow_catalog")
-        if catalog is not None:
-            return uvcsite.plugins.Status(
-                state=uvcsite.plugins.States.INSTALLED)
-        return uvcsite.plugins.Status(
-            state=uvcsite.plugins.States.NOT_INSTALLED)
+    def __init__(self):
+        self.catalog = uvcsite.cataloging.WorkflowCatalog
+        self.trigger = uvcsite.cataloging.CatalogDeployment
 
     @uvcsite.plugins.plugin_action('Documentation')
     def documentation(self, site):
@@ -42,65 +36,48 @@ class CatalogPlugin(uvcsite.plugins.Plugin):
 
     @uvcsite.plugins.plugin_action(
         'Install', uvcsite.plugins.States.NOT_INSTALLED)
-    def install(self, site):
-        grok.notify(uvcsite.cataloging.CatalogDeployment(site))
+    def _install(self, site):
+        super(CatalogPlugin, self).install(site)
         return uvcsite.plugins.Result(
-            value=u'Catalog installed with success',
+            value=u'Install was successful.',
             type=uvcsite.plugins.ResultTypes.MESSAGE,
             redirect=True)
 
     @uvcsite.plugins.plugin_action(
         'Diagnostic', uvcsite.plugins.States.INSTALLED)
-    def diagnose(self, site):
-        sm = site.getSiteManager()
-        catalog = sm.getUtility(ICatalog, name="workflow_catalog")
+    def _diagnose(self, site):
+        diag = super(CatalogPlugin, self).diagnose(site)
         return uvcsite.plugins.Result(
-            value={
-                'Plugin type': u'Catalog',
-                'Indexes': ', '.join(list(catalog.keys())),
-                'Local name': catalog.__name__,
-                'Catalog name': u"workflow_catalog",
-                'Number of documents': catalog['state'].documentCount(),
-                'Remarks': 'Depends on IntIds.'
-            },
+            value=diag,
             type=uvcsite.plugins.ResultTypes.JSON)
 
     @uvcsite.plugins.plugin_action(
         'Recatalog', uvcsite.plugins.States.INSTALLED)
-    def recatalog(self, site):
-        sm = site.getSiteManager()
-        catalog = sm.getUtility(ICatalog, name="workflow_catalog")
-        ids = sm.getUtility(IIntIds)
-
-        counter = 0
-        for obj in getContentInAllFolders(site['members']):
-            id = ids.queryId(obj)
-            if id is not None:
-                catalog.index_doc(id, obj)
-                counter += 1
-
+    def _recatalog(self, site):
+        iterator = getContentInAllFolders(site['members'])
+        super(CatalogPlugin, self).recatalog(site, iterator)
         return uvcsite.plugins.Result(
-            value=u'%s items recataloged !' % counter,
+            value=u'Recataloging was successful.',
             type=uvcsite.plugins.ResultTypes.MESSAGE,
             redirect=True)
 
     @uvcsite.plugins.plugin_action(
         'Uninstall', uvcsite.plugins.States.INSTALLED)
-    def uninstall(self, site):
-        sm = site.getSiteManager()
-        catalog = sm.queryUtility(ICatalog, name="workflow_catalog")
-        if catalog is not None:
-            name_in_container = catalog.__name__
-            if sm.unregisterUtility(
-                    catalog, provided=ICatalog, name="workflow_catalog"):
-                del sm[name_in_container]
-                return uvcsite.plugins.Result(
-                    value=u'Catalog uninstalled with success',
-                    type=uvcsite.plugins.ResultTypes.MESSAGE,
-                    redirect=True)
-            raise uvcsite.plugins.PluginError(
-                'Installation error'
-                u'Catalog unregistration was unsuccessful.')
-        raise uvcsite.plugins.PluginError(
-                'Installation error'
-                u'Catalog does not exist.')
+    def _uninstall(self, site):
+        super(CatalogPlugin, self).uninstall(site)
+        return uvcsite.plugins.Result(
+            value=u'Uninstall was successful.',
+            type=uvcsite.plugins.ResultTypes.MESSAGE,
+            redirect=True)
+
+    @uvcsite.plugins.plugin_action(
+        'Count', uvcsite.plugins.States.INSTALLED)
+    def count(self, site):
+        catalog = self.get(site)
+        counted = defaultdict(dict)
+        for type, tids in catalog['type']._fwd_index.items():
+            for state, sids in catalog['state']._fwd_index.items():
+                counted[type][state] = len(set(tids) & set(sids))
+        return uvcsite.plugins.Result(
+            value=counted,
+            type=uvcsite.plugins.ResultTypes.JSON)
