@@ -45,6 +45,7 @@ class ProductFolderRest(grok.REST):
     def PUT(self):
         errors = []
         content = self.context.getContentType()()
+        grok.notify(grok.ObjectCreatedEvent(content))
         interface = content.schema[0]
         serializer = ISerializer(content)
         serializer.work(self.body, interface, errors)
