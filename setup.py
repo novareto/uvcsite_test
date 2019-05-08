@@ -33,7 +33,7 @@ setup(name='uvcsite',
       zip_safe=False,
       install_requires=[
           'docutils',
-          'dolmen.app.authentication',
+          'dolmen.authentication',
           'dolmen.app.layout',
           'dolmen.beaker',
           'dolmen.content',

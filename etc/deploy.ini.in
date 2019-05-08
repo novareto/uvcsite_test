@@ -2,7 +2,8 @@
 zope_conf = %(here)s/zope.conf
 
 [server:main]
-use = egg:Paste#http
+#use = egg:Paste#http
+use =egg:waitress#main
 host = ${:host}
 port = ${:port}
 
