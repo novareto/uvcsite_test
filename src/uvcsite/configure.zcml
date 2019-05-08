@@ -18,6 +18,8 @@
   <include package="zope.dublincore" />
   <include package="zope.fanstatic" />
   <include package="zope.authentication" />
+  <include package="zope.pluggableauth" />
+  <include package="zope.pluggableauth.plugins" file="groupfolder.zcml" />
   <include package="zope.generations" file="subscriber.zcml" />
   <include package="zope.app.locales" />
   <include package="zope.app.wsgi" />
@@ -28,7 +30,6 @@
   <include package="megrok.z3ctable" />
   <include package="megrok.z3ctable" file="meta.zcml" />
   <include package="megrok.pagetemplate" file="meta.zcml" />
-  <include package="megrok.rendersource" />
 
   <include package="grokcore.layout" />
   <include package="grokcore.chameleon" />
@@ -40,7 +41,7 @@
   <include package="dolmen.beaker" />
   <include package="dolmen.menu" />
   <include package="dolmen.app.security" />
-  <include package="dolmen.app.authentication" />
+  <!--<include package="dolmen.app.authentication" />-->
   <include package="dolmen.app.breadcrumbs" />
  
   <i18n:registerTranslations directory="locales" />

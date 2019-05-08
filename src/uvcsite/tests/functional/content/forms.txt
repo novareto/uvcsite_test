@@ -36,10 +36,6 @@ We should reach to forms
 
 2) logout
 
-   >>> browser.open('http://localhost/app/logoutaction')
-   >>> browser.headers['status'].upper()
-   '200 OK'
-
 
 Try to Authenticate
 -------------------

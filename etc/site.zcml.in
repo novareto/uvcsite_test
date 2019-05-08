@@ -5,7 +5,7 @@
   <include package="uvcsite" />
   <include package="uvcsite.examples" />
   <include package="uvc.staticcontent" />
-  <include package="uvc.token_auth" />
+<!--  <include package="uvc.token_auth" /> -->
   
   <principal id="zope.manager"
              title="Manager"
