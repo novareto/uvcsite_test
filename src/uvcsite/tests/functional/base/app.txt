@@ -26,7 +26,9 @@ Let's look if we have our authenticate infrastucture
 
    >>> for plugin in auth.getCredentialsPlugins():
    ...     print plugin
-   ('cookies', <dolmen.app.authentication.plugins.cookies.CookiesCredentials object at 0...>)
+   ('cookies', <uvcsite.auth.cookies.CookiesCredentials object at 0...>)
+   ('Zope Realm Basic-Auth', <zope.pluggableauth.plugins.httpplugins.HTTPBasicAuthCredentialsPlugin object at 0...>)
+   ('No Challenge if Authenticated', <zope.pluggableauth.plugins.generic.NoChallengeCredentialsPlugin object at 0...>)
 
    >>> for plugin in auth.getAuthenticatorPlugins():
    ...     print plugin
