@@ -30,7 +30,6 @@
   <include package="megrok.z3ctable" />
   <include package="megrok.z3ctable" file="meta.zcml" />
   <include package="megrok.pagetemplate" file="meta.zcml" />
-  <include package="megrok.rendersource" />
 
   <include package="grokcore.layout" />
   <include package="grokcore.chameleon" />
