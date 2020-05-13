@@ -18,6 +18,7 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 
 @grok.subscribe(IUserLoggedInEvent)
 def applyPermissionsForExistentCoUsers(factory):
+    return
     principal = factory.object
     createProductFolders(principal)
     homefolder = IHomeFolder(principal).homeFolder

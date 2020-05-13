@@ -37,7 +37,7 @@ class Result:
         self.type = type
         self.value = value
         self.redirect = redirect
-        
+
     def __str__(self):
         return str(self.type.value)
 
@@ -125,7 +125,7 @@ class ComplexPlugin(Plugin):
 
     def dispatch(self, action, site):
         errors = []
-        for sp in self.subplugins.values():
+        for sp in self.subplugins:
             try:
                 method = getattr(sp, action, None)
                 if method is not None:
@@ -144,7 +144,7 @@ class ComplexPlugin(Plugin):
 
     @property
     def status(self):
-        statuses = [sp.status for sp in self.subplugins.values()]
+        statuses = [sp.status for sp in self.subplugins]
         states = set((s.state for s in statuses))
         if len(states) > 1:
             status = uvcsite.plugins.Status(
